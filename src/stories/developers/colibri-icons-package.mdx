@@ -1,0 +1,20 @@
+import { Meta } from '@storybook/blocks';
+import { Header } from '../../blocks/Header.jsx';
+
+<Meta title="developers/Environment/Colibri Icons Package" />
+
+<Header isDoc title="Colibri icons package" />
+
+## Adding a New Icon
+
+- Create the SVG File:
+  - From the shared Figma Design System, grab the monochromatic icon and export as SVG.
+  - From Downloads (or the location you downloaded the SVG) update to ensure a descriptive name (e.g., my-icon.svg).
+  - Make sure the name is not duplicate of an existing icon.
+  - Finally place the svg file in our src/icons directory.
+- How to publish
+  - If you're developing locally: `npm run build --workspace=@tls-ds/colibri` will generate the icon so you can import it locally
+  - If you want it to be available from the `'@tls-ds/colibri'` package, submit your PR adding the icon, once approved it will be merged and automatically deployed.
+
+## Using components
+See our [Icons docs](/docs/components-misc-col-icon-colibri-icons--docs)

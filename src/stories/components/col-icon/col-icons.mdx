@@ -1,0 +1,39 @@
+import { IconGallery, IconItem, Meta } from '@storybook/blocks';
+import { Header } from '../../../blocks/Header.jsx';
+import { allIcons } from './icon-list';
+
+<Meta title="components/Misc/col-icon/Colibri Icons" />
+
+<Header isDoc title="Colibri Icons" />
+
+## Quick Start
+
+Install the package:
+
+```bash
+npm install @tls-ds/colibri-icons
+```
+
+```typescript
+// Import libraries
+import { registerColibriComponents } from '@tls-ds/colibri';
+import { ColIcon } from '@tls-ds/colibri-icons';
+
+// Register component only one time
+registerColibriComponents([ColIcon]);
+
+<col-icon name="home"></col-icon>
+```
+
+## Icons library
+
+<IconGallery style={{marginTop: '20px'}}>
+  {
+    allIcons.map((icon) => (
+      <IconItem key={icon} name={icon}>
+        <col-icon name={icon}></col-icon>
+      </IconItem>
+    ))
+  }
+
+</IconGallery>

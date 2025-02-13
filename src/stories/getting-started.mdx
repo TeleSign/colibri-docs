@@ -1,0 +1,55 @@
+import { Meta } from '@storybook/blocks';
+import { Header } from '../blocks/Header.jsx';
+
+<Meta title="Welcome/Introduction" />
+
+<Header/>
+
+
+<div className='sb-section'>
+  # Welcome
+
+  Colibri is a themeable Web Components library built with Lit, designed to provide a consistent and customizable design system for your web applications.
+</div>
+
+## Quick Start
+
+Install the package:
+
+```bash
+npm install @tls-ds/colibri @tls-ds/colibri-icons
+```
+
+```typescript
+// Import libraries
+import { registerColibriComponents, ColButton, ColCard } from '@tls-ds/colibri';
+import { ColIcon } from '@tls-ds/colibri-icons';
+
+// Register component
+registerColibriComponents([ColIcon, ColButton, ColCard]);
+
+// Use components
+<col-icon name="home"></col-icon>
+```
+
+## Core Features
+
+- 🎨 **Themeable**: Light, dark, and custom themes supported
+- 🔧 **Customizable**: Style tokens and CSS custom properties
+- ♿ **Accessible**: Built with accessibility in mind
+- 📱 **Responsive**: Mobile-first approach
+- ⚡ **Performant**: Lightweight and fast
+- 🛠️ **Web Components**: Framework agnostic
+
+## Browser Support
+
+Colibri components work in all modern browsers:
+
+- Chrome/Edge ≥ 79
+- Firefox ≥ 67
+- Safari ≥ 14
+- iOS Safari ≥ 14
+
+## Contributing
+
+See our [Contributing Guide](/docs/developers-how-to-contributing--docs)
