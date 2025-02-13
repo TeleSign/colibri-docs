@@ -2,6 +2,7 @@ import { html } from 'lit';
 import type { Preview } from '@storybook/web-components';
 import { registerColibriComponents } from '@tls-ds/colibri';
 import { ColIcon } from '@tls-ds/colibri-icons';
+import '@/assets/styles.css';
 
 registerColibriComponents([ColIcon]);
 
