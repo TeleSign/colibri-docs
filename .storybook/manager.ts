@@ -5,7 +5,7 @@ const customTheme = create({
   base: 'dark',
   brandTitle: 'Colibri',
   brandTarget: '_self',
-  brandImage: '/src/assets/colibri.png',
+  brandImage: '/assets/colibri.png',
   appBg: '#1b3e5a',
   textColor: '#fff'
 })
