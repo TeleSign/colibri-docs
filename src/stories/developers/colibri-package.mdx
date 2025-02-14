@@ -3,4 +3,245 @@ import { Header } from '../../blocks/Header.jsx';
 
 <Meta title="developers/Environment/Colibri Package" />
 
-<Header isDoc title="Colibri package" />
+<Header isDoc title="Colibri Design System Package" />
+
+Colibri is a Design System built with Lit components, featuring a powerful theming system and modern build tooling.
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Development](#development)
+- [Building](#building)
+- [Theming System](#theming-system)
+- [Configuration](#configuration)
+
+## Installation
+
+```bash
+npm install @tls-ds/colibri
+```
+
+## Features
+
+- Built with Lit components for efficient web components
+- Advanced theming system with light and dark modes
+- CSS token generation system
+- TypeScript support
+- Modern build system using Vite
+- ESLint and Prettier integration
+- Path aliases for better import organization
+
+## Project Structure
+
+```
+colibri/
+├── src/
+│   ├── components/     # Web components
+│   ├── styles/
+│   │   ├── global/    # Global styles and tokens
+│   │   └── themes/    # Theme-specific tokens
+│   ├── config/        # Configuration files
+│   └── tools/         # Utility functions
+├── scripts/
+│   ├── generate-css.js      # CSS generation script
+│   └── token-to-css.js      # Token processing utilities
+└── dist/              # Built files
+    ├── styles/
+    │   ├── global.css
+    │   └── themes/
+    │       ├── light.css
+    │       ├── dark.css
+    │       └── system.css
+```
+
+## Development
+
+### Setup Development Environment
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
+The development server will start at `http://localhost:3000` with HMR enabled.
+
+### Available Scripts
+
+- `npm run dev`: Start development server
+- `npm run preview`: Preview production build
+- `npm run build`: Build package for production
+- `npm run build:css`: Generate CSS files from tokens
+- `npm run lint`: Run ESLint
+- `npm run lint:fix`: Fix ESLint issues
+- `npm run format`: Format code with Prettier
+
+## Building
+
+The build process includes several steps:
+
+1. TypeScript compilation
+2. Vite bundle generation
+3. CSS token generation
+
+```bash
+npm run build
+```
+
+### Build Configuration
+
+The build system uses Vite with the following configuration:
+
+- ES modules output
+- Tree-shaking enabled
+- Source maps generation
+- TypeScript declaration files (d.ts)
+- Minification with Terser
+- Module preservation for better tree-shaking
+
+## Theming System
+
+### Token Structure
+
+The theming system uses CSS custom properties with a structured naming convention:
+
+```css
+--col-[category]-[property]
+```
+
+### Theme Files
+
+Three types of theme files are generated:
+
+1. `global.css`: Global tokens and reset styles
+2. `themes/light.css`: Light theme tokens
+3. `themes/dark.css`: Dark theme tokens
+4. `themes/system.css`: System preference-based theme
+
+### Using Themes
+
+Apply themes using the `data-theme` attribute:
+
+```html
+<body data-theme="light">
+  <!-- Light theme -->
+</body>
+
+<body data-theme="dark">
+  <!-- Dark theme -->
+</body>
+
+<body data-theme="system">
+  <!-- System preference theme -->
+</body>
+```
+
+## Configuration
+
+### TypeScript Configuration
+
+The project uses TypeScript with modern features enabled:
+
+- Target: ES2020
+- Module: ES2020
+- Strict type checking
+- Path aliases for cleaner imports
+- Decorator support
+- Source maps generation
+
+### ESLint Configuration
+
+ESLint is configured with:
+
+- TypeScript support
+- Lit plugin
+- Prettier integration
+- Custom rules for better code quality
+
+```javascript
+// Key ESLint rules
+{
+  'prettier/prettier': 'error',
+  '@typescript-eslint/explicit-function-return-type': 'off',
+  '@typescript-eslint/no-explicit-any': 'warn',
+  '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+  'lit/no-invalid-html': 'error',
+  'lit/no-duplicate-template-bindings': 'error'
+}
+```
+
+### Vite Configuration
+
+Vite is configured for optimal development and build:
+
+- Development server at port 3000
+- CORS enabled
+- HMR with overlay
+- Library mode for bundle generation
+- External dependencies handling
+- Path aliases matching TypeScript configuration
+
+### Package Exports
+
+The package exports are configured for maximum compatibility:
+
+```json
+{
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./*": {
+      "import": "./dist/*",
+      "types": "./dist/types/*"
+    }
+  }
+}
+```
+
+## CSS Generation
+
+The CSS generation system includes:
+
+### Token Processing
+
+- Converts design tokens to CSS custom properties
+- Handles nested token structures
+- Processes dynamic token values
+- Maintains token references
+
+### Build Features
+
+- Minification for production
+- Source maps for development
+- Browser compatibility targets
+- Automatic directory creation
+- Error handling
+
+### Usage Example
+
+```javascript
+const generator = new TokenToCSSGenerator({
+  outputDir: 'dist/styles',
+  minify: true,
+  sourceMap: false,
+  globalTokens: tokens
+});
+
+await generator.generateGlobalFile();
+await generator.generateThemeFile('light', lightTokens);
+```
+
+## Browser Support
+
+The package targets modern browsers with the following minimum versions:
+
+- Chrome: 80+
+- Firefox: 80+
+- Safari: 13+
+- Edge: 80+

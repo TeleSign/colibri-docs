@@ -4,3 +4,89 @@ import { Header } from '../../blocks/Header.jsx';
 <Meta title="developers/Components/Develop Components " />
 
 <Header isDoc title="Develop components" />
+
+## Component Usage
+
+### Registration
+
+Components need to be registered before they can be used. Colibri provides a utility function for this:
+
+```typescript
+import { registerColibriComponents } from '@tls-ds/colibri';
+import { ColButton, ColTextField } from '@tls-ds/colibri';
+
+// Register multiple components
+registerColibriComponents([
+  ColButton,
+  ColTextField
+]);
+```
+
+### Component Architecture
+
+All Colibri components extend from either `ThemedComponent` or `FormComponent`:
+
+```typescript
+import { ThemedComponent } from '@tls-ds/colibri';
+
+@Meta({ name: 'my-component', tokensName: 'myComponents' })
+export class MyComponent extends ThemedComponent {
+  static styles = [MyComponentStyles];
+
+  // Component implementation
+}
+```
+
+## Lit Integration
+
+### Component Lifecycle
+
+Colibri components extend Lit's lifecycle:
+
+```typescript
+class MyComponent extends ThemedComponent {
+  protected updated(changedProperties: Map<string, unknown>) {
+    super.updated(changedProperties);
+    // Custom update logic
+  }
+}
+```
+
+### Property Declarations
+
+Use Lit decorators for properties:
+
+```typescript
+class MyComponent extends ThemedComponent {
+  @property({ type: String })
+  label?: string;
+
+  @state()
+  private _value = '';
+}
+```
+
+### Template Composition
+
+Leverage Lit's template syntax:
+
+```typescript
+render() {
+  return html`
+    <div class=${classMap(this.classes)}>
+      <slot name="prefix"></slot>
+      ${this.renderContent()}
+      <slot name="suffix"></slot>
+    </div>
+  `;
+}
+```
+
+### Event Handling
+
+```typescript
+class MyComponent extends FormComponent {
+  private _handleInput(evt: InputEvent) {
+    this._dispatchInput(evt.target.value);
+  }
+}
