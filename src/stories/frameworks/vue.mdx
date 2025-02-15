@@ -301,19 +301,19 @@ export default defineComponent({
 ```vue
 <template>
   <col-card>
-    <template #header>
+    <div slot="header">
       <col-icon name="user" />
       <span>User Profile</span>
-    </template>
+    </div>
     
-    <col-text-field label="Name" v-model="name" />
-    <col-text-field label="Email" v-model="email" />
+    <col-text-field label="Name" />
+    <col-text-field label="Email" />
     
-    <template #footer>
+    <div slot="footer">
       <col-button color="primary" @click="saveProfile">
         Save
       </col-button>
-    </template>
+    </div>
   </col-card>
 </template>
 ```
@@ -399,24 +399,6 @@ export default defineComponent({
      @focus="handleFocus"
    />
    ```
-
-3. **v-model Usage**
-   ```vue
-   <!-- Proper v-model binding -->
-   <col-text-field
-     v-model="value"
-     @input="value = $event.target.value"
-   />
-   ```
-
-### Debug Mode
-
-Enable debug logging:
-
-```typescript
-// Enable at app initialization
-window.localStorage.setItem('debug', 'colibri:*');
-```
 
 ## Next Steps
 
