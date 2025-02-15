@@ -4,3 +4,431 @@ import { Header } from '../../blocks/Header.jsx';
 <Meta title="Frameworks Integration/Vue" />
 
 <Header isDoc title="Vue" />
+
+# Integrating Colibri with Vue
+
+This guide explains how to integrate Colibri Design System components and icons into your Vue application.
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Basic Setup](#basic-setup)
+- [Component Usage](#component-usage)
+- [Theme Configuration](#theme-configuration)
+- [Advanced Usage](#advanced-usage)
+- [TypeScript Support](#typescript-support)
+- [Best Practices](#best-practices)
+- [Troubleshooting](#troubleshooting)
+
+## Installation
+
+First, install the required packages:
+
+```bash
+npm install @tls-ds/colibri @tls-ds/colibri-icons
+```
+
+## Basic Setup
+
+### Component Registration
+
+Create a Colibri plugin file (e.g., `src/plugins/colibri.ts`):
+
+```typescript
+import { registerColibriComponents, ColButton, ColTextField } from '@tls-ds/colibri';
+import { ColIcon } from '@tls-ds/colibri-icons';
+
+// Register components
+registerColibriComponents([
+  ColIcon,
+  ColButton,
+  ColTextField
+]);
+
+// Vue plugin
+export default {
+  install() {
+    // Plugin initialization if needed
+  }
+};
+```
+
+Register the plugin in your main file:
+
+```typescript
+// src/main.ts
+import { createApp } from 'vue';
+import App from './App.vue';
+import ColibriPlugin from './plugins/colibri';
+
+const app = createApp(App);
+app.use(ColibriPlugin);
+app.mount('#app');
+```
+
+### Theme Setup
+
+Create a theme provider component:
+
+```vue
+<!-- src/components/ThemeProvider.vue -->
+<template>
+  <div :data-theme="theme">
+    <slot></slot>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'ThemeProvider',
+  props: {
+    theme: {
+      type: String,
+      default: 'light',
+      validator: (value: string) => ['light', 'dark', 'system'].includes(value)
+    }
+  }
+});
+</script>
+```
+
+## Component Usage
+
+### Basic Component Usage
+
+```vue
+<template>
+  <div>
+    <!-- Button Component -->
+    <col-button
+      color="primary"
+      variant="contained"
+      @click="handleClick"
+    >
+      Click Me
+    </col-button>
+
+    <!-- Icon Component -->
+    <col-icon
+      name="user"
+      size="24px"
+      color="#000000"
+    />
+
+    <!-- Text Field Component -->
+    <col-text-field
+      label="Username"
+      name="username"
+      :value="username"
+      @input="handleInput"
+    >
+    </col-text-field>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  name: 'MyComponent',
+  setup() {
+    const username = ref('');
+
+    const handleClick = () => {
+      console.log('Button clicked!');
+    };
+
+    const handleInput = (event: Event) => {
+      const target = event.target as HTMLInputElement;
+      console.log('Value:', target.value);
+    };
+
+    return {
+      username,
+      handleClick,
+      handleInput
+    };
+  }
+});
+</script>
+```
+
+### Form Handling
+
+```vue
+<template>
+  <form @submit.prevent="handleSubmit">
+    <col-text-field
+      :value="formData.username"
+      @input="formData.username = $event.target.value"
+      name="username"
+      label="Username"
+      required
+    />
+    
+    <col-text-field
+      :value="formData.password"
+      @input="formData.password = $event.target.value"
+      name="password"
+      type="password"
+      label="Password"
+      required
+    />
+
+    <col-button type="submit">
+      Login
+    </col-button>
+  </form>
+</template>
+
+<script lang="ts">
+import { defineComponent, reactive } from 'vue';
+
+export default defineComponent({
+  name: 'LoginForm',
+  setup() {
+    const formData = reactive({
+      username: '',
+      password: ''
+    });
+
+    const handleSubmit = () => {
+      console.log('Form data:', formData);
+    };
+
+    return {
+      formData,
+      handleSubmit
+    };
+  }
+});
+</script>
+```
+
+## Theme Configuration
+
+### Theme Provider Usage
+
+```vue
+<!-- App.vue -->
+<template>
+  <theme-provider :theme="currentTheme">
+    <your-components />
+  </theme-provider>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+import ThemeProvider from './components/ThemeProvider.vue';
+
+export default defineComponent({
+  components: {
+    ThemeProvider
+  },
+  setup() {
+    const currentTheme = ref('light');
+    return { currentTheme };
+  }
+});
+</script>
+```
+
+### Dynamic Theme Switching
+
+```vue
+<template>
+  <theme-provider :theme="theme">
+    <col-button @click="toggleTheme">
+      Toggle Theme
+    </col-button>
+    <your-components />
+  </theme-provider>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const theme = ref<'light' | 'dark' | 'system'>('light');
+
+    const toggleTheme = () => {
+      theme.value = theme.value === 'light' ? 'dark' : 'light';
+    };
+
+    return {
+      theme,
+      toggleTheme
+    };
+  }
+});
+</script>
+```
+
+## Advanced Usage
+
+### Custom Styling
+
+```vue
+<template>
+  <col-button
+    :style="buttonStyles"
+  >
+    Custom Styled Button
+  </col-button>
+</template>
+
+<script lang="ts">
+import { defineComponent, computed } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const buttonStyles = computed(() => ({
+      '--col-components-buttons-background-color': '#ff0000',
+      '--col-components-buttons-text-color': '#ffffff'
+    }));
+
+    return { buttonStyles };
+  }
+});
+</script>
+```
+
+### Component Composition
+
+```vue
+<template>
+  <col-card>
+    <template #header>
+      <col-icon name="user" />
+      <span>User Profile</span>
+    </template>
+    
+    <col-text-field label="Name" v-model="name" />
+    <col-text-field label="Email" v-model="email" />
+    
+    <template #footer>
+      <col-button color="primary" @click="saveProfile">
+        Save
+      </col-button>
+    </template>
+  </col-card>
+</template>
+```
+
+## TypeScript Support
+
+### Component Types
+
+```typescript
+// types/colibri.d.ts
+import { COLORS, BUTTON_VARIANTS } from '@tls-ds/colibri';
+
+declare module '@vue/runtime-core' {
+  export interface GlobalComponents {
+    'col-button': {
+      color?: COLORS;
+      variant?: BUTTON_VARIANTS;
+      size?: 'small' | 'large';
+      disabled?: boolean;
+    };
+    'col-icon': {
+      name: string;
+      size?: string | number;
+      color?: string;
+    };
+    // Add other components as needed
+  }
+}
+```
+
+### Using with Composition API
+
+```typescript
+import { defineComponent, ref } from 'vue';
+import type { COLORS, BUTTON_VARIANTS } from '@tls-ds/colibri';
+
+export default defineComponent({
+  setup() {
+    const buttonColor = ref<COLORS>('primary');
+    const buttonVariant = ref<BUTTON_VARIANTS>('contained');
+
+    return {
+      buttonColor,
+      buttonVariant
+    };
+  }
+});
+```
+
+## Best Practices
+
+1. **Component Registration**
+   - Register components at the application level
+   - Use the Vue plugin system for setup
+
+2. **Reactivity**
+   - Use `ref` or `reactive` for state management
+   - Watch for changes using `watch` or `watchEffect`
+
+3. **Event Handling**
+   - Use `@event` syntax for event binding
+   - Handle events in setup or methods
+
+4. **Performance**
+   - Use `v-show` instead of `v-if` when appropriate
+   - Implement proper memoization with `computed`
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Component Registration**
+   ```typescript
+   // Ensure plugin is registered
+   app.use(ColibriPlugin);
+   ```
+
+2. **Event Handling**
+   ```vue
+   <!-- Use correct event names -->
+   <col-text-field
+     @input="handleInput"
+     @focus="handleFocus"
+   />
+   ```
+
+3. **v-model Usage**
+   ```vue
+   <!-- Proper v-model binding -->
+   <col-text-field
+     v-model="value"
+     @input="value = $event.target.value"
+   />
+   ```
+
+### Debug Mode
+
+Enable debug logging:
+
+```typescript
+// Enable at app initialization
+window.localStorage.setItem('debug', 'colibri:*');
+```
+
+## Next Steps
+
+1. Review component documentation
+2. Set up theme customization
+3. Configure TypeScript
+4. Set up build process
+5. Implement testing strategy
+
+## Additional Resources
+
+- Vue Documentation
+- Colibri Component Documentation
+- Vue TypeScript Guide
+- Web Components in Vue Guide

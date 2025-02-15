@@ -4,3 +4,365 @@ import { Header } from '../../blocks/Header.jsx';
 <Meta title="Frameworks Integration/React" />
 
 <Header isDoc title="React" />
+
+# Integrating Colibri with React
+
+This guide explains how to integrate Colibri Design System components and icons into your React application.
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Basic Setup](#basic-setup)
+- [Component Usage](#component-usage)
+- [Theme Configuration](#theme-configuration)
+- [Advanced Usage](#advanced-usage)
+- [TypeScript Support](#typescript-support)
+- [Best Practices](#best-practices)
+- [Troubleshooting](#troubleshooting)
+
+## Installation
+
+First, install the required packages:
+
+```bash
+npm install @tls-ds/colibri @tls-ds/colibri-icons
+```
+
+## Basic Setup
+
+### Component Registration
+
+Create a setup file (e.g., `src/lib/colibri.ts`):
+
+```typescript
+import { registerColibriComponents, ColButton, ColTextField } from '@tls-ds/colibri';
+import { ColIcon } from '@tls-ds/colibri-icons';
+
+// Register all components you plan to use
+registerColibriComponents([
+  ColIcon,
+  ColButton,
+  ColTextField
+]);
+```
+
+Import this file in your main application entry point (e.g., `src/main.tsx` or `src/index.tsx`):
+
+```typescript
+import './lib/colibri';
+```
+
+### Theme Setup
+
+Create a theme provider component:
+
+```typescript
+// src/components/ThemeProvider.tsx
+import React from 'react';
+
+interface ThemeProviderProps {
+  theme?: 'light' | 'dark' | 'system';
+  children: React.ReactNode;
+}
+
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({ 
+  theme = 'light', 
+  children 
+}) => {
+  return (
+    <div data-theme={theme}>
+      {children}
+    </div>
+  );
+};
+```
+
+## Component Usage
+
+### Basic Component Usage
+
+```tsx
+import React from 'react';
+
+function MyComponent() {
+  const handleClick = () => {
+    console.log('Button clicked!');
+  };
+
+  return (
+    <div>
+      {/* Button Component */}
+      <col-button 
+        color="primary"
+        variant="contained"
+        onClick={handleClick}
+      >
+        Click Me
+      </col-button>
+
+      {/* Icon Component */}
+      <col-icon 
+        name="user" 
+        size="24px" 
+        color="#000000"
+      />
+
+      {/* Text Field Component */}
+      <col-text-field
+        label="Username"
+        name="username"
+        value={username}
+        onInput={handleInput}
+      >
+        <span slot="helper-text">Enter your username</span>
+      </col-text-field>
+    </div>
+  );
+}
+```
+
+### Event Handling
+
+React events need to be handled slightly differently with Web Components:
+
+```tsx
+function FormComponent() {
+  const handleInput = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    console.log('Value:', target.value);
+  };
+
+  const handleFocus = (event: FocusEvent) => {
+    console.log('Field focused!');
+  };
+
+  return (
+    <col-text-field
+      onInput={handleInput}
+      onFocus={handleFocus}
+    />
+  );
+}
+```
+
+### Using with Forms
+
+```tsx
+function LoginForm() {
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    const formData = new FormData(event.target as HTMLFormElement);
+    console.log(Object.fromEntries(formData));
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <col-text-field
+        name="username"
+        label="Username"
+        required
+      />
+      
+      <col-text-field
+        name="password"
+        type="password"
+        label="Password"
+        required
+      />
+
+      <col-button type="submit">
+        Login
+      </col-button>
+    </form>
+  );
+}
+```
+
+## Theme Configuration
+
+### Theme Provider Usage
+
+```tsx
+// App.tsx
+import { ThemeProvider } from './components/ThemeProvider';
+
+function App() {
+  return (
+    <ThemeProvider theme="light">
+      <YourComponents />
+    </ThemeProvider>
+  );
+}
+```
+
+### Dynamic Theme Switching
+
+```tsx
+function App() {
+  const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('light');
+
+  const toggleTheme = () => {
+    setTheme(current => current === 'light' ? 'dark' : 'light');
+  };
+
+  return (
+    <ThemeProvider theme={theme}>
+      <col-button onClick={toggleTheme}>
+        Toggle Theme
+      </col-button>
+      <YourComponents />
+    </ThemeProvider>
+  );
+}
+```
+
+## Advanced Usage
+
+### Custom Styling
+
+```tsx
+function StyledComponent() {
+  return (
+    <col-button
+      style={{
+        '--col-components-buttons-background-color': '#ff0000',
+        '--col-components-buttons-text-color': '#ffffff'
+      } as React.CSSProperties}
+    >
+      Custom Styled Button
+    </col-button>
+  );
+}
+```
+
+### Component Composition
+
+```tsx
+function ComposedComponent() {
+  return (
+    <col-card>
+      <div slot="header">
+        <col-icon name="user" />
+        <span>User Profile</span>
+      </div>
+      
+      <div>
+        <col-text-field label="Name" />
+        <col-text-field label="Email" />
+      </div>
+      
+      <div slot="footer">
+        <col-button color="primary">Save</col-button>
+      </div>
+    </col-card>
+  );
+}
+```
+
+## TypeScript Support
+
+### Component Props Types
+
+```typescript
+// types/colibri.d.ts
+import { COLORS, BUTTON_VARIANTS } from '@tls-ds/colibri';
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'col-button': {
+        color?: COLORS;
+        variant?: BUTTON_VARIANTS;
+        size?: 'small' | 'large';
+        disabled?: boolean;
+        onClick?: (event: MouseEvent) => void;
+        children?: React.ReactNode;
+      };
+      'col-icon': {
+        name: string;
+        size?: string | number;
+        color?: string;
+      };
+      // Add other components as needed
+    }
+  }
+}
+```
+
+### Usage with TypeScript
+
+```tsx
+import React from 'react';
+import { COLORS, BUTTON_VARIANTS } from '@tls-ds/colibri';
+
+interface ButtonProps {
+  color: COLORS;
+  variant: BUTTON_VARIANTS;
+  onClick: () => void;
+}
+
+const Button: React.FC<ButtonProps> = ({ color, variant, onClick }) => {
+  return (
+    <col-button
+      color={color}
+      variant={variant}
+      onClick={onClick}
+    >
+      Click Me
+    </col-button>
+  );
+};
+```
+
+## Best Practices
+
+1. **Component Registration**
+   - Register components once at app initialization
+   - Only register components you plan to use
+
+2. **Event Handling**
+   - Use proper event types for handlers
+   - Remember events bubble through the shadow DOM
+
+3. **Performance**
+   - Avoid unnecessary re-renders
+   - Use proper memoization techniques
+
+4. **Accessibility**
+   - Maintain ARIA attributes
+   - Ensure keyboard navigation works
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Components Not Rendering**
+   ```typescript
+   // Ensure components are registered before use
+   import './lib/colibri';
+   ```
+
+2. **Event Handling Issues**
+   ```typescript
+   // Use correct event types
+   const handleInput = (event: Event) => {
+     const target = event.target as HTMLInputElement;
+     // Handle event
+   };
+   ```
+
+3. **Theme Not Applying**
+   ```typescript
+   // Check theme provider setup
+   <ThemeProvider theme="light">
+     <YourComponents />
+   </ThemeProvider>
+   ```
+
+## Next Steps
+
+1. Review component documentation
+2. Set up theme customization
+3. Implement proper TypeScript types
+4. Configure build tooling
+5. Set up testing environment
