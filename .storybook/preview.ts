@@ -1,10 +1,12 @@
 import { html } from 'lit';
 import type { Preview } from '@storybook/web-components';
-import { registerColibriComponents } from '@tls-ds/colibri';
+import { registerColibriComponents, ColCard, ColButton, ColLink, ColTextField, ColPill } from '@tls-ds/colibri';
 import { ColIcon } from '@tls-ds/colibri-icons';
+import '@tls-ds/colibri/styles/global.css';
+import '@tls-ds/colibri/styles/themes/light.css';
 import '@/assets/styles.css';
 
-registerColibriComponents([ColIcon]);
+registerColibriComponents([ColIcon, ColCard, ColButton, ColLink, ColTextField, ColPill]);
 
 const preview: Preview = {
   parameters: {
