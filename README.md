@@ -1,0 +1,298 @@
+# Colibri Documentation System
+
+The Colibri Documentation System is built using Storybook 8.6, providing an interactive environment for documenting components, design guidelines, and usage patterns.
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Getting Started](#getting-started)
+- [Documentation Structure](#documentation-structure)
+- [Writing Documentation](#writing-documentation)
+- [Development](#development)
+- [Customization](#customization)
+- [Best Practices](#best-practices)
+- [Contributing](#contributing)
+
+## Overview
+
+### Key Features
+
+- Interactive component playground
+- MDX documentation support
+- Accessibility testing
+- Responsive preview
+- Theme switching
+- Code snippets
+- Framework integration guides
+
+## Getting Started
+
+### Installation
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build documentation
+npm run build
+```
+
+### Environment Setup
+
+The documentation system requires:
+- Node.js (latest LTS)
+- npm or yarn
+- Modern browser for development
+
+## Documentation Structure
+
+```
+colibri-docs/
+├── src/
+│   ├── assets/          # Static assets
+│   ├── blocks/          # Custom MDX blocks
+│   ├── stories/         # Component documentation
+└── .storybook/          # Storybook configuration
+```
+
+## Writing Documentation
+
+### MDX Files
+
+Create documentation using MDX format:
+
+```mdx
+import { Meta } from '@storybook/blocks';
+import { Header } from '../blocks/Header.jsx';
+
+<Meta title="Components/Button" />
+
+<Header title="Button Component" isDoc />
+
+# Button Component
+
+Description and usage examples...
+```
+
+### Component Stories
+
+Document components with stories:
+
+```typescript
+import type { Meta, StoryObj } from '@storybook/web-components';
+
+const meta: Meta = {
+  title: 'Components/Button',
+  component: 'col-button',
+  argTypes: {
+    // Component props
+  }
+};
+
+export default meta;
+```
+
+### Custom Blocks
+
+Create reusable documentation blocks:
+
+```jsx
+// Header.jsx
+export const Header = ({ isDoc, title }) => (
+  <div className={`main-header${isDoc ? ' is-doc' : ''}`}>
+    <img src={Logo} alt="Colibri logo" />
+    {!isDoc ? <h1>Colibri Design System</h1> : <h1>{title}</h1>}
+  </div>
+);
+```
+
+## Development
+
+### Available Scripts
+
+```json
+{
+  "dev": "storybook dev -p 6006",
+  "build": "storybook build"
+}
+```
+
+### Storybook Addons
+
+Installed addons include:
+- @storybook/addon-essentials
+- @storybook/addon-a11y
+- @storybook/addon-links
+- @storybook/test
+
+### Build Process
+
+1. Generate static files:
+```bash
+npm run build
+```
+
+2. Output directory: `storybook-static/`
+
+## Customization
+
+### Story Organization
+
+Stories are organized in a specific order:
+1. Welcome
+2. Components
+3. Frameworks Integration
+4. Developers
+
+This ordering is configured in the preview configuration:
+
+```typescript
+options: {
+  storySort: {
+    order: ['Welcome', 'Components', 'Frameworks Integration', 'Developers'],
+  }
+}
+```
+
+### Theme Customization
+
+Customize Storybook theme:
+
+```typescript
+// .storybook/manager.ts
+import { addons } from '@storybook/manager-api';
+import { create } from '@storybook/theming';
+
+const theme = create({
+  base: 'light',
+  brandTitle: 'Colibri Design System',
+  brandImage: 'path/to/logo.png'
+});
+
+addons.setConfig({ theme });
+```
+
+### Custom Blocks
+
+Create custom documentation blocks:
+
+1. Create component in `src/blocks/`
+2. Import and use in MDX files
+3. Style using CSS modules or styled-components
+
+## Best Practices
+
+### Documentation Guidelines
+
+1. Component Documentation
+- Overview
+- Props/API
+- Examples
+- Best practices
+- Accessibility considerations
+
+2. Code Examples
+- Basic usage
+- Common patterns
+- Edge cases
+- Framework-specific examples
+
+3. Writing Style
+- Clear and concise
+- Consistent terminology
+- Progressive disclosure
+- Include visual examples
+
+### Accessibility
+
+1. Testing
+- Use a11y addon
+- Test with screen readers
+- Keyboard navigation
+- Color contrast
+
+2. Documentation
+- ARIA roles
+- Keyboard interactions
+- Screen reader behavior
+
+### Asset Handling
+
+The documentation system includes specific configuration for asset handling:
+
+1. Asset File Structure
+```typescript
+build: {
+  rollupOptions: {
+    input: {
+      assets: resolve(__dirname, '../src/assets')
+    },
+    output: {
+      assetFileNames: (assetInfo) => {
+        const extType = assetInfo.name.split('.').at(1);
+        if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
+          return `assets/[name][extname]`;
+        }
+        return `assets/[name][extname]`;
+      }
+    },
+  }
+}
+```
+
+2. Font Configuration
+- Uses Inter font family
+- Configures fallback fonts
+- Supports variable font weights and styles
+
+### Performance
+
+1. Asset Optimization
+- Compress images
+- Lazy load examples
+- Code splitting
+
+2. Build Optimization
+- Minification
+- Tree shaking
+- Cache optimization
+
+## Contributing
+
+### Documentation Updates
+
+1. Fork the repository
+2. Create feature branch
+3. Make changes
+4. Submit pull request
+
+### Review Process
+
+1. Documentation review
+2. Technical review
+3. Accessibility review
+4. Final approval
+
+### Style Guide
+
+1. File Organization
+- Group by component
+- Consistent naming
+- Clear hierarchy
+
+2. Code Examples
+- Follow style guide
+- Include comments
+- Show best practices
+
+## Next Steps
+
+After setup:
+1. Review existing documentation
+2. Identify gaps
+3. Plan documentation structure
+4. Create contribution guidelines
+5. Set up automated deployment
