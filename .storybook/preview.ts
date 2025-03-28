@@ -1,12 +1,12 @@
 import { html } from 'lit';
 import type { Preview } from '@storybook/web-components';
-import { registerColibriComponents, ColCard, ColButton, ColLink, ColTextField, ColPill } from '@tls-ds/colibri';
+import { registerColibriComponents } from '@tls-ds/colibri';
 import { ColIcon } from '@tls-ds/colibri-icons';
 import '@tls-ds/colibri/styles/global.css';
 import '@tls-ds/colibri/styles/theme-default.css';
 import '@/styles/globals.css';
 
-registerColibriComponents([ColIcon, ColCard, ColButton, ColLink, ColTextField, ColPill]);
+registerColibriComponents([ColIcon]);
 
 const preview: Preview = {
   parameters: {
@@ -18,7 +18,7 @@ const preview: Preview = {
     },
     options: {
       storySort: {
-        order: ['Welcome', 'Components', 'Frameworks Integration', 'Developers'],
+        order: ['Welcome', 'Atoms', 'Molecules', 'Organisms', 'Tokens'],
       }
     }
   },
@@ -30,7 +30,7 @@ const preview: Preview = {
       }
 
       return html`
-        <div data-theme=${context.args.mode || 'light'}> ${story()} </div>
+        <div data-theme=${context.args.mode || 'default'}> ${story()} </div>
       `;
     },
   ],
