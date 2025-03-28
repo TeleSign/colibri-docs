@@ -27,8 +27,8 @@
     "allowJs": true,
     "jsx": "react",
     "paths": {
-      "@/*": ["src/*"],
-      "@assets/*": ["src/assets/*"],
+      "@/*": ["./src/*"],
+      "@root/*": ["./*"]
     },
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx"],

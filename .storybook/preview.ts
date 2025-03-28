@@ -4,7 +4,7 @@ import { registerColibriComponents, ColCard, ColButton, ColLink, ColTextField, C
 import { ColIcon } from '@tls-ds/colibri-icons';
 import '@tls-ds/colibri/styles/global.css';
 import '@tls-ds/colibri/styles/theme-default.css';
-import '@/assets/styles.css';
+import '@/styles/globals.css';
 
 registerColibriComponents([ColIcon, ColCard, ColButton, ColLink, ColTextField, ColPill]);
 
