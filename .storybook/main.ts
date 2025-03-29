@@ -4,10 +4,8 @@ import { resolve } from 'path';
 
 const config: StorybookConfig = {
   stories: [
-    '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
-    '../src/**/*.mdx',
-    '!../src/blocks/*.mdx',
-    '!../src/blocks/**/*.mdx'
+    '../src/stories/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+    '../src/stories/**/*.mdx',
   ],
   addons: [
     '@chromatic-com/storybook',
@@ -21,6 +19,7 @@ const config: StorybookConfig = {
     name: '@storybook/web-components-vite',
     options: {},
   },
+  staticDirs: ['./static'],
   docs: {
     autodocs: 'tag',
   },
