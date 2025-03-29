@@ -1,4 +1,4 @@
-export const allIcons = [
+export const iconList = [
   'arrow',
   'barcode-outline',
   'briefcase',
