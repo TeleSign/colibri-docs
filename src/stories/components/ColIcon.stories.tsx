@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from '@storybook/web-components';
-import { iconList } from '@/constants/icons';
+import { icons } from '@tls-ds/colibri-icons/icons-list';
 import { html, css } from 'lit';
 
 interface StoryArgs {
@@ -15,7 +15,7 @@ export default {
   argTypes: {
     name: {
       control: 'select',
-      options: iconList,
+      options: icons,
       description: 'The name of the icon to display',
       table: {
         type: { summary: 'string' },
@@ -40,7 +40,7 @@ export default {
     },
   },
   args: {
-    name: 'lock',
+    name: 'home',
     color: 'currentColor',
     size: '24px',
   },
@@ -121,8 +121,8 @@ export const AllIcons = () => html`
   <style>
     ${styles}
   </style>
-  ${iconList.map(
-    icon => html`
+  ${icons.map(
+    (icon: string) => html`
       <div class="icon-item">
         <col-icon name=${icon} size="32px"></col-icon>
         <span class="icon-name">${icon}</span>
