@@ -1,6 +1,6 @@
 # Colibri Documentation System
 
-The Colibri Documentation System is built using Storybook 8.6, providing an interactive environment for documenting components, design guidelines, and usage patterns.
+The Colibri Documentation System is built using Storybook, providing an interactive environment for documenting components, design guidelines, and usage patterns.
 
 ## Table of Contents
 
@@ -18,7 +18,7 @@ The Colibri Documentation System is built using Storybook 8.6, providing an inte
 ### Key Features
 
 - Interactive component playground
-- MDX documentation support
+- Web Components support
 - Accessibility testing
 - Responsive preview
 - Theme switching
@@ -47,67 +47,105 @@ The documentation system requires:
 - npm or yarn
 - Modern browser for development
 
+### Component Registration
+
+All web components must be registered in `.storybook/preview.ts` before they can be used in stories:
+
+```typescript
+// .storybook/preview.ts
+import { registerColibriComponents } from '@tls-ds/colibri';
+import { ColIcon } from '@tls-ds/colibri-icons';
+
+// Register components for all stories
+registerColibriComponents([ColIcon]);
+```
+
+This ensures components are available globally across all stories. Never register components in individual story files.
+
 ## Documentation Structure
 
 ```
 colibri-docs/
 ├── src/
 │   ├── assets/          # Static assets
-│   ├── blocks/          # Custom MDX blocks
-│   ├── stories/         # Component documentation
-└── .storybook/          # Storybook configuration
+│   ├── constants/       # Shared constants
+│   ├── styles/          # Global styles
+│   └── stories/         # Component documentation
+│       └── components/  # Component stories
+└── .storybook/         # Storybook configuration
+    ├── preview.ts      # Global configuration and component registration
+    └── main.ts         # Storybook configuration
 ```
 
 ## Writing Documentation
 
-### MDX Files
+### Story File Organization
 
-Create documentation using MDX format:
+All story files should follow this standard organization:
 
-```mdx
-import { Meta } from '@storybook/blocks';
-import { Header } from '../blocks/Header.jsx';
+#### 1. Imports
+- External dependencies first
+- Local imports second
 
-<Meta title="Components/Button" />
+#### 2. Interfaces/Types
+- Story-specific type definitions
+- Props interfaces
 
-<Header title="Button Component" isDoc />
+#### 3. Story Metadata (default export)
+- Component documentation
+- Props configuration (argTypes)
+- Default args
+- Parameters (including __sb for layout)
 
-# Button Component
+#### 4. Styles
+- Story-specific styles using lit's css
+- Placed before stories for context
 
-Description and usage examples...
-```
+#### 5. Stories
+- Individual story implementations
+- Story-specific documentation
 
-### Component Stories
+For a complete example of this organization, see [ColIcon.stories.ts](src/stories/components/ColIcon.stories.ts). This story demonstrates:
+- Proper file structure
+- Component documentation
+- Props configuration
+- Layout customization
+- Multiple story variants
+- Styled components
 
-Document components with stories:
+### Component Usage Example
+
+After registering a component in `preview.ts`, you can use it in your stories:
 
 ```typescript
-import type { Meta, StoryObj } from '@storybook/web-components';
+// ComponentName.stories.ts
+export const Default = () => html`
+  <col-icon name="home" size="24px" color="currentColor"></col-icon>
+`;
+```
 
-const meta: Meta = {
-  title: 'Components/Button',
-  component: 'col-button',
-  argTypes: {
-    // Component props
+### Layout Configuration
+
+Stories can be configured with custom layouts using the `__sb` parameter:
+
+```typescript
+parameters: {
+  __sb: {
+    display: 'grid' | 'flex',
+    gridTemplateColumns?: string,
+    gap?: string,
+    flexDirection?: 'row' | 'row-reverse' | 'column' | 'column-reverse',
+    justifyContent?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly',
+    flexWrap?: 'nowrap' | 'wrap' | 'wrap-reverse'
   }
-};
-
-export default meta;
+}
 ```
 
-### Custom Blocks
+### Story Naming Convention
 
-Create reusable documentation blocks:
-
-```jsx
-// Header.jsx
-export const Header = ({ isDoc, title }) => (
-  <div className={`main-header${isDoc ? ' is-doc' : ''}`}>
-    <img src={Logo} alt="Colibri logo" />
-    {!isDoc ? <h1>Colibri Design System</h1> : <h1>{title}</h1>}
-  </div>
-);
-```
+- Files should be placed in the `stories/components` directory
+- File name should be `ComponentName.stories.ts`
+- Story title should follow `Category/ComponentName` format
 
 ## Development
 
@@ -126,16 +164,6 @@ Installed addons include:
 - @storybook/addon-essentials
 - @storybook/addon-a11y
 - @storybook/addon-links
-- @storybook/test
-
-### Build Process
-
-1. Generate static files:
-```bash
-npm run build
-```
-
-2. Output directory: `storybook-static/`
 
 ## Customization
 
@@ -143,45 +171,34 @@ npm run build
 
 Stories are organized in a specific order:
 1. Welcome
-2. Components
-3. Frameworks Integration
-4. Developers
+2. Atoms
+3. Molecules
+4. Organisms
+5. Tokens
 
 This ordering is configured in the preview configuration:
 
 ```typescript
 options: {
   storySort: {
-    order: ['Welcome', 'Components', 'Frameworks Integration', 'Developers'],
+    order: ['Welcome', 'Atoms', 'Molecules', 'Organisms', 'Tokens'],
   }
 }
 ```
 
 ### Theme Customization
 
-Customize Storybook theme:
+The system supports theme switching through the `data-theme` attribute:
 
 ```typescript
-// .storybook/manager.ts
-import { addons } from '@storybook/manager-api';
-import { create } from '@storybook/theming';
-
-const theme = create({
-  base: 'light',
-  brandTitle: 'Colibri Design System',
-  brandImage: 'path/to/logo.png'
-});
-
-addons.setConfig({ theme });
+decorators: [
+  (story, context) => html`
+    <div data-theme=${context.args.mode || 'default'}>
+      ${story()}
+    </div>
+  `
+]
 ```
-
-### Custom Blocks
-
-Create custom documentation blocks:
-
-1. Create component in `src/blocks/`
-2. Import and use in MDX files
-3. Style using CSS modules or styled-components
 
 ## Best Practices
 
@@ -198,7 +215,6 @@ Create custom documentation blocks:
 - Basic usage
 - Common patterns
 - Edge cases
-- Framework-specific examples
 
 3. Writing Style
 - Clear and concise
@@ -219,54 +235,13 @@ Create custom documentation blocks:
 - Keyboard interactions
 - Screen reader behavior
 
-### Asset Handling
-
-The documentation system includes specific configuration for asset handling:
-
-1. Asset File Structure
-```typescript
-build: {
-  rollupOptions: {
-    input: {
-      assets: resolve(__dirname, '../src/assets')
-    },
-    output: {
-      assetFileNames: (assetInfo) => {
-        const extType = assetInfo.name.split('.').at(1);
-        if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
-          return `assets/[name][extname]`;
-        }
-        return `assets/[name][extname]`;
-      }
-    },
-  }
-}
-```
-
-2. Font Configuration
-- Uses Inter font family
-- Configures fallback fonts
-- Supports variable font weights and styles
-
-### Performance
-
-1. Asset Optimization
-- Compress images
-- Lazy load examples
-- Code splitting
-
-2. Build Optimization
-- Minification
-- Tree shaking
-- Cache optimization
-
 ## Contributing
 
 ### Documentation Updates
 
 1. Fork the repository
 2. Create feature branch
-3. Make changes
+3. Make changes following the story organization guidelines
 4. Submit pull request
 
 ### Review Process
@@ -279,9 +254,9 @@ build: {
 ### Style Guide
 
 1. File Organization
-- Group by component
-- Consistent naming
-- Clear hierarchy
+- Follow standard story file structure
+- Use consistent naming
+- Maintain clear hierarchy
 
 2. Code Examples
 - Follow style guide
