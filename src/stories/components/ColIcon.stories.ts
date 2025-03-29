@@ -1,6 +1,12 @@
 import { Meta, StoryFn } from '@storybook/web-components';
 import { iconList } from '@/constants/icons';
-import { html } from 'lit';
+import { html, css } from 'lit';
+
+interface StoryArgs {
+  name: string;
+  color: string;
+  size: string;
+}
 
 export default {
   title: 'Atoms/Icons',
@@ -18,7 +24,7 @@ export default {
     },
     color: {
       control: 'color',
-      description: 'The color of the icon',
+      description: 'The color of the icon. Can be any valid CSS color value',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'currentColor' },
@@ -26,7 +32,7 @@ export default {
     },
     size: {
       control: 'text',
-      description: 'The size of the icon (can be in px, rem, or em)',
+      description: 'The size of the icon. Can be specified in px, rem, or em',
       table: {
         type: { summary: 'string | number' },
         defaultValue: { summary: '24px' },
@@ -67,26 +73,60 @@ Below you can find all available icons in the library.
         `,
       },
     },
+    __sb: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))',
+      gap: '16px',
+    },
   },
-} as Meta;
+} as Meta<StoryArgs>;
 
-const Template: StoryFn = args => html`
+/**
+ * Styles for the icon stories using Lit's css template literal.
+ * These styles are scoped to the stories and won't affect other components.
+ */
+const styles = css`
+  .icon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .icon-name {
+    font-size: 12px;
+    text-align: center;
+  }
+`;
+
+/**
+ * Default story showing a single icon with controls for name, color, and size.
+ * Use the controls panel to experiment with different values.
+ */
+const Template: StoryFn<StoryArgs> = args => html`
+  <style>
+    ${styles}
+  </style>
   <col-icon name=${args.name} color=${args.color} size=${args.size}></col-icon>
 `;
 
 export const Default = Template.bind({});
 
+/**
+ * This story showcases all available icons in the library.
+ * Icons are displayed in a responsive grid layout with names underneath.
+ * The layout is controlled by the __sb parameter in the default export.
+ */
 export const AllIcons = () => html`
-  <div
-    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 16px; padding: 20px;"
-  >
-    ${iconList.map(
-      icon => html`
-        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-          <col-icon name=${icon} size="32px"></col-icon>
-          <span style="font-size: 12px; text-align: center;">${icon}</span>
-        </div>
-      `
-    )}
-  </div>
+  <style>
+    ${styles}
+  </style>
+  ${iconList.map(
+    icon => html`
+      <div class="icon-item">
+        <col-icon name=${icon} size="32px"></col-icon>
+        <span class="icon-name">${icon}</span>
+      </div>
+    `
+  )}
 `;
