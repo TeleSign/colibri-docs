@@ -124,6 +124,54 @@ export const Default = () => html`
 `;
 ```
 
+### Source Code Customization
+
+Control how source code appears in your documentation with these options:
+
+#### Excluding Decorators
+To exclude decorators and show only the component code:
+
+```typescript
+parameters: {
+  docs: {
+    source: {
+      excludeDecorators: true
+    }
+  }
+}
+```
+
+#### Transforming Source Code
+To remove specific elements (like style tags) from the displayed source code:
+
+```typescript
+parameters: {
+  docs: {
+    source: {
+      transform: (code: string): string => {
+        // Remove style tags and their content
+        return code.replace(/<style>[\s\S]*?<\/style>\s*/, '');
+      }
+    }
+  }
+}
+```
+
+#### Disabling Source Code Display
+To hide the source code for specific stories:
+
+```typescript
+parameters: {
+  docs: {
+    source: {
+      code: null // Disables the "Show code" option
+    }
+  }
+}
+```
+
+For a complete example of source code customization, see [ColIcon.stories.ts](src/stories/components/ColIcon.stories.ts).
+
 ### Layout Configuration
 
 Stories can be configured with custom layouts using the `__sb` parameter:
