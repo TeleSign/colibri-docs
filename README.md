@@ -105,7 +105,7 @@ All story files should follow this standard organization:
 - Individual story implementations
 - Story-specific documentation
 
-For a complete example of this organization, see [ColIcon.stories.ts](src/stories/components/ColIcon.stories.ts). This story demonstrates:
+For a complete example of this organization, see [ColIcon.stories.tsx](src/stories/components/ColIcon.stories.tsx). This story demonstrates:
 - Proper file structure
 - Component documentation
 - Props configuration
@@ -142,7 +142,7 @@ parameters: {
 ```
 
 #### Transforming Source Code
-To remove specific elements (like style tags) from the displayed source code:
+To remove specific elements (like `<style>` tags) from the displayed source code:
 
 ```typescript
 parameters: {
@@ -170,7 +170,7 @@ parameters: {
 }
 ```
 
-For a complete example of source code customization, see [ColIcon.stories.ts](src/stories/components/ColIcon.stories.ts).
+For a complete example of source code customization, see [ColIcon.stories.tsx](src/stories/components/ColIcon.stories.tsx).
 
 ### Layout Configuration
 
