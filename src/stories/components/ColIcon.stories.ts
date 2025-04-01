@@ -1,17 +1,59 @@
-import { Meta, StoryFn } from '@storybook/web-components';
-import { iconList } from '@/constants/icons';
 import { html, css } from 'lit';
+import { iconList } from '@/constants/icons';
+import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 
-interface StoryArgs {
+type StoryArgs = {
   name: string;
   color: string;
-  size: string;
-}
+  size: string | number;
+};
 
-export default {
+const meta = {
   title: 'Atoms/Icons',
+  component: 'col-icon',
   tags: ['autodocs'],
-  component: 'ColIcon',
+  parameters: {
+    docs: {
+      description: {
+        component: `
+  ## Quick Start
+
+  Install the package:
+
+  \`\`\`bash
+  npm install @tls-ds/colibri-icons
+  \`\`\`
+
+  \`\`\`typescript
+  // Import libraries
+  import { registerColibriComponents } from '@tls-ds/colibri';
+  import { ColIcon } from '@tls-ds/colibri-icons';
+
+  // Register component only one time
+  registerColibriComponents([ColIcon]);
+
+  <col-icon name="home"></col-icon>
+  \`\`\`
+
+  ## Icons library
+
+  Below you can find all available icons in the library.
+  `,
+      },
+      source: {
+        excludeDecorators: true,
+        transform: (code: string): string => {
+          // Remove style tags and their content
+          return code.replace(/<style>[\s\S]*?<\/style>\s*/, '');
+        },
+      },
+    },
+    __sb: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))',
+      gap: '16px',
+    },
+  },
   argTypes: {
     name: {
       control: 'select',
@@ -44,42 +86,11 @@ export default {
     color: 'currentColor',
     size: '24px',
   },
-  parameters: {
-    docs: {
-      description: {
-        component: `
-## Quick Start
+} satisfies ColibriStoryMeta<StoryArgs>;
 
-Install the package:
+export default meta;
 
-\`\`\`bash
-npm install @tls-ds/colibri-icons
-\`\`\`
-
-\`\`\`typescript
-// Import libraries
-import { registerColibriComponents } from '@tls-ds/colibri';
-import { ColIcon } from '@tls-ds/colibri-icons';
-
-// Register component only one time
-registerColibriComponents([ColIcon]);
-
-<col-icon name="home"></col-icon>
-\`\`\`
-
-## Icons library
-
-Below you can find all available icons in the library.
-        `,
-      },
-    },
-    __sb: {
-      display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))',
-      gap: '16px',
-    },
-  },
-} as Meta<StoryArgs>;
+type Story = ColibriStory<StoryArgs>;
 
 /**
  * Styles for the icon stories using Lit's css template literal.
@@ -103,30 +114,39 @@ const styles = css`
  * Default story showing a single icon with controls for name, color, and size.
  * Use the controls panel to experiment with different values.
  */
-const Template: StoryFn<StoryArgs> = args => html`
-  <style>
-    ${styles}
-  </style>
-  <col-icon name=${args.name} color=${args.color} size=${args.size}></col-icon>
-`;
-
-export const Default = Template.bind({});
+export const Default: Story = {
+  render: args => html`
+    <style>
+      ${styles}
+    </style>
+    <col-icon name=${args.name} color=${args.color} size=${args.size}></col-icon>
+  `,
+};
 
 /**
  * This story showcases all available icons in the library.
  * Icons are displayed in a responsive grid layout with names underneath.
  * The layout is controlled by the __sb parameter in the default export.
  */
-export const AllIcons = () => html`
-  <style>
-    ${styles}
-  </style>
-  ${iconList.map(
-    icon => html`
-      <div class="icon-item">
-        <col-icon name=${icon} size="32px"></col-icon>
-        <span class="icon-name">${icon}</span>
-      </div>
-    `
-  )}
-`;
+export const AllIcons: Story = {
+  parameters: {
+    docs: {
+      source: {
+        code: null,
+      },
+    },
+  },
+  render: () => html`
+    <style>
+      ${styles}
+    </style>
+    ${iconList.map(
+      (icon: string) => html`
+        <div class="icon-item">
+          <col-icon name=${icon} size="32px"></col-icon>
+          <span class="icon-name">${icon}</span>
+        </div>
+      `
+    )}
+  `,
+};
