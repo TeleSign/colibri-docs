@@ -195,17 +195,21 @@ parameters: {
 - File name should be `ComponentName.stories.ts`
 - Story title should follow `Category/ComponentName` format
 
+Available `Category` values:
+
+- `Atoms`
+- `Molecules`
+- `Organisms`
+- `Tokens`
+
 ### Example Story Component
 A story file for a molecule component is available for reference at [ExampleTextField.stories.tsx](src/stories/components/ExampleTextField.stories.ts?at=refs%2Fheads%2Fshowcase%2Fstorybook-examples).
 
 This file demonstrates:
 
 - Usage of a molecule component (with slots and nested elements)
-
 - Custom tokens usage for styling (e.g. colors.border.default)
-
 - A custom transform function to clean up displayed source code
-
 - Story structure and props setup following best practices
 
 ## Development
