@@ -1,5 +1,5 @@
 import { html, css } from 'lit';
-import { iconList } from '@/constants/icons';
+import { icons } from '@tls-ds/colibri-icons/icons-list';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 
 type StoryArgs = {
@@ -57,7 +57,7 @@ const meta = {
   argTypes: {
     name: {
       control: 'select',
-      options: iconList,
+      options: icons,
       description: 'The name of the icon to display',
       table: {
         type: { summary: 'string' },
@@ -82,7 +82,7 @@ const meta = {
     },
   },
   args: {
-    name: 'lock',
+    name: 'home',
     color: 'currentColor',
     size: '24px',
   },
@@ -140,7 +140,7 @@ export const AllIcons: Story = {
     <style>
       ${styles}
     </style>
-    ${iconList.map(
+    ${icons.map(
       (icon: string) => html`
         <div class="icon-item">
           <col-icon name=${icon} size="32px"></col-icon>
