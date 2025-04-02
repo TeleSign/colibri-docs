@@ -18,8 +18,8 @@ type JustifyContent = 'flex-start' | 'flex-end' | 'center' | 'space-between' | '
 type FlexWrap = 'nowrap' | 'wrap' | 'wrap-reverse';
 
 /**
- * Interface defining available style properties for story layouts.
- * This interface can be extended with new CSS properties as needed.
+ * Type defining available style properties for story layouts.
+ * This type can be extended with new CSS properties as needed.
  *
  * Current supported properties:
  * - display: Controls the layout type (grid or flex)
@@ -30,11 +30,11 @@ type FlexWrap = 'nowrap' | 'wrap' | 'wrap-reverse';
  * - flexWrap: Controls wrapping behavior
  *
  * To extend:
- * 1. Add new property to this interface
+ * 1. Add new property to this type
  * 2. Add corresponding type definition if needed
  * 3. Update getStyles function to handle the new property
  */
-interface Styles {
+export type Styles = {
   display?: Display;
   gridTemplateColumns?: string;
   gap?: string;
@@ -43,7 +43,18 @@ interface Styles {
   flexWrap?: FlexWrap;
 }
 
-interface StylesOptions {
+export interface StylesOptions {
+  /**
+   * Custom styles that override the default settings. The current CSS attributes include:
+   * 1. display - 'grid' | 'flex'
+   * 2. gridTemplateColumns - 'grid-template-columns'
+   * 3. gap - 'gap'
+   * 4. flexDirection - 'flex-direction'
+   * 5. justifyContent - 'justify-content'
+   * 6. flexWrap - 'flex-wrap'
+   *
+   * To incorporate additional CSS attributes, navigate to the '.storybook/preview.tsx' file and append them within the 'Styles' type.
+   */
   __sb?: Styles;
 }
 

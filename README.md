@@ -105,7 +105,7 @@ All story files should follow this standard organization:
 - Individual story implementations
 - Story-specific documentation
 
-For a complete example of this organization, see [ColIcon.stories.ts](src/stories/components/ColIcon.stories.ts). This story demonstrates:
+For a complete example of this organization, see [ColIcon.stories.tsx](src/stories/components/ColIcon.stories.tsx). This story demonstrates:
 - Proper file structure
 - Component documentation
 - Props configuration
@@ -123,6 +123,54 @@ export const Default = () => html`
   <col-icon name="home" size="24px" color="currentColor"></col-icon>
 `;
 ```
+
+### Source Code Customization
+
+Control how source code appears in your documentation with these options:
+
+#### Excluding Decorators
+To exclude decorators and show only the component code:
+
+```typescript
+parameters: {
+  docs: {
+    source: {
+      excludeDecorators: true
+    }
+  }
+}
+```
+
+#### Transforming Source Code
+To remove specific elements (like `<style>` tags) from the displayed source code:
+
+```typescript
+parameters: {
+  docs: {
+    source: {
+      transform: (code: string): string => {
+        // Remove style tags and their content
+        return code.replace(/<style>[\s\S]*?<\/style>\s*/, '');
+      }
+    }
+  }
+}
+```
+
+#### Disabling Source Code Display
+To hide the source code for specific stories:
+
+```typescript
+parameters: {
+  docs: {
+    source: {
+      code: null // Disables the "Show code" option
+    }
+  }
+}
+```
+
+For a complete example of source code customization, see [ColIcon.stories.tsx](src/stories/components/ColIcon.stories.tsx).
 
 ### Layout Configuration
 
@@ -146,6 +194,23 @@ parameters: {
 - Files should be placed in the `stories/components` directory
 - File name should be `ComponentName.stories.ts`
 - Story title should follow `Category/ComponentName` format
+
+Available `Category` values:
+
+- `Atoms`
+- `Molecules`
+- `Organisms`
+- `Tokens`
+
+### Example Story Component
+A story file for a molecule component is available for reference at [ExampleTextField.stories.tsx](src/stories/components/ExampleTextField.stories.ts?at=refs%2Fheads%2Fshowcase%2Fstorybook-examples).
+
+This file demonstrates:
+
+- Usage of a molecule component (with slots and nested elements)
+- Custom tokens usage for styling (e.g. colors.border.default)
+- A custom transform function to clean up displayed source code
+- Story structure and props setup following best practices
 
 ## Development
 
