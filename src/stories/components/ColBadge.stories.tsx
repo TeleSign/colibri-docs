@@ -1,4 +1,4 @@
-import { html, css } from 'lit';
+import { html } from 'lit';
 import { icons } from '@tls-ds/colibri-icons/icons-list';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 
