@@ -1,7 +1,9 @@
-.main-header {
-    padding-bottom: 30px;
-    h1 {
-        font-size: 48px;
-        margin-bottom: 0;
-    }
+.sbdocs-content h2 {
+  font-size: 28px;
+  color: black;
+}
+
+.sbdocs-content h3 {
+  font-size: 20px;
+  color: black;
 }
