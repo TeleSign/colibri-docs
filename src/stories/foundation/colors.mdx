@@ -1,0 +1,213 @@
+import React from 'react';
+import { Meta, Title, Subtitle, Unstyled } from '@storybook/blocks';
+import { capitalize, getVariableValue } from './utils/helpers';
+import {
+  PRIMARY_COLORS,
+  ACCENT_COLORS,
+  NEUTRAL,
+  BASE,
+  BLACK_WHITE,
+  SUCCESS,
+  WARNING,
+  DANGER,
+  INFORMATION,
+  FOCUS,
+  UI_COLORS,
+  TEXT_COLORS,
+  BACKGROUND_COLORS
+} from './constants/colors'
+
+<Meta title="Foundation/Colors"/>
+
+<div data-theme="default" className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Unstyled>
+      <Title>Colors</Title>
+
+      <div className="col-intro-text">
+        The Colibri Design System uses a comprehensive color palette organized by purpose and application.
+        Colors are categorized based on their intended use.
+        These colors establish our visual identity while ensuring accessibility and consistency across applications.
+      </div>
+
+      <Subtitle>Primary Colors</Subtitle>
+      <div>
+        Primary colors represent the core of our visual identity and brand. They are carefully selected to reflect our brand's
+        essence and values. Use primary colors judiciously to create a strong and cohesive visual language.
+      </div>
+      <ColorItem
+        name="Primary"
+        prefix="theme"
+        values={PRIMARY_COLORS}
+      />
+
+      <Subtitle>Accent Colors</Subtitle>
+      <div>
+        Accent colors are used as highlights to create visual interest and draw attention to specific elements
+        within the interface. They complement the primary palette and add visual depth.
+      </div>
+      <ColorItem
+        name="Accent"
+        prefix="theme"
+        values={ACCENT_COLORS}
+      />
+
+      <Subtitle>Neutral Colors</Subtitle>
+      <div>
+        Neutral colors provide balance and create a comfortable, accessible user experience. They are used for
+        backgrounds, typography, and supporting elements to complement other colors in the palette.
+      </div>
+      <ColorItem
+        name="Neutral"
+        prefix="theme"
+        values={NEUTRAL}
+      />
+      <ColorItem
+        name="Black & White"
+        prefix="theme"
+        values={BLACK_WHITE}
+      />
+
+      <Subtitle>Base Colors</Subtitle>
+      <div>
+        Base colors establish the foundation of our interface. They are used for standard elements and provide
+        consistency across different components.
+      </div>
+      <ColorItem
+        name="Base"
+        prefix="theme"
+        values={BASE}
+      />
+
+      <Subtitle>System Colors</Subtitle>
+      <div>
+        System colors convey information and status to users. They indicate success, warning, error, or informational
+        states in components and are essential for providing meaningful feedback.
+      </div>
+      <ColorItem
+        name="Success"
+        prefix="theme"
+        values={SUCCESS}
+      />
+      <ColorItem
+        name="Warning"
+        prefix="theme"
+        values={WARNING}
+      />
+      <ColorItem
+        name="Danger"
+        prefix="theme"
+        values={DANGER}
+      />
+      <ColorItem
+        name="Information"
+        prefix="theme"
+        values={INFORMATION}
+      />
+
+      <Subtitle>Focus Colors</Subtitle>
+      <div>
+        Focus colors highlight interactive elements when they receive keyboard focus. This is crucial for
+        accessibility and helps users navigate the interface using keyboard controls.
+      </div>
+      <ColorItem
+        name="Focus"
+        prefix="theme"
+        values={FOCUS}
+      />
+
+      <Subtitle>UI Application Colors</Subtitle>
+      <div>
+        These colors are specifically mapped for user interface elements. They abstract the base colors
+        into contextual applications for text, backgrounds, and UI components.
+      </div>
+      <ColorItem
+        name="UI Colors"
+        prefix="colors"
+        values={UI_COLORS}
+      />
+      <ColorItem
+        name="Text Colors"
+        prefix="colors"
+        values={TEXT_COLORS}
+      />
+      <ColorItem
+        name="Background Colors"
+        prefix="colors"
+        values={BACKGROUND_COLORS}
+      />
+    </Unstyled>
+  </div>
+</div>
+
+export const ColorItem = ({ name, values, prefix }) => {
+  const [colorValues, setColorValues] = React.useState({});
+  const [isLoaded, setIsLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      const valueObj = {};
+      values.forEach(colorName => {
+        valueObj[colorName] = getVariableValue(colorName, prefix);
+      });
+      setColorValues(valueObj);
+      setIsLoaded(true);
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, [values, prefix]);
+
+  return (
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      marginBottom: '2rem'
+    }}>
+      <div style={{ display: 'block', marginBottom: '0.5rem' }}>{capitalize(name)}</div>
+      <div style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '0.5rem',
+        width: '100%'
+      }}>
+        {values.map((colorName) => (
+          <div
+            key={colorName}
+            style={{
+              display: 'flex',
+              flex: '1',
+              flexDirection: 'column',
+              textAlign: 'center',
+              minWidth: '120px',
+              maxWidth: '180px'
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                width: '100%',
+                height: '3.5rem',
+                border: '1px solid var(--col-border-color, #ccc)',
+                marginBottom: '0.25rem',
+                backgroundColor: `var(--col-${prefix}-${colorName})`
+              }}
+            ></div>
+            <p style={{
+              fontSize: '0.75rem',
+              fontWeight: 'bold',
+              margin: '0.125rem 0'
+            }}>{`--col-${prefix}-${colorName}`}</p>
+            <p style={{
+              fontSize: '0.75rem',
+              color: 'var(--col-text-secondary, #666)',
+              margin: '0'
+            }}>
+              {isLoaded ? colorValues[colorName] : 'Loading...'}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
