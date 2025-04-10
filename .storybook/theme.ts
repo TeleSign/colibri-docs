@@ -1,10 +1,12 @@
 import { create } from '@storybook/theming';
 
 export const customTheme = create({
-  base: 'dark',
+  base: 'light',
   brandTitle: 'Colibri',
   brandTarget: '_self',
   brandImage: 'colibri.png',
-  appBg: '#1b3e5a',
-  textColor: '#fff'
+
+  // Typography
+  fontBase: '"Inter", sans-serif',
+  fontCode: 'monospace',
 })

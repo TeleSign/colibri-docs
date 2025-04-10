@@ -151,12 +151,7 @@ const withCustomStyling: DecoratorFunction<WebComponentsRenderer, {
 
 const preview: Preview = {
   parameters: {
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/i,
-      },
-    },
+    controls: { expanded: true, hideNoControlsWarning: true },
     options: {
       storySort: {
         order: ['Welcome', 'Atoms', 'Molecules', 'Organisms', 'Tokens'],
@@ -165,7 +160,6 @@ const preview: Preview = {
     docs: {
       container: (props: any) => {
         const { theme } = props.context.store.userGlobals.globals;
-
         const body = document.querySelector('body');
         body!.setAttribute('data-theme', theme.toLowerCase() ?? 'default');
 
