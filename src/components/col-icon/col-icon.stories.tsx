@@ -11,35 +11,8 @@ type StoryArgs = {
 const meta = {
   title: 'Atoms/Icons',
   component: 'col-icon',
-  tags: ['autodocs'],
   parameters: {
     docs: {
-      description: {
-        component: `
-  ## Quick Start
-
-  Install the package:
-
-  \`\`\`bash
-  npm install @tls-ds/colibri-icons
-  \`\`\`
-
-  \`\`\`typescript
-  // Import libraries
-  import { registerColibriComponents } from '@tls-ds/colibri';
-  import { ColIcon } from '@tls-ds/colibri-icons';
-
-  // Register component only one time
-  registerColibriComponents([ColIcon]);
-
-  <col-icon name="home"></col-icon>
-  \`\`\`
-
-  ## Icons library
-
-  Below you can find all available icons in the library.
-  `,
-      },
       source: {
         excludeDecorators: true,
         transform: (code: string): string => {
