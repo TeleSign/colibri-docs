@@ -1,9 +1,13 @@
 import { html } from 'lit';
-import type { Preview } from '@storybook/web-components';
+import { createElement } from 'react';
+import type { DecoratorFunction } from '@storybook/csf';
+import { DocsContainer } from '@storybook/blocks';
+import type { Preview, WebComponentsRenderer } from '@storybook/web-components';
 import { registerColibriComponents } from '@tls-ds/colibri';
 import { ColIcon } from '@tls-ds/colibri-icons';
 import '@tls-ds/colibri/styles/global.css';
 import '@tls-ds/colibri/styles/theme-default.css';
+import '@tls-ds/colibri/styles/theme-massive.css'
 import '@/styles/globals.css';
 
 registerColibriComponents([ColIcon]);
@@ -101,6 +105,50 @@ const getStyles = (options?: StylesOptions): string => {
   `.trim();
 };
 
+/**
+ * Decorator function for Storybook that applies a theme to the story.
+ * This function retrieves the theme from the globals context and sets it as a data attribute on the body element.
+ *
+ * @param {Function} story - The story function to be decorated
+ * @param {Object} context - The context object containing globals information, including the theme
+ * @returns {TemplateResult} The result of the story function execution
+ *
+ * @example
+ */
+const withThemeProvider: DecoratorFunction<WebComponentsRenderer, {
+  [x: string]: any;
+}> = (story, context) => {
+  const {
+    globals: { theme },
+  } = context;
+  const body = document.querySelector('body.sb-show-main');
+  if (!(body instanceof HTMLElement)) return story();
+
+  body.setAttribute('data-theme', theme || 'default');
+  return story();
+};
+
+/**
+ * A decorator function that applies custom styling to a Storybook story.
+ *
+ * This decorator wraps the story output in a div with styles determined by the
+ * context parameters provided by Storybook. It uses the `getStyles` function to
+ * convert parameters into CSS style attributes.
+ *
+ * @param {Function} story - The story function to be decorated
+ * @param {Object} context - The Storybook context object containing parameters
+ * @returns {TemplateResult} An HTML template result with custom styling applied
+ */
+const withCustomStyling: DecoratorFunction<WebComponentsRenderer, {
+  [x: string]: any;
+}> = (story, context) => {
+  return html`
+    <div style=${getStyles(context.parameters)}>
+      ${story()}
+    </div>
+  `;
+}
+
 const preview: Preview = {
   parameters: {
     controls: {
@@ -114,25 +162,33 @@ const preview: Preview = {
         order: ['Welcome', 'Atoms', 'Molecules', 'Organisms', 'Tokens'],
       },
     },
-  },
-  decorators: [
-    (story, context) => {
-      // Skip decorator if disableThemeProvider is true
-      if (context.parameters.disableThemeProvider) {
-        return html`
-          <div style=${getStyles(context.parameters)}>
-            ${story()}
-          </div>
-        `;
-      }
+    docs: {
+      container: (props: any) => {
+        const { theme } = props.context.store.userGlobals.globals;
 
-      return html`
-        <div data-theme=${context.args.mode || 'default'} style=${getStyles(context.parameters)}>
-          ${story()}
-        </div>
-      `;
+        const body = document.querySelector('body');
+        body!.setAttribute('data-theme', theme.toLowerCase() ?? 'default');
+
+        return createElement(DocsContainer, props);
+      },
     },
-  ],
+  },
+  decorators: [withThemeProvider, withCustomStyling],
+  globalTypes: {
+    theme: {
+      name: 'Theme',
+      description: 'Theme for Colibri components',
+      defaultValue: 'default',
+      toolbar: {
+        icon: 'globe',
+        items: [
+          { value: 'default', title: 'Theme: default' },
+          { value: 'massive', title: 'Theme: Massive' },
+        ],
+        dynamicTitle: true,
+      },
+    },
+  }
 };
 
 export default preview;
