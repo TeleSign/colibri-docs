@@ -1,6 +1,7 @@
 import { html, css } from 'lit';
 import { icons } from '@tls-ds/colibri-icons/icons-list';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
+import { removeStyleTags } from "@/utils/formatters";
 
 type StoryArgs = {
   name: string;
@@ -15,10 +16,7 @@ const meta = {
     docs: {
       source: {
         excludeDecorators: true,
-        transform: (code: string): string => {
-          // Remove style tags and their content
-          return code.replace(/<style>[\s\S]*?<\/style>\s*/, '');
-        },
+        transform: removeStyleTags,
       },
     },
     __sb: {

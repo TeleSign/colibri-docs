@@ -1,7 +1,7 @@
 /**
  * Helper functions for the colors documentation
  *
- * This file contains utility functions used in the colors.mdx documentation page.
+ * This file contains utility functions.
  * These functions help with:
  * 1. Text formatting (capitalize)
  * 2. CSS variable extraction and presentation (getVariableValue)
