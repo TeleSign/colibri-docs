@@ -1,0 +1,12 @@
+import { ArgTypes, Meta, Title, Subtitle, Unstyled, Canvas, Controls } from '@storybook/blocks';
+import * as ColBadgeStories from './col-badge.stories'
+
+<Meta of={ColBadgeStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Badge</Title>
+    <Canvas of={ColBadgeStories.Default}/>
+    <Controls of={ColBadgeStories.Default}/>
+  </div>
+</div>
