@@ -3,14 +3,14 @@ import { createElement } from 'react';
 import type { DecoratorFunction } from '@storybook/csf';
 import { DocsContainer } from '@storybook/blocks';
 import type { Preview, WebComponentsRenderer } from '@storybook/web-components';
-import { registerColibriComponents, ColBadge } from '@tls-ds/colibri';
+import { registerColibriComponents } from '@tls-ds/colibri';
 import { ColIcon } from '@tls-ds/colibri-icons';
 import '@tls-ds/colibri/styles/global.css';
 import '@tls-ds/colibri/styles/theme-default.css';
 import '@tls-ds/colibri/styles/theme-massive.css'
 import '@/styles/globals.css';
 
-registerColibriComponents([ColIcon, ColBadge]);
+registerColibriComponents([ColIcon]);
 
 /**
  * Type definitions for style properties.
