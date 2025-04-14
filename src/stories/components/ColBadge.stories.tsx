@@ -88,7 +88,7 @@ type Story = ColibriStory<StoryArgs>;
 export const Default: Story = {
     render: args => html`
     <col-badge .variant=${args.variant} ?isDisabled=${args.isDisabled}> 
-        <col-icon slot="icon" name=${args.badgeIconName} size="20px"></col-icon>
+        <col-icon slot="icon" name=${args.badgeIconName} size="12px"></col-icon>
         ${args.badgeText}
     </col-badge>
     `,
@@ -111,7 +111,7 @@ export const SuccessVariantAndNoIcon: Story = {
 export const WarningVariantAndNoText: Story = {
     render: () => html`
     <col-badge variant="warning"> 
-        <col-icon slot="icon" name="trash" size="20px"></col-icon>
+        <col-icon slot="icon" name="home" size="12px"></col-icon>
     </col-badge>
     `,
 };
@@ -122,7 +122,7 @@ export const WarningVariantAndNoText: Story = {
 export const InfoVariantAndDisabled: Story = {
     render: () => html`
     <col-badge variant="info" isDisabled> 
-        <col-icon slot="icon" name="info-circle" size="20px"></col-icon>
+        <col-icon slot="icon" name="info-circle" size="12px"></col-icon>
         Info disabled
     </col-badge>
     `,
