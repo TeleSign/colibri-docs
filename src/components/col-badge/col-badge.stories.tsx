@@ -69,6 +69,13 @@ export default meta;
 
 type Story = ColibriStory<StoryArgs>;
 
+const renderBadge: Story['render'] = (args) => html`
+  <col-badge .variant=${args.variant} ?isDisabled=${args.isDisabled}>
+    ${args.badgeIconName &&
+    html`<col-icon slot="icon" name=${args.badgeIconName} size="12px"></col-icon>`}
+    ${args.badgeText}
+  </col-badge>
+`;
 
 /**
  * Default story showing a badge with an icon and text, with controls for variant
@@ -87,32 +94,65 @@ export const Default: Story = {
  * This story showcases a badge with success variant and no icon
  */
 export const SuccessVariantAndNoIcon: Story = {
-    render: () => html`
-    <col-badge variant="success">
-        Success Text
-    </col-badge>
-    `,
-};
+    render: renderBadge,
+    args: {
+      variant: 'success',
+      badgeText: 'Success Text',
+      badgeIconName: '',
+      isDisabled: false,
+    },
+    parameters: {
+      docs: {
+        source: {
+          code: formatCodeString(`<col-badge variant="success">
+    Success Text
+  </col-badge>`),
+        },
+      },
+    },
+  };
 
 /**
  * This story showcases a badge with warning variant and only an icon, no text
  */
 export const WarningVariantAndNoText: Story = {
-    render: () => html`
-    <col-badge variant="warning">
+    render: renderBadge,
+    args: {
+      variant: 'warning',
+      badgeText: '',
+      badgeIconName: 'trash',
+      isDisabled: false,
+    },
+    parameters: {
+      docs: {
+        source: {
+          code: formatCodeString(`<col-badge variant="warning">
         <col-icon slot="icon" name="trash" size="12px"></col-icon>
-    </col-badge>
-    `,
-};
+    </col-badge>`),
+        },
+      },
+    },
+  };
 
 /**
  * This story showcases a badge with info variant and disabled
  */
 export const InfoVariantAndDisabled: Story = {
-    render: () => html`
-    <col-badge variant="info" isDisabled>
+    render: renderBadge,
+    args: {
+      variant: 'info',
+      badgeText: 'Info Disabled',
+      badgeIconName: 'info-circle',
+      isDisabled: true,
+    },
+    parameters: {
+      docs: {
+        source: {
+          code: formatCodeString(`<col-badge variant="info" isDisabled>
         <col-icon slot="icon" name="info-circle" size="12px"></col-icon>
         Info Disabled
-    </col-badge>
-    `,
-};
+      </col-badge>`),
+        },
+      },
+    },
+  };
