@@ -123,7 +123,7 @@ export const InfoVariantAndDisabled: Story = {
     render: () => html`
     <col-badge variant="info" isDisabled> 
         <col-icon slot="icon" name="info-circle" size="12px"></col-icon>
-        Info disabled
+        Info Disabled
     </col-badge>
     `,
 };
