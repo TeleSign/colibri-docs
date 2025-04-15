@@ -1,6 +1,7 @@
 import { html } from 'lit';
 import { icons } from '@tls-ds/colibri-icons/icons-list';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
+import { formatCodeString } from '@/utils/formatters';
 
 type StoryArgs = {
   badgeText: string;
@@ -10,28 +11,16 @@ type StoryArgs = {
 };
 
 const meta = {
-    title: 'Atoms/Badges',
-    component: 'col-badge',
-    tags: ['autodocs'],
-    parameters: {
-        docs: {
-            description: {
-                component: `
-  ## Quick Start
-
-  \`\`\`typescript
-  // Import libraries
-  import { registerColibriComponents, ColBadge } from '@tls-ds/colibri';
-
-  // Register component only one time
-  registerColibriComponents([ColBadge]);
-
-  <col-badge></col-badge>
-  \`\`\`
-`
-            }
-        }
+  title: 'Atoms/Badges',
+  component: 'col-badge',
+  parameters: {
+    docs: {
+      source: {
+        excludeDecorators: true,
+        transform: formatCodeString,
+      },
     },
+  },
     argTypes: {
         badgeText: {
             control: 'text',
@@ -87,7 +76,7 @@ type Story = ColibriStory<StoryArgs>;
  */
 export const Default: Story = {
     render: args => html`
-    <col-badge .variant=${args.variant} ?isDisabled=${args.isDisabled}> 
+    <col-badge .variant=${args.variant} ?isDisabled=${args.isDisabled}>
         <col-icon slot="icon" name=${args.badgeIconName} size="12px"></col-icon>
         ${args.badgeText}
     </col-badge>
@@ -99,7 +88,7 @@ export const Default: Story = {
  */
 export const SuccessVariantAndNoIcon: Story = {
     render: () => html`
-    <col-badge variant="success"> 
+    <col-badge variant="success">
         Success Text
     </col-badge>
     `,
@@ -110,7 +99,7 @@ export const SuccessVariantAndNoIcon: Story = {
  */
 export const WarningVariantAndNoText: Story = {
     render: () => html`
-    <col-badge variant="warning"> 
+    <col-badge variant="warning">
         <col-icon slot="icon" name="trash" size="12px"></col-icon>
     </col-badge>
     `,
@@ -121,7 +110,7 @@ export const WarningVariantAndNoText: Story = {
  */
 export const InfoVariantAndDisabled: Story = {
     render: () => html`
-    <col-badge variant="info" isDisabled> 
+    <col-badge variant="info" isDisabled>
         <col-icon slot="icon" name="info-circle" size="12px"></col-icon>
         Info Disabled
     </col-badge>

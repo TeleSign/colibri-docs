@@ -1,0 +1,53 @@
+import { ArgTypes, Meta, Title, Subtitle, Canvas } from '@storybook/blocks';
+import * as ColIconStories from './col-icon.stories';
+
+<Meta of={ColIconStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Icons</Title>
+    The Colibri Icon component provides a simple and efficient way to display vector icons in your application. As part of the Colibri Design System, this component offers a comprehensive library of consistent icons that can be easily implemented across your project. With support for various sizes and customization options, `col-icon` enables designers and developers to maintain visual consistency while adding meaningful visual elements to enhance user experience and interface clarity.
+
+    <Subtitle>How to use it</Subtitle>
+    1. Install the packages:
+        ```bash
+        npm install @tls-ds/colibri
+        npm install @tls-ds/colibri-icons
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents } from '@tls-ds/colibri';
+        import { ColIcon } from '@tls-ds/colibri-icons';
+        ```
+    3. Register the web component:
+        ```typescript
+        registerColibriComponents([ColIcon]);
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-icon name="home"></col-icon>
+        ```
+
+    <Subtitle>When to use it</Subtitle>
+    Icons are versatile UI elements that can be utilized in multiple contexts:
+
+    - **Navigation** - Represent different application sections (home, settings, profile) to improve wayfinding
+    - **Action buttons** - Communicate functions (save, delete, edit, search) in a space-efficient manner
+    - **Status indicators** - Visually convey states (success, error, warning, loading) at a glance
+    - **Informational cues** - Highlight important content or provide additional context
+    - **Brand elements** - Reinforce brand identity and create recognition throughout the interface
+    - **Feature differentiation** - Help users distinguish between similar features or content types
+
+    <Subtitle>Component preview</Subtitle>
+    You can click on the **Show code** button in the bottom-right section of the following code snippet to see how to use the component:
+
+    <Canvas of={ColIconStories.Default}/>
+
+    <Subtitle>Properties</Subtitle>
+
+    <ArgTypes of={ColIconStories} />
+
+    <Subtitle>Interact with the component</Subtitle>
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the **Default** section.
+  </div>
+</div>
