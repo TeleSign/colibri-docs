@@ -41,6 +41,32 @@
   height: 3.5rem;
   border: 1px solid var(--col-border-color, #ccc);
   margin-bottom: 0.25rem;
+  border-radius: 4px;
+}
+
+/* Checkerboard pattern styles for alpha colors */
+.checkerboard {
+  position: relative;
+  background-image:
+    linear-gradient(45deg, #ccc 25%, transparent 25%),
+    linear-gradient(-45deg, #ccc 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #ccc 75%),
+    linear-gradient(-45deg, transparent 75%, #ccc 75%);
+  background-size: 16px 16px;
+  background-position:
+    0 0,
+    0 8px,
+    8px -8px,
+    -8px 0px;
+}
+
+.color-item__swatch-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 4px;
 }
 
 .color-item__variable-name {
