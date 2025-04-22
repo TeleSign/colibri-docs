@@ -9,4 +9,4 @@ export const customTheme = create({
   // Typography
   fontBase: '"Inter", sans-serif',
   fontCode: 'monospace',
-})
+});
