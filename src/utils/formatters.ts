@@ -22,11 +22,11 @@ export function formatCodeString(code: string): string {
   const restoredBooleans = booleanAttributes.reduce((result, attr) => {
     const htmlAttr = attr.toLowerCase();
     return result.replace(new RegExp(`\\s${htmlAttr}=""`, 'g'), ` ${attr}`);
-  }, withoutStyle);
+  }, transformedCode);
 
   const lines = transformedCode.split('\n').filter(line => line.trim() !== '');
   if (lines.length === 0) {
-    return transformedCode;
+    return restoredBooleans;
   }
 
   const firstLine = lines[0].trim();
