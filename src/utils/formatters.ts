@@ -19,14 +19,15 @@ export function formatCodeString(code: string): string {
   let transformedCode = code.replace(/<style>[\s\S]*?<\/style>\s*/, '');
 
   const booleanAttributes = ['isDisabled'];
-  const restoredBooleans = booleanAttributes.reduce((result, attr) => {
+  transformedCode = booleanAttributes.reduce((result, attr) => {
     const htmlAttr = attr.toLowerCase();
     return result.replace(new RegExp(`\\s${htmlAttr}=""`, 'g'), ` ${attr}`);
   }, transformedCode);
 
   const lines = transformedCode.split('\n').filter(line => line.trim() !== '');
-  if (lines.length === 0) {
-    return restoredBooleans;
+
+  if (lines.length <= 1) {
+    return lines.join('').trim();
   }
 
   const firstLine = lines[0].trim();
