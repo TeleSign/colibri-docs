@@ -18,6 +18,7 @@ import {
   ICON_COLORS,
   STROKE_COLORS,
   ALPHA_COLORS,
+  EXTENDED_COLORS,
 } from './constants/colors';
 import './styles/preview.css';
 
@@ -112,6 +113,15 @@ import './styles/preview.css';
         name="Focus"
         prefix="theme"
         values={FOCUS}
+      />
+      <h3>Extended Colors</h3>
+      <div>
+        The extended palette provides additional flexibility for unique UI needs, themes, or product variants. These colors are optional and used to expand the visual language when the primary, accent, or semantic tokens are not sufficient. Extended colors should be used sparingly and with intention to maintain harmony within the system.
+      </div>
+      <ColorItem
+        name="Extended"
+        prefix="colors"
+        values={EXTENDED_COLORS}
       />
 
       <Subtitle>Color Usage Classification</Subtitle>
