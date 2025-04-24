@@ -16,13 +16,24 @@ const config: StorybookConfig = {
     name: '@storybook/web-components-vite',
     options: {},
   },
-  staticDirs: ['./static'],
+  staticDirs: ['./static', './styles'],
   docs: {
     defaultName: 'Overview',
   },
   core: {
     builder: '@storybook/builder-vite',
   },
+  managerHead: head => `
+    ${head}
+    <link rel="stylesheet" type="text/css" href="globals.css" />
+  `,
+  previewHead: head => `
+    ${head}
+    <link rel="stylesheet" type="text/css" href="preview.css" />
+    <script type="text/javascript">
+      window.global = window;
+    </script>
+  `,
   viteFinal: config => {
     return mergeConfig(config, {
       resolve: {

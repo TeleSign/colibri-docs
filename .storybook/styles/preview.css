@@ -1,3 +1,44 @@
+.sbdocs-content a,
+.sbdocs-content blockquote,
+.sbdocs-content h1,
+.sbdocs-content h2,
+.sbdocs-content li,
+.sbdocs-content ol,
+.sbdocs-content p,
+.sbdocs-content table,
+.sbdocs-content td,
+.sbdocs-content th,
+.sbdocs-content tr,
+.sbdocs-content ul {
+  font-family: var(--col-typography-font-family);
+  color: var(--col-theme-black);
+}
+
+.sbdocs-content h1 {
+  font-size: var(--col-typography-font-size-4xl);
+  line-height: 48px;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.sbdocs-content h2 {
+  font-size: var(--col-typography-font-size-3xl);
+  line-height: 40px;
+  font-weight: bold;
+}
+
+.sbdocs-content h3 {
+  font-size: var(--col-typography-font-size-2xl);
+  line-height: 36px;
+  font-weight: 600;
+}
+
+.sbdocs-content h4 {
+  font-size: var(--col-typography-font-size-xl);
+  line-height: 32px;
+  font-weight: 600;
+}
+
 .col-intro-text {
   margin-block-end: 4rem;
 }

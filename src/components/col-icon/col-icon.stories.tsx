@@ -1,7 +1,7 @@
 import { html, css } from 'lit';
 import { icons } from '@tls-ds/colibri-icons/icons-list';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
-import { removeStyleTags } from "@/utils/formatters";
+import { removeStyleTags } from '@/utils/formatters';
 
 type StoryArgs = {
   name: string;

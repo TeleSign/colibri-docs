@@ -1,0 +1,14 @@
+html,
+body {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 1rem;
+}
+
+.sidebar-item,
+.sidebar-item a {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.sidebar-subheading > button {
+  font-family: 'Segoe UI', sans-serif;
+}
