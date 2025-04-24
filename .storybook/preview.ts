@@ -9,7 +9,6 @@ import '@tls-ds/colibri/styles/fonts/segoe-ui.css';
 import '@tls-ds/colibri/styles/global.css';
 import '@tls-ds/colibri/styles/theme-default.css';
 import '@tls-ds/colibri/styles/theme-massive.css';
-import '@/styles/globals.css';
 
 registerColibriComponents([ColIcon, ColBadge]);
 
