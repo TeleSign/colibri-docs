@@ -47,3 +47,17 @@ export const Default: Story = {
       <col-divider .orientation=${args.orientation}></col-divider>
     </div>`,
 };
+
+/**
+ * Story showing a divider with a vertical orientation
+ */
+export const Vertical: Story = {
+  args: {
+    orientation: 'vertical',
+  },
+  render: args => html`
+    <div style="height: 200px; width: 400px;">
+      <col-divider .orientation=${args.orientation}></col-divider>
+    </div>
+  `,
+};
