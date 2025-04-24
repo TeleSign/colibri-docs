@@ -1,0 +1,64 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as ColBadgeStories from './col-badge.stories';
+
+<Meta of={ColBadgeStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Badge</Title>
+    The Colibri Badge component is used to inform merchants of the status of an object or an action that has been taken.
+    
+    <Subtitle>How to use it</Subtitle>
+    1. Install the packages:
+        ```bash
+        npm install @tls-ds/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, ColBadge } from '@tls-ds/colibri';
+        ```
+    3. Register the web component:
+        ```typescript
+        registerColibriComponents([ColBadge]);
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-badge>
+          <col-icon slot="icon" size="12px" name="emoji-circle"></col-icon>
+          Text
+        </col-badge>
+        ```
+    
+    <Subtitle>When to use it</Subtitle>
+    The "badge" component in design has multiple purposes and can be used in a variety of contexts to enhance the user interface and user experience. Here are some common use cases:
+
+    - **Status Indicators** - Show the status of an element or process, such as online/offline status, availability or task completion.
+    - **Categorization or Labelling** - Tag items with categories or labels for easy identification and filtering.
+    - **Counts and Totals** - Display counts or totals related to an item
+    - **Priority Indicators** - Highlight the priority or urgency of an item.
+    - **Interactive Elements** - Use badges as interactive elements that users can click on to see more details or perform actions.
+
+     <Subtitle>Component preview</Subtitle>
+    You can click on the **Show code** button in the bottom-right section of the following code snippets to see how to use the component:
+
+    <h4>Variant: Default with icon</h4>
+    <Canvas of={ColBadgeStories.Default}/>
+
+    <h4>Variant: Success with no icon</h4>
+    <Canvas of={ColBadgeStories.SuccessVariantAndNoIcon} />
+
+    <h4>Variant: Warning with icon and no text</h4>
+    <Canvas of={ColBadgeStories.WarningVariantAndNoText} />
+
+    <h4>Variant: Info and disabled</h4>
+    <Canvas of={ColBadgeStories.InfoVariantAndDisabled} />
+
+    <Subtitle>Properties</Subtitle>
+
+    <ArgTypes of={ColBadgeStories} />
+
+    <Subtitle>Interact with the component</Subtitle>
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the **Default** section.
+
+  </div>
+</div>

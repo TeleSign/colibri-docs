@@ -4,14 +4,14 @@ import { resolve } from 'path';
 
 const config: StorybookConfig = {
   stories: [
-    '../src/stories/**/*.stories.@(js|jsx|mjs|ts|tsx)',
-    '../src/stories/**/*.mdx',
+    '../src/**/*.mdx',
+    '../src/**/*.stories.@(ts|tsx)',
   ],
   addons: [
-    '@chromatic-com/storybook',
-    '@storybook/addon-a11y',
-    '@storybook/addon-actions',
     '@storybook/addon-controls',
+    '@storybook/addon-actions',
+    '@storybook/addon-a11y',
+    '@chromatic-com/storybook',
     '@storybook/addon-essentials',
     '@storybook/addon-links',
   ],
@@ -21,7 +21,7 @@ const config: StorybookConfig = {
   },
   staticDirs: ['./static'],
   docs: {
-    autodocs: 'tag',
+    defaultName: 'Overview',
   },
   core: {
     builder: '@storybook/builder-vite',
