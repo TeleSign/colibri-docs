@@ -1,0 +1,53 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as ColDividerStories from './col-divider.stories';
+
+<Meta of={ColDividerStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Divider</Title>
+    The Colibri Divider component is used to group content into lists or other containers.
+    
+    <Subtitle>How to use it</Subtitle>
+    1. Install the packages:
+        ```bash
+        npm install @tls-ds/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, ColDivider } from '@tls-ds/colibri';
+        ```
+    3. Register the web component:
+        ```typescript
+        registerColibriComponents([ColDivider]);
+        ```
+    4. Use it in your HTML:
+        ```html
+        // Horizontal divider by default
+        <col-divider></col-divider>
+
+        // Vertical divider
+        <col-divider orientation="vertical"></col-divider>
+        ```
+
+    <Subtitle>When to use it</Subtitle>
+    Dividers are thin lines that group content into lists or other containers.
+
+    - Make dividers visible but not bold
+    - Only use dividers if items can’t be grouped with open space
+    - Use dividers to group things, not separate individual items
+
+    <Subtitle>Component preview</Subtitle>
+    You can click on the **Show code** button in the bottom-right section of the following code snippet to see how to use the component:
+
+    <Canvas of={ColDividerStories.Default}/>
+
+    <Subtitle>Properties</Subtitle>
+
+    <ArgTypes of={ColDividerStories} />
+
+    <Subtitle>Interact with the component</Subtitle>
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the **Default** section.
+
+  </div>
+</div>
