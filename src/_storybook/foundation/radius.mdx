@@ -1,0 +1,80 @@
+import React from 'react';
+import { Meta, Title, Subtitle, Source } from '@storybook/blocks';
+
+<Meta title="Foundation/Radius" />
+
+export const radius = {
+  size: {
+    none: '0px',
+    xs2: '2px',
+    xs: '4px',
+    s: '8px',
+    m: '12px',
+    l: '16px',
+    xl: '24px',
+    full: '360px',
+  },
+};
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Radius</Title>
+    <div className="col-intro-text">
+      The border radius system provides a consistent approach to creating rounded corners across the interface. With options ranging from sharp corners to fully rounded shapes, these tokens help maintain visual harmony while allowing for appropriate distinction between UI elements.
+    </div>
+
+    <RadiusItem
+      values={Object.keys(radius.size)}
+    />
+  </div>
+</div>
+
+export const RadiusItem = ({ values }) => {
+  const [radiusValues, setRadiusValues] = React.useState({});
+  const [isLoaded, setIsLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      const valueObj = {};
+      values.forEach(radiusName => {
+        valueObj[radiusName] = radius.size[radiusName];
+      });
+      setRadiusValues(valueObj);
+      setIsLoaded(true);
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, [values]);
+
+  return (
+    <div className="radius-item">
+            <div className="radius-item__container">
+        {values.map((radiusName) => (
+          <div key={radiusName} className="radius-item__example">
+            <div className="radius-item__info-container">
+              <div className="radius-item__sample-wrapper">
+                <div
+                  className="radius-item__sample"
+                  style={{ borderRadius: radius.size[radiusName] }}
+                />
+              </div>
+              <div className="radius-item__details">
+                <div>{radiusName}</div>
+                <div className="radius-item__value">{isLoaded ? radiusValues[radiusName] : 'Loading...'}</div>
+                <div className="radius-item__variable-name">--col-radius-size-{radiusName}</div>
+              </div>
+            </div>
+            <div className="radius-item__code-container">
+              <Source
+                dark
+                format="dedent"
+                language="css"
+                code={`border-radius: var(--col-radius-size-${radiusName});`}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};

@@ -89,7 +89,6 @@
   border-radius: 4px;
 }
 
-/* Checkerboard pattern styles for alpha colors */
 .checkerboard {
   position: relative;
   background-image:
@@ -114,7 +113,8 @@
   border-radius: 4px;
 }
 
-.color-item__variable-name {
+.color-item__variable-name,
+div.radius-item__variable-name {
   font-size: 0.75rem;
   font-weight: bold;
   margin: 0.125rem 0;
@@ -155,4 +155,66 @@
   font-size: 24px;
   margin-top: 16px;
   letter-spacing: 0.25rem;
+}
+
+.radius-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.radius-item__container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 32px;
+  margin: 32px 0;
+  width: 100%;
+}
+
+.radius-item__example {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid var(--col-colors-stroke-default-light);
+  border-radius: var(--col-radius-size-m);
+  overflow: hidden;
+}
+
+.radius-item__info-container {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  align-items: center;
+  background-color: var(--col-colors-bg-default);
+}
+
+.radius-item__sample-wrapper {
+  flex-shrink: 0;
+}
+
+.radius-item__sample {
+  width: 64px;
+  height: 64px;
+  background-color: var(--col-colors-ui-primary);
+  border: 1px solid var(--col-colors-stroke-default);
+}
+
+.radius-item__details {
+  flex-grow: 1;
+}
+
+div.radius-item__value {
+  font-family: var(--col-typography-font-family-secondary);
+  font-size: var(--col-typography-font-size-s);
+  margin-bottom: 4px;
+}
+
+.radius-item__code-container {
+  margin: 0;
+  padding: 0;
+}
+
+.radius-item__code-container > div {
+  margin: 0;
+  border-radius: 0;
 }
