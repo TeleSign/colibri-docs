@@ -10,7 +10,7 @@
 .sbdocs-content th,
 .sbdocs-content tr,
 .sbdocs-content ul {
-  font-family: var(--col-typography-font-family);
+  font-family: var(--col-typography-font-family-primary);
   color: var(--col-theme-black);
 }
 
@@ -39,8 +39,12 @@
   font-weight: 600;
 }
 
+.sbdocs.sbdocs-content :where(p:not(.sb-anchor, .sb-unstyled, .sb-unstyled p)) {
+  font-size: 16px;
+}
+
 .col-intro-text {
-  margin-block-end: 4rem;
+  margin-block-end: 2rem;
 }
 
 .color-item {
@@ -120,4 +124,35 @@
   font-size: 0.75rem;
   color: var(--col-text-secondary, #666);
   margin: 0;
+}
+
+.font-family-section {
+  margin-bottom: 24px;
+}
+
+.typography-example {
+  margin-bottom: 32px;
+}
+
+.code-example {
+  margin-top: 8px;
+  margin-bottom: 24px;
+}
+
+.typography-section {
+  margin-bottom: 40px;
+}
+
+.primary-font-preview p {
+  font-family: var(--col-typography-font-family-primary);
+  font-size: 24px;
+  margin-top: 16px;
+  letter-spacing: 0.25rem;
+}
+
+.secondary-font-preview p {
+  font-family: var(--col-typography-font-family-secondary);
+  font-size: 24px;
+  margin-top: 16px;
+  letter-spacing: 0.25rem;
 }
