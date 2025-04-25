@@ -6,6 +6,7 @@ import type { Preview, WebComponentsRenderer } from '@storybook/web-components';
 import { ColBadge, registerColibriComponents } from '@tls-ds/colibri';
 import { ColIcon } from '@tls-ds/colibri-icons';
 import '@tls-ds/colibri/styles/fonts/segoe-ui.css';
+import '@tls-ds/colibri/styles/fonts/courier.css';
 import '@tls-ds/colibri/styles/global.css';
 import '@tls-ds/colibri/styles/theme-default.css';
 import '@tls-ds/colibri/styles/theme-massive.css';
