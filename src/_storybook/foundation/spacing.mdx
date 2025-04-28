@@ -1,41 +1,8 @@
 import React from 'react';
 import { Meta, Title, Subtitle } from '@storybook/blocks';
+import { SPACING, LAYOUT } from './constants'
 
 <Meta title="Foundation/Spacing" />
-
-export const spacing = {
-  size: {
-    '2xs': '1px',
-    xs: '2px',
-    '2xs': '4px',
-    xs: '6px',
-    s: '8px',
-    m: '12px',
-    l: '16px',
-    xl: '20px',
-    '2xl': '24px',
-    '3xl': '32px',
-    '4xl': '40px',
-    '5xl': '48px',
-    '6xl': '56px',
-    '7xl': '64px',
-  },
-};
-
-export const layout = {
-  size: {
-    xs: '8px',
-    s: '12px',
-    m: '16px',
-    ml: '24px',
-    l: '32px',
-    xl: '48px',
-    '2xl': '64px',
-    '3xl': '96px',
-    '4xl': '128px',
-    '5xl': '160px',
-  },
-};
 
 <div className="col-doc__wrapper">
   <div className="col-doc__container">
@@ -50,8 +17,8 @@ export const layout = {
     </p>
 
     <SpacingItem
-      values={Object.keys(spacing.size)}
-      tokenData={spacing.size}
+      values={Object.keys(SPACING.size)}
+      tokenData={SPACING.size}
       tokenPrefix="spacing"
     />
 
@@ -61,8 +28,8 @@ export const layout = {
     </p>
 
     <SpacingItem
-      values={Object.keys(layout.size)}
-      tokenData={layout.size}
+      values={Object.keys(LAYOUT.size)}
+      tokenData={LAYOUT.size}
       tokenPrefix="layout"
     />
   </div>
@@ -86,21 +53,21 @@ export const SpacingItem = ({ values, tokenData, tokenPrefix }) => {
   }, [values, tokenData]);
 
   return (
-    <div className="spacing-item">
-      <div className="spacing-item__container">
+    <div className="token-item">
+      <div className="token-item__container token-item__container--spacing">
         {values.map((spacingName) => (
-          <div key={spacingName} className="spacing-item__example">
-            <div className="spacing-item__info-container">
-              <div className="spacing-item__sample-wrapper">
+          <div key={spacingName} className="token-item__example token-item__example--spacing">
+            <div className="token-item__info-container">
+              <div className="token-item__sample-wrapper">
                 <div
-                  className="spacing-item__sample"
-                  style={{ width: tokenData[spacingName], height: tokenData[spacingName], width: tokenData[spacingName] }}
+                  className="token-item__sample token-item__sample--spacing"
+                  style={{ width: tokenData[spacingName], height: tokenData[spacingName] }}
                 />
               </div>
-              <div className="spacing-item__details">
+              <div className="token-item__details">
                 <div>{spacingName}</div>
-                <div className="spacing-item__value">{isLoaded ? spacingValues[spacingName] : 'Loading...'}</div>
-                <div className="spacing-item__variable-name">--col-{tokenPrefix}-size-{spacingName}</div>
+                <div className="token-item__value">{isLoaded ? spacingValues[spacingName] : 'Loading...'}</div>
+                <div className="token-item__variable-name">--col-{tokenPrefix}-size-{spacingName}</div>
               </div>
             </div>
           </div>
