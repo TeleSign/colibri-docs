@@ -1,0 +1,70 @@
+import React from 'react';
+import { Meta, Title, Subtitle, Source } from '@storybook/blocks';
+import { DEPTH } from './constants'
+
+<Meta title="Foundation/Depth" />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Depth</Title>
+    <div className="col-intro-text">
+      The depth system provides box-shadow tokens that create visual hierarchy and spatial relationships through elevation in the interface. These tokens allow components to appear raised from or recessed into the UI surface, adding dimension and focus while maintaining a cohesive visual language.
+    </div>
+
+    <DepthItem
+      values={Object.keys(DEPTH['box-shadow'])}
+    />
+  </div>
+</div>
+
+export const DepthItem = ({ values }) => {
+  const [depthValues, setDepthValues] = React.useState({});
+  const [isLoaded, setIsLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      const valueObj = {};
+      values.forEach(depthName => {
+        valueObj[depthName] = DEPTH['box-shadow'][depthName];
+      });
+      setDepthValues(valueObj);
+      setIsLoaded(true);
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, [values]);
+
+  const isInverse = (name) => name.includes('inverse');
+
+  return (
+    <div className="token-item">
+      <div className="token-item__container">
+        {values.map((depthName) => (
+          <div key={depthName} className="token-item__example">
+            <div className="token-item__info-container">
+              <div className="token-item__sample-wrapper">
+                <div
+                  className={`token-item__sample token-item__sample--depth ${isInverse(depthName) ? 'depth-inverse-sample' : ''}`}
+                  style={{ boxShadow: depthValues[depthName] }}
+                />
+              </div>
+              <div className="token-item__details">
+                <div>{depthName}</div>
+                <div className="token-item__value">{isLoaded ? depthValues[depthName] : 'Loading...'}</div>
+                <div className="token-item__variable-name">--col-depth-box-shadow-{depthName}</div>
+              </div>
+            </div>
+            <div className="token-item__code-container">
+              <Source
+                dark
+                format="dedent"
+                language="css"
+                code={`box-shadow: var(--col-depth-box-shadow-${depthName});`}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};

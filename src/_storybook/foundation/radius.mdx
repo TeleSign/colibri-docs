@@ -1,0 +1,68 @@
+import React from 'react';
+import { Meta, Title, Subtitle, Source } from '@storybook/blocks';
+import { RADIUS } from './constants'
+
+<Meta title="Foundation/Radius" />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Radius</Title>
+    <div className="col-intro-text">
+      The border radius system provides a consistent approach to creating rounded corners across the interface. With options ranging from sharp corners to fully rounded shapes, these tokens help maintain visual harmony while allowing for appropriate distinction between UI elements.
+    </div>
+
+    <RadiusItem
+      values={Object.keys(RADIUS.size)}
+    />
+  </div>
+</div>
+
+export const RadiusItem = ({ values }) => {
+  const [radiusValues, setRadiusValues] = React.useState({});
+  const [isLoaded, setIsLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      const valueObj = {};
+      values.forEach(radiusName => {
+        valueObj[radiusName] = RADIUS.size[radiusName];
+      });
+      setRadiusValues(valueObj);
+      setIsLoaded(true);
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, [values]);
+
+  return (
+    <div className="token-item">
+      <div className="token-item__container">
+        {values.map((radiusName) => (
+          <div key={radiusName} className="token-item__example">
+            <div className="token-item__info-container">
+              <div className="token-item__sample-wrapper">
+                <div
+                  className="token-item__sample token-item__sample--radius"
+                  style={{ borderRadius: RADIUS.size[radiusName] }}
+                />
+              </div>
+              <div className="token-item__details">
+                <div>{radiusName}</div>
+                <div className="token-item__value">{isLoaded ? radiusValues[radiusName] : 'Loading...'}</div>
+                <div className="token-item__variable-name">--col-radius-size-{radiusName}</div>
+              </div>
+            </div>
+            <div className="token-item__code-container">
+              <Source
+                dark
+                format="dedent"
+                language="css"
+                code={`border-radius: var(--col-radius-size-${radiusName});`}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};

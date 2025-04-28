@@ -18,10 +18,10 @@ import {
   ICON_COLORS,
   STROKE_COLORS,
   ALPHA_COLORS,
-} from './constants/colors';
-import './styles/preview.css';
+  EXTENDED_COLORS,
+} from './constants';
 
-<Meta title="Foundation/Colors"/>
+<Meta title="Foundation/Colors" />
 
 <div className="col-doc__wrapper">
   <div className="col-doc__container">
@@ -35,7 +35,7 @@ import './styles/preview.css';
 
       <h3>Primary Colors</h3>
       <div>
-        These are the most recognizable brand colors, used prominently across the UI. They serve as the backbone of the product’s identity, applied to key actions like buttons, banners, links, and major navigation components. The primary palette reinforces brand recognition and should remain consistent across all touchpoints.
+        These are the most recognizable brand colors, used prominently across the UI. They serve as the backbone of the product's identity, applied to key actions like buttons, banners, links, and major navigation components. The primary palette reinforces brand recognition and should remain consistent across all touchpoints.
       </div>
       <ColorItem
         name="Primary"
@@ -113,6 +113,15 @@ import './styles/preview.css';
         prefix="theme"
         values={FOCUS}
       />
+      <h3>Extended Colors</h3>
+      <div>
+        The extended palette provides additional flexibility for unique UI needs, themes, or product variants. These colors are optional and used to expand the visual language when the primary, accent, or semantic tokens are not sufficient. Extended colors should be used sparingly and with intention to maintain harmony within the system.
+      </div>
+      <ColorItem
+        name="Extended"
+        prefix="colors"
+        values={EXTENDED_COLORS}
+      />
 
       <Subtitle>Color Usage Classification</Subtitle>
       <div>
@@ -180,21 +189,34 @@ export const ColorItem = ({ name, description, values, prefix }) => {
       <div className="color-item__title">{capitalize(name)}</div>
       {description && <div className="color-item__description">{description}</div>}
       <div className="color-item__container">
-        {values.map((colorName) => (
-          <div
-            key={colorName}
-            className="color-item__swatch-wrapper"
-          >
+        {values.map((colorName) => {
+          const isAlphaColor = prefix === 'colors' && colorName.includes('alpha-');
+
+          return (
             <div
-              className="color-item__swatch"
-              style={{ backgroundColor: `var(--col-${prefix}-${colorName})` }}
-            ></div>
-            <p className="color-item__variable-name">{`--col-${prefix}-${colorName}`}</p>
-            <p className="color-item__color-value">
-              {isLoaded ? colorValues[colorName] : 'Loading...'}
-            </p>
-          </div>
-        ))}
+              key={colorName}
+              className="color-item__swatch-wrapper"
+            >
+              {isAlphaColor ? (
+                <div className="color-item__swatch checkerboard">
+                  <div
+                    className="color-item__swatch-overlay"
+                    style={{ backgroundColor: `var(--col-${prefix}-${colorName})` }}
+                  ></div>
+                </div>
+              ) : (
+                <div
+                  className="color-item__swatch"
+                  style={{ backgroundColor: `var(--col-${prefix}-${colorName})` }}
+                ></div>
+              )}
+              <p className="color-item__variable-name">{`--col-${prefix}-${colorName}`}</p>
+              <p className="color-item__color-value">
+                {isLoaded ? colorValues[colorName] : 'Loading...'}
+              </p>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

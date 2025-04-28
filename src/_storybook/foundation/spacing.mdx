@@ -1,0 +1,78 @@
+import React from 'react';
+import { Meta, Title, Subtitle } from '@storybook/blocks';
+import { SPACING, LAYOUT } from './constants'
+
+<Meta title="Foundation/Spacing" />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Spacing</Title>
+    <div className="col-intro-text">
+      The spacing system provides consistent measurements for layout and component design. It includes both a detailed component-level scale for precise UI element spacing and a broader design scale for overall layout composition.
+    </div>
+
+    <Subtitle>Spacing Scale (Component)</Subtitle>
+    <p>
+      Use the spacing scale when building individual components. It includes small increments necessary to create appropriate spatial relationships for detailed designs.
+    </p>
+
+    <SpacingItem
+      values={Object.keys(SPACING.size)}
+      tokenData={SPACING.size}
+      tokenPrefix="spacing"
+    />
+
+    <Subtitle>Design Scale</Subtitle>
+    <p>
+      The design scale is used to organize components and other parts of the user interface in a complete page layout. It features larger increments that help control the density of a design. Use smaller design tokens to create denser compositions and direct relationships. Use larger tokens to increase whitespace and separate sections.
+    </p>
+
+    <SpacingItem
+      values={Object.keys(LAYOUT.size)}
+      tokenData={LAYOUT.size}
+      tokenPrefix="layout"
+    />
+  </div>
+</div>
+
+export const SpacingItem = ({ values, tokenData, tokenPrefix }) => {
+  const [spacingValues, setSpacingValues] = React.useState({});
+  const [isLoaded, setIsLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      const valueObj = {};
+      values.forEach(spacingName => {
+        valueObj[spacingName] = tokenData[spacingName];
+      });
+      setSpacingValues(valueObj);
+      setIsLoaded(true);
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, [values, tokenData]);
+
+  return (
+    <div className="token-item">
+      <div className="token-item__container token-item__container--spacing">
+        {values.map((spacingName) => (
+          <div key={spacingName} className="token-item__example token-item__example--spacing">
+            <div className="token-item__info-container">
+              <div className="token-item__sample-wrapper">
+                <div
+                  className="token-item__sample token-item__sample--spacing"
+                  style={{ width: tokenData[spacingName], height: tokenData[spacingName] }}
+                />
+              </div>
+              <div className="token-item__details">
+                <div>{spacingName}</div>
+                <div className="token-item__value">{isLoaded ? spacingValues[spacingName] : 'Loading...'}</div>
+                <div className="token-item__variable-name">--col-{tokenPrefix}-size-{spacingName}</div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};

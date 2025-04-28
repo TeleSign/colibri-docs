@@ -5,10 +5,11 @@ import { DocsContainer } from '@storybook/blocks';
 import type { Preview, WebComponentsRenderer } from '@storybook/web-components';
 import { registerColibriComponents, ColBadge, ColDivider } from '@tls-ds/colibri';
 import { ColIcon } from '@tls-ds/colibri-icons';
+import '@tls-ds/colibri/styles/fonts/segoe-ui.css';
+import '@tls-ds/colibri/styles/fonts/courier.css';
 import '@tls-ds/colibri/styles/global.css';
 import '@tls-ds/colibri/styles/theme-default.css';
-import '@tls-ds/colibri/styles/theme-massive.css'
-import '@/styles/globals.css';
+import '@tls-ds/colibri/styles/theme-massive.css';
 
 registerColibriComponents([ColIcon, ColBadge, ColDivider]);
 
@@ -18,7 +19,13 @@ registerColibriComponents([ColIcon, ColBadge, ColDivider]);
  */
 type Display = 'grid' | 'flex';
 type FlexDirection = 'row' | 'row-reverse' | 'column' | 'column-reverse';
-type JustifyContent = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
+type JustifyContent =
+  | 'flex-start'
+  | 'flex-end'
+  | 'center'
+  | 'space-between'
+  | 'space-around'
+  | 'space-evenly';
 type FlexWrap = 'nowrap' | 'wrap' | 'wrap-reverse';
 
 /**
@@ -45,7 +52,7 @@ export type Styles = {
   flexDirection?: FlexDirection;
   justifyContent?: JustifyContent;
   flexWrap?: FlexWrap;
-}
+};
 
 export interface StylesOptions {
   /**
@@ -96,11 +103,15 @@ const getStyles = (options?: StylesOptions): string => {
   return `
     display: ${display};
     ${display === 'grid' ? `grid-template-columns: ${gridTemplateColumns};` : ''}
-    ${display === 'flex' ? `
+    ${
+      display === 'flex'
+        ? `
       flex-direction: ${flexDirection || 'column'};
       justify-content: ${justifyContent || 'flex-start'};
       flex-wrap: ${flexWrap || 'wrap'};
-    ` : ''}
+    `
+        : ''
+    }
     ${gap ? `gap: ${gap};` : ''}
   `.trim();
 };
@@ -115,9 +126,12 @@ const getStyles = (options?: StylesOptions): string => {
  *
  * @example
  */
-const withThemeProvider: DecoratorFunction<WebComponentsRenderer, {
-  [x: string]: any;
-}> = (story, context) => {
+const withThemeProvider: DecoratorFunction<
+  WebComponentsRenderer,
+  {
+    [x: string]: any;
+  }
+> = (story, context) => {
   const {
     globals: { theme },
   } = context;
@@ -139,15 +153,14 @@ const withThemeProvider: DecoratorFunction<WebComponentsRenderer, {
  * @param {Object} context - The Storybook context object containing parameters
  * @returns {TemplateResult} An HTML template result with custom styling applied
  */
-const withCustomStyling: DecoratorFunction<WebComponentsRenderer, {
-  [x: string]: any;
-}> = (story, context) => {
-  return html`
-    <div style=${getStyles(context.parameters)}>
-      ${story()}
-    </div>
-  `;
-}
+const withCustomStyling: DecoratorFunction<
+  WebComponentsRenderer,
+  {
+    [x: string]: any;
+  }
+> = (story, context) => {
+  return html` <div style=${getStyles(context.parameters)}>${story()}</div> `;
+};
 
 const preview: Preview = {
   parameters: {
@@ -182,7 +195,7 @@ const preview: Preview = {
         dynamicTitle: true,
       },
     },
-  }
+  },
 };
 
 export default preview;

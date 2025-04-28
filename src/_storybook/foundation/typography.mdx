@@ -1,0 +1,478 @@
+import { Meta, Title, Subtitle, Typeset, Source } from '@storybook/blocks';
+import { TYPOGRAPHY } from './constants'
+
+<Meta title="Foundation/Typography" />
+
+export const theme = () => document.querySelector('body').getAttribute('data-theme');
+
+export const baseSegoeUIFont = {
+  name: 'Segoe UI',
+  url: null,
+  description: 'Primary font for the Colibri Design System, locally hosted',
+  fallbacks: '"Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif'
+};
+
+export const baseCourierFont = {
+  name: 'Courier Monospace',
+  url: null,
+  description: 'Monospace font for code blocks and technical content',
+  fallbacks: 'monospace'
+};
+
+export const fontFamilies = {
+  default: {
+    primary: baseSegoeUIFont,
+    secondary: baseCourierFont
+  },
+  massive: {
+    primary: baseSegoeUIFont,
+    secondary: baseCourierFont
+  }
+};
+
+export const getCurrentFont = (type = 'primary') => {
+  const currentTheme = theme() || 'default';
+  const themeFamily = fontFamilies[currentTheme] || fontFamilies.default;
+  return themeFamily[type] || themeFamily.primary;
+};
+
+export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Typography</Title>
+    <div className="col-intro-text">
+      The typography system defines the core text elements used throughout our product ecosystem. It consists of carefully calibrated font families, size scales, line heights, and weight variations that ensure optimal readability and clear information hierarchy. This comprehensive token system enables designers and developers to implement consistent typography that meets accessibility standards while maintaining brand fidelity across all platforms.
+    </div>
+
+    <Subtitle>Font Families</Subtitle>
+    <div className="font-family-section">
+      <h3>{getCurrentFont().name}</h3>
+      <p>
+      Colibri Design System uses <b>{getCurrentFont().name}</b> as its primary font family, a versatile and modern typeface that provides excellent readability across devices and screen sizes.
+    </p>
+      <div className="primary-font-preview">
+        ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />
+        abcdefghijklmnopqrstuvwxyz<br />
+        0123456789!@#$%^&*()
+      </div>
+    </div>
+
+    <div className="font-family-section">
+      <h3>Courier</h3>
+      <p>
+        Colibri Design System uses <b>{getCurrentFont('secondary').name}</b> as its monospace font family, optimized for code blocks, terminal output, and technical content.
+      </p>
+      <div className="secondary-font-preview">
+        ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />
+        abcdefghijklmnopqrstuvwxyz<br />
+        0123456789!@#$%^&*()
+      </div>
+    </div>
+
+    <Subtitle>Typography Styles</Subtitle>
+    <p>
+      Colibri defines a set of typography styles that combine font size, weight, and line height to create a consistent type system across all interfaces. These styles are organized into three main categories: Heading, Body, and Supporting text.
+    </p>
+
+    <div className="typography-section">
+      <h3>Heading</h3>
+      <p>
+        Heading styles are used for titles, subtitles, and section headers. They establish the information hierarchy and help users scan and navigate content. Headings should be used in descending order (H1 to H6) to maintain proper document structure.
+      </p>
+
+      <h4>H1</h4>
+      <p>
+        H1 headings are the most prominent text elements, typically used for page titles and major section headers. They use our largest font size (54px) with semilight weight to create strong visual hierarchy while maintaining an elegant, spacious feel. Use H1 sparingly - generally once per page - to establish the primary topic or purpose of the content.
+      </p>
+
+      <p>To set a H1 heading, you can use the native <code>h1</code> HTML tag:</p>
+
+      <div className="typography-example">
+        <div className="code-example">
+          <Source dark format="dedent" language="html" code={`<h1>${SampleText}</h1>`} />
+        </div>
+        <p>or the <code>.h1</code> class:</p>
+        <div className="code-example">
+          <Source dark format="dedent" language="html" code={`<div class="h1">${SampleText}</div>`} />
+        </div>
+        <Typeset
+          fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
+          fontSizes={[Number(TYPOGRAPHY.size['7xl'])]}
+          fontWeight={TYPOGRAPHY.weight.regular}
+          sampleText={SampleText}
+        />
+
+        <h4>H2</h4>
+        <p>
+          H2 headings are used for major section titles within a page, creating clear divisions between primary content areas. At 42px with semilight weight, they maintain strong visibility while being visually subordinate to H1 headings. Use H2s to break up long content into scannable sections and establish a logical content structure. Each major section of your page should typically have its own H2 heading.
+        </p>
+
+        <p>To set a H2 heading, you can use the native <code>h2</code> HTML tag:</p>
+
+        <div className="code-example">
+          <Source dark format="dedent" language="html" code={`<h2>${SampleText}</h2>`} />
+        </div>
+        <p>or the <code>.h2</code> class:</p>
+        <div className="code-example">
+          <Source dark format="dedent" language="html" code={`<div class="h2">${SampleText}</div>`} />
+        </div>
+        <Typeset
+          fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
+          fontSizes={[Number(TYPOGRAPHY.size['5xl'])]}
+          fontWeight={TYPOGRAPHY.weight.regular}
+          sampleText={SampleText}
+        />
+
+        <h4>H3</h4>
+        <p>
+          H3 headings denote subsections within the larger sections established by H2 headings. At 32px with regular weight, they provide clear subsection differentiation while maintaining visual hierarchy. Use H3s to organize related content into more digestible chunks and create a more granular content structure. They're particularly effective for complex sections that contain multiple distinct topics.
+        </p>
+
+        <p>To set a H3 heading, you can use the native <code>h3</code> HTML tag:</p>
+
+        <div className="code-example">
+          <Source dark format="dedent" language="html" code={`<h3>${SampleText}</h3>`} />
+        </div>
+        <p>or the <code>.h3</code> class:</p>
+        <div className="code-example">
+          <Source dark format="dedent" language="html" code={`<div class="h3">${SampleText}</div>`} />
+        </div>
+        <Typeset
+          fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
+          fontSizes={[Number(TYPOGRAPHY.size['3xl'])]}
+          fontWeight={TYPOGRAPHY.weight.regular}
+          sampleText={SampleText}
+        />
+
+        <h4>H4</h4>
+        <p>
+          H4 headings are used for minor section titles or prominent content points within subsections. At 28px with regular weight, they provide emphasis while integrating more naturally with surrounding content. These headings are useful for highlighting specific details, features, or topics within a subsection, making complex information more scannable and accessible.
+        </p>
+
+        <p>To set a H4 heading, you can use the native <code>h4</code> HTML tag:</p>
+
+        <div className="code-example">
+          <Source dark format="dedent" language="html" code={`<h4>${SampleText}</h4>`} />
+        </div>
+        <p>or the <code>.h4</code> class:</p>
+        <div className="code-example">
+          <Source dark format="dedent" language="html" code={`<div class="h4">${SampleText}</div>`} />
+        </div>
+
+        <Typeset
+          fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
+          fontSizes={[Number(TYPOGRAPHY.size['2xl'])]}
+          fontWeight={TYPOGRAPHY.weight.regular}
+          sampleText={SampleText}
+        />
+
+        <h4>H5</h4>
+        <p>
+          H5 headings function as subtle dividers for very specific content segments or as emphasized introductory text. At 20px with regular weight, they integrate closely with body text while providing sufficient distinction. Use H5s for specialized content segments, lists of features, or to introduce important paragraphs that need slightly more prominence than standard body text.
+        </p>
+
+        <p>To set a H5 heading, you can use the native <code>h5</code> HTML tag:</p>
+
+        <div className="code-example">
+          <Source dark format="dedent" language="html" code={`<h5>${SampleText}</h5>`} />
+        </div>
+        <p>or the <code>.h5</code> class:</p>
+        <div className="code-example">
+          <Source dark format="dedent" language="html" code={`<div class="h5">${SampleText}</div>`} />
+        </div>
+
+        <Typeset
+          fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
+          fontSizes={[Number(TYPOGRAPHY.size.l)]}
+          fontWeight={TYPOGRAPHY.weight.regular}
+          sampleText={SampleText}
+        />
+
+        <h4>H6</h4>
+        <p>
+          H6 headings are the smallest heading elements, used for minor subdivisions or emphasized inline content. At 16px (matching body text size) with semibold weight, they maintain heading status through weight distinction rather than size. Use H6s sparingly for small content labels, important notes within body text, or to create subtle structural divisions in dense information displays.
+        </p>
+
+        <p>To set a H6 heading, you can use the native <code>h6</code> HTML tag:</p>
+
+        <div className="code-example">
+          <Source dark format="dedent" language="html" code={`<h6>${SampleText}</h6>`} />
+        </div>
+        <p>or the <code>.h6</code> class:</p>
+        <div className="code-example">
+          <Source dark format="dedent" language="html" code={`<div class="h6">${SampleText}</div>`} />
+        </div>
+
+        <Typeset
+          fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
+          fontSizes={[Number(TYPOGRAPHY.size.m)]}
+          fontWeight={TYPOGRAPHY.weight.semibold}
+          sampleText={SampleText}
+        />
+      </div>
+    </div>
+
+    <div className="typography-section">
+      <h3>Body</h3>
+      <p>
+        Body styles are used for the main content of a page. They are designed for optimal readability in different contexts, from paragraphs to lists, captions, and labels. The paragraph (<code>&lt;p&gt;</code>) element is the recommended semantic tag for body text, combined with our utility classes to apply the appropriate size.
+      </p>
+
+      <h4>Regular (L)</h4>
+      <p>
+        Regular L (20px) body text is used for primary content that requires enhanced readability or emphasis, such as introductory paragraphs, important statements, or content aimed at older audiences. The larger size creates a more comfortable reading experience for longer text blocks while maintaining proper information hierarchy when paired with headings.
+      </p>
+
+      <p>To set a regular large paragraph, you can use the <code>.text-l</code> class:</p>
+
+      <div className="code-example">
+        <Source dark format="dedent" language="html" code={`<p class="text-l">${SampleText}</p>`} />
+      </div>
+      <Typeset
+        fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
+        fontSizes={[Number(TYPOGRAPHY.size.l)]}
+        fontWeight={TYPOGRAPHY.weight.regular}
+        sampleText={SampleText}
+      />
+
+      <h4>Regular (M)</h4>
+      <p>
+        Regular M (16px) body text is our standard size for most paragraph content, offering optimal readability across devices and screen sizes. This versatile size works well for general content, articles, descriptions, and most interface text. It provides a balanced reading experience that works well in both dense layouts and more spacious designs.
+      </p>
+
+      <p>To set a regular medium paragraph, you can use the <code>.text-m</code> class:</p>
+
+      <div className="code-example">
+        <Source dark format="dedent" language="html" code={`<p class="text-m">${SampleText}</p>`} />
+      </div>
+      <Typeset
+        fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
+        fontSizes={[Number(TYPOGRAPHY.size.m)]}
+        fontWeight={TYPOGRAPHY.weight.regular}
+        sampleText={SampleText}
+      />
+
+      <h4>Regular (S)</h4>
+      <p>
+        Regular S (14px) body text is used for secondary content, compact UI elements, or supporting information where space is limited but readability remains important. This size works well for sidebar content, secondary descriptions, metadata, and interfaces with higher information density requirements.
+      </p>
+
+      <p>To set a regular small paragraph, you can use the <code>.text-s</code> class:</p>
+
+      <div className="code-example">
+        <Source dark format="dedent" language="html" code={`<p class="text-s">${SampleText}</p>`} />
+      </div>
+      <Typeset
+        fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
+        fontSizes={[Number(TYPOGRAPHY.size.s)]}
+        fontWeight={TYPOGRAPHY.weight.regular}
+        sampleText={SampleText}
+      />
+
+      <h4>Regular (XS)</h4>
+      <p>
+        Regular XS (12px) body text is reserved for tertiary content, fine print, legal information, or highly compact UI elements. Use this size sparingly as it approaches minimum readability thresholds, particularly for users with visual impairments. Ensure sufficient contrast when implementing this text size.
+      </p>
+
+      <p>To set a regular extra small paragraph, you can use the <code>.text-xs</code> class:</p>
+
+      <div className="code-example">
+        <Source dark format="dedent" language="html" code={`<p class="text-xs">${SampleText}</p>`} />
+      </div>
+      <Typeset
+        fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
+        fontSizes={[Number(TYPOGRAPHY.size.xs)]}
+        fontWeight={TYPOGRAPHY.weight.regular}
+        sampleText={SampleText}
+      />
+    </div>
+
+    <div className="typography-section">
+      <h3>Supporting</h3>
+      <p>
+        Supporting text styles are used for auxiliary content such as helper text, labels, code snippets, and underlined text. These styles provide additional context or emphasis while maintaining clear visual hierarchy through size, weight, and decoration variations.
+      </p>
+
+      <h4>Helper (S)</h4>
+      <p>
+        Helper S (14px) provides contextual guidance and additional information with optimal readability. Typically used for form field instructions, tooltips, or explanatory notes where space allows for comfortable reading. The regular weight and appropriate line height ensure clear communication while maintaining visual subordination to primary content.
+      </p>
+
+      <p>To set helper text in size S, you can use the <code>.helper-s</code> class:</p>
+
+      <div className="code-example">
+        <Source dark format="dedent" language="html" code={`<span class="helper-s">${SampleText}</span>`} />
+      </div>
+      <Typeset
+        fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
+        fontSizes={[Number(TYPOGRAPHY.size.s)]}
+        fontWeight={TYPOGRAPHY.weight.regular}
+        sampleText={SampleText}
+      />
+
+      <h4>Helper (XS)</h4>
+      <p>
+        Helper XS (12px) offers compact contextual information where space is limited. Ideal for inline hints, small form fields, or dense interfaces. Use sparingly and ensure sufficient contrast, as this size approaches minimum readability thresholds for some users.
+      </p>
+
+      <p>To set helper text in size XS, you can use the <code>.helper-xs</code> class:</p>
+
+      <div className="code-example">
+        <Source dark format="dedent" language="html" code={`<span class="helper-xs">${SampleText}</span>`} />
+      </div>
+      <Typeset
+        fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
+        fontSizes={[Number(TYPOGRAPHY.size.xs)]}
+        fontWeight={TYPOGRAPHY.weight.regular}
+        sampleText={SampleText}
+      />
+
+      <h4>Label (L)</h4>
+      <p>
+        Label L (20px) is used for prominent form labels, section identifiers, or interface elements requiring enhanced visibility. At 20px with semibold weight, these labels maintain strong presence while sitting comfortably within the typographic hierarchy. Use for important categorization or when labels need to stand out.
+      </p>
+
+      <p>To set a label in size L, you can use the <code>.label-l</code> class:</p>
+
+      <div className="code-example">
+        <Source dark format="dedent" language="html" code={`<label class="label-l">${SampleText}</label>`} />
+      </div>
+      <Typeset
+        fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
+        fontSizes={[Number(TYPOGRAPHY.size.l)]}
+        fontWeight={TYPOGRAPHY.weight.semibold}
+        sampleText={SampleText}
+      />
+
+      <h4>Label (M)</h4>
+      <p>
+        Label M (16px) is our standard size for form labels, providing good visibility while integrating harmoniously with surrounding content. The semibold weight ensures emphasis without dominating the interface. This versatile size works well across most contexts and maintains readability on various screen sizes.
+      </p>
+
+      <p>To set a label in size M, you can use the <code>.label-m</code> class:</p>
+
+      <div className="code-example">
+        <Source dark format="dedent" language="html" code={`<label class="label-m">${SampleText}</label>`} />
+      </div>
+      <Typeset
+        fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
+        fontSizes={[Number(TYPOGRAPHY.size.m)]}
+        fontWeight={TYPOGRAPHY.weight.semibold}
+        sampleText={SampleText}
+      />
+
+      <h4>Label (S)</h4>
+      <p>
+        Label S (14px) offers compact labeling for space-constrained interfaces or secondary form elements. The semibold weight ensures readability despite the smaller size. Use for field groups, dense forms, or when multiple labels need to coexist in a limited space.
+      </p>
+
+      <p>To set a label in size S, you can use the <code>.label-s</code> class:</p>
+
+      <div className="code-example">
+        <Source dark format="dedent" language="html" code={`<label class="label-s">${SampleText}</label>`} />
+      </div>
+      <Typeset
+        fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
+        fontSizes={[Number(TYPOGRAPHY.size.s)]}
+        fontWeight={TYPOGRAPHY.weight.semibold}
+        sampleText={SampleText}
+      />
+
+      <h4>Label (XS)</h4>
+      <p>
+        Label XS (12px) is our most compact label size, used for tight spaces, badges, tags, or micro-interactions. The semibold weight compensates for the small size to maintain legibility. Use sparingly and with high contrast backgrounds to ensure accessibility.
+      </p>
+
+      <p>To set a label in size XS, you can use the <code>.label-xs</code> class:</p>
+
+      <div className="code-example">
+        <Source dark format="dedent" language="html" code={`<label class="label-xs">${SampleText}</label>`} />
+      </div>
+      <Typeset
+        fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
+        fontSizes={[Number(TYPOGRAPHY.size.xs)]}
+        fontWeight={TYPOGRAPHY.weight.semibold}
+        sampleText={SampleText}
+      />
+
+      <h4>Code (S)</h4>
+      <p>
+        Code S (14px) is designed for inline code snippets, commands, or technical notations within regular text. Using a monospace font at 14px with regular weight, it provides clear distinction for code elements while maintaining visual harmony with surrounding content. This style enhances technical documentation by clearly identifying programmatic content.
+      </p>
+
+      <p>To set code text in size S, you can use the native <code>code</code> HTML tag:</p>
+
+      <div className="code-example">
+        <Source dark format="dedent" language="html" code={`<code>${SampleText}</code>`} />
+      </div>
+
+      <p>or the <code>.code</code>class:</p>
+
+      <div className="code-example">
+        <Source dark format="dedent" language="html" code={`<p class="code">${SampleText}</p>`} />
+      </div>
+
+      <Typeset
+        fontFamily={`"${getCurrentFont('secondary').name}", ${getCurrentFont('secondary').fallbacks}`}
+        fontSizes={[Number(TYPOGRAPHY.size.s)]}
+        fontWeight={TYPOGRAPHY.weight.regular}
+        sampleText={SampleText}
+      />
+
+      <h4>Underlined (M)</h4>
+      <p>
+        Underlined M (16px) is used for text that requires emphasis or indicates interactivity, such as links within paragraph content. At our standard 16px size with regular weight and underline decoration, it maintains readability while providing clear visual distinction for interactive or emphasized content.
+      </p>
+
+      <p>To set underlined text in size M, you can use the <code>.underline-m</code> class:</p>
+
+      <div className="code-example">
+        <Source dark format="dedent" language="html" code={`<span class="underline-m">${SampleText}</span>`} />
+      </div>
+      <Typeset
+        fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
+        fontSizes={[Number(TYPOGRAPHY.size.m)]}
+        fontWeight={TYPOGRAPHY.weight.regular}
+        sampleText={SampleText}
+        style={{ textDecoration: "underline" }}
+      />
+
+      <h4>Underlined (S)</h4>
+      <p>
+        Underlined S (14px) provides a more compact option for emphasized or interactive text in space-constrained layouts. The smaller size integrates well with supporting content while the underline decoration ensures it remains distinct and recognizable as interactive content.
+      </p>
+
+      <p>To set underlined text in size S, you can use the <code>.underline-s</code> class:</p>
+
+      <div className="code-example">
+        <Source dark format="dedent" language="html" code={`<span class="underline-s">${SampleText}</span>`} />
+      </div>
+      <Typeset
+        fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
+        fontSizes={[Number(TYPOGRAPHY.size.s)]}
+        fontWeight={TYPOGRAPHY.weight.regular}
+        sampleText={SampleText}
+        style={{ textDecoration: "underline" }}
+      />
+
+      <h4>Underlined (XS)</h4>
+      <p>
+        Underlined XS (12px) is our smallest underlined text style, used for compact UI elements, footnote links, or secondary navigation items where space is extremely limited. The underline decoration ensures interactivity cues remain clear despite the reduced size.
+      </p>
+
+      <p>To set underlined text in size XS, you can use the <code>.underline-xs</code> class:</p>
+
+      <div className="code-example">
+        <Source dark format="dedent" language="html" code={`<span class="underline-xs">${SampleText}</span>`} />
+      </div>
+      <Typeset
+        fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
+        fontSizes={[Number(TYPOGRAPHY.size.xs)]}
+        fontWeight={TYPOGRAPHY.weight.regular}
+        sampleText={SampleText}
+        style={{ textDecoration: "underline" }}
+      />
+    </div>
+  </div>
+</div>

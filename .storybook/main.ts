@@ -3,10 +3,7 @@ import { mergeConfig } from 'vite';
 import { resolve } from 'path';
 
 const config: StorybookConfig = {
-  stories: [
-    '../src/**/*.mdx',
-    '../src/**/*.stories.@(ts|tsx)',
-  ],
+  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(ts|tsx)'],
   addons: [
     '@storybook/addon-controls',
     '@storybook/addon-actions',
@@ -19,37 +16,48 @@ const config: StorybookConfig = {
     name: '@storybook/web-components-vite',
     options: {},
   },
-  staticDirs: ['./static'],
+  staticDirs: ['./static', './styles'],
   docs: {
     defaultName: 'Overview',
   },
   core: {
     builder: '@storybook/builder-vite',
   },
-  viteFinal: (config) => {
+  managerHead: head => `
+    ${head}
+    <link rel="stylesheet" type="text/css" href="globals.css" />
+  `,
+  previewHead: head => `
+    ${head}
+    <link rel="stylesheet" type="text/css" href="preview.css" />
+    <script type="text/javascript">
+      window.global = window;
+    </script>
+  `,
+  viteFinal: config => {
     return mergeConfig(config, {
       resolve: {
         alias: {
           '@': resolve(__dirname, '../src'),
-        }
+        },
       },
       build: {
         rollupOptions: {
           input: {
-            assets: resolve(__dirname, '../src/assets')
+            assets: resolve(__dirname, '../src/assets'),
           },
           output: {
-            assetFileNames: (assetInfo) => {
+            assetFileNames: assetInfo => {
               const extType = assetInfo.name.split('.').at(1);
               if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
                 return `assets/[name][extname]`;
               }
               return `assets/[name][extname]`;
-            }
+            },
           },
-        }
-      }
+        },
+      },
     });
-  }
+  },
 };
 export default config;
