@@ -48,7 +48,8 @@
 }
 
 .color-item,
-.radius-item {
+.radius-item,
+.depth-item {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -160,14 +161,16 @@ div.spacing-item__variable-name {
 }
 
 .radius-item__container,
-.spacing-item__container {
+.spacing-item__container,
+.depth-item__container {
   display: grid;
   gap: 24px;
   margin: 32px 0;
   width: 100%;
 }
 
-.radius-item__container {
+.radius-item__container,
+.depth-item__container {
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
 }
 
@@ -260,4 +263,12 @@ div.spacing-item__value {
 
 .spacing-item__details {
   flex-grow: 1;
+}
+
+.depth-sample {
+  width: 80px;
+  height: 80px;
+  background-color: var(--col-colors-ui-primary-lighter, #e5efff);
+  border: none;
+  transition: box-shadow 0.3s ease;
 }
