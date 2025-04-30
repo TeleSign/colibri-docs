@@ -7,8 +7,8 @@
     "build": "storybook build"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Telesign",
+  "license": "MIT",
   "description": "",
   "dependencies": {
     "@telesign/colibri": "^0.1.0",
