@@ -43,6 +43,7 @@ npm run build
 ### Environment Setup
 
 The documentation system requires:
+
 - Node.js (latest LTS)
 - npm or yarn
 - Modern browser for development
@@ -53,10 +54,13 @@ All web components must be registered in `.storybook/preview.ts` before they can
 
 ```typescript
 // .storybook/preview.ts
-import { registerColibriComponents } from '@tls-ds/colibri';
-import { ColIcon } from '@tls-ds/colibri-icons';
+import { registerColibriComponents, registerAllComponents } from '@telesign/colibri';
+import { ColIcon } from '@telesign/colibri-icons';
 
-// Register components for all stories
+// Register all components from @telesign/colibri
+registerAllComponents();
+
+// Register external components like icons separately
 registerColibriComponents([ColIcon]);
 ```
 
@@ -84,28 +88,34 @@ colibri-docs/
 All story files should follow this standard organization:
 
 #### 1. Imports
+
 - External dependencies first
 - Local imports second
 
 #### 2. Interfaces/Types
+
 - Story-specific type definitions
 - Props interfaces
 
 #### 3. Story Metadata (default export)
+
 - Component documentation
 - Props configuration (argTypes)
 - Default args
-- Parameters (including __sb for layout)
+- Parameters (including `__sb` for layout)
 
 #### 4. Styles
+
 - Story-specific styles using lit's css
 - Placed before stories for context
 
 #### 5. Stories
+
 - Individual story implementations
 - Story-specific documentation
 
 For a complete example of this organization, see [ColIcon.stories.tsx](src/stories/components/ColIcon.stories.tsx). This story demonstrates:
+
 - Proper file structure
 - Component documentation
 - Props configuration
@@ -129,19 +139,21 @@ export const Default = () => html`
 Control how source code appears in your documentation with these options:
 
 #### Excluding Decorators
+
 To exclude decorators and show only the component code:
 
 ```typescript
 parameters: {
   docs: {
     source: {
-      excludeDecorators: true
+      excludeDecorators: true;
     }
   }
 }
 ```
 
 #### Transforming Source Code
+
 To remove specific elements (like `<style>` tags) from the displayed source code:
 
 ```typescript
@@ -151,20 +163,21 @@ parameters: {
       transform: (code: string): string => {
         // Remove style tags and their content
         return code.replace(/<style>[\s\S]*?<\/style>\s*/, '');
-      }
+      };
     }
   }
 }
 ```
 
 #### Disabling Source Code Display
+
 To hide the source code for specific stories:
 
 ```typescript
 parameters: {
   docs: {
     source: {
-      code: null // Disables the "Show code" option
+      code: null; // Disables the "Show code" option
     }
   }
 }
@@ -203,6 +216,7 @@ Available `Category` values:
 - `Tokens`
 
 ### Example Story Component
+
 A story file for a molecule component is available for reference at [ExampleTextField.stories.tsx](src/stories/components/ExampleTextField.stories.ts?at=refs%2Fheads%2Fshowcase%2Fstorybook-examples).
 
 This file demonstrates:
@@ -226,6 +240,7 @@ This file demonstrates:
 ### Storybook Addons
 
 Installed addons include:
+
 - @storybook/addon-essentials
 - @storybook/addon-a11y
 - @storybook/addon-links
@@ -235,6 +250,7 @@ Installed addons include:
 ### Story Organization
 
 Stories are organized in a specific order:
+
 1. Welcome
 2. Atoms
 3. Molecules
@@ -257,12 +273,8 @@ The system supports theme switching through the `data-theme` attribute:
 
 ```typescript
 decorators: [
-  (story, context) => html`
-    <div data-theme=${context.args.mode || 'default'}>
-      ${story()}
-    </div>
-  `
-]
+  (story, context) => html` <div data-theme=${context.args.mode || 'default'}>${story()}</div> `,
+];
 ```
 
 ## Best Practices
@@ -270,6 +282,7 @@ decorators: [
 ### Documentation Guidelines
 
 1. Component Documentation
+
 - Overview
 - Props/API
 - Examples
@@ -277,11 +290,13 @@ decorators: [
 - Accessibility considerations
 
 2. Code Examples
+
 - Basic usage
 - Common patterns
 - Edge cases
 
 3. Writing Style
+
 - Clear and concise
 - Consistent terminology
 - Progressive disclosure
@@ -290,12 +305,14 @@ decorators: [
 ### Accessibility
 
 1. Testing
+
 - Use a11y addon
 - Test with screen readers
 - Keyboard navigation
 - Color contrast
 
 2. Documentation
+
 - ARIA roles
 - Keyboard interactions
 - Screen reader behavior
@@ -319,11 +336,13 @@ decorators: [
 ### Style Guide
 
 1. File Organization
+
 - Follow standard story file structure
 - Use consistent naming
 - Maintain clear hierarchy
 
 2. Code Examples
+
 - Follow style guide
 - Include comments
 - Show best practices
@@ -331,6 +350,7 @@ decorators: [
 ## Next Steps
 
 After setup:
+
 1. Review existing documentation
 2. Identify gaps
 3. Plan documentation structure

@@ -7,19 +7,23 @@ import * as ColDividerStories from './col-divider.stories';
   <div className="col-doc__container">
     <Title>Divider</Title>
     The Colibri Divider component is used to group content into lists or other containers.
-    
+
     <Subtitle>How to use it</Subtitle>
     1. Install the packages:
         ```bash
-        npm install @tls-ds/colibri
+        npm install @telesign/colibri
         ```
     2. Import the dependencies:
         ```typescript
-        import { registerColibriComponents, ColDivider } from '@tls-ds/colibri';
+        import { registerColibriComponents, registerAllComponents, ColDivider } from '@telesign/colibri';
         ```
-    3. Register the web component:
+    3. Register the web components:
         ```typescript
+        // Option 1: Register specific components
         registerColibriComponents([ColDivider]);
+
+        // Option 2: Register all Colibri components
+        registerAllComponents();
         ```
     4. Use it in your HTML:
         ```html
@@ -34,7 +38,7 @@ import * as ColDividerStories from './col-divider.stories';
     Dividers are thin lines that group content into lists or other containers.
 
     - Make dividers visible but not bold
-    - Only use dividers if items can’t be grouped with open space
+    - Only use dividers if items can't be grouped with open space
     - Use dividers to group things, not separate individual items
 
     <Subtitle>Component preview</Subtitle>

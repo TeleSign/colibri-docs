@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { icons } from '@tls-ds/colibri-icons/icons-list';
+import { icons } from '@telesign/colibri-icons/icons-list';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
 

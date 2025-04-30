@@ -11,15 +11,19 @@ import * as ColBadgeStories from './col-badge.stories';
     <Subtitle>How to use it</Subtitle>
     1. Install the packages:
         ```bash
-        npm install @tls-ds/colibri
+        npm install @telesign/colibri
         ```
     2. Import the dependencies:
         ```typescript
-        import { registerColibriComponents, ColBadge } from '@tls-ds/colibri';
+        import { registerColibriComponents, registerAllComponents, ColBadge } from '@telesign/colibri';
         ```
-    3. Register the web component:
+    3. Register the web components:
         ```typescript
+        // Option 1: Register specific components
         registerColibriComponents([ColBadge]);
+
+        // Option 2: Register all Colibri components
+        registerAllComponents();
         ```
     4. Use it in your HTML:
         ```html
