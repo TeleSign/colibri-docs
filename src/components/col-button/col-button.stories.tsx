@@ -109,7 +109,7 @@ type Story = ColibriStory<StoryArgs>;
 export const Default: Story = {
   render: ({ ariaLabel, color, disabled, name, size, type, variant }) => html`
     <col-button
-      aria-label=${ariaLabel}
+      ariaLabel=${ariaLabel}
       color=${color}
       ?disabled=${disabled}
       name=${name}
