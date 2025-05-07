@@ -3,15 +3,16 @@ import { createElement } from 'react';
 import type { DecoratorFunction } from '@storybook/csf';
 import { DocsContainer } from '@storybook/blocks';
 import type { Preview, WebComponentsRenderer } from '@storybook/web-components';
-import { registerColibriComponents, ColBadge, ColDivider, ColButton } from '@tls-ds/colibri';
-import { ColIcon } from '@tls-ds/colibri-icons';
-import '@tls-ds/colibri/styles/fonts/segoe-ui.css';
-import '@tls-ds/colibri/styles/fonts/courier.css';
-import '@tls-ds/colibri/styles/global.css';
-import '@tls-ds/colibri/styles/theme-default.css';
-import '@tls-ds/colibri/styles/theme-massive.css';
+import { registerColibriComponents, registerAllComponents } from '@telesign/colibri';
+import { ColIcon } from '@telesign/colibri-icons';
+import '@telesign/colibri/styles/fonts/segoe-ui.css';
+import '@telesign/colibri/styles/fonts/courier.css';
+import '@telesign/colibri/styles/global.css';
+import '@telesign/colibri/styles/theme-default.css';
+import '@telesign/colibri/styles/theme-massive.css';
 
-registerColibriComponents([ColIcon, ColBadge, ColDivider, ColButton]);
+registerAllComponents();
+registerColibriComponents([ColIcon]);
 
 /**
  * Type definitions for style properties.

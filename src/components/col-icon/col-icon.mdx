@@ -11,16 +11,20 @@ import * as ColIconStories from './col-icon.stories';
     <Subtitle>How to use it</Subtitle>
     1. Install the packages:
         ```bash
-        npm install @tls-ds/colibri
-        npm install @tls-ds/colibri-icons
+        npm install @telesign/colibri
+        npm install @telesign/colibri-icons
         ```
     2. Import the dependencies:
         ```typescript
-        import { registerColibriComponents } from '@tls-ds/colibri';
-        import { ColIcon } from '@tls-ds/colibri-icons';
+        import { registerColibriComponents, registerAllComponents } from '@telesign/colibri';
+        import { ColIcon } from '@telesign/colibri-icons';
         ```
-    3. Register the web component:
+    3. Register the web components:
         ```typescript
+        // First register all Colibri components (if needed)
+        registerAllComponents();
+
+        // Then register the icon component separately
         registerColibriComponents([ColIcon]);
         ```
     4. Use it in your HTML:
