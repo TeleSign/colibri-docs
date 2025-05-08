@@ -22,7 +22,7 @@ const meta = {
   argTypes: {
     hideAvatarIcon: {
       control: 'boolean',
-      description: 'If the avatar initials icon is displayed or not',
+      description: 'Hides the avatar initials icon if true',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
@@ -30,7 +30,7 @@ const meta = {
     },
     hideAvatarName: {
       control: 'boolean',
-      description: 'If the avatar name is displayed or not',
+      description: 'Hides the avatar name label if true',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
@@ -64,7 +64,13 @@ export const Default: Story = {
   args: {
     avatarName: 'John Doe',
   },
-  render: args => html` <col-avatar .avatarName=${args.avatarName}></col-avatar> `,
+  render: args => html`
+    <col-avatar
+      .hideAvatarIcon=${args.hideAvatarIcon}
+      .hideAvatarName=${args.hideAvatarName}
+      .avatarName=${args.avatarName}
+    ></col-avatar>
+  `,
   parameters: {
     docs: {
       source: {
@@ -83,7 +89,11 @@ export const HideAvatarName: Story = {
     avatarName: 'Jane Doe',
   },
   render: args => html`
-    <col-avatar .hideAvatarName=${args.hideAvatarName} .avatarName=${args.avatarName}></col-avatar>
+    <col-avatar
+      .hideAvatarIcon=${args.hideAvatarIcon}
+      .hideAvatarName=${args.hideAvatarName}
+      .avatarName=${args.avatarName}
+    ></col-avatar>
   `,
   parameters: {
     docs: {
@@ -103,12 +113,16 @@ export const HideAvatarIcon: Story = {
     avatarName: 'John Doe',
   },
   render: args => html`
-    <col-avatar .hideAvatarIcon=${args.hideAvatarIcon} .avatarName=${args.avatarName}></col-avatar>
+    <col-avatar
+      .hideAvatarIcon=${args.hideAvatarIcon}
+      .hideAvatarName=${args.hideAvatarName}
+      .avatarName=${args.avatarName}
+    ></col-avatar>
   `,
   parameters: {
     docs: {
       source: {
-        code: `<col-avatar hideAvatarIcon avatarName="Jane Doe"></col-avatar>`,
+        code: `<col-avatar hideAvatarIcon avatarName="John Doe"></col-avatar>`,
       },
     },
   },
