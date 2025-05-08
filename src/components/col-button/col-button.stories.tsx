@@ -1,7 +1,8 @@
 import { html } from 'lit';
+import { fn } from '@storybook/test';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
-import { BUTTON_SIZES, BUTTON_VARIANTS, COLORS } from '@tls-ds/colibri';
+import { BUTTON_SIZES, BUTTON_VARIANTS, COLORS } from '@telesign/colibri';
 
 type StoryArgs = {
   ariaLabel: string;
@@ -11,6 +12,7 @@ type StoryArgs = {
   size: BUTTON_SIZES;
   type: 'button' | 'submit' | 'reset';
   variant: BUTTON_VARIANTS;
+  onClick?: () => void;
 };
 
 const meta = {
@@ -85,6 +87,13 @@ const meta = {
         defaultValue: { summary: 'DEFAULT' },
       },
     },
+    onClick: {
+      action: 'clicked',
+      description: 'Callback function that is called when the button is clicked.',
+      table: {
+        category: 'Events',
+      },
+    },
   },
   args: {
     ariaLabel: 'Default button for storybook',
@@ -94,6 +103,7 @@ const meta = {
     size: BUTTON_SIZES.MEDIUM,
     type: 'button',
     variant: BUTTON_VARIANTS.DEFAULT,
+    onClick: fn(),
   },
 } satisfies ColibriStoryMeta<StoryArgs>;
 
@@ -109,6 +119,7 @@ const renderButton: Story['render'] = ({
   size,
   type,
   variant,
+  onClick,
 }) => html`
   <col-button
     ariaLabel=${ariaLabel}
@@ -118,6 +129,7 @@ const renderButton: Story['render'] = ({
     size=${size}
     type=${type}
     variant=${variant}
+    @click=${onClick}
   >
     Your text
   </col-button>
@@ -127,7 +139,7 @@ const renderButton: Story['render'] = ({
  * Default story showing a default text button. Use the controls panel to experiment with different values.
  */
 export const Default: Story = {
-  render: ({ ariaLabel, color, disabled, name, size, type, variant }) => html`
+  render: ({ ariaLabel, color, disabled, name, size, type, variant, onClick }) => html`
     <col-button
       ariaLabel=${ariaLabel}
       color=${color}
@@ -136,6 +148,7 @@ export const Default: Story = {
       size=${size}
       type=${type}
       variant=${variant}
+      @click=${onClick}
     >
       Your text
     </col-button>
