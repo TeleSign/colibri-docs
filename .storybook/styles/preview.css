@@ -1,4 +1,3 @@
-.sbdocs-content a,
 .sbdocs-content blockquote,
 .sbdocs-content h1,
 .sbdocs-content h2,
@@ -12,6 +11,10 @@
 .sbdocs-content ul {
   font-family: var(--col-typography-font-family-primary);
   color: var(--col-theme-black);
+}
+
+.sbdocs-content a {
+  color: var(--col-theme-primary-base);
 }
 
 .sbdocs-content h1 {
@@ -246,4 +249,32 @@ div.token-item__code-container {
 
 .token-item__container--spacing {
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+
+div.col-doc__callout {
+  display: flex;
+  gap: 1rem;
+  border-style: solid;
+  padding: var(--col-spacing-size-m);
+  margin-bottom: 1rem;
+  border-radius: var(--col-radius-size-xs);
+}
+
+.col-doc__callout--info {
+  background-color: var(--col-colors-ui-info-light);
+  border-color: var(--col-colors-stroke-info);
+}
+
+.col-doc__callout--tip {
+  background-color: var(--col-colors-ui-success-lighter);
+  border-color: var(--col-colors-stroke-success);
+}
+
+.col-doc__callout strong {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.col-doc__callout p {
+  margin: 0;
 }
