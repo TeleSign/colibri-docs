@@ -1,0 +1,62 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as ColAvatarStories from './col-avatar.stories';
+
+<Meta of={ColAvatarStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Avatar</Title>
+    The Colibri Avatar component is used to visually identify and represent a user or entity in a user interface. Its main purpose is visual identification. It provides a graphical representation that helps to quickly and visually identify a user or entity in the application.
+
+    <Subtitle>How to use it</Subtitle>
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, registerAllComponents, ColAvatar } from '@telesign/colibri';
+        ```
+    3. Register the web components:
+        ```typescript
+        // Option 1: Register specific components
+        registerColibriComponents([ColAvatar]);
+
+        // Option 2: Register all Colibri components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-avatar avatarName="John Doe"></col-avatar>
+        ```
+
+    <Subtitle>When to use it</Subtitle>
+    Here are some common use cases:
+
+    - **User Profiles** - In areas where a user's profile information is displayed.
+    - **Comments and Messages** - Next to comments, posts or messages to identify the author.
+    - **Lists and Groups** - In lists of users or groups to show the profile picture of each member.
+    - **Chat and Messaging** - In chat applications to show the profile image of the sender or receiver of messages.
+    - **Content Management System** - In administration panels to identify content authors or contributors.
+
+    <Subtitle>Component preview</Subtitle>
+    You can click on the **Show code** button in the bottom-right section of the following code snippets to see how to use the component:
+
+    <h4>Avatar Icon with Avatar Name</h4>
+    <Canvas of={ColAvatarStories.Default}/>
+
+    <h4>Avatar Icon Only</h4>
+    <Canvas of={ColAvatarStories.HideAvatarName} />
+
+    <h4>Avatar Name Only</h4>
+    <Canvas of={ColAvatarStories.HideAvatarIcon} />
+
+    <Subtitle>Properties</Subtitle>
+
+    <ArgTypes of={ColAvatarStories} />
+
+    <Subtitle>Interact with the component</Subtitle>
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the **Default** section.
+
+  </div>
+</div>
