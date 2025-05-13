@@ -1,0 +1,31 @@
+/**
+ * List of standard HTML boolean attributes that should appear without values when true
+ */
+export const HTML_BOOLEAN_ATTRIBUTES = [
+  'allowfullscreen',
+  'async',
+  'autofocus',
+  'autoplay',
+  'checked',
+  'controls',
+  'default',
+  'defer',
+  'disabled',
+  'formnovalidate',
+  'hidden',
+  'ismap',
+  'itemscope',
+  'loop',
+  'multiple',
+  'muted',
+  'nomodule',
+  'novalidate',
+  'open',
+  'playsinline',
+  'readonly',
+  'required',
+  'reversed',
+  'selected',
+  // Custom component boolean attributes
+  'isDisabled',
+];
