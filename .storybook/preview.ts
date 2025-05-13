@@ -180,6 +180,14 @@ const preview: Preview = {
         return createElement(DocsContainer, props);
       },
     },
+    backgrounds: {
+      values: [
+        { name: 'Dark', value: '#333' },
+        { name: 'Light', value: '#fff' },
+        { name: 'Figma', value: '#e5e5e5' },
+      ],
+      default: 'Figma',
+    },
   },
   decorators: [withThemeProvider, withCustomStyling],
   globalTypes: {

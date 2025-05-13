@@ -82,6 +82,7 @@ div.color-item {
 .color-item__swatch-wrapper {
   display: flex;
   flex: 1;
+  flex-basis: 180px;
   flex-direction: column;
   text-align: center;
   min-width: 120px;
@@ -133,6 +134,7 @@ div.spacing-item__variable-name {
   font-size: 0.75rem;
   color: var(--col-text-secondary, #666);
   margin: 0;
+  text-transform: uppercase;
 }
 
 .font-family-section {

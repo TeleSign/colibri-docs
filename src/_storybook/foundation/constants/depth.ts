@@ -11,8 +11,8 @@ export const DEPTH = {
     'l-inverse': '0 -8px 12px 0 rgba(var(--col-theme-black-rgb), .15)',
     'xl-large-inverse': '0 -12px 16px 0 rgba(var(--col-theme-black-rgb), .15)',
     active:
-      '0 0 0 2px var(--col-theme-focus), inset 0 1px 2px 0 rgba(var(--col-theme-black-rgb), .15)',
-    focus: '0 0 0 2px var(--col-theme-focus)',
+      '0 0 0 1px var(--col-theme-white), 0 0 0 3px var(--col-theme-focus), inset 0 1px 2px 0 rgba(var(--col-theme-black-rgb), .15)',
+    focus: '0 0 0 1px var(--col-theme-white), 0 0 0 2px var(--col-theme-focus)',
     inset: 'inset 0 1px 2px 0 rgba(var(--col-theme-black-rgb), .15)',
     plain: '0, 0, 0, 0 rgba(var(--col-theme-black-rgb), .15)',
   },
