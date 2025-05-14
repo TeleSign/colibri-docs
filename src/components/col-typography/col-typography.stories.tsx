@@ -187,7 +187,8 @@ const meta = {
     },
     iconVisible: {
       control: 'boolean',
-      description: 'Shows the icon in the icon slot.',
+      description:
+        'Controls visibility of the icon in the slot, solely for documentation preview purposes, **not a component prop.**',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
@@ -197,8 +198,7 @@ const meta = {
     iconSize: {
       control: 'text',
       description:
-        'Size of the slotted icon. Only available for `heading`, `subheading`, and `label` variants.',
-      if: { arg: 'iconVisible', truthy: true },
+        'Size of the slotted icon, mapping to the `size` prop of the `Icon` component. Only available for `heading`, `subheading`, and `label` variants. Refer to [Icon documentation](../?path=/docs/atoms-icons--overview) for more details.',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '12px' },
@@ -208,8 +208,7 @@ const meta = {
     iconName: {
       control: 'text',
       description:
-        'Name of the icon to display in the icon slot. Only available for `heading`, `subheading`, and `label` variants.',
-      if: { arg: 'iconVisible', truthy: true },
+        'Name of the slotted icon mapping to the `name` prop of the `Icon` component. Only available for `heading`, `subheading`, and `label` variants. Refer to [Icon documentation](../?path=/docs/atoms-icons--overview) for more details.',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'info-circle' },

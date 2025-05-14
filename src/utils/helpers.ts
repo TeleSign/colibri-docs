@@ -29,7 +29,7 @@ export function getDisabledControlsForVariant(variant: string, hasIcon = false):
   const truncationControls = ['ellipsis', 'maxLines'];
 
   // Icon-related controls
-  const iconControls = hasIcon ? [] : ['iconVisible'];
+  const iconControls = hasIcon ? [] : ['iconVisible', 'iconName', 'iconSize'];
 
   switch (variant) {
     case 'heading':
