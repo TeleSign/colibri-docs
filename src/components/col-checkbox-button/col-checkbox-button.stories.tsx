@@ -198,7 +198,7 @@ export const InteractiveExample: Story = {
           <strong>Current state: </strong><span id="state-display">Unchecked</span>
         </div>
         <col-checkbox-button id="controlled-checkbox-button" @change=${toggleState}>
-          <col-icon name="toggle-right" slot="icon"></col-icon>
+          <col-icon name="check-circle" slot="icon"></col-icon>
           Click to toggle state
         </col-checkbox-button>
         <div style="margin-top: 12px;">

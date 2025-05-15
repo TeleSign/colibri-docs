@@ -7,6 +7,81 @@ import * as ColRadioButtonStories from './col-radio-button.stories';
   <div className="col-doc__container">
     <Title>Radio Button</Title>
 
+    <h2>Usage</h2>
+    <p>
+      Radio Buttons provide a more visually prominent and touch-friendly alternative to standard
+      radio inputs. They're ideal for interfaces where selection options should be emphasized and
+      have greater visual weight, such as in filter controls, preference settings, or configurable
+      dashboards.
+    </p>
+
+    <h2>Examples</h2>
+
+    <h3>Default</h3>
+    <p>Standard radio button with icon and text.</p>
     <Canvas of={ColRadioButtonStories.Default} />
+
+    <h3>Checked State</h3>
+    <p>Radio button in selected state.</p>
+    <Canvas of={ColRadioButtonStories.Checked} />
+
+    <h3>Disabled State</h3>
+    <p>Radio button that cannot be interacted with.</p>
+    <Canvas of={ColRadioButtonStories.Disabled} />
+
+    <h3>Disabled and Checked</h3>
+    <p>Radio button that is both selected and disabled.</p>
+    <Canvas of={ColRadioButtonStories.DisabledChecked} />
+
+    <h3>With String Label</h3>
+    <p>Using the label property instead of slot content.</p>
+    <Canvas of={ColRadioButtonStories.WithStringLabel} />
+
+    <h3>With Default Slot</h3>
+    <p>Using the default slot for label content.</p>
+    <Canvas of={ColRadioButtonStories.WithDefaultSlot} />
+
+    <h3>With Custom Label</h3>
+    <p>Using the custom label slot for rich formatting.</p>
+    <Canvas of={ColRadioButtonStories.WithCustomLabel} />
+
+    <h3>Icon Only</h3>
+    <p>Radio button with only an icon and no text.</p>
+    <Canvas of={ColRadioButtonStories.OnlyIcon} />
+
+    <h3>Radio Button Group</h3>
+    <p>Multiple radio buttons working together as a group. Only one can be selected at a time.</p>
+    <Canvas of={ColRadioButtonStories.RadioButtonGroup} />
+
+    <h3>Interactive Example</h3>
+    <p>A working example that displays the currently selected value.</p>
+    <Canvas of={ColRadioButtonStories.InteractiveExample} />
+
+    <h2>Grouping Radio Buttons</h2>
+    <p>
+      Radio buttons that belong together should share the same <code>group</code> attribute.
+      This ensures that only one radio button in the group can be selected at a time.
+    </p>
+
+    <h2>Icons</h2>
+    <p>
+      Radio buttons typically include an icon through the <code>icon</code> slot to provide visual
+      feedback of their state. Common icons include circles, check-circles, or other indicators
+      that help communicate the purpose of the option.
+    </p>
+
+    <h2>Accessibility</h2>
+    <p>
+      Radio Button components follow WAI-ARIA best practices for accessibility:
+    </p>
+    <ul>
+      <li>Uses proper <code>role="radio"</code> and <code>aria-checked</code> attributes</li>
+      <li>Supports keyboard navigation and focus</li>
+      <li>Ensures labels are properly associated with controls</li>
+      <li>Maintains appropriate contrast ratios for all states</li>
+    </ul>
+
+    <h2>Properties</h2>
+    <ArgTypes of={ColRadioButtonStories} />
   </div>
 </div>
