@@ -1,14 +1,21 @@
 import { html, nothing } from 'lit';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString, disableControls, getDisabledControlsForVariant } from '@/utils';
+import {
+  TYPOGRAPHY_VARIANTS,
+  TYPOGRAPHY_ELEMENTS,
+  TYPOGRAPHY_DISPLAY_SIZES,
+  ALIGNMENTS,
+  STATES,
+} from '@telesign/colibri';
 
 type StoryArgs = {
   text: string;
-  variant: string;
-  element: string;
-  size: string;
-  state: string;
-  align: string;
+  variant: TYPOGRAPHY_VARIANTS | '';
+  element: TYPOGRAPHY_ELEMENTS | '';
+  size: TYPOGRAPHY_DISPLAY_SIZES | '';
+  state: STATES | '';
+  align: ALIGNMENTS | '';
   required: boolean;
   disabled: boolean;
   ellipsis: boolean;
@@ -47,68 +54,53 @@ const meta = {
     },
     variant: {
       control: 'select',
-      options: ['caption', 'code', 'display', 'heading', 'helper', 'label', 'link', 'subheading'],
+      options: Object.values(TYPOGRAPHY_VARIANTS),
       description: 'The variant of the typography for styling the text.',
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: 'display' },
+        defaultValue: { summary: TYPOGRAPHY_VARIANTS.DISPLAY },
         category: 'Core',
       },
     },
     element: {
       control: 'select',
-      options: [
-        'h1',
-        'h2',
-        'h3',
-        'h4',
-        'h5',
-        'h6',
-        'p',
-        'a',
-        'div',
-        'kbd',
-        'span',
-        'code',
-        'label',
-        'caption',
-      ],
+      options: Object.values(TYPOGRAPHY_ELEMENTS),
       description:
         'Defines the HTML element. For `heading` variant, the text size adjusts to the HTML heading level (`h1` through `h6`).',
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: 'p' },
+        defaultValue: { summary: TYPOGRAPHY_ELEMENTS.P },
         category: 'Core',
       },
     },
     size: {
       control: 'select',
-      options: ['extra-large', 'large', 'medium', 'small'],
+      options: Object.values(TYPOGRAPHY_DISPLAY_SIZES),
       description:
-        'The size of the typography. Only available for `display` and `link` variants (options: `extra-large`, `large`, `medium`, `small`).',
+        'The size of the typography. For `display` variant all options are available (`xl`, `lg`, `md`, `sm`), while for `link` variant only `md` and `sm` are available.',
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: 'medium' },
+        defaultValue: { summary: TYPOGRAPHY_DISPLAY_SIZES.MEDIUM },
         category: 'Core',
       },
     },
     align: {
       control: 'select',
-      options: ['start', 'center', 'end', 'inherit'],
+      options: Object.values(ALIGNMENTS),
       description: 'The text alignment.',
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: 'start' },
+        defaultValue: { summary: ALIGNMENTS.START },
         category: 'Styling',
       },
     },
     state: {
       control: 'select',
-      options: ['default', 'error'],
+      options: Object.values(STATES),
       description: 'The state of the typography. Only available for a `helper` variant.',
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: 'default' },
+        defaultValue: { summary: STATES.DEFAULT },
         category: 'Styling',
       },
     },
@@ -151,7 +143,7 @@ const meta = {
     },
     href: {
       control: 'text',
-      description: 'URL when the typography is a link.',
+      description: 'URL when the typography is a `link` variant.',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'https://example.com' },
@@ -160,7 +152,7 @@ const meta = {
     },
     newTab: {
       control: 'boolean',
-      description: 'Opens the link in a new tab.',
+      description: 'Opens the `link` in a new tab.',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
@@ -169,7 +161,7 @@ const meta = {
     },
     downloadable: {
       control: 'boolean',
-      description: 'Makes the link download a file.',
+      description: 'Makes the `link` download a file.',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
@@ -178,7 +170,7 @@ const meta = {
     },
     downloadFilename: {
       control: 'text',
-      description: 'Suggested filename when downloading a file from the link.',
+      description: 'Suggested filename when downloading a file from the `link` variant.',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'example.pdf' },
@@ -273,11 +265,11 @@ const renderTypography: Story['render'] = args => html`
 export const Default: Story = {
   args: {
     text: SampleText,
-    variant: 'display',
-    element: 'p',
-    size: 'medium',
-    state: 'default',
-    align: 'start',
+    variant: TYPOGRAPHY_VARIANTS.DISPLAY,
+    element: TYPOGRAPHY_ELEMENTS.P,
+    size: TYPOGRAPHY_DISPLAY_SIZES.MEDIUM,
+    state: STATES.DEFAULT,
+    align: ALIGNMENTS.START,
     iconVisible: true,
     iconName: 'info-circle',
     iconSize: '20px',
@@ -291,8 +283,8 @@ export const Default: Story = {
 export const Heading: Story = {
   args: {
     text: SampleText,
-    variant: 'heading',
-    element: 'h1',
+    variant: TYPOGRAPHY_VARIANTS.HEADING,
+    element: TYPOGRAPHY_ELEMENTS.H1,
   },
   argTypes: disableControls(...getDisabledControlsForVariant('heading')),
   render: renderTypography,
@@ -304,8 +296,8 @@ export const Heading: Story = {
 export const HeadingWithIcon: Story = {
   args: {
     text: SampleText,
-    variant: 'heading',
-    element: 'h1',
+    variant: TYPOGRAPHY_VARIANTS.HEADING,
+    element: TYPOGRAPHY_ELEMENTS.H1,
     iconVisible: true,
     iconName: 'info-circle',
     iconSize: '30px',
@@ -320,7 +312,7 @@ export const HeadingWithIcon: Story = {
 export const Subheading: Story = {
   args: {
     text: SampleText,
-    variant: 'subheading',
+    variant: TYPOGRAPHY_VARIANTS.SUBHEADING,
   },
   argTypes: disableControls(...getDisabledControlsForVariant('subheading')),
   render: renderTypography,
@@ -332,7 +324,7 @@ export const Subheading: Story = {
 export const SubheadingWithIcon: Story = {
   args: {
     text: SampleText,
-    variant: 'subheading',
+    variant: TYPOGRAPHY_VARIANTS.SUBHEADING,
     iconVisible: true,
     iconName: 'info-circle',
     iconSize: '12px',
@@ -347,8 +339,8 @@ export const SubheadingWithIcon: Story = {
 export const Display: Story = {
   args: {
     text: SampleText,
-    variant: 'display',
-    size: 'extra-large',
+    variant: TYPOGRAPHY_VARIANTS.DISPLAY,
+    size: TYPOGRAPHY_DISPLAY_SIZES.EXTRA_LARGE,
   },
   argTypes: disableControls(...getDisabledControlsForVariant('display')),
   render: renderTypography,
@@ -360,8 +352,8 @@ export const Display: Story = {
 export const Label: Story = {
   args: {
     text: SampleText,
-    variant: 'label',
-    element: 'label',
+    variant: TYPOGRAPHY_VARIANTS.LABEL,
+    element: TYPOGRAPHY_ELEMENTS.LABEL,
   },
   argTypes: disableControls(...getDisabledControlsForVariant('label')),
   render: renderTypography,
@@ -373,8 +365,8 @@ export const Label: Story = {
 export const LabelWithIcon: Story = {
   args: {
     text: SampleText,
-    variant: 'label',
-    element: 'label',
+    variant: TYPOGRAPHY_VARIANTS.LABEL,
+    element: TYPOGRAPHY_ELEMENTS.LABEL,
     iconVisible: true,
     iconName: 'info-circle',
     iconSize: '12px',
@@ -389,8 +381,8 @@ export const LabelWithIcon: Story = {
 export const LabelWithRequiredIndicator: Story = {
   args: {
     text: SampleText,
-    variant: 'label',
-    element: 'label',
+    variant: TYPOGRAPHY_VARIANTS.LABEL,
+    element: TYPOGRAPHY_ELEMENTS.LABEL,
     required: true,
   },
   argTypes: disableControls(...getDisabledControlsForVariant('label')),
@@ -403,8 +395,8 @@ export const LabelWithRequiredIndicator: Story = {
 export const LabelWithDisabledState: Story = {
   args: {
     text: SampleText,
-    variant: 'label',
-    element: 'label',
+    variant: TYPOGRAPHY_VARIANTS.LABEL,
+    element: TYPOGRAPHY_ELEMENTS.LABEL,
     disabled: true,
   },
   argTypes: disableControls(...getDisabledControlsForVariant('label')),
@@ -417,8 +409,8 @@ export const LabelWithDisabledState: Story = {
 export const Helper: Story = {
   args: {
     text: SampleText,
-    variant: 'helper',
-    state: 'default',
+    variant: TYPOGRAPHY_VARIANTS.HELPER,
+    state: STATES.DEFAULT,
   },
   argTypes: disableControls(...getDisabledControlsForVariant('helper')),
   render: renderTypography,
@@ -430,8 +422,8 @@ export const Helper: Story = {
 export const HelperWithError: Story = {
   args: {
     text: SampleText,
-    variant: 'helper',
-    state: 'error',
+    variant: TYPOGRAPHY_VARIANTS.HELPER,
+    state: STATES.ERROR,
   },
   argTypes: disableControls(...getDisabledControlsForVariant('helper')),
   render: renderTypography,
@@ -443,8 +435,8 @@ export const HelperWithError: Story = {
 export const Link: Story = {
   args: {
     text: SampleText,
-    variant: 'link',
-    element: 'a',
+    variant: TYPOGRAPHY_VARIANTS.LINK,
+    element: TYPOGRAPHY_ELEMENTS.A,
     href: 'https://example.com',
     newTab: true,
   },
@@ -458,8 +450,8 @@ export const Link: Story = {
 export const LinkWithDisabledState: Story = {
   args: {
     text: SampleText,
-    variant: 'link',
-    element: 'a',
+    variant: TYPOGRAPHY_VARIANTS.LINK,
+    element: TYPOGRAPHY_ELEMENTS.A,
     href: 'https://example.com',
     disabled: true,
   },
@@ -473,8 +465,8 @@ export const LinkWithDisabledState: Story = {
 export const LinkWithDownloadFilename: Story = {
   args: {
     text: SampleText,
-    variant: 'link',
-    element: 'a',
+    variant: TYPOGRAPHY_VARIANTS.LINK,
+    element: TYPOGRAPHY_ELEMENTS.A,
     href: '/assets/example.pdf',
     downloadable: true,
     downloadFilename: 'example.pdf',
@@ -489,7 +481,7 @@ export const LinkWithDownloadFilename: Story = {
 export const Caption: Story = {
   args: {
     text: SampleText,
-    variant: 'caption',
+    variant: TYPOGRAPHY_VARIANTS.CAPTION,
   },
   argTypes: disableControls(...getDisabledControlsForVariant('caption')),
   render: renderTypography,
@@ -501,7 +493,7 @@ export const Caption: Story = {
 export const Code: Story = {
   args: {
     text: SampleText,
-    variant: 'code',
+    variant: TYPOGRAPHY_VARIANTS.CODE,
   },
   argTypes: disableControls(...getDisabledControlsForVariant('code')),
   render: renderTypography,
@@ -513,7 +505,7 @@ export const Code: Story = {
 export const TextTruncation: Story = {
   args: {
     text: 'This is a very long text that demonstrates truncation with ellipsis when content exceeds the specified number of lines. The text will be cut off and an ellipsis will be shown at the end.',
-    variant: 'display',
+    variant: TYPOGRAPHY_VARIANTS.DISPLAY,
     ellipsis: true,
     maxLines: 2,
   },

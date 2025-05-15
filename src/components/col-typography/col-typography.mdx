@@ -159,7 +159,7 @@ export const SampleText = 'Lorem ipsum dolor sit amet';
         You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
       </p>
     </div>
-    By default, the Display component is styled with a `color` of `default` based on the current theme and a `font-weight` of `350` for the `extra-large` and `large` size, `400` for the `medium` and `small` sizes.
+    By default, the Display component is styled with a `color` of `default` based on the current theme and a `font-weight` of `350` for the `xl` and `lg` size, `400` for the `md` and `sm` sizes.
 
     <Canvas of={ColTypographyStories.Display}/>
 
@@ -175,14 +175,14 @@ export const SampleText = 'Lorem ipsum dolor sit amet';
     The Display variant offers 4 different sizes. The size is set using the `size` attribute on the component:
 
     ```html
-    <col-typography variant="display" size="large">Display</col-typography>
+    <col-typography variant="display" size="lg">Display</col-typography>
     ```
 
     The sizes are as follows:
-    - `extra-large`: `54px`
-    - `large`: `42px`
-    - `medium`: `32px`
-    - `small`: `28px`
+    - `xl`: `54px`
+    - `lg`: `42px`
+    - `md`: `32px`
+    - `sm`: `28px`
 
     <Typeset
       fontSizes={[
@@ -308,12 +308,12 @@ export const SampleText = 'Lorem ipsum dolor sit amet';
     The Link variant offers 2 different sizes. The size is set using the `size` attribute on the component:
 
     ```html
-    <col-typography variant="link" element="a" size="medium">Link</col-typography>
+    <col-typography variant="link" element="a" size="md">Link</col-typography>
     ```
 
     The sizes are as follows:
-    - `medium`: `14px`
-    - `small`: `12px`
+    - `md`: `14px`
+    - `sm`: `12px`
 
     <Typeset
       fontSizes={[
