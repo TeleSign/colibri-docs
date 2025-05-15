@@ -1,4 +1,4 @@
-import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import { ArgTypes, Canvas, Meta, Subtitle, Title, Description } from '@storybook/blocks';
 import * as ColCheckboxStories from './col-checkbox.stories';
 
 <Meta of={ColCheckboxStories} />
@@ -7,6 +7,54 @@ import * as ColCheckboxStories from './col-checkbox.stories';
   <div className="col-doc__container">
     <Title>Checkbox</Title>
 
+    ## Basic Usage
     <Canvas of={ColCheckboxStories.Default} />
+
+    ## States
+
+    ### Checked State
+    <Canvas of={ColCheckboxStories.Checked} />
+
+    ### Indeterminate State
+    <Canvas of={ColCheckboxStories.Indeterminate} />
+
+    ### Disabled States
+    <Canvas of={ColCheckboxStories.Disabled} />
+    <Canvas of={ColCheckboxStories.DisabledChecked} />
+    <Canvas of={ColCheckboxStories.DisabledIndeterminate} />
+
+    ## Labels
+
+    ### Standard Label
+    <Canvas of={ColCheckboxStories.Label} />
+
+    ### Custom Label
+    <Canvas of={ColCheckboxStories.CustomLabel} />
+
+    ### With Icons
+    <Canvas of={ColCheckboxStories.WithIcon} />
+    <Canvas of={ColCheckboxStories.WithMultipleIcons} />
+
+    ### Interactive Example
+    <Canvas of={ColCheckboxStories.InteractiveControlledExample} />
+
+    ## Properties
+    <ArgTypes of={ColCheckboxStories} />
+
+    ## Accessibility
+
+    The checkbox component follows accessibility best practices:
+
+    - Uses proper ARIA attributes (`role="checkbox"`, `aria-checked`, `aria-disabled`)
+    - Supports keyboard navigation and interaction (Space and Enter keys)
+    - Maintains proper focus states
+    - Provides appropriate visual states (checked, unchecked, indeterminate, disabled)
+
+    ## Events
+
+    | Event | Detail | Description |
+    | ----- | ------ | ----------- |
+    | `change` | `{ checked: boolean, indeterminate: boolean }` | Fired when the checkbox state changes |
+
   </div>
 </div>
