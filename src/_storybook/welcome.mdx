@@ -6,9 +6,9 @@ import { Meta } from '@storybook/blocks';
   <h1>Colibri Design System</h1>
 </div>
 
-<div className='sb-section'>
-  # Welcome
-  Colibri is a themeable Web Components library built with Lit, designed to provide a consistent and customizable design system for your web applications.
+<div className="sb-section">
+  # Welcome Colibri is a themeable Web Components library built with Lit, designed to provide a
+  consistent and customizable design system for your web applications.
 </div>
 
 ## Quick Start
@@ -23,6 +23,9 @@ npm install @telesign/colibri @telesign/colibri-icons
 // Import libraries
 import { registerColibriComponents, registerAllComponents, ColButton, ColCard } from '@telesign/colibri';
 import { ColIcon } from '@telesign/colibri-icons';
+import '@telesign/colibri/styles/fonts/segoe-ui.css';
+import '@telesign/colibri/styles/fonts/courier.css';
+import '@telesign/colibri/styles/styles.css';
 
 // Option 1: Register specific components
 registerColibriComponents([ColButton, ColCard]);
