@@ -26,6 +26,4 @@ export const HTML_BOOLEAN_ATTRIBUTES = [
   'required',
   'reversed',
   'selected',
-  // Custom component boolean attributes
-  'isDisabled',
 ];
