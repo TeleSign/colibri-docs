@@ -7,11 +7,11 @@ type StoryArgs = {
   badgeText: string;
   variant: string;
   badgeIconName: string;
-  isDisabled: boolean;
+  disabled: boolean;
 };
 
 const meta = {
-  title: 'Atoms/Badges',
+  title: 'Atoms/Badge',
   component: 'col-badge',
   parameters: {
     docs: {
@@ -48,7 +48,7 @@ const meta = {
         defaultValue: { summary: 'emoji-circle' },
       },
     },
-    isDisabled: {
+    disabled: {
       control: 'boolean',
       description: 'If the badge is disabled or not',
       table: {
@@ -61,7 +61,7 @@ const meta = {
     badgeText: 'Text',
     variant: 'default',
     badgeIconName: 'emoji-circle',
-    isDisabled: false,
+    disabled: false,
   },
 } satisfies ColibriStoryMeta<StoryArgs>;
 
@@ -70,7 +70,7 @@ export default meta;
 type Story = ColibriStory<StoryArgs>;
 
 const renderBadge: Story['render'] = args => html`
-  <col-badge .variant=${args.variant} ?isDisabled=${args.isDisabled}>
+  <col-badge .variant=${args.variant} ?disabled=${args.disabled}>
     ${args.badgeIconName &&
     html`<col-icon slot="icon" name=${args.badgeIconName} size="12px"></col-icon>`}
     ${args.badgeText}
@@ -79,11 +79,11 @@ const renderBadge: Story['render'] = args => html`
 
 /**
  * Default story showing a badge with an icon and text, with controls for variant
- * and isDisabled. Use the controls panel to experiment with different values.
+ * and disabled. Use the controls panel to experiment with different values.
  */
 export const Default: Story = {
   render: args => html`
-    <col-badge .variant=${args.variant} ?isDisabled=${args.isDisabled}>
+    <col-badge .variant=${args.variant} ?disabled=${args.disabled}>
       <col-icon slot="icon" name=${args.badgeIconName} size="12px"></col-icon>
       ${args.badgeText}
     </col-badge>
@@ -99,7 +99,7 @@ export const SuccessVariantAndNoIcon: Story = {
     variant: 'success',
     badgeText: 'Success Text',
     badgeIconName: '',
-    isDisabled: false,
+    disabled: false,
   },
   parameters: {
     docs: {
@@ -119,7 +119,7 @@ export const WarningVariantAndNoText: Story = {
     variant: 'warning',
     badgeText: '',
     badgeIconName: 'trash',
-    isDisabled: false,
+    disabled: false,
   },
   parameters: {
     docs: {
@@ -143,13 +143,13 @@ export const InfoVariantAndDisabled: Story = {
     variant: 'info',
     badgeText: 'Info Disabled',
     badgeIconName: 'info-circle',
-    isDisabled: true,
+    disabled: true,
   },
   parameters: {
     docs: {
       source: {
         code: formatCodeString(
-          `<col-badge variant="info" isDisabled>
+          `<col-badge variant="info" disabled>
             <col-icon slot="icon" name="info-circle" size="12px"></col-icon>
               Info Disabled
           </col-badge>`

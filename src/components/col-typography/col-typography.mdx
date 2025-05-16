@@ -1,0 +1,387 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title, Typeset } from '@storybook/blocks';
+import * as ColTypographyStories from './col-typography.stories';
+
+<Meta of={ColTypographyStories} />
+
+export const SampleText = 'Lorem ipsum dolor sit amet';
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Typography</Title>
+    The Colibri Typography component provides consistent text styling across the application, with multiple variants, sizes, and states to match different design contexts.
+
+    <div className="col-doc__callout col-doc__callout--info">
+      <p>ℹ️</p>
+      <p>
+        For details on the core font families used by the Colibri Design System, please refer to the [Foundation Typography documentation](/docs/foundation-typography--overview#font-families).
+      </p>
+    </div>
+
+    <Subtitle>Table of contents</Subtitle>
+    - [How to use it](#how-to-use-it)
+    - [When to use it](#when-to-use-it)
+    - [Component preview](#component-preview)
+      - [Heading](#heading)
+      - [Subheading](#subheading)
+      - [Display](#display)
+      - [Label](#label)
+      - [Helper](#helper)
+      - [Link](#link)
+      - [Caption](#caption)
+      - [Code](#code)
+    - [Properties](#properties)
+    - [Interact with the component](#interact-with-the-component)
+
+    ## How to use it
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, registerAllComponents, ColTypography } from '@telesign/colibri';
+        ```
+    3. Register the web components:
+        ```typescript
+        // Option 1: Register specific components
+        registerColibriComponents([ColTypography]);
+
+        // Option 2: Register all Colibri components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-typography variant="heading" element="h1">Page Title</col-typography>
+        ```
+
+    ## When to use it
+    The Typography component provides consistent text styling for various contexts:
+
+    - **Headings** - For page titles, section headers, and content organization
+    - **Labels** - For form controls, with support for required and disabled states
+    - **Display** - For large, prominent text elements that need visual emphasis
+    - **Helper** - For providing additional context or assistance, including error messages
+    - **Links** - For interactive text elements that navigate to new content
+    - **Code** - For displaying inline code snippets or technical content
+    - **Caption** - For smaller supporting text like image captions or secondary information
+    - **Subheading** - For section subtitles or dividing content groups
+
+    ## Component preview
+
+    ### Heading
+    <div>
+      The Heading component is used to display a title or heading for a section of content. It can be used to create a main title, a section title, or for content organization.
+    </div>
+    <h4>Overview</h4>
+    <div className="col-doc__callout col-doc__callout--tip">
+      <p>💡</p>
+      <p>
+        You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+      </p>
+    </div>
+    By default, the Heading component is styled with a `color` of `default` based on the current theme and a `font-weight` of `400`.
+
+    **Basic version:**
+
+    <Canvas of={ColTypographyStories.Heading} />
+
+    **With icon:**
+    <Canvas of={ColTypographyStories.HeadingWithIcon} />
+
+    The `element` attribute can be set to a different HTML tag to **change the size of the text** (see next section for more information).
+
+    <h4>Sizes</h4>
+    The Heading variant offers 6 distinct sizes, corresponding to the standard HTML heading tags from `h1` to `h6`. This size is set using the `element` attribute on the component. For example:
+
+    ```html
+    <col-typography variant="heading" element="h1">Page Title</col-typography>
+    ```
+
+    The sizes are as follows:
+    - `h1`: `54px`
+    - `h2`: `42px`
+    - `h3`: `32px`
+    - `h4`: `28px`
+    - `h5`: `20px`
+    - `h6`: `16px`
+
+    <Typeset
+      fontSizes={[
+        '54px',
+        '42px',
+        '32px',
+        '28px',
+        '20px',
+        '16px',
+      ]}
+      sampleText={SampleText}
+    />
+
+    ### Subheading
+    <div>
+      The Subheading component is used to display a subtitle for a section of content. It can be used to create a subtitle, a section subtitle, or for content organization.
+    </div>
+    <h4>Overview</h4>
+    <div className="col-doc__callout col-doc__callout--tip">
+      <p>💡</p>
+      <p>
+        You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+      </p>
+    </div>
+    By default, the Subheading component is styled with a `color` of `default` based on the current theme and a `font-weight` of `600`.
+
+    **Basic version:**
+
+    <Canvas of={ColTypographyStories.Subheading} />
+
+    **With icon:**
+    <Canvas of={ColTypographyStories.SubheadingWithIcon} />
+
+    Alternatively, you can set the `element` attribute to an specific HTML tag:
+
+    ```html
+    <col-typography variant="subheading" element="p">Subheading</col-typography>
+    ```
+
+    While this won't affect the visual size of the Subheading text, it's a key feature for ensuring semantic HTML. This flexibility allows you to choose the most appropriate tag for the content's role in the document structure, enhancing clarity and accessibility without altering the subheading's appearance.
+
+    <h4>Sizes</h4>
+    The Subheading variant only offers one size: `16px`. Changing the `element` attribute will not affect the size of the text.
+
+    ### Display
+    <div>
+      The Display variant is used for rendering general text content within the application interface. It's suitable for paragraphs, descriptions, and other standard textual elements where specific heading, subheading, or caption styling isn't required.
+    </div>
+    <h4>Overview</h4>
+    <div className="col-doc__callout col-doc__callout--tip">
+      <p>💡</p>
+      <p>
+        You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+      </p>
+    </div>
+    By default, the Display component is styled with a `color` of `default` based on the current theme and a `font-weight` of `350` for the `xl` and `lg` size, `400` for the `md` and `sm` sizes.
+
+    <Canvas of={ColTypographyStories.Display}/>
+
+    Alternatively, you can set the `element` attribute to an specific HTML tag:
+
+    ```html
+    <col-typography variant="display" element="p">Display</col-typography>
+    ```
+
+    While this won't affect the visual size of the Display text, it's a key feature for ensuring semantic HTML. This flexibility allows you to choose the most appropriate tag for the content's role in the document structure, enhancing clarity and accessibility without altering the Display's appearance.
+
+    <h4>Sizes</h4>
+    The Display variant offers 4 different sizes. The size is set using the `size` attribute on the component:
+
+    ```html
+    <col-typography variant="display" size="lg">Display</col-typography>
+    ```
+
+    The sizes are as follows:
+    - `xl`: `54px`
+    - `lg`: `42px`
+    - `md`: `32px`
+    - `sm`: `28px`
+
+    <Typeset
+      fontSizes={[
+        '54px',
+        '42px',
+        '32px',
+        '28px',
+      ]}
+      fontWeights={[
+        '350',
+        '350',
+        '400',
+        '400',
+      ]}
+      sampleText={SampleText}
+    />
+
+    ### Label
+    <div>
+      The Label variant is specifically designed to accompany form controls, clearly identifying their purpose. It supports visual states like `required` (often indicated by an asterisk) and `disabled`, and can optionally include an icon for additional context or visual cues.
+    </div>
+    <h4>Overview</h4>
+    <div className="col-doc__callout col-doc__callout--tip">
+      <p>💡</p>
+      <p>
+        You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+      </p>
+    </div>
+    By default, the Label component is styled with a `color` of `default-darker` based on the current theme and a `font-weight` of `600`.
+
+    **Basic version:**
+    <Canvas of={ColTypographyStories.Label} />
+
+    **With icon:**
+    <Canvas of={ColTypographyStories.LabelWithIcon} />
+
+    **With required indicator:**
+    <Canvas of={ColTypographyStories.LabelWithRequiredIndicator} />
+
+    **With disabled state:**
+    <Canvas of={ColTypographyStories.LabelWithDisabledState} />
+
+    While the `variant="label"` attribute styles the text appropriately for a label, you can control the specific HTML tag rendered using the `element` attribute. For optimal semantic HTML and accessibility, especially when associating the label with a form control, it is strongly recommended to set `element="label"` as shown in the code snippets above and as follows:
+
+    ```html
+    <col-typography variant="label" element="label">Label</col-typography>
+    ```
+
+    If a generic inline label is needed (not directly tied to an input), using `element="span"` is also possible:
+
+    ```html
+    <col-typography variant="label" element="span">Label</col-typography>
+    ```
+
+    This choice primarily affects the document structure and accessibility, not the visual appearance provided by the `variant`.
+
+    <h4>Sizes</h4>
+    The Label variant only offers one size: `12px`.
+
+    ### Helper
+    <div>
+      The Helper variant is used to provide additional context or assistance, including error messages.
+    </div>
+    <h4>Overview</h4>
+    <div className="col-doc__callout col-doc__callout--tip">
+      <p>💡</p>
+      <p>
+        You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+      </p>
+    </div>
+    By default, the Helper component is styled with a `color` of `default-light` based on the current theme and a `font-weight` of `400`.
+
+    **Basic version:**
+    <Canvas of={ColTypographyStories.Helper} />
+
+    **With error state:**
+    <Canvas of={ColTypographyStories.HelperWithError} />
+
+    Alternatively, you can set the `element` attribute to an specific HTML tag:
+
+    ```html
+    <col-typography variant="helper" element="span">Helper</col-typography>
+    ```
+
+    While this won't affect the visual size of the Helper text, it's a key feature for ensuring semantic HTML. This flexibility allows you to choose the most appropriate tag for the content's role in the document structure, enhancing clarity and accessibility without altering the Helper's appearance.
+
+    <h4>Sizes</h4>
+    The Helper variant only offers one size: `12px`.
+
+    ### Link
+    <div>
+      The Link variant is used to create interactive text elements that navigate to new content.
+    </div>
+    <h4>Overview</h4>
+    <div className="col-doc__callout col-doc__callout--tip">
+      <p>💡</p>
+      <p>
+        You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+      </p>
+    </div>
+    By default, the Link component is styled with a `color` of `primary` based on the current theme and a `font-weight` of `400`.
+
+    **Basic version:**
+
+    <div className="col-doc__callout col-doc__callout--tip">
+      <p>💡</p>
+      <p>
+        Try hovering over the link to observe its hover state. For a detailed understanding of the link handling, please visit the [Link](/story/atoms-typography--link) section.
+      </p>
+    </div>
+    <Canvas of={ColTypographyStories.Link} />
+
+    **With disabled state:**
+    <Canvas of={ColTypographyStories.LinkWithDisabledState} />
+
+    For semantic HTML, it is recommended to set the `element` attribute to `a` as shown in the code snippets above and as follows:
+
+    ```html
+    <col-typography variant="link" element="a">Link</col-typography>
+    ```
+
+    <h4>Sizes</h4>
+    The Link variant offers 2 different sizes. The size is set using the `size` attribute on the component:
+
+    ```html
+    <col-typography variant="link" element="a" size="md">Link</col-typography>
+    ```
+
+    The sizes are as follows:
+    - `md`: `14px`
+    - `sm`: `12px`
+
+    <Typeset
+      fontSizes={[
+        '14px',
+        '12px',
+      ]}
+      sampleText={SampleText}
+    />
+
+    ### Caption
+    <div>
+      The Caption variant is used to provide additional context or assistance.
+    </div>
+    <h4>Overview</h4>
+    <div className="col-doc__callout col-doc__callout--tip">
+      <p>💡</p>
+      <p>
+        You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+      </p>
+    </div>
+    By default, the Caption component is styled with a `color` of `default-light` based on the current theme and a `font-weight` of `400`.
+
+
+    <Canvas of={ColTypographyStories.Caption} />
+
+    Alternatively, you can set the `element` attribute to an specific HTML tag:
+
+    ```html
+    <col-typography variant="caption" element="caption">Caption</col-typography>
+    ```
+
+    While this won't affect the visual size of the Caption text, it's a key feature for ensuring semantic HTML. This flexibility allows you to choose the most appropriate tag for the content's role in the document structure, enhancing clarity and accessibility without altering the Caption's appearance.
+
+    <h4>Sizes</h4>
+    The Caption variant only offers one size: `12px`.
+
+    ### Code
+    <div>
+      The Code variant is used to display inline code snippets or technical content.
+    </div>
+    <h4>Overview</h4>
+    <div className="col-doc__callout col-doc__callout--tip">
+      <p>💡</p>
+      <p>
+        You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+      </p>
+    </div>
+    By default, the Code component is styled with a `color` of `default` based on the current theme, a `font-weight` of `400` and a `font-family` of `Courier` `monospace`.
+
+    <Canvas of={ColTypographyStories.Code} />
+
+    Alternatively, you can set the `element` attribute to an specific HTML tag:
+
+    ```html
+    <col-typography variant="code" element="code">Code</col-typography>
+    ```
+
+    While this won't affect the visual size of the Code text, it's a key feature for ensuring semantic HTML. This flexibility allows you to choose the most appropriate tag for the content's role in the document structure, enhancing clarity and accessibility without altering the Code's appearance.
+
+    <h4>Sizes</h4>
+    The Code variant only offers one size: `12px`.
+
+    ## Properties
+
+    <ArgTypes of={ColTypographyStories} />
+
+    ## Interact with the component
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-typography--default) section.
+
+  </div>
+</div>
