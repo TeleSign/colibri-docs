@@ -11,7 +11,7 @@ type StoryArgs = {
 }
 
 const meta = {
-  title: 'Atoms/CheckboxCard',
+  title: 'Atoms/Checkbox Card',
   component: 'col-checkbox-card',
   parameters: {
     docs: {

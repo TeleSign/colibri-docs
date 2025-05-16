@@ -10,7 +10,7 @@ type StoryArgs = {
 }
 
 const meta = {
-  title: 'Atoms/CheckboxButton',
+  title: 'Atoms/Checkbox Button',
   component: 'col-checkbox-button',
   parameters: {
     docs: {
