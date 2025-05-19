@@ -1,17 +1,18 @@
-import { Meta } from '@storybook/blocks';
+import { Meta, Title, Subtitle } from '@storybook/blocks';
 
 <Meta title="Welcome" />
 
 <div className={`main-header`}>
-  <h1>Colibri Design System</h1>
+  <Title>Colibri Design System</Title>
 </div>
 
 <div className="sb-section">
-  # Welcome Colibri is a themeable Web Components library built with Lit, designed to provide a
+  <Subtitle>Welcome</Subtitle>
+  Colibri is a themeable Web Components library built with Lit, designed to provide a
   consistent and customizable design system for your web applications.
 </div>
 
-## Quick Start
+<Subtitle>Quick Start</Subtitle>
 
 Install the package:
 
@@ -23,8 +24,6 @@ npm install @telesign/colibri @telesign/colibri-icons
 // Import libraries
 import { registerColibriComponents, registerAllComponents, ColButton, ColCard } from '@telesign/colibri';
 import { ColIcon } from '@telesign/colibri-icons';
-import '@telesign/colibri/styles/fonts/segoe-ui.css';
-import '@telesign/colibri/styles/fonts/courier.css';
 import '@telesign/colibri/styles/styles.css';
 
 // Option 1: Register specific components
@@ -40,7 +39,7 @@ registerColibriComponents([ColIcon]);
 <col-icon name="home"></col-icon>
 ```
 
-## Core Features
+<Subtitle>Core Features</Subtitle>
 
 - 🎨 **Themeable**: Light, dark, and custom themes supported
 - 🔧 **Customizable**: Style tokens and CSS custom properties
@@ -49,7 +48,7 @@ registerColibriComponents([ColIcon]);
 - ⚡ **Performant**: Lightweight and fast
 - 🛠️ **Web Components**: Framework agnostic
 
-## Browser Support
+<Subtitle>Browser Support</Subtitle>
 
 Colibri components work in all modern browsers:
 
