@@ -1,6 +1,6 @@
 import { html } from 'lit';
 import { createElement } from 'react';
-import type { DecoratorFunction } from '@storybook/csf';
+import type { DecoratorFunction, StoryContext } from '@storybook/types';
 import { DocsContainer } from '@storybook/blocks';
 import type { Preview, WebComponentsRenderer } from '@storybook/web-components';
 import { registerColibriComponents, registerAllComponents } from '@telesign/colibri';
@@ -123,12 +123,10 @@ const getStyles = (options?: StylesOptions): string => {
  *
  * @example
  */
-const withThemeProvider: DecoratorFunction<
-  WebComponentsRenderer,
-  {
-    [x: string]: any;
-  }
-> = (story, context) => {
+const withThemeProvider: DecoratorFunction<WebComponentsRenderer> = (
+  story,
+  context: StoryContext<WebComponentsRenderer>
+) => {
   const {
     globals: { theme },
   } = context;
@@ -150,12 +148,10 @@ const withThemeProvider: DecoratorFunction<
  * @param {Object} context - The Storybook context object containing parameters
  * @returns {TemplateResult} An HTML template result with custom styling applied
  */
-const withCustomStyling: DecoratorFunction<
-  WebComponentsRenderer,
-  {
-    [x: string]: any;
-  }
-> = (story, context) => {
+const withCustomStyling: DecoratorFunction<WebComponentsRenderer> = (
+  story,
+  context: StoryContext<WebComponentsRenderer>
+) => {
   return html` <div style=${getStyles(context.parameters)}>${story()}</div> `;
 };
 
