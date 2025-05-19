@@ -5,11 +5,7 @@ import { DocsContainer } from '@storybook/blocks';
 import type { Preview, WebComponentsRenderer } from '@storybook/web-components';
 import { registerColibriComponents, registerAllComponents } from '@telesign/colibri';
 import { ColIcon } from '@telesign/colibri-icons';
-import '@telesign/colibri/styles/fonts/segoe-ui.css';
-import '@telesign/colibri/styles/fonts/courier.css';
-import '@telesign/colibri/styles/global.css';
-import '@telesign/colibri/styles/theme-default.css';
-import '@telesign/colibri/styles/theme-massive.css';
+import '@telesign/colibri/styles/styles.css';
 
 registerAllComponents();
 registerColibriComponents([ColIcon]);
