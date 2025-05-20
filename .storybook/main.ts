@@ -39,6 +39,7 @@ const config: StorybookConfig = {
       resolve: {
         alias: {
           '@': resolve(__dirname, '../src'),
+          '@root': resolve(__dirname, '..'),
         },
       },
       build: {

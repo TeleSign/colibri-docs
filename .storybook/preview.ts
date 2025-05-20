@@ -123,7 +123,7 @@ const getStyles = (options?: StylesOptions): string => {
  *
  * @example
  */
-const withThemeProvider: DecoratorFunction<WebComponentsRenderer> = (
+export const withThemeProvider: DecoratorFunction<WebComponentsRenderer> = (
   story,
   context: StoryContext<WebComponentsRenderer>
 ) => {
@@ -148,7 +148,7 @@ const withThemeProvider: DecoratorFunction<WebComponentsRenderer> = (
  * @param {Object} context - The Storybook context object containing parameters
  * @returns {TemplateResult} An HTML template result with custom styling applied
  */
-const withCustomStyling: DecoratorFunction<WebComponentsRenderer> = (
+export const withCustomStyling: DecoratorFunction<WebComponentsRenderer> = (
   story,
   context: StoryContext<WebComponentsRenderer>
 ) => {
@@ -181,7 +181,7 @@ const preview: Preview = {
       default: 'Figma',
     },
   },
-  decorators: [withThemeProvider, withCustomStyling],
+  decorators: [withThemeProvider],
   globalTypes: {
     theme: {
       name: 'Theme',
