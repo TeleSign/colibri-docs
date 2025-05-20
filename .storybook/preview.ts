@@ -1,15 +1,11 @@
 import { html } from 'lit';
 import { createElement } from 'react';
-import type { DecoratorFunction } from '@storybook/csf';
+import type { DecoratorFunction, StoryContext } from '@storybook/types';
 import { DocsContainer } from '@storybook/blocks';
 import type { Preview, WebComponentsRenderer } from '@storybook/web-components';
 import { registerColibriComponents, registerAllComponents } from '@telesign/colibri';
 import { ColIcon } from '@telesign/colibri-icons';
-import '@telesign/colibri/styles/fonts/segoe-ui.css';
-import '@telesign/colibri/styles/fonts/courier.css';
-import '@telesign/colibri/styles/global.css';
-import '@telesign/colibri/styles/theme-default.css';
-import '@telesign/colibri/styles/theme-massive.css';
+import '@telesign/colibri/styles/styles.css';
 
 registerAllComponents();
 registerColibriComponents([ColIcon]);
@@ -127,12 +123,10 @@ const getStyles = (options?: StylesOptions): string => {
  *
  * @example
  */
-const withThemeProvider: DecoratorFunction<
-  WebComponentsRenderer,
-  {
-    [x: string]: any;
-  }
-> = (story, context) => {
+const withThemeProvider: DecoratorFunction<WebComponentsRenderer> = (
+  story,
+  context: StoryContext<WebComponentsRenderer>
+) => {
   const {
     globals: { theme },
   } = context;
@@ -154,12 +148,10 @@ const withThemeProvider: DecoratorFunction<
  * @param {Object} context - The Storybook context object containing parameters
  * @returns {TemplateResult} An HTML template result with custom styling applied
  */
-const withCustomStyling: DecoratorFunction<
-  WebComponentsRenderer,
-  {
-    [x: string]: any;
-  }
-> = (story, context) => {
+const withCustomStyling: DecoratorFunction<WebComponentsRenderer> = (
+  story,
+  context: StoryContext<WebComponentsRenderer>
+) => {
   return html` <div style=${getStyles(context.parameters)}>${story()}</div> `;
 };
 

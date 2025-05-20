@@ -56,6 +56,7 @@ All web components must be registered in `.storybook/preview.ts` before they can
 // .storybook/preview.ts
 import { registerColibriComponents, registerAllComponents } from '@telesign/colibri';
 import { ColIcon } from '@telesign/colibri-icons';
+import '@telesign/colibri/styles/styles.css';
 
 // Register all components from @telesign/colibri
 registerAllComponents();
