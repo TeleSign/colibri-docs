@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - 'release/current'
-      - 'feature/EOA-1223_deployment_to_github_pages'
   workflow_dispatch:
 
 permissions:
