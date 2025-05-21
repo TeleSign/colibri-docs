@@ -190,7 +190,7 @@ const meta = {
     iconSize: {
       control: 'text',
       description:
-        'Size of the slotted icon, mapping to the `size` prop of the `Icon` component. Only available for `heading`, `subheading`, and `label` variants. Refer to [Icon documentation](../?path=/docs/atoms-icons--overview) for more details.',
+        'Size of the slotted icon, mapping to the `size` prop of the `Icon` component. Only available for `heading`, `subheading`, and `label` variants. Refer to [Icon documentation](./?path=/docs/atoms-icons--overview) for more details.',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '12px' },
@@ -200,7 +200,7 @@ const meta = {
     iconName: {
       control: 'text',
       description:
-        'Name of the slotted icon mapping to the `name` prop of the `Icon` component. Only available for `heading`, `subheading`, and `label` variants. Refer to [Icon documentation](../?path=/docs/atoms-icons--overview) for more details.',
+        'Name of the slotted icon mapping to the `name` prop of the `Icon` component. Only available for `heading`, `subheading`, and `label` variants. Refer to [Icon documentation](./?path=/docs/atoms-icons--overview) for more details.',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'info-circle' },
