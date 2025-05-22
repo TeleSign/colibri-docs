@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'release/current'
+      - 'testing/github-pages'
   workflow_dispatch:
 
 permissions:
