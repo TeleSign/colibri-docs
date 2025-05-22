@@ -6,9 +6,38 @@ import * as ColCheckboxCardStories from './col-checkbox-card.stories';
 <div className="col-doc__wrapper">
   <div className="col-doc__container">
     <Title>Checkbox Card</Title>
-    <Subtitle>
-      A selectable card component with checkbox functionality that can contain various content.
-    </Subtitle>
+    Checkboxes card are used for multiple choices, not for mutually exclusive choices. Each checkbox card works independently from other checkboxes card in the list, therefore checking an additional box does not affect any other selections.
+
+    ## How to use it
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, ColCheckboxCard } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web component:
+        ```typescript
+        registerColibriComponents([ColCheckboxCard]);
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-checkbox-card title="Card Title" description="Card description text">
+        ...
+        </col-checkbox-card>
+        ```
+
+    ## When to use it
+    The "Checkbox Button" component is a common and versatile user interface element used to allow users to select one or more options from a list:
+
+    - **Forms:** checkboxes are used to allow users to select multiple options from a list.
+    - **Filtering and batch action:** Checkboxes are used to allow users to filter content by categories, attributes or tags.
+    - **Settings:** Check boxes are used to allow users to enable or disable features, set language preferences, etc.
+    - **Item selection and Lists with sub-selections:** In file management applications, checkboxes are used to allow users to select multiple items to perform actions such as delete, move or set the action according to the functionalities of their design.
+    - Use the indeterminate state when the checkbox contains a sublist of selections, some of which are selected, and some unselected. In addition to default, selected, and indeterminate states, checkboxes also have states for hover, active, focus and disabled.
+
 
     <h2>Usage</h2>
     <p>
@@ -37,5 +66,6 @@ import * as ColCheckboxCardStories from './col-checkbox-card.stories';
 
     <h2>Properties</h2>
     <ArgTypes of={ColCheckboxCardStories} />
+
   </div>
 </div>

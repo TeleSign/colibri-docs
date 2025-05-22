@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { fn } from '@storybook/test';
 import { ColibriStory, ColibriStoryMeta } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
 
@@ -7,7 +8,8 @@ type StoryArgs = {
   disabled: boolean;
   indeterminate: boolean;
   customLabel: boolean;
-}
+  change: () => void;
+};
 
 const meta = {
   title: 'Atoms/Checkbox',
@@ -19,181 +21,205 @@ const meta = {
         transform: formatCodeString,
       },
     },
-    argTypes: {
-      checked: {
-        control: 'boolean',
-        description: 'Controls the checked state of the checkbox',
-        table: {
-          type: { summary: 'boolean' },
-          defaultValue: { summary: 'false' },
-        },
+  },
+  argTypes: {
+    checked: {
+      control: 'boolean',
+      description: 'Controls the checked state of the checkbox',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+        category: 'core',
       },
-      disabled: {
-        control: 'boolean',
-        description: 'Disables the checkbox',
-        table: {
-          type: { summary: 'boolean' },
-          defaultValue: { summary: 'false' },
-        },
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'Disables the checkbox',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+        category: 'core',
       },
-      indeterminate: {
-        control: 'boolean',
-        description: 'Sets the checkbox to an indeterminate state',
-        table: {
-          type: { summary: 'boolean' },
-          defaultValue: { summary: 'false' },
-        },
+    },
+    indeterminate: {
+      control: 'boolean',
+      description: 'Sets the checkbox to an indeterminate state',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+        category: 'core',
       },
-      customLabel: {
-        control: 'boolean',
-        description: 'Enables custom label slot',
-        table: {
-          type: { summary: 'boolean' },
-          defaultValue: { summary: 'false' },
-        },
+    },
+    customLabel: {
+      control: 'boolean',
+      description: 'Enables custom label slot',
+      table: {
+        type: { summary: 'boolean' },
+        category: 'core',
+        defaultValue: { summary: 'false' },
       },
-    }
+    },
+    change: {
+      action: 'clicked',
+      description: 'Fired when the checkbox state changes.',
+      table: {
+        category: 'Events',
+        type: { summary: '{ checked: boolean, indeterminate: boolean }' },
+      },
+    },
   },
   args: {
     checked: false,
     disabled: false,
     indeterminate: false,
     customLabel: false,
+    change: fn(),
   },
-} satisfies ColibriStoryMeta<StoryArgs>
+} satisfies ColibriStoryMeta<StoryArgs>;
 
 export default meta;
 
 type Story = ColibriStory<StoryArgs>;
 
 export const Default: Story = {
-  render: ({ disabled }) =>
-    html`
-      <div>
-        <col-checkbox ?disabled=${disabled}>Default checkbox</col-checkbox>
-      </div>
-    `
-}
+  render: ({ disabled }) => html`
+    <div>
+      <col-checkbox ?disabled=${disabled}>Default checkbox</col-checkbox>
+    </div>
+  `,
+};
 
 export const Checked: Story = {
   args: {
     checked: true,
   },
-  render: ({ checked, disabled }) =>
-    html`
-      <div>
-        <col-checkbox ?checked=${checked} ?disabled=${disabled}>Checked state</col-checkbox>
-      </div>
-    `
-}
+  render: ({ checked, disabled }) => html`
+    <div>
+      <col-checkbox ?checked=${checked} ?disabled=${disabled}>Checked state</col-checkbox>
+    </div>
+  `,
+};
 
 export const Indeterminate: Story = {
   args: {
     indeterminate: true,
   },
-  render: ({ indeterminate, disabled }) =>
-    html`
-      <div>
-        <col-checkbox ?indeterminate=${indeterminate} ?disabled=${disabled}>Indeterminate state</col-checkbox>
-      </div>
-    `
-}
+  render: ({ indeterminate, disabled }) => html`
+    <div>
+      <col-checkbox ?indeterminate=${indeterminate} ?disabled=${disabled}
+        >Indeterminate state</col-checkbox
+      >
+    </div>
+  `,
+};
 
 export const Disabled: Story = {
   args: {
     disabled: true,
   },
-  render: ({ disabled }) =>
-    html`
-      <div>
-        <col-checkbox ?disabled=${disabled}>Disabled checkbox</col-checkbox>
-      </div>
-    `
-}
+  render: ({ disabled }) => html`
+    <div>
+      <col-checkbox ?disabled=${disabled}>Disabled checkbox</col-checkbox>
+    </div>
+  `,
+};
 
 export const DisabledChecked: Story = {
   args: {
     disabled: true,
     checked: true,
   },
-  render: ({ disabled, checked }) =>
-    html`
-      <div>
-        <col-checkbox ?disabled=${disabled} ?checked=${checked}>Disabled and checked</col-checkbox>
-      </div>
-    `
-}
+  render: ({ disabled, checked }) => html`
+    <div>
+      <col-checkbox ?disabled=${disabled} ?checked=${checked}>Disabled and checked</col-checkbox>
+    </div>
+  `,
+};
 
 export const DisabledIndeterminate: Story = {
   args: {
     disabled: true,
     indeterminate: true,
   },
-  render: ({ disabled, indeterminate }) =>
-    html`
-      <div>
-        <col-checkbox ?disabled=${disabled} ?indeterminate=${indeterminate}>Disabled and indeterminate</col-checkbox>
-      </div>
-    `
-}
+  render: ({ disabled, indeterminate }) => html`
+    <div>
+      <col-checkbox ?disabled=${disabled} ?indeterminate=${indeterminate}
+        >Disabled and indeterminate</col-checkbox
+      >
+    </div>
+  `,
+};
 
 export const Label: Story = {
-  render: ({ disabled, checked, indeterminate }) =>
-    html`
-      <div>
-        <col-checkbox ?disabled=${disabled} ?checked=${checked} ?indeterminate=${indeterminate}>With standard label</col-checkbox>
-      </div>
-    `
-}
+  render: ({ disabled, checked, indeterminate }) => html`
+    <div>
+      <col-checkbox ?disabled=${disabled} ?checked=${checked} ?indeterminate=${indeterminate}
+        >With standard label</col-checkbox
+      >
+    </div>
+  `,
+};
 
 export const CustomLabel: Story = {
   args: {
     customLabel: true,
   },
-  render: ({ customLabel, disabled, checked, indeterminate }) =>
-    html`
-      <div>
-        <col-checkbox ?disabled=${disabled} ?checked=${checked} ?indeterminate=${indeterminate} ?customLabel=${customLabel}>
-          <div slot="label">With custom label formatting</div>
-        </col-checkbox>
-      </div>
-    `
-}
+  render: ({ customLabel, disabled, checked, indeterminate }) => html`
+    <div>
+      <col-checkbox
+        ?disabled=${disabled}
+        ?checked=${checked}
+        ?indeterminate=${indeterminate}
+        ?customLabel=${customLabel}
+      >
+        <div slot="label">With custom label formatting</div>
+      </col-checkbox>
+    </div>
+  `,
+};
 
 export const WithIcon: Story = {
   args: {
     customLabel: true,
   },
-  render: ({ customLabel, disabled, checked, indeterminate }) =>
-    html`
-      <div>
-        <col-checkbox ?disabled=${disabled} ?checked=${checked} ?indeterminate=${indeterminate} ?customLabel=${customLabel}>
-          <div slot="label">
-            <col-icon name="emoji-circle"></col-icon>
-            With icon
-          </div>
-        </col-checkbox>
-      </div>
-    `
-}
+  render: ({ customLabel, disabled, checked, indeterminate }) => html`
+    <div>
+      <col-checkbox
+        ?disabled=${disabled}
+        ?checked=${checked}
+        ?indeterminate=${indeterminate}
+        ?customLabel=${customLabel}
+      >
+        <div slot="label">
+          <col-icon name="emoji-circle"></col-icon>
+          With icon
+        </div>
+      </col-checkbox>
+    </div>
+  `,
+};
 
 export const WithMultipleIcons: Story = {
   args: {
     customLabel: true,
   },
-  render: ({ customLabel, disabled, checked, indeterminate }) =>
-    html`
-      <div>
-        <col-checkbox ?disabled=${disabled} ?checked=${checked} ?indeterminate=${indeterminate} ?customLabel=${customLabel}>
-          <div slot="label" style="display: flex; align-items: center; gap: 4px;">
-            <col-icon name="check-circle"></col-icon>
-            With multiple icons
-            <col-icon name="info-circle"></col-icon>
-          </div>
-        </col-checkbox>
-      </div>
-    `
-}
+  render: ({ customLabel, disabled, checked, indeterminate }) => html`
+    <div>
+      <col-checkbox
+        ?disabled=${disabled}
+        ?checked=${checked}
+        ?indeterminate=${indeterminate}
+        ?customLabel=${customLabel}
+      >
+        <div slot="label" style="display: flex; align-items: center; gap: 4px;">
+          <col-icon name="check-circle"></col-icon>
+          With multiple icons
+          <col-icon name="info-circle"></col-icon>
+        </div>
+      </col-checkbox>
+    </div>
+  `,
+};
 
 export const InteractiveControlledExample: Story = {
   render: () => {
@@ -209,8 +235,11 @@ export const InteractiveControlledExample: Story = {
       }
       document.querySelector('#controlled-checkbox').checked = checked;
       document.querySelector('#controlled-checkbox').indeterminate = indeterminate;
-      document.querySelector('#state-display').textContent =
-        indeterminate ? 'Indeterminate' : (checked ? 'Checked' : 'Unchecked');
+      document.querySelector('#state-display').textContent = indeterminate
+        ? 'Indeterminate'
+        : checked
+          ? 'Checked'
+          : 'Unchecked';
     };
 
     return html`
@@ -226,5 +255,5 @@ export const InteractiveControlledExample: Story = {
         </div>
       </div>
     `;
-  }
-}
+  },
+};

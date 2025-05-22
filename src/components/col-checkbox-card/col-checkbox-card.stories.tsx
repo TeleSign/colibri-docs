@@ -8,7 +8,7 @@ type StoryArgs = {
   title: string;
   description: string;
   customContent: boolean;
-}
+};
 
 const meta = {
   title: 'Atoms/Checkbox Card',
@@ -20,48 +20,53 @@ const meta = {
         transform: formatCodeString,
       },
     },
-    argTypes: {
-      checked: {
-        control: 'boolean',
-        description: 'Controls the checked state of the checkbox card',
-        table: {
-          type: { summary: 'boolean' },
-          defaultValue: { summary: 'false' },
-        },
+  },
+  argTypes: {
+    checked: {
+      control: 'boolean',
+      description: 'Controls the checked state of the checkbox card',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+        category: 'core',
       },
-      disabled: {
-        control: 'boolean',
-        description: 'Disables the checkbox card',
-        table: {
-          type: { summary: 'boolean' },
-          defaultValue: { summary: 'false' },
-        },
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'Disables the checkbox card',
+      table: {
+        type: { summary: 'boolean' },
+        category: 'core',
+        defaultValue: { summary: 'false' },
       },
-      title: {
-        control: 'text',
-        description: 'Title text for the checkbox card',
-        table: {
-          type: { summary: 'string' },
-          defaultValue: { summary: '""' },
-        },
+    },
+    title: {
+      control: 'text',
+      description: 'Title text for the checkbox card',
+      table: {
+        type: { summary: 'string' },
+        category: 'core',
+        defaultValue: { summary: '""' },
       },
-      description: {
-        control: 'text',
-        description: 'Description text for the checkbox card',
-        table: {
-          type: { summary: 'string' },
-          defaultValue: { summary: '""' },
-        },
+    },
+    description: {
+      control: 'text',
+      description: 'Description text for the checkbox card',
+      table: {
+        type: { summary: 'string' },
+        category: 'core',
+        defaultValue: { summary: '""' },
       },
-      customContent: {
-        control: 'boolean',
-        description: 'Enables custom content slot',
-        table: {
-          type: { summary: 'boolean' },
-          defaultValue: { summary: 'false' },
-        },
+    },
+    customContent: {
+      control: 'boolean',
+      description: 'Enables custom content slot',
+      table: {
+        type: { summary: 'boolean' },
+        category: 'core',
+        defaultValue: { summary: 'false' },
       },
-    }
+    },
   },
   args: {
     checked: false,
@@ -70,77 +75,69 @@ const meta = {
     description: 'Card description text',
     customContent: false,
   },
-} satisfies ColibriStoryMeta<StoryArgs>
+} satisfies ColibriStoryMeta<StoryArgs>;
 
 export default meta;
 
 type Story = ColibriStory<StoryArgs>;
 
 export const Default: Story = {
-  render: ({ checked, disabled, title, description }) =>
-    html`
-      <div>
-        <col-checkbox-card
-          ?checked=${checked}
-          ?disabled=${disabled}
-          title=${title}
-          description=${description}
-        ></col-checkbox-card>
-      </div>
-    `
-}
+  render: ({ checked, disabled, title, description }) => html`
+    <div>
+      <col-checkbox-card
+        ?checked=${checked}
+        ?disabled=${disabled}
+        title=${title}
+        description=${description}
+      ></col-checkbox-card>
+    </div>
+  `,
+};
 
 export const Checked: Story = {
   args: {
     checked: true,
   },
-  render: ({ checked, disabled, title, description }) =>
-    html`
-      <div>
-        <col-checkbox-card
-          ?checked=${checked}
-          ?disabled=${disabled}
-          title=${title}
-          description=${description}
-        ></col-checkbox-card>
-      </div>
-    `
-}
+  render: ({ checked, disabled, title, description }) => html`
+    <div>
+      <col-checkbox-card
+        ?checked=${checked}
+        ?disabled=${disabled}
+        title=${title}
+        description=${description}
+      ></col-checkbox-card>
+    </div>
+  `,
+};
 
 export const Disabled: Story = {
   args: {
     disabled: true,
   },
-  render: ({ checked, disabled, title, description }) =>
-    html`
-      <div>
-        <col-checkbox-card
-          ?checked=${checked}
-          ?disabled=${disabled}
-          title=${title}
-          description=${description}
-        ></col-checkbox-card>
-      </div>
-    `
-}
+  render: ({ checked, disabled, title, description }) => html`
+    <div>
+      <col-checkbox-card
+        ?checked=${checked}
+        ?disabled=${disabled}
+        title=${title}
+        description=${description}
+      ></col-checkbox-card>
+    </div>
+  `,
+};
 
 export const CustomContent: Story = {
   args: {
     customContent: true,
   },
-  render: ({ checked, disabled, customContent }) =>
-    html`
-      <div>
-        <col-checkbox-card
-          ?checked=${checked}
-          ?disabled=${disabled}
-          ?customContent=${customContent}
-        >
-          <div style="padding: 8px 0;">
-            <h3 style="margin: 0 0 8px 0;">Custom Content</h3>
-            <p style="margin: 0;">You can add any custom content here</p>
-          </div>
-        </col-checkbox-card>
-      </div>
-    `
-}
+  render: ({ checked, disabled, customContent }) => html`
+    <div>
+      <col-checkbox-card ?checked=${checked} ?disabled=${disabled} ?customContent=${customContent}>
+        <div style="padding: 8px 0;">
+          <h3 style="margin: 0 0 8px 0;">Custom Content</h3>
+          <p style="margin: 0;">You can add any custom content here</p>
+        </div>
+      </col-checkbox-card>
+    </div>
+  `,
+};
