@@ -6,23 +6,17 @@ import * as ColBreadcrumbStories from './col-breadcrumb.stories';
 <div className="col-doc__wrapper">
   <div className="col-doc__container">
     <Title>Breadcrumb</Title>
-    The Colibri Breadcrumb component provides a navigation trail that helps users understand their current location within a website or application hierarchy. It consists of a container (`col-breadcrumb`) and individual items (`col-breadcrumb-item`) that represent each level of navigation.
-
-    <div>
-      <p>
-        Breadcrumbs improve navigation and user orientation, especially in complex hierarchical structures. They provide a clear path back to parent pages and reduce the number of clicks needed to navigate to higher-level pages.
-      </p>
-    </div>
+    The Colibri Breadcrumb component provides a navigation container that displays a trail of links to help users understand their current location within a website or application hierarchy. It works in conjunction with `col-breadcrumb-item` components to create a complete navigation trail.
+    The Breadcrumb component is a container that manages the overall navigation trail. For individual navigation items, see the [Breadcrumb Item](/docs/navigation-breadcrumb-item--overview) documentation.
 
     <Subtitle>Table of contents</Subtitle>
+    - [How to use it](#how-to-use-it)
+    - [When to use it](#when-to-use-it)
     - [Component preview](#component-preview)
       - [Basic breadcrumb](#basic-breadcrumb)
-      - [With custom separator](#with-custom-separator)
-      - [With links](#with-links)
-      - [With router integration](#with-router-integration)
-      - [Mixed navigation types](#mixed-navigation-types)
+      - [Custom separator](#custom-separator)
+      - [Custom aria label](#custom-aria-label)
     - [Properties](#properties)
-    - [Events](#events)
     - [Accessibility](#accessibility)
     - [Interact with the component](#interact-with-the-component)
 
@@ -47,17 +41,23 @@ import * as ColBreadcrumbStories from './col-breadcrumb.stories';
     4. Use it in your HTML:
         ```html
         <col-breadcrumb>
-          <col-breadcrumb-item href="/">Home</col-breadcrumb-item>
-          <col-breadcrumb-item href="/products">Products</col-breadcrumb-item>
-          <col-breadcrumb-item current>Product Details</col-breadcrumb-item>
+          <col-breadcrumb-item>Home</col-breadcrumb-item>
+          <col-breadcrumb-item>Products</col-breadcrumb-item>
+          <col-breadcrumb-item current>Details</col-breadcrumb-item>
         </col-breadcrumb>
         ```
+
+    The breadcrumb container:
+    - Provides semantic navigation structure
+    - Manages separator consistency across all items
+    - Ensures proper accessibility attributes
+    - Maintains visual consistency
 
     ## Component preview
 
     ### Basic breadcrumb
     <div>
-      The basic breadcrumb displays a simple navigation trail without any interactive elements. This is useful for showing the current location without providing navigation functionality.
+      The basic breadcrumb container wraps breadcrumb items and provides the navigation structure. By default, it uses a forward slash (/) as the separator between items.
     </div>
     <h4>Overview</h4>
     <div className="col-doc__callout col-doc__callout--tip">
@@ -67,118 +67,71 @@ import * as ColBreadcrumbStories from './col-breadcrumb.stories';
       </p>
     </div>
 
-    <Canvas of={ColBreadcrumbStories.Basic} />
+    <Canvas of={ColBreadcrumbStories.Default} />
 
-    The last item in the breadcrumb trail should have the `current` attribute to indicate the current page. This item is not clickable and has different styling to show it's the active page.
+    The breadcrumb container automatically:
+    - Applies the separator to all child breadcrumb items
+    - Provides proper navigation semantics
+    - Handles responsive layout with wrapping when needed
 
-    ### With custom separator
+    ### Custom separator
     <div>
-      You can customize the separator between breadcrumb items using the `separator` prop on the container. This allows you to match your design system's visual language.
+      You can customize the separator character displayed between breadcrumb items using the `separator` property. This allows you to match your design system's visual language.
     </div>
 
-    <Canvas of={ColBreadcrumbStories.WithCustomSeparator} />
+    <Canvas of={ColBreadcrumbStories.CustomSeparator} />
 
-    Common separator options include:
-    - `/` (default)
-    - `>`
-    - `→`
-    - `•`
-    - `|`
+    Popular separator options include:
+    - `/` (default) - Forward slash
+    - `>` - Greater than symbol
+    - `→` - Arrow
+    - `•` - Bullet
+    - `|` - Pipe
+    - `»` - Double angle quote
+    - `-` - Dash
 
-    ### With links
+    The separator is automatically applied to all breadcrumb items within the container.
+
+    ### Custom aria label
     <div>
-      Add the `href` attribute to breadcrumb items to make them navigable. This creates standard HTML links that work with browser navigation.
+      For better accessibility, you can customize the aria-label of the navigation element to provide more context about the specific breadcrumb trail.
     </div>
 
-    <Canvas of={ColBreadcrumbStories.WithLinks} />
+    <Canvas of={ColBreadcrumbStories.CustomAriaLabel} />
 
-    You can also use the `newTab` property to open links in a new tab:
-
-    ```html
-    <col-breadcrumb-item href="/products" newTab>Products</col-breadcrumb-item>
-    ```
-
-    ### With router integration
-    <div>
-      For single-page applications, use the `router` property along with the `breadcrumb-click` event to handle navigation without page refreshes.
-    </div>
-
-    <Canvas of={ColBreadcrumbStories.WithRouter} />
-
-    When `router` is set to `true`, clicking a breadcrumb item will:
-    1. Prevent the default link navigation
-    2. Emit a `breadcrumb-click` event with navigation details
-    3. Allow your application router to handle the navigation
-
-    Example event handler:
-    ```javascript
-    document.addEventListener('breadcrumb-click', (event) => {
-      const { value, label, index, href } = event.detail;
-      // Handle navigation with your router
-      router.navigate(href || value);
-    });
-    ```
-
-    ### Mixed navigation types
-    <div>
-      You can combine different navigation types within the same breadcrumb. This is useful when some items should navigate with regular links while others use router navigation.
-    </div>
-
-    <Canvas of={ColBreadcrumbStories.MixedNavigation} />
+    This is particularly useful when you have multiple breadcrumb trails on the same page, such as:
+    - Main site navigation
+    - Category navigation
+    - User account navigation
 
     ## Properties
 
-    ### col-breadcrumb
-
-    | Property | Type | Default | Description |
-    |----------|------|---------|-------------|
-    | `ariaLabel` | `string` | `'Breadcrumb navigation'` | Accessibility label for the navigation element |
-    | `separator` | `string` | `'/'` | Character or string used to separate breadcrumb items |
-
-    ### col-breadcrumb-item
-
-    | Property | Type | Default | Description |
-    |----------|------|---------|-------------|
-    | `href` | `string` | `''` | URL for the breadcrumb link |
-    | `current` | `boolean` | `false` | Indicates if this is the current page |
-    | `separator` | `string` | `'/'` | Separator character (inherited from parent) |
-    | `newTab` | `boolean` | `false` | Opens the link in a new tab |
-    | `value` | `string` | `''` | Value passed in the breadcrumb-click event |
-    | `router` | `boolean` | `false` | Enables router mode for SPA navigation |
-
-    ## Events
-
-    ### breadcrumb-click
-
-    Emitted when a breadcrumb item is clicked. The event detail contains:
-
-    ```typescript
-    interface BreadcrumbClickDetail {
-      value: string;     // The value prop of the clicked item
-      label: string;     // The text content of the clicked item
-      index: number;     // The index of the item in the breadcrumb
-      href?: string;     // The href if provided
-    }
-    ```
+    <ArgTypes of={ColBreadcrumbStories} include={['ariaLabel', 'separator']} />
 
     ## Accessibility
 
-    The Breadcrumb component includes several accessibility features:
+    The Breadcrumb container component includes several built-in accessibility features:
 
-    - **ARIA navigation landmark** - The breadcrumb is wrapped in a `<nav>` element with an appropriate `aria-label`
-    - **Screen reader support** - Includes "You are here:" text for screen readers
-    - **Current page indication** - The current page is marked with `aria-current="page"`
-    - **Keyboard navigation** - All interactive items are keyboard accessible
-    - **Semantic HTML** - Uses appropriate HTML elements for structure
+    - **Semantic HTML** - Uses `<nav>` element to identify the breadcrumb as a navigation landmark
+    - **ARIA label** - Customizable `aria-label` attribute for the navigation element (defaults to "Breadcrumb navigation")
+    - **Screen reader support** - Includes hidden "You are here:" text for screen reader users
+    - **Keyboard navigation** - Ensures all interactive breadcrumb items are keyboard accessible
 
     Best practices:
-    - Always mark the current page with the `current` attribute
-    - Provide meaningful link text that makes sense out of context
-    - Keep breadcrumb trails concise and logical
-    - Ensure sufficient color contrast for separators and links
+    - Use descriptive aria-labels when multiple breadcrumbs exist on a page
+    - Ensure breadcrumb items have sufficient color contrast
+    - Keep the breadcrumb trail concise and logical
+    - Always mark the current page item with the `current` attribute
+
+    <div className="col-doc__callout col-doc__callout--info">
+      <p>ℹ️</p>
+      <p>
+        For more information about individual breadcrumb items and their interactive features, see the [Breadcrumb Item](/docs/navigation-breadcrumb-item--overview) documentation.
+      </p>
+    </div>
 
     ## Interact with the component
-    To interact with the component, test different configurations, and verify accessibility compliance, navigate to the [Breadcrumb](/story/navigation-breadcrumb--breadcrumb) section.
+    To interact with the component, test different separators, and verify accessibility compliance, navigate to the [Default](/story/navigation-breadcrumb--default) section.
 
   </div>
 </div>

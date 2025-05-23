@@ -5,14 +5,6 @@ import { formatCodeString } from '@/utils';
 type BreadcrumbStoryArgs = {
   ariaLabel: string;
   separator: string;
-  items: Array<{
-    text: string;
-    href?: string;
-    current?: boolean;
-    newTab?: boolean;
-    value?: string;
-    router?: boolean;
-  }>;
 };
 
 const meta = {
@@ -46,19 +38,10 @@ const meta = {
         category: 'Appearance',
       },
     },
-    items: {
-      control: 'object',
-      description: 'Array of breadcrumb items with their properties',
-      table: {
-        type: { summary: 'Array<BreadcrumbItem>' },
-        category: 'Content',
-      },
-    },
   },
   args: {
     ariaLabel: 'Breadcrumb navigation',
     separator: '/',
-    items: [],
   },
 } satisfies ColibriStoryMeta<BreadcrumbStoryArgs>;
 
@@ -67,138 +50,56 @@ export default meta;
 type Story = ColibriStory<BreadcrumbStoryArgs>;
 
 /**
- * Reusable render function for breadcrumb component
+ * Default breadcrumb container with basic navigation items
  */
-const renderBreadcrumb: Story['render'] = args => html`
-  <col-breadcrumb
-    ariaLabel=${args.ariaLabel}
-    separator=${args.separator}
-  >
-    ${args.items.map(item => html`
-      <col-breadcrumb-item
-        href=${item.href || ''}
-        ?current=${item.current}
-        ?newTab=${item.newTab}
-        ?router=${item.router}
-        value=${item.value || ''}
-      >
-        ${item.text}
-      </col-breadcrumb-item>
-    `)}
-  </col-breadcrumb>
-`;
-
-/**
- * Basic breadcrumb showing a simple navigation trail
- */
-export const Basic: Story = {
+export const Default: Story = {
   args: {
-    items: [
-      { text: 'Home' },
-      { text: 'Products' },
-      { text: 'Electronics' },
-      { text: 'Phones', current: true },
-    ],
-  },
-  render: renderBreadcrumb,
-};
-
-/**
- * Breadcrumb with custom separator
- */
-export const WithCustomSeparator: Story = {
-  args: {
-    separator: '>',
-    items: [
-      { text: 'Home' },
-      { text: 'Documentation' },
-      { text: 'Components' },
-      { text: 'Breadcrumb', current: true },
-    ],
-  },
-  render: renderBreadcrumb,
-};
-
-/**
- * Breadcrumb with clickable links
- */
-export const WithLinks: Story = {
-  args: {
-    items: [
-      { text: 'Home', href: '/' },
-      { text: 'Products', href: '/products' },
-      { text: 'Electronics', href: '/products/electronics' },
-      { text: 'iPhone 15', current: true },
-    ],
-  },
-  render: renderBreadcrumb,
-};
-
-/**
- * Breadcrumb with router integration for SPA navigation
- */
-export const WithRouter: Story = {
-  args: {
-    items: [
-      { text: 'Dashboard', value: 'dashboard', router: true },
-      { text: 'Users', value: 'users', router: true },
-      { text: 'Profile', value: 'profile', router: true },
-      { text: 'Edit', current: true },
-    ],
+    ariaLabel: 'Breadcrumb navigation',
+    separator: '/',
   },
   render: (args) => html`
-    <div>
-      ${// @ts-ignore
-        renderBreadcrumb(args)
-      }
-      <div style="margin-top: 16px; padding: 12px; background-color: #f5f5f5; border-radius: 4px; font-size: 14px;">
-        <strong>Router mode enabled:</strong> Click items to see the breadcrumb-click event in the console.
-      </div>
-    </div>
-    <script>
-      document.addEventListener('breadcrumb-click', (event) => {
-        console.log('Breadcrumb clicked:', event.detail);
-      });
-    </script>
+    <col-breadcrumb
+      ariaLabel=${args.ariaLabel}
+      separator=${args.separator}
+    >
+      <col-breadcrumb-item>Home</col-breadcrumb-item>
+      <col-breadcrumb-item>Products</col-breadcrumb-item>
+      <col-breadcrumb-item>Electronics</col-breadcrumb-item>
+      <col-breadcrumb-item current>Mobile Phones</col-breadcrumb-item>
+    </col-breadcrumb>
   `,
 };
 
 /**
- * Mixed navigation with both links and router items
+ * Breadcrumb with custom separator character
  */
-export const MixedNavigation: Story = {
+export const CustomSeparator: Story = {
   args: {
-    items: [
-      { text: 'Home', href: '/' },
-      { text: 'Documentation', href: '/docs', newTab: true },
-      { text: 'API', value: 'api', router: true },
-      { text: 'Methods', current: true },
-    ],
+    separator: '>',
   },
-  render: renderBreadcrumb,
+  render: (args) => html`
+    <col-breadcrumb separator=${args.separator}>
+      <col-breadcrumb-item href="/">Home</col-breadcrumb-item>
+      <col-breadcrumb-item href="/docs">Documentation</col-breadcrumb-item>
+      <col-breadcrumb-item href="/docs/components">Components</col-breadcrumb-item>
+      <col-breadcrumb-item current>Breadcrumb</col-breadcrumb-item>
+    </col-breadcrumb>
+  `,
 };
 
 /**
- * Interactive breadcrumb with all features enabled
+ * Breadcrumb with custom aria-label for specific navigation context
  */
-export const Breadcrumb: Story = {
+export const CustomAriaLabel: Story = {
   args: {
-    ariaLabel: 'Main navigation',
-    separator: '/',
-    items: [
-      { text: 'Home', href: '/', value: 'home' },
-      { text: 'Products', href: '/products', value: 'products' },
-      { text: 'Electronics', href: '/products/electronics', value: 'electronics' },
-      { text: 'Mobile Phones', href: '/products/electronics/phones', value: 'phones' },
-      { text: 'iPhone 15 Pro', current: true },
-    ],
+    ariaLabel: 'Product category navigation',
   },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Complete breadcrumb example with all features. Try customizing the separator, adding or removing items, and toggling between link and router modes.',
-      },
-    },
-  },
-  render: renderBreadcrumb,
+  render: (args) => html`
+    <col-breadcrumb ariaLabel=${args.ariaLabel}>
+      <col-breadcrumb-item href="/shop">Shop</col-breadcrumb-item>
+      <col-breadcrumb-item href="/shop/electronics">Electronics</col-breadcrumb-item>
+      <col-breadcrumb-item href="/shop/electronics/computers">Computers</col-breadcrumb-item>
+      <col-breadcrumb-item current>Laptops</col-breadcrumb-item>
+    </col-breadcrumb>
+  `,
 };
