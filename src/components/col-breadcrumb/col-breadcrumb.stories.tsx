@@ -16,7 +16,7 @@ type BreadcrumbStoryArgs = {
 };
 
 const meta = {
-  title: 'Navigation/Breadcrumb',
+  title: 'Atoms/Breadcrumb',
   component: 'col-breadcrumb',
   parameters: {
     docs: {
