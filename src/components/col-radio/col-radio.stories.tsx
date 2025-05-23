@@ -8,7 +8,7 @@ type StoryArgs = {
   value: string;
   customLabel: boolean;
   group: string;
-}
+};
 
 const meta = {
   title: 'Atoms/Radio',
@@ -20,48 +20,53 @@ const meta = {
         transform: formatCodeString,
       },
     },
-    argTypes: {
-      checked: {
-        control: 'boolean',
-        description: 'Controls the checked state of the radio button',
-        table: {
-          type: { summary: 'boolean' },
-          defaultValue: { summary: 'false' },
-        },
+  },
+  argTypes: {
+    checked: {
+      control: 'boolean',
+      description: 'Controls the checked state of the radio button',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+        category: 'core',
       },
-      disabled: {
-        control: 'boolean',
-        description: 'Disables the radio button',
-        table: {
-          type: { summary: 'boolean' },
-          defaultValue: { summary: 'false' },
-        },
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'Disables the radio button',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+        category: 'core',
       },
-      value: {
-        control: 'text',
-        description: 'Value of the radio button when selected',
-        table: {
-          type: { summary: 'string' },
-          defaultValue: { summary: '""' },
-        },
+    },
+    value: {
+      control: 'text',
+      description: 'Value of the radio button when selected',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: '""' },
+        category: 'core',
       },
-      customLabel: {
-        control: 'boolean',
-        description: 'Enables custom label slot',
-        table: {
-          type: { summary: 'boolean' },
-          defaultValue: { summary: 'false' },
-        },
+    },
+    customLabel: {
+      control: 'boolean',
+      description: 'Enables custom label slot',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+        category: 'core',
       },
-      group: {
-        control: 'text',
-        description: 'Group name for related radio buttons',
-        table: {
-          type: { summary: 'string' },
-          defaultValue: { summary: '""' },
-        },
+    },
+    group: {
+      control: 'text',
+      description: 'Group name for related radio buttons',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: '""' },
+        category: 'core',
       },
-    }
+    },
   },
   args: {
     checked: false,
@@ -70,70 +75,55 @@ const meta = {
     customLabel: false,
     group: '',
   },
-} satisfies ColibriStoryMeta<StoryArgs>
+} satisfies ColibriStoryMeta<StoryArgs>;
 
 export default meta;
 
 type Story = ColibriStory<StoryArgs>;
 
 export const Default: Story = {
-  render: ({ checked, disabled, value }) =>
-    html`
-      <div>
-        <col-radio ?checked=${checked} ?disabled=${disabled} value=${value}></col-radio>
-      </div>
-    `
-}
+  render: ({ checked, disabled, value }) => html`
+    <col-radio ?checked=${checked} ?disabled=${disabled} value=${value}></col-radio>
+  `,
+};
 
 export const Checked: Story = {
   args: {
     checked: true,
   },
-  render: ({ checked, disabled, value }) =>
-    html`
-      <div>
-        <col-radio ?checked=${checked} ?disabled=${disabled} value=${value}>Checked radio</col-radio>
-      </div>
-    `
-}
+  render: ({ checked, disabled, value }) => html`
+    <col-radio ?checked=${checked} ?disabled=${disabled} value=${value}>Checked radio</col-radio>
+  `,
+};
 
 export const Disabled: Story = {
   args: {
     disabled: true,
   },
-  render: ({ checked, disabled, value }) =>
-    html`
-      <div>
-        <col-radio ?checked=${checked} ?disabled=${disabled} value=${value}>Disabled radio</col-radio>
-      </div>
-    `
-}
+  render: ({ checked, disabled, value }) => html`
+    <col-radio ?checked=${checked} ?disabled=${disabled} value=${value}>Disabled radio</col-radio>
+  `,
+};
 
 export const WithLabel: Story = {
-  render: ({ checked, disabled, value }) =>
-    html`
-      <div>
-        <col-radio ?checked=${checked} ?disabled=${disabled} value=${value}>Standard label</col-radio>
-      </div>
-    `
-}
+  render: ({ checked, disabled, value }) => html`
+    <col-radio ?checked=${checked} ?disabled=${disabled} value=${value}>Standard label</col-radio>
+  `,
+};
 
 export const WithCustomLabel: Story = {
   args: {
     customLabel: true,
   },
-  render: ({ checked, disabled, value, customLabel }) =>
-    html`
-      <div>
-        <col-radio ?checked=${checked} ?disabled=${disabled} value=${value} ?customLabel=${customLabel}>
-          <div slot="label" style="display: flex; align-items: center; gap: 4px;">
-            <col-icon name="info-circle"></col-icon>
-            Custom formatted label
-          </div>
-        </col-radio>
+  render: ({ checked, disabled, value, customLabel }) => html`
+    <col-radio ?checked=${checked} ?disabled=${disabled} value=${value} ?customLabel=${customLabel}>
+      <div slot="label" style="display: flex; align-items: center; gap: 4px;">
+        <col-icon name="info-circle"></col-icon>
+        Custom formatted label
       </div>
-    `
-}
+    </col-radio>
+  `,
+};
 
 export const RadioGroup: Story = {
   render: () => html`
@@ -142,8 +132,8 @@ export const RadioGroup: Story = {
       <col-radio group="fruits" value="banana">Banana</col-radio>
       <col-radio group="fruits" value="cherry">Cherry</col-radio>
     </div>
-  `
-}
+  `,
+};
 
 export const InteractiveExample: Story = {
   render: () => {
@@ -162,11 +152,13 @@ export const InteractiveExample: Story = {
           <strong>Selected value: </strong><span id="selected-value">option1</span>
         </div>
         <div style="display: flex; flex-direction: column; gap: 16px;">
-          <col-radio group="demo" value="option1" checked @change=${updateSelection}>Option 1</col-radio>
+          <col-radio group="demo" value="option1" checked @change=${updateSelection}
+            >Option 1</col-radio
+          >
           <col-radio group="demo" value="option2" @change=${updateSelection}>Option 2</col-radio>
           <col-radio group="demo" value="option3" @change=${updateSelection}>Option 3</col-radio>
         </div>
       </div>
     `;
-  }
-}
+  },
+};

@@ -1,6 +1,7 @@
 import { html } from 'lit';
 import { ColibriStory, ColibriStoryMeta } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
+import { fn } from '@storybook/test';
 
 type StoryArgs = {
   checked: boolean;
@@ -9,7 +10,7 @@ type StoryArgs = {
   customLabel: boolean;
   default: string;
   icon: string;
-  label: string;
+  change: () => void;
 };
 
 const meta = {
@@ -40,15 +41,6 @@ const meta = {
         type: { summary: 'boolean' },
         category: 'core',
         defaultValue: { summary: 'false' },
-      },
-    },
-    label: {
-      control: 'text',
-      description: 'Text label for the checkbox button',
-      table: {
-        type: { summary: 'string' },
-        category: 'core',
-        defaultValue: { summary: '""' },
       },
     },
     customLabel: {
@@ -97,7 +89,7 @@ const meta = {
     customLabel: false,
     default: '',
     icon: '',
-    label: '',
+    change: fn(),
   },
 } satisfies ColibriStoryMeta<StoryArgs>;
 
@@ -105,117 +97,86 @@ export default meta;
 
 type Story = ColibriStory<StoryArgs>;
 
+const renderCheckboxButton: Story['render'] = args => html`
+  <col-checkbox-button ?checked=${args.checked} ?disabled=${args.disabled}>
+    <col-icon name=${args.icon} slot="icon"></col-icon>
+    ${args.customLabel ? html`<span slot="label">${args.label}</span>` : args.default}
+  </col-checkbox-button>
+`;
+
 export const Default: Story = {
-  render: ({ checked, disabled }) => html`
-    <div>
-      <col-checkbox-button ?checked=${checked} ?disabled=${disabled}>
-        <col-icon name="emoji-circle" slot="icon"></col-icon>
-        Checkbox button
-      </col-checkbox-button>
-    </div>
-  `,
+  args: {
+    checked: false,
+    disabled: false,
+    label: 'Checkbox button',
+    icon: 'emoji-circle',
+  },
+  render: renderCheckboxButton,
 };
 
 export const Checked: Story = {
   args: {
     checked: true,
+    icon: 'check-circle',
+    default: 'Checked state',
   },
-  render: ({ checked, disabled }) => html`
-    <div>
-      <col-checkbox-button ?checked=${checked} ?disabled=${disabled}>
-        <col-icon name="check-circle" slot="icon"></col-icon>
-        Checked state
-      </col-checkbox-button>
-    </div>
-  `,
+  render: renderCheckboxButton,
 };
 
 export const Disabled: Story = {
   args: {
     disabled: true,
+    default: 'Disabled state',
+    icon: 'emoji-circle',
   },
-  render: ({ checked, disabled }) => html`
-    <div>
-      <col-checkbox-button ?checked=${checked} ?disabled=${disabled}>
-        <col-icon name="emoji-circle" slot="icon"></col-icon>
-        Disabled state
-      </col-checkbox-button>
-    </div>
-  `,
+  render: renderCheckboxButton,
 };
 
 export const DisabledChecked: Story = {
   args: {
     disabled: true,
     checked: true,
+    default: 'Disabled and checked',
+    icon: 'check-circle',
   },
-  render: ({ checked, disabled }) => html`
-    <div>
-      <col-checkbox-button ?checked=${checked} ?disabled=${disabled}>
-        <col-icon name="check-circle" slot="icon"></col-icon>
-        Disabled and checked
-      </col-checkbox-button>
-    </div>
-  `,
+  render: renderCheckboxButton,
 };
 
 export const WithStringLabel: Story = {
   args: {
     label: 'String label property',
   },
-  render: ({ checked, disabled, label }) => html`
-    <div>
-      <col-checkbox-button
-        ?checked=${checked}
-        ?disabled=${disabled}
-        label=${label}
-      ></col-checkbox-button>
-    </div>
-  `,
+  render: renderCheckboxButton,
 };
 
 export const WithDefaultSlot: Story = {
-  render: ({ checked, disabled }) => html`
-    <div>
-      <col-checkbox-button ?checked=${checked} ?disabled=${disabled}
-        >Default slot label</col-checkbox-button
-      >
-    </div>
-  `,
+  args: {
+    default: 'Default slot label',
+  },
+  render: renderCheckboxButton,
 };
 
 export const WithCustomLabel: Story = {
   args: {
     customLabel: true,
+    label: 'Custom formatted label',
   },
-  render: ({ checked, disabled, customLabel }) => html`
-    <div>
-      <col-checkbox-button ?checked=${checked} ?disabled=${disabled} ?customLabel=${customLabel}>
-        <span slot="label">Custom <strong>formatted</strong> label</span>
-      </col-checkbox-button>
-    </div>
-  `,
+  render: renderCheckboxButton,
 };
 
 export const OnlyIcon: Story = {
-  render: ({ checked, disabled }) => html`
-    <div>
-      <col-checkbox-button ?checked=${checked} ?disabled=${disabled}>
-        <col-icon name="emoji-circle" slot="icon"></col-icon>
-      </col-checkbox-button>
-    </div>
-  `,
+  args: {
+    icon: 'emoji-circle',
+  },
+  render: renderCheckboxButton,
 };
 
 export const WithIcon: Story = {
-  render: ({ checked, disabled }) => html`
-    <div>
-      <col-checkbox-button ?checked=${checked} ?disabled=${disabled}>
-        <col-icon name="emoji-circle" slot="icon"></col-icon>
-        With icon
-      </col-checkbox-button>
-    </div>
-  `,
+  args: {
+    icon: 'emoji-circle',
+    default: 'With icon',
+  },
+  render: renderCheckboxButton,
 };
 
 export const InteractiveExample: Story = {
@@ -224,8 +185,10 @@ export const InteractiveExample: Story = {
 
     const toggleState = () => {
       checked = !checked;
-      document.querySelector('#controlled-checkbox-button').checked = checked;
-      document.querySelector('#state-display').textContent = checked ? 'Checked' : 'Unchecked';
+      const checkbox = document.querySelector('#controlled-checkbox-button') as HTMLInputElement;
+      checkbox.checked = checked;
+      const stateDisplay = document.querySelector('#state-display') as HTMLInputElement;
+      stateDisplay.textContent = checked ? 'Checked' : 'Unchecked';
     };
 
     return html`

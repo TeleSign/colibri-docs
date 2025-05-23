@@ -63,7 +63,6 @@ const meta = {
       description: 'Enables custom content slot',
       table: {
         type: { summary: 'boolean' },
-        category: 'core',
         defaultValue: { summary: 'false' },
       },
     },
@@ -81,49 +80,31 @@ export default meta;
 
 type Story = ColibriStory<StoryArgs>;
 
+const renderCheckboxCard: Story['render'] = args => html`
+  <col-checkbox-card
+    ?checked=${args.checked}
+    ?disabled=${args.disabled}
+    title=${args.title}
+    description=${args.description}
+  ></col-checkbox-card>
+`;
+
 export const Default: Story = {
-  render: ({ checked, disabled, title, description }) => html`
-    <div>
-      <col-checkbox-card
-        ?checked=${checked}
-        ?disabled=${disabled}
-        title=${title}
-        description=${description}
-      ></col-checkbox-card>
-    </div>
-  `,
+  render: renderCheckboxCard,
 };
 
 export const Checked: Story = {
   args: {
     checked: true,
   },
-  render: ({ checked, disabled, title, description }) => html`
-    <div>
-      <col-checkbox-card
-        ?checked=${checked}
-        ?disabled=${disabled}
-        title=${title}
-        description=${description}
-      ></col-checkbox-card>
-    </div>
-  `,
+  render: renderCheckboxCard,
 };
 
 export const Disabled: Story = {
   args: {
     disabled: true,
   },
-  render: ({ checked, disabled, title, description }) => html`
-    <div>
-      <col-checkbox-card
-        ?checked=${checked}
-        ?disabled=${disabled}
-        title=${title}
-        description=${description}
-      ></col-checkbox-card>
-    </div>
-  `,
+  render: renderCheckboxCard,
 };
 
 export const CustomContent: Story = {
@@ -131,13 +112,11 @@ export const CustomContent: Story = {
     customContent: true,
   },
   render: ({ checked, disabled, customContent }) => html`
-    <div>
-      <col-checkbox-card ?checked=${checked} ?disabled=${disabled} ?customContent=${customContent}>
-        <div style="padding: 8px 0;">
-          <h3 style="margin: 0 0 8px 0;">Custom Content</h3>
-          <p style="margin: 0;">You can add any custom content here</p>
-        </div>
-      </col-checkbox-card>
-    </div>
+    <col-checkbox-card ?checked=${checked} ?disabled=${disabled} ?customContent=${customContent}>
+      <div style="padding: 8px 0;">
+        <h3 style="margin: 0 0 8px 0;">Custom Content</h3>
+        <p style="margin: 0;">You can add any custom content here</p>
+      </div>
+    </col-checkbox-card>
   `,
 };

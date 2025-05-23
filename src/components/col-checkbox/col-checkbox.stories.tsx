@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import { fn } from '@storybook/test';
 import { ColibriStory, ColibriStoryMeta } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
@@ -8,6 +8,8 @@ type StoryArgs = {
   disabled: boolean;
   indeterminate: boolean;
   customLabel: boolean;
+  label: string;
+  default: string;
   change: () => void;
 };
 
@@ -59,6 +61,20 @@ const meta = {
         defaultValue: { summary: 'false' },
       },
     },
+    default: {
+      control: 'text',
+      description: 'The default content of the button (typically used for the label)',
+      table: {
+        category: 'slots',
+      },
+    },
+    label: {
+      control: 'text',
+      description: 'Custom label content (when customLabel is true)',
+      table: {
+        category: 'slots',
+      },
+    },
     change: {
       action: 'clicked',
       description: 'Fired when the checkbox state changes.',
@@ -73,6 +89,8 @@ const meta = {
     disabled: false,
     indeterminate: false,
     customLabel: false,
+    label: '',
+    default: 'Default checkbox',
     change: fn(),
   },
 } satisfies ColibriStoryMeta<StoryArgs>;
@@ -81,101 +99,78 @@ export default meta;
 
 type Story = ColibriStory<StoryArgs>;
 
+const renderCheckbox: Story['render'] = args => html`
+  <col-checkbox
+    ?disabled=${args.disabled}
+    ?checked=${args.checked}
+    ?indeterminate=${args.indeterminate}
+    ?customLabel=${args.customLabel}
+  >
+    ${args.customLabel
+      ? html`<div slot="label">${args.label || nothing}</div>`
+      : args.default || nothing}
+  </col-checkbox>
+`;
+
 export const Default: Story = {
-  render: ({ disabled }) => html`
-    <div>
-      <col-checkbox ?disabled=${disabled}>Default checkbox</col-checkbox>
-    </div>
-  `,
+  render: renderCheckbox,
 };
 
 export const Checked: Story = {
   args: {
     checked: true,
+    default: 'Checked state',
   },
-  render: ({ checked, disabled }) => html`
-    <div>
-      <col-checkbox ?checked=${checked} ?disabled=${disabled}>Checked state</col-checkbox>
-    </div>
-  `,
+  render: renderCheckbox,
 };
 
 export const Indeterminate: Story = {
   args: {
     indeterminate: true,
+    default: 'Indeterminate state',
   },
-  render: ({ indeterminate, disabled }) => html`
-    <div>
-      <col-checkbox ?indeterminate=${indeterminate} ?disabled=${disabled}
-        >Indeterminate state</col-checkbox
-      >
-    </div>
-  `,
+  render: renderCheckbox,
 };
 
 export const Disabled: Story = {
   args: {
     disabled: true,
+    default: 'Disabled checkbox',
   },
-  render: ({ disabled }) => html`
-    <div>
-      <col-checkbox ?disabled=${disabled}>Disabled checkbox</col-checkbox>
-    </div>
-  `,
+  render: renderCheckbox,
 };
 
 export const DisabledChecked: Story = {
   args: {
     disabled: true,
     checked: true,
+    default: 'Disabled and checked',
   },
-  render: ({ disabled, checked }) => html`
-    <div>
-      <col-checkbox ?disabled=${disabled} ?checked=${checked}>Disabled and checked</col-checkbox>
-    </div>
-  `,
+  render: renderCheckbox,
 };
 
 export const DisabledIndeterminate: Story = {
   args: {
     disabled: true,
     indeterminate: true,
+    default: 'Disabled and indeterminate',
   },
-  render: ({ disabled, indeterminate }) => html`
-    <div>
-      <col-checkbox ?disabled=${disabled} ?indeterminate=${indeterminate}
-        >Disabled and indeterminate</col-checkbox
-      >
-    </div>
-  `,
+  render: renderCheckbox,
 };
 
 export const Label: Story = {
-  render: ({ disabled, checked, indeterminate }) => html`
-    <div>
-      <col-checkbox ?disabled=${disabled} ?checked=${checked} ?indeterminate=${indeterminate}
-        >With standard label</col-checkbox
-      >
-    </div>
-  `,
+  args: {
+    default: 'Standard label',
+  },
+  render: renderCheckbox,
 };
 
 export const CustomLabel: Story = {
   args: {
     customLabel: true,
+    label: 'With custom label formatting',
   },
-  render: ({ customLabel, disabled, checked, indeterminate }) => html`
-    <div>
-      <col-checkbox
-        ?disabled=${disabled}
-        ?checked=${checked}
-        ?indeterminate=${indeterminate}
-        ?customLabel=${customLabel}
-      >
-        <div slot="label">With custom label formatting</div>
-      </col-checkbox>
-    </div>
-  `,
+  render: renderCheckbox,
 };
 
 export const WithIcon: Story = {
@@ -183,19 +178,17 @@ export const WithIcon: Story = {
     customLabel: true,
   },
   render: ({ customLabel, disabled, checked, indeterminate }) => html`
-    <div>
-      <col-checkbox
-        ?disabled=${disabled}
-        ?checked=${checked}
-        ?indeterminate=${indeterminate}
-        ?customLabel=${customLabel}
-      >
-        <div slot="label">
-          <col-icon name="emoji-circle"></col-icon>
-          With icon
-        </div>
-      </col-checkbox>
-    </div>
+    <col-checkbox
+      ?disabled=${disabled}
+      ?checked=${checked}
+      ?indeterminate=${indeterminate}
+      ?customLabel=${customLabel}
+    >
+      <div slot="label">
+        <col-icon name="emoji-circle"></col-icon>
+        With icon
+      </div>
+    </col-checkbox>
   `,
 };
 
@@ -204,20 +197,18 @@ export const WithMultipleIcons: Story = {
     customLabel: true,
   },
   render: ({ customLabel, disabled, checked, indeterminate }) => html`
-    <div>
-      <col-checkbox
-        ?disabled=${disabled}
-        ?checked=${checked}
-        ?indeterminate=${indeterminate}
-        ?customLabel=${customLabel}
-      >
-        <div slot="label" style="display: flex; align-items: center; gap: 4px;">
-          <col-icon name="check-circle"></col-icon>
-          With multiple icons
-          <col-icon name="info-circle"></col-icon>
-        </div>
-      </col-checkbox>
-    </div>
+    <col-checkbox
+      ?disabled=${disabled}
+      ?checked=${checked}
+      ?indeterminate=${indeterminate}
+      ?customLabel=${customLabel}
+    >
+      <div slot="label" style="display: flex; align-items: center; gap: 4px;">
+        <col-icon name="check-circle"></col-icon>
+        With multiple icons
+        <col-icon name="info-circle"></col-icon>
+      </div>
+    </col-checkbox>
   `,
 };
 
@@ -233,9 +224,11 @@ export const InteractiveControlledExample: Story = {
       } else {
         checked = !checked;
       }
-      document.querySelector('#controlled-checkbox').checked = checked;
-      document.querySelector('#controlled-checkbox').indeterminate = indeterminate;
-      document.querySelector('#state-display').textContent = indeterminate
+      const checkbox = document.querySelector('#controlled-checkbox') as HTMLInputElement;
+      checkbox.checked = checked;
+      checkbox.indeterminate = indeterminate;
+      const stateDisplay = document.querySelector('#state-display') as HTMLInputElement;
+      stateDisplay.textContent = indeterminate
         ? 'Indeterminate'
         : checked
           ? 'Checked'
