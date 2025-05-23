@@ -2,6 +2,7 @@ import { html, css } from 'lit';
 import { icons } from '@telesign/colibri-icons/icons-list';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { removeStyleTags } from '@/utils/formatters';
+import { withCustomStyling } from '@root/.storybook/preview';
 
 type StoryArgs = {
   name: string;
@@ -12,6 +13,7 @@ type StoryArgs = {
 const meta = {
   title: 'Atoms/Icons',
   component: 'col-icon',
+  decorators: [withCustomStyling],
   parameters: {
     docs: {
       source: {
