@@ -1,0 +1,93 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title, Description } from '@storybook/blocks';
+import * as ColCheckboxButtonStories from './col-checkbox-button.stories';
+
+<Meta of={ColCheckboxButtonStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Checkbox Button</Title>
+    Checkboxes button are used for multiple choices, not for mutually exclusive choices. Each checkbox button works independently from other checkboxes button in the list, therefore checking an additional box does not affect any other selections.
+
+    ## How to use it
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, ColCheckboxButton } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web component:
+        ```typescript
+        registerColibriComponents([ColCheckboxButton]);
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-checkbox-button>
+          <col-icon name="emoji-circle" slot="icon"></col-icon>
+          Checkbox button
+        </col-checkbox-button>
+        ```
+
+    ## When to use it
+    The "Checkbox Button" component is a common and versatile user interface element used to allow users to select one or more options from a list:
+
+    - **Forms:** checkboxes are used to allow users to select multiple options from a list.
+    - **Filtering and batch action:** Checkboxes are used to allow users to filter content by categories, attributes or tags.
+    - **Settings:** Check boxes are used to allow users to enable or disable features, set language preferences, etc.
+    - **Item selection and Lists with sub-selections:** In file management applications, checkboxes are used to allow users to select multiple items to perform actions such as delete, move or set the action according to the functionalities of their design.
+    - Use the indeterminate state when the checkbox contains a sublist of selections, some of which are selected, and some unselected. In addition to default, selected, and indeterminate states, checkboxes also have states for hover, active, focus and disabled.
+
+
+    ## Basic Usage
+    <Canvas of={ColCheckboxButtonStories.Default} />
+
+    ## States
+
+    ### Checked State
+    <Canvas of={ColCheckboxButtonStories.Checked} />
+
+    ### Disabled States
+    <Canvas of={ColCheckboxButtonStories.Disabled} />
+    <Canvas of={ColCheckboxButtonStories.DisabledChecked} />
+
+    ## Label Options
+
+    The component offers multiple ways to add labels:
+
+    ### With String Label Property
+    <Canvas of={ColCheckboxButtonStories.WithStringLabel} />
+
+    ### With Default Slot
+    <Canvas of={ColCheckboxButtonStories.WithDefaultSlot} />
+
+    ### With Custom Label
+    <Canvas of={ColCheckboxButtonStories.WithCustomLabel} />
+
+    ## Icon Usage
+
+    ### Icon Only
+    <Canvas of={ColCheckboxButtonStories.OnlyIcon} />
+
+    ### With Icon
+    <Canvas of={ColCheckboxButtonStories.WithIcon} />
+
+
+    ### Interactive Example
+    <Canvas of={ColCheckboxButtonStories.InteractiveExample} />
+
+    ## Properties
+    <ArgTypes of={ColCheckboxButtonStories} />
+
+    ## Accessibility
+
+    The checkbox button component follows accessibility best practices:
+
+    - Uses proper ARIA attributes (`role="checkbox"`, `aria-checked`, `aria-disabled`)
+    - Supports keyboard navigation and interaction (Space and Enter keys)
+    - Maintains proper focus states
+    - Provides appropriate visual states (checked, unchecked, disabled)
+
+  </div>
+</div>
