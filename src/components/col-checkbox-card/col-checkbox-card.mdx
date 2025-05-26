@@ -1,0 +1,71 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as ColCheckboxCardStories from './col-checkbox-card.stories';
+
+<Meta of={ColCheckboxCardStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Checkbox Card</Title>
+    Checkboxes card are used for multiple choices, not for mutually exclusive choices. Each checkbox card works independently from other checkboxes card in the list, therefore checking an additional box does not affect any other selections.
+
+    ## How to use it
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, ColCheckboxCard } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web component:
+        ```typescript
+        registerColibriComponents([ColCheckboxCard]);
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-checkbox-card title="Card Title" description="Card description text">
+        ...
+        </col-checkbox-card>
+        ```
+
+    ## When to use it
+    The "Checkbox Button" component is a common and versatile user interface element used to allow users to select one or more options from a list:
+
+    - **Forms:** checkboxes are used to allow users to select multiple options from a list.
+    - **Filtering and batch action:** Checkboxes are used to allow users to filter content by categories, attributes or tags.
+    - **Settings:** Check boxes are used to allow users to enable or disable features, set language preferences, etc.
+    - **Item selection and Lists with sub-selections:** In file management applications, checkboxes are used to allow users to select multiple items to perform actions such as delete, move or set the action according to the functionalities of their design.
+    - Use the indeterminate state when the checkbox contains a sublist of selections, some of which are selected, and some unselected. In addition to default, selected, and indeterminate states, checkboxes also have states for hover, active, focus and disabled.
+
+
+    <h2>Usage</h2>
+    <p>
+      The Checkbox Card component enables users to select content presented in a card format.
+      It combines the functionality of a checkbox with a visual card container, making
+      selections more engaging and providing more space for content.
+    </p>
+
+    <h2>Examples</h2>
+
+    <h3>Default</h3>
+    <p>Standard checkbox card with title and description.</p>
+    <Canvas of={ColCheckboxCardStories.Default} />
+
+    <h3>Checked State</h3>
+    <p>Checkbox card in checked state.</p>
+    <Canvas of={ColCheckboxCardStories.Checked} />
+
+    <h3>Disabled State</h3>
+    <p>Checkbox card in disabled state.</p>
+    <Canvas of={ColCheckboxCardStories.Disabled} />
+
+    <h3>Custom Content</h3>
+    <p>Checkbox card with custom content instead of the default title/description structure.</p>
+    <Canvas of={ColCheckboxCardStories.CustomContent} />
+
+    <h2>Properties</h2>
+    <ArgTypes of={ColCheckboxCardStories} />
+
+  </div>
+</div>
