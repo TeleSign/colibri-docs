@@ -1,13 +1,15 @@
 # Colibri Documentation System
 
-The Colibri Documentation System is built using Storybook, providing an interactive environment for documenting components, design guidelines, and usage patterns.
+This site documents Colibri, a framework-agnostic component library for building web UIs in JavaScript/Typescript. Colibri was designed and is maintained by [Telesign](https://www.telesign.com/).
+
+Our documentation system is built using Storybook, providing an interactive environment for documenting components, design guidelines, and usage patterns.
 
 ## Table of Contents
 
 - [Overview](#overview)
 - [Getting Started](#getting-started)
 - [Documentation Structure](#documentation-structure)
-- [Writing Documentation](#writing-documentation)
+- [Writing Documentation](#writing-documentation) 
 - [Development](#development)
 - [Customization](#customization)
 - [Best Practices](#best-practices)
