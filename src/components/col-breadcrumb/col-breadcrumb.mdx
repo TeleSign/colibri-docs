@@ -1,0 +1,133 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as ColBreadcrumbStories from './col-breadcrumb.stories';
+
+<Meta of={ColBreadcrumbStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Breadcrumb</Title>
+    The Colibri Breadcrumb component provides a navigation container that displays a trail of links to help users understand their current location within a website or application hierarchy. It works in conjunction with `col-breadcrumb-item` components to create a complete navigation trail.
+    The Breadcrumb component is a container that manages the overall navigation trail. For individual navigation items, see the [Breadcrumb Item](/docs/atoms-breadcrumb-item--overview) documentation.
+
+    <Subtitle>Table of contents</Subtitle>
+    - [How to use it](#how-to-use-it)
+    - [When to use it](#when-to-use-it)
+    - [Component preview](#component-preview)
+      - [Basic breadcrumb](#basic-breadcrumb)
+      - [Custom separator](#custom-separator)
+      - [Custom aria label](#custom-aria-label)
+    - [Properties](#properties)
+    - [Accessibility](#accessibility)
+    - [Interact with the component](#interact-with-the-component)
+
+    ## How to use it
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, registerAllComponents, ColBreadcrumb, ColBreadcrumbItem } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web components:
+        ```typescript
+        // Option 1: Register specific components
+        registerColibriComponents([ColBreadcrumb, ColBreadcrumbItem]);
+
+        // Option 2: Register all Colibri components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-breadcrumb>
+          <col-breadcrumb-item>Home</col-breadcrumb-item>
+          <col-breadcrumb-item>Products</col-breadcrumb-item>
+          <col-breadcrumb-item current>Details</col-breadcrumb-item>
+        </col-breadcrumb>
+        ```
+
+    The breadcrumb container:
+    - Provides semantic navigation structure
+    - Manages separator consistency across all items
+    - Ensures proper accessibility attributes
+    - Maintains visual consistency
+
+    ## Component preview
+
+    ### Basic breadcrumb
+    <div>
+      The basic breadcrumb container wraps breadcrumb items and provides the navigation structure. By default, it uses a forward slash (/) as the separator between items.
+    </div>
+    <h4>Overview</h4>
+    <div className="col-doc__callout col-doc__callout--tip">
+      <p>💡</p>
+      <p>
+        You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+      </p>
+    </div>
+
+    <Canvas of={ColBreadcrumbStories.Default} />
+
+    The breadcrumb container automatically:
+    - Applies the separator to all child breadcrumb items
+    - Provides proper navigation semantics
+    - Handles responsive layout with wrapping when needed
+
+    ### Custom separator
+    <div>
+      You can customize the separator character displayed between breadcrumb items using the `separator` property. This allows you to match your design system's visual language.
+    </div>
+
+    <Canvas of={ColBreadcrumbStories.CustomSeparator} />
+
+    Popular separator options include:
+    - `/` (default) - Forward slash
+    - `>` - Greater than symbol
+    - `→` - Arrow
+    - `•` - Bullet
+    - `|` - Pipe
+    - `»` - Double angle quote
+    - `-` - Dash
+
+    The separator is automatically applied to all breadcrumb items within the container.
+
+    ### Custom aria label
+    <div>
+      For better accessibility, you can customize the aria-label of the navigation element to provide more context about the specific breadcrumb trail.
+    </div>
+
+    <Canvas of={ColBreadcrumbStories.CustomAriaLabel} />
+
+    This is particularly useful when you have multiple breadcrumb trails on the same page, such as:
+    - Main site navigation
+    - Category navigation
+    - User account navigation
+
+    ## Properties
+
+    <ArgTypes of={ColBreadcrumbStories} include={['ariaLabel', 'separator']} />
+
+    ## Accessibility
+
+    The Breadcrumb container component includes several built-in accessibility features:
+
+    - **Semantic HTML** - Uses `<nav>` element to identify the breadcrumb as a navigation landmark
+    - **ARIA label** - Customizable `aria-label` attribute for the navigation element (defaults to "Breadcrumb navigation")
+    - **Screen reader support** - Includes hidden "You are here:" text for screen reader users
+    - **Keyboard navigation** - Ensures all interactive breadcrumb items are keyboard accessible
+
+    Best practices:
+    - Use descriptive aria-labels when multiple breadcrumbs exist on a page
+    - Ensure breadcrumb items have sufficient color contrast
+    - Keep the breadcrumb trail concise and logical
+    - Always mark the current page item with the `current` attribute
+
+    <div className="col-doc__callout col-doc__callout--info">
+      <p>ℹ️</p>
+      <p>
+        For more information about individual breadcrumb items and their interactive features, see the [Breadcrumb Item](/docs/atoms-breadcrumb-item--overview) documentation.
+      </p>
+    </div>
+  </div>
+</div>
