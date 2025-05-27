@@ -179,6 +179,28 @@ export const WithIcon: Story = {
   render: renderCheckboxButton,
 };
 
+export const GroupCheckbox: Story = {
+  args: {
+    icon: 'emoji-circle',
+    default: 'With icon',
+  },
+  render: args => html`
+    <col-group
+      label="Checkbox group button horizontal"
+      role="group"
+      withoutGap
+    >
+      <col-checkbox-button ?checked=${args.checked} ?disabled=${args.disabled}>
+        <col-icon name=${args.icon} slot="icon"></col-icon>
+        ${args.customLabel ? html`<span slot="label">${args.label}</span>` : args.default}
+      </col-checkbox-button>
+      <col-checkbox-button>Week</col-checkbox-button>
+      <col-checkbox-button>Month</col-checkbox-button>
+      <col-checkbox-button>Year</col-checkbox-button>
+    </col-group>
+  `,
+}
+
 export const InteractiveExample: Story = {
   render: () => {
     let checked = false;
