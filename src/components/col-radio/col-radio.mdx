@@ -1,0 +1,59 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as ColRadioStories from './col-radio.stories';
+
+<Meta of={ColRadioStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Radio</Title>
+
+    <h2>Examples</h2>
+
+    <h3>Default</h3>
+    <p>Basic radio button without any label.</p>
+    <Canvas of={ColRadioStories.Default} />
+
+    <h3>Checked State</h3>
+    <p>Radio button in the selected state.</p>
+    <Canvas of={ColRadioStories.Checked} />
+
+    <h3>Disabled State</h3>
+    <p>Radio button that cannot be interacted with.</p>
+    <Canvas of={ColRadioStories.Disabled} />
+
+    <h3>With Label</h3>
+    <p>Radio button with a text label.</p>
+    <Canvas of={ColRadioStories.WithLabel} />
+
+    <h3>With Custom Label</h3>
+    <p>Radio button with custom formatted label content.</p>
+    <Canvas of={ColRadioStories.WithCustomLabel} />
+
+    <h3>Radio Group</h3>
+    <p>Multiple radio buttons working together in a group. Only one can be selected at a time.</p>
+    <Canvas of={ColRadioStories.RadioGroup} />
+
+    <h3>Interactive Example</h3>
+    <p>A working example that displays the currently selected value.</p>
+    <Canvas of={ColRadioStories.InteractiveExample} />
+
+    <h2>Grouping Radio Buttons</h2>
+    <p>
+      Radio buttons that belong together should share the same <code>group</code> attribute.
+      This ensures that only one radio button in the group can be selected at a time.
+    </p>
+
+    <h2>Accessibility</h2>
+    <p>
+      Radio buttons follow WAI-ARIA best practices for accessibility:
+    </p>
+    <ul>
+      <li>Uses proper <code>role="radio"</code> and <code>aria-checked</code> attributes</li>
+      <li>Supports keyboard navigation</li>
+      <li>Labels are properly associated with inputs</li>
+    </ul>
+
+    <h2>Properties</h2>
+    <ArgTypes of={ColRadioStories} />
+  </div>
+</div>
