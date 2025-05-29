@@ -1,5 +1,5 @@
 import { Meta, Title, Subtitle, Typeset, Source } from '@storybook/blocks';
-import { TYPOGRAPHY } from './constants'
+import { TYPOGRAPHY } from './utils'
 
 <Meta title="Foundation/Typography" />
 
@@ -98,8 +98,8 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
         </div>
         <Typeset
           fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
-          fontSizes={[Number(TYPOGRAPHY.size['7xl'])]}
-          fontWeight={TYPOGRAPHY.weight.regular}
+          fontSizes={[parseInt(TYPOGRAPHY['7xl'])]}
+          fontWeight={400}
           sampleText={SampleText}
         />
 
@@ -119,8 +119,8 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
         </div>
         <Typeset
           fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
-          fontSizes={[Number(TYPOGRAPHY.size['5xl'])]}
-          fontWeight={TYPOGRAPHY.weight.regular}
+          fontSizes={[parseInt(TYPOGRAPHY['5xl'])]}
+          fontWeight={400}
           sampleText={SampleText}
         />
 
@@ -140,8 +140,8 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
         </div>
         <Typeset
           fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
-          fontSizes={[Number(TYPOGRAPHY.size['3xl'])]}
-          fontWeight={TYPOGRAPHY.weight.regular}
+          fontSizes={[parseInt(TYPOGRAPHY['3xl'])]}
+          fontWeight={400}
           sampleText={SampleText}
         />
 
@@ -162,8 +162,8 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
 
         <Typeset
           fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
-          fontSizes={[Number(TYPOGRAPHY.size['2xl'])]}
-          fontWeight={TYPOGRAPHY.weight.regular}
+          fontSizes={[parseInt(TYPOGRAPHY['2xl'])]}
+          fontWeight={400}
           sampleText={SampleText}
         />
 
@@ -184,8 +184,8 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
 
         <Typeset
           fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
-          fontSizes={[Number(TYPOGRAPHY.size.l)]}
-          fontWeight={TYPOGRAPHY.weight.regular}
+          fontSizes={[parseInt(TYPOGRAPHY.l)]}
+          fontWeight={400}
           sampleText={SampleText}
         />
 
@@ -206,8 +206,8 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
 
         <Typeset
           fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
-          fontSizes={[Number(TYPOGRAPHY.size.m)]}
-          fontWeight={TYPOGRAPHY.weight.semibold}
+          fontSizes={[parseInt(TYPOGRAPHY.m)]}
+          fontWeight={600}
           sampleText={SampleText}
         />
       </div>
@@ -231,8 +231,8 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
       </div>
       <Typeset
         fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
-        fontSizes={[Number(TYPOGRAPHY.size.l)]}
-        fontWeight={TYPOGRAPHY.weight.regular}
+        fontSizes={[parseInt(TYPOGRAPHY.l)]}
+        fontWeight={400}
         sampleText={SampleText}
       />
 
@@ -248,8 +248,8 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
       </div>
       <Typeset
         fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
-        fontSizes={[Number(TYPOGRAPHY.size.m)]}
-        fontWeight={TYPOGRAPHY.weight.regular}
+        fontSizes={[parseInt(TYPOGRAPHY.m)]}
+        fontWeight={400}
         sampleText={SampleText}
       />
 
@@ -265,8 +265,8 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
       </div>
       <Typeset
         fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
-        fontSizes={[Number(TYPOGRAPHY.size.s)]}
-        fontWeight={TYPOGRAPHY.weight.regular}
+        fontSizes={[parseInt(TYPOGRAPHY.s)]}
+        fontWeight={400}
         sampleText={SampleText}
       />
 
@@ -282,8 +282,8 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
       </div>
       <Typeset
         fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
-        fontSizes={[Number(TYPOGRAPHY.size.xs)]}
-        fontWeight={TYPOGRAPHY.weight.regular}
+        fontSizes={[parseInt(TYPOGRAPHY.xs)]}
+        fontWeight={400}
         sampleText={SampleText}
       />
     </div>
@@ -306,8 +306,8 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
       </div>
       <Typeset
         fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
-        fontSizes={[Number(TYPOGRAPHY.size.s)]}
-        fontWeight={TYPOGRAPHY.weight.regular}
+        fontSizes={[parseInt(TYPOGRAPHY.s)]}
+        fontWeight={400}
         sampleText={SampleText}
       />
 
@@ -323,8 +323,8 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
       </div>
       <Typeset
         fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
-        fontSizes={[Number(TYPOGRAPHY.size.xs)]}
-        fontWeight={TYPOGRAPHY.weight.regular}
+        fontSizes={[parseInt(TYPOGRAPHY.xs)]}
+        fontWeight={400}
         sampleText={SampleText}
       />
 
@@ -340,8 +340,8 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
       </div>
       <Typeset
         fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
-        fontSizes={[Number(TYPOGRAPHY.size.l)]}
-        fontWeight={TYPOGRAPHY.weight.semibold}
+        fontSizes={[parseInt(TYPOGRAPHY.l)]}
+        fontWeight={600}
         sampleText={SampleText}
       />
 
@@ -357,8 +357,8 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
       </div>
       <Typeset
         fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
-        fontSizes={[Number(TYPOGRAPHY.size.m)]}
-        fontWeight={TYPOGRAPHY.weight.semibold}
+        fontSizes={[parseInt(TYPOGRAPHY.m)]}
+        fontWeight={600}
         sampleText={SampleText}
       />
 
@@ -374,8 +374,8 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
       </div>
       <Typeset
         fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
-        fontSizes={[Number(TYPOGRAPHY.size.s)]}
-        fontWeight={TYPOGRAPHY.weight.semibold}
+        fontSizes={[parseInt(TYPOGRAPHY.s)]}
+        fontWeight={600}
         sampleText={SampleText}
       />
 
@@ -391,8 +391,8 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
       </div>
       <Typeset
         fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
-        fontSizes={[Number(TYPOGRAPHY.size.xs)]}
-        fontWeight={TYPOGRAPHY.weight.semibold}
+        fontSizes={[parseInt(TYPOGRAPHY.xs)]}
+        fontWeight={600}
         sampleText={SampleText}
       />
 
@@ -415,8 +415,8 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
 
       <Typeset
         fontFamily={`"${getCurrentFont('secondary').name}", ${getCurrentFont('secondary').fallbacks}`}
-        fontSizes={[Number(TYPOGRAPHY.size.s)]}
-        fontWeight={TYPOGRAPHY.weight.regular}
+        fontSizes={[parseInt(TYPOGRAPHY.s)]}
+        fontWeight={400}
         sampleText={SampleText}
       />
 
@@ -432,8 +432,8 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
       </div>
       <Typeset
         fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
-        fontSizes={[Number(TYPOGRAPHY.size.m)]}
-        fontWeight={TYPOGRAPHY.weight.regular}
+        fontSizes={[parseInt(TYPOGRAPHY.m)]}
+        fontWeight={400}
         sampleText={SampleText}
         style={{ textDecoration: "underline" }}
       />
@@ -450,8 +450,8 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
       </div>
       <Typeset
         fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
-        fontSizes={[Number(TYPOGRAPHY.size.s)]}
-        fontWeight={TYPOGRAPHY.weight.regular}
+        fontSizes={[parseInt(TYPOGRAPHY.s)]}
+        fontWeight={400}
         sampleText={SampleText}
         style={{ textDecoration: "underline" }}
       />
@@ -468,8 +468,8 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
       </div>
       <Typeset
         fontFamily={`"${getCurrentFont().name}", ${getCurrentFont().fallbacks}`}
-        fontSizes={[Number(TYPOGRAPHY.size.xs)]}
-        fontWeight={TYPOGRAPHY.weight.regular}
+        fontSizes={[parseInt(TYPOGRAPHY.xs)]}
+        fontWeight={400}
         sampleText={SampleText}
         style={{ textDecoration: "underline" }}
       />

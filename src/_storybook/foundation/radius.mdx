@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meta, Title, Subtitle, Source } from '@storybook/blocks';
-import { RADIUS } from './constants'
+import { RADIUS } from './utils'
 
 <Meta title="Foundation/Radius" />
 
@@ -12,7 +12,7 @@ import { RADIUS } from './constants'
     </div>
 
     <RadiusItem
-      values={Object.keys(RADIUS.size)}
+      values={Object.keys(RADIUS)}
     />
   </div>
 </div>
@@ -25,7 +25,7 @@ export const RadiusItem = ({ values }) => {
     const timer = setTimeout(() => {
       const valueObj = {};
       values.forEach(radiusName => {
-        valueObj[radiusName] = RADIUS.size[radiusName];
+        valueObj[radiusName] = RADIUS[radiusName];
       });
       setRadiusValues(valueObj);
       setIsLoaded(true);
@@ -43,7 +43,7 @@ export const RadiusItem = ({ values }) => {
               <div className="token-item__sample-wrapper">
                 <div
                   className="token-item__sample token-item__sample--radius"
-                  style={{ borderRadius: RADIUS.size[radiusName] }}
+                  style={{ borderRadius: RADIUS[radiusName] }}
                 />
               </div>
               <div className="token-item__details">

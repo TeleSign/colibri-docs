@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meta, Title, Subtitle, Unstyled } from '@storybook/blocks';
-import { capitalize, getVariableValue } from './utils/helpers';
+import { capitalize, getVariableValue } from './utils';
 import {
   PRIMARY_COLORS,
   ACCENT_COLORS,
@@ -19,7 +19,7 @@ import {
   STROKE_COLORS,
   ALPHA_COLORS,
   EXTENDED_COLORS,
-} from './constants';
+} from './utils';
 
 <Meta title="Foundation/Colors" />
 
@@ -119,7 +119,7 @@ import {
       </div>
       <ColorItem
         name="Extended"
-        prefix="colors"
+        prefix="colors-extended"
         values={EXTENDED_COLORS}
       />
 
@@ -130,37 +130,37 @@ import {
       <ColorItem
         name="UI Colors"
         description="Applied to interactive and visual interface elements such as buttons, toggles, badges, chips, and sliders. UI colors bring interactivity to life and should align with the hierarchy and role of the component (e.g., primary vs. secondary actions)."
-        prefix="colors"
+        prefix="colors-ui"
         values={UI_COLORS}
       />
       <ColorItem
         name="Text Colors"
         description="Used for all typographic elements — including headers, body text, captions, labels, and links. Text colors should always maintain sufficient contrast against their background to meet accessibility standards. They typically derive from neutral, primary, or semantic categories depending on the context."
-        prefix="colors"
+        prefix="colors-text"
         values={TEXT_COLORS}
       />
       <ColorItem
         name="Background Colors"
         description="Assigned to large surface areas including pages, cards, modals, drawers, and sections. These colors establish spatial zones and often derive from neutral, base, or extended palettes depending on the theme or product layer."
-        prefix="colors"
+        prefix="colors-bg"
         values={BACKGROUND_COLORS}
       />
       <ColorItem
         name="Icon Colors"
         description="Used to colorize icons and symbolic figures. Icon colors should complement the surrounding text and UI elements while ensuring visibility and clarity. They often align with semantic or accent tones for status indicators or callouts."
-        prefix="colors"
+        prefix="colors-icon"
         values={ICON_COLORS}
       />
       <ColorItem
         name="Stroke Colors"
         description="Used for outlines, borders, and dividers — supporting structure, visual grouping, and affordance. These colors often come from the base or neutral categories and must maintain enough contrast to distinguish components clearly."
-        prefix="colors"
+        prefix="colors-stroke"
         values={STROKE_COLORS}
       />
       <ColorItem
         name="Alpha Colors"
         description="These are semi-transparent variations of existing tokens, primarily used for overlay states like hover, focus, disabled, or loading. Alpha colors allow for layering while preserving the visual tone of the underlying element. They are essential for creating subtle transitions and feedback in UI interactions."
-        prefix="colors"
+        prefix="colors-alpha"
         values={ALPHA_COLORS}
       />
     </Unstyled>
@@ -190,7 +190,7 @@ export const ColorItem = ({ name, description, values, prefix }) => {
       {description && <div className="color-item__description">{description}</div>}
       <div className="color-item__container">
         {values.map((colorName) => {
-          const isAlphaColor = prefix === 'colors' && colorName.includes('alpha-');
+          const isAlphaColor = prefix === 'colors-alpha';
 
           return (
             <div
