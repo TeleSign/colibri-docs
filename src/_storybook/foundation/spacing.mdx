@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meta, Title, Subtitle } from '@storybook/blocks';
-import { SPACING, LAYOUT } from './constants'
+import { SPACING, LAYOUT } from './utils/token-helpers';
 
 <Meta title="Foundation/Spacing" />
 
@@ -17,8 +17,8 @@ import { SPACING, LAYOUT } from './constants'
     </p>
 
     <SpacingItem
-      values={Object.keys(SPACING.size)}
-      tokenData={SPACING.size}
+      values={Object.keys(SPACING)}
+      tokenData={SPACING}
       tokenPrefix="spacing"
     />
 
@@ -28,8 +28,8 @@ import { SPACING, LAYOUT } from './constants'
     </p>
 
     <SpacingItem
-      values={Object.keys(LAYOUT.size)}
-      tokenData={LAYOUT.size}
+      values={Object.keys(LAYOUT)}
+      tokenData={LAYOUT}
       tokenPrefix="layout"
     />
   </div>
