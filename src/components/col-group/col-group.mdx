@@ -1,0 +1,172 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as ColGroupStories from './col-group.stories';
+
+<Meta of={ColGroupStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Group</Title>
+    The Colibri Group component is a layout container that organizes related UI elements together. It provides consistent spacing, orientation control, and optional labeling to create cohesive groups of interactive elements like buttons, form inputs, or other components.
+
+    <Subtitle>Table of contents</Subtitle>
+    - [How to use it](#how-to-use-it)
+    - [When to use it](#when-to-use-it)
+    - [Component preview](#component-preview)
+      - [Basic horizontal group](#basic-horizontal-group)
+      - [Vertical group with label](#vertical-group-with-label)
+      - [Group without gaps](#group-without-gaps)
+      - [Form input group](#form-input-group)
+      - [Radio button group](#radio-button-group)
+      - [Nested groups](#nested-groups)
+    - [Properties](#properties)
+    - [Accessibility](#accessibility)
+    - [Interact with the component](#interact-with-the-component)
+
+    ## How to use it
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, registerAllComponents, ColGroup, ColTypography } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web components:
+        ```typescript
+        // Option 1: Register specific components
+        registerColibriComponents([ColGroup, ColTypography]);
+
+        // Option 2: Register all Colibri components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-group orientation="horizontal">
+          <col-button variant="primary">Save</col-button>
+          <col-button variant="secondary">Cancel</col-button>
+        </col-group>
+        ```
+
+    <div className="col-doc__callout col-doc__callout--info">
+      <p>ℹ️</p>
+      <p>
+        The Group component uses `col-typography` internally for labels and helper text. Make sure to register the ColTypography component when using groups with labels or helper text.
+      </p>
+    </div>
+
+    ## When to use it
+    Here are common use cases for the Group component:
+
+    - **Button groups** - Organize related actions like Save/Cancel or navigation buttons
+    - **Form sections** - Group related form inputs with a descriptive label
+    - **Radio/Checkbox groups** - Create accessible groups of selectable options
+    - **Toolbar items** - Organize toolbar actions with consistent spacing
+    - **Navigation elements** - Group navigation links or tabs together
+    - **Settings panels** - Organize related configuration options
+
+    ## Component preview
+
+    ### Basic horizontal group
+    <div>
+      The default group arranges items horizontally with consistent spacing. This is ideal for button groups and inline actions.
+    </div>
+    <h4>Overview</h4>
+
+    <Canvas of={ColGroupStories.Default} />
+
+    The group automatically:
+    - Applies consistent spacing between items
+    - Manages visual grouping for related elements
+    - Handles responsive behavior when space is limited
+
+    ### Vertical group with label
+    <div>
+      Use vertical orientation for form fields or stacked options. Adding a label and helper text provides context and guidance to users.
+    </div>
+
+    <Canvas of={ColGroupStories.VerticalWithLabel} />
+
+    Labels and helper text:
+    - Use `col-typography` components internally
+    - Are properly associated with the group for accessibility
+    - Support dynamic updates via properties
+
+    ### Group without gaps
+    <div>
+      Remove spacing between items using the `withoutGap` property. This is useful for creating segmented controls or button groups that appear as a single unit.
+    </div>
+
+    <div className="col-doc__callout col-doc__callout--info">
+      <p>ℹ️</p>
+      <p>
+        Some components like `checkbox-button`, `radio-button` includes styles when are inside `col-group` requires withoutGap property.
+      </p>
+    </div>
+
+    <Canvas of={ColGroupStories.WithoutGap} />
+
+    Common use cases for groups without gaps:
+    - Segmented controls
+    - Toggle button groups
+    - Tab-like interfaces
+    - Joined input fields
+
+
+    <Canvas of={ColGroupStories.RadioGroup} />
+
+    The group component:
+    - Provides proper ARIA semantics
+    - Associates the label with the radio group
+    - Maintains visual consistency
+    - Supports keyboard navigation
+
+    ### Nested groups
+    <div>
+      Groups can be nested to create more complex layouts. This is useful for organizing multiple sections of related controls.
+    </div>
+
+    <Canvas of={ColGroupStories.NestedGroups} />
+
+    Nesting allows you to:
+    - Create hierarchical organization
+    - Mix horizontal and vertical layouts
+    - Apply different spacing rules
+    - Build complex but organized interfaces
+
+    ## Properties
+
+    <ArgTypes of={ColGroupStories} />
+
+    ## Accessibility
+
+    The Group component includes several accessibility features:
+
+    - **Semantic HTML** - Uses appropriate role attributes (default: "group", customizable)
+    - **Label association** - Labels are properly associated using `aria-labelledby`
+    - **Helper text** - Helper text is associated using `aria-describedby`
+    - **Keyboard navigation** - Maintains natural tab order through grouped elements
+    - **Screen reader support** - Announces group context and relationships
+
+    Best practices:
+    - Use descriptive labels for groups containing form controls
+    - Set `role="radiogroup"` for radio button groups
+    - Ensure all interactive elements within groups are keyboard accessible
+    - Provide helper text when the group's purpose isn't immediately clear
+    - Test with screen readers to ensure proper announcement
+
+    Special considerations:
+    - Form sections benefit from clear, descriptive labels
+    - Complex nested groups should maintain a logical structure
+
+    <div className="col-doc__callout col-doc__callout--warning">
+      <p>⚠️</p>
+      <p>
+        Remember to register the `ColTypography` component when using groups with labels or helper text, as it's a required dependency for these features.
+      </p>
+    </div>
+
+    ## Interact with the component
+    To interact with the component, test different configurations, and verify accessibility compliance, navigate to the canvas tab of any story above.
+  </div>
+</div>
