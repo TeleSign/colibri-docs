@@ -41,3 +41,13 @@
   background-color: var(--col-colors-ui-success-lighter);
   border-color: var(--col-colors-stroke-success);
 }
+
+.warning {
+  background-color: var(--col-colors-ui-warning-lighter);
+  border-color: var(--col-colors-stroke-warning);
+}
+
+.error {
+  background-color: var(--col-colors-ui-danger-lighter);
+  border-color: var(--col-colors-stroke-danger);
+}

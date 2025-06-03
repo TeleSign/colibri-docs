@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Callout.module.css';
 
 export interface CalloutProps {
-  variant: 'info' | 'tip';
+  variant: 'info' | 'tip' | 'warning' | 'error';
   icon?: string;
   children: React.ReactNode;
 }
