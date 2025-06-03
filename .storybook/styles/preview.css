@@ -260,6 +260,12 @@ div.token-item__code-container {
   margin: 2rem 0;
 }
 
+.implementation-methods {
+  display: grid;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
 @media (max-width: 768px) {
   .theme-preview-container {
     grid-template-columns: 1fr;

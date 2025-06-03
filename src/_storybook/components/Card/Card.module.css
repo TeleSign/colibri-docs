@@ -1,0 +1,61 @@
+.card {
+  border: 1px solid var(--col-colors-stroke-default);
+  border-radius: 8px;
+  background: var(--col-colors-ui-default-dark);
+  & .title {
+    margin: 0 0 0.75rem 0;
+    color: var(--col-colors-text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+  }
+}
+
+.content {
+  color: var(--col-colors-text-default-darker);
+  line-height: 1.5;
+}
+
+.default {
+  padding: 1.5rem;
+}
+
+.outlined {
+  background: var(--col-colors-bg-default);
+  border-width: 2px;
+}
+
+.elevated {
+  background: var(--col-colors-bg-default);
+  box-shadow: var(--col-depth-box-shadow-s);
+  border: none;
+}
+
+.sm {
+  padding: 1rem;
+}
+
+.sm .title {
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.sm .content {
+  font-size: 0.875rem;
+}
+
+.md {
+  padding: 1.5rem;
+}
+
+.lg {
+  padding: 2rem;
+}
+
+.lg .title {
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+}
+
+.lg .content {
+  font-size: 1rem;
+}
