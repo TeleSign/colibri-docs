@@ -253,30 +253,16 @@ div.token-item__code-container {
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 }
 
-div.col-doc__callout {
-  display: flex;
-  gap: 1rem;
-  border-style: solid;
-  padding: var(--col-spacing-size-m);
-  margin-bottom: 1rem;
-  border-radius: var(--col-radius-size-xs);
+.theme-preview-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
 }
 
-.col-doc__callout--info {
-  background-color: var(--col-colors-ui-info-light);
-  border-color: var(--col-colors-stroke-info);
-}
-
-.col-doc__callout--tip {
-  background-color: var(--col-colors-ui-success-lighter);
-  border-color: var(--col-colors-stroke-success);
-}
-
-.col-doc__callout strong {
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.col-doc__callout p {
-  margin: 0;
+@media (max-width: 768px) {
+  .theme-preview-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 }
