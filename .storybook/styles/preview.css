@@ -244,7 +244,7 @@ div.token-item__code-container {
 .token-item__sample--depth {
   width: 80px;
   height: 80px;
-  background-color: var(--col-colors-ui-primary-lighter, #e5efff);
+  background-color: var(--col-colors-ui-primary-lighter);
   border: none;
   transition: box-shadow 0.3s ease;
 }
@@ -258,6 +258,70 @@ div.token-item__code-container {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   margin: 2rem 0;
+}
+
+.theme-preview-item {
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.theme-preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.theme-preview-header h4 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.theme-preview-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.theme-preview-colors-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.theme-color-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.theme-color-swatch-circle {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.theme-color-token-name {
+  flex: 1;
+  font-family: var(--col-typography-font-family-secondary, monospace);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.theme-color-hex-value {
+  font-family: var(--col-typography-font-family-secondary, monospace);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
 }
 
 .implementation-methods {

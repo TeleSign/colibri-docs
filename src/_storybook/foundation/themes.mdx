@@ -1,6 +1,6 @@
 import { Meta, Title, Subtitle, Unstyled } from '@storybook/blocks';
 import { themes } from '@telesign/colibri';
-import { Callout, Card, ThemePreview } from '../components';
+import { Callout, Card } from '../components';
 
 <Meta title="Foundation/Themes" />
 
@@ -29,27 +29,25 @@ import { Callout, Card, ThemePreview } from '../components';
         <li><strong>Component Integration:</strong> Seamless theme application through data attributes and token overrides</li>
       </ul>
 
+      <h3>Interactive Theme Testing</h3>
+      <Callout variant="info" icon="💡">
+        Use the theme switcher in Storybook's toolbar (🌐 icon) to see how themes affect components in real-time throughout this documentation.
+      </Callout>
+
       <h3>Available Themes</h3>
       <div>
-        Colibri currently provides {Object.keys(themes).length} built-in themes, each designed for different use cases and aesthetic preferences:
+        Colibri currently provides {Object.keys(themes).length} built-in themes, each designed for different use cases and aesthetic preferences. The themes include main color categories such as <strong>primary</strong>, <strong>accent</strong>, <strong>neutral</strong>, <strong>success</strong>, <strong>danger</strong>, <strong>warning</strong>, and <strong>information</strong> colors. For a complete overview of all available colors and their usage, please refer to the [Colors](/docs/foundation-colors--overview)  section in the documentation.
       </div>
 
-      <Callout variant="info" icon="💡">
-        <strong>Interactive Theme Testing:</strong> Use the theme switcher in Storybook's toolbar (globe icon) to see how themes affect components in real-time throughout this documentation.
-      </Callout>
       <div className="theme-preview-container">
-        <ThemePreview
-          themeName="default"
-          themeConfig={themes.default}
-          description="The primary theme featuring a clean, modern aesthetic with high contrast and accessibility-focused color choices. Ideal for most applications and serves as the foundation for customization."
-          colors={['primary-base', 'accent-base', 'neutral-500', 'success-base']}
-        />
-        <ThemePreview
-          themeName="massive"
-          themeConfig={themes.massive}
-          description="An alternative theme with a distinct color palette and visual personality. Features warmer tones and different contrast relationships, perfect for brand differentiation or specialized applications."
-          colors={['primary-base', 'accent-base', 'neutral-500', 'success-base']}
-        />
+        {Object.keys(themes).map((themeName) => (
+          <ThemePreview
+            key={themeName}
+            themeName={themeName}
+            themeConfig={themes[themeName]}
+            colors={['primary-base', 'accent-base', 'neutral-500', 'success-base', 'danger-base', 'warning-base', 'information-base', 'focus']}
+          />
+        ))}
       </div>
 
       <h3>Theme Implementation Methods</h3>
@@ -59,13 +57,13 @@ import { Callout, Card, ThemePreview } from '../components';
 
       <div className="implementation-methods">
         <Card title="Data Attribute Themes">
-          <div>Apply themes globally or to specific sections using <code>data-theme</code> attributes. Perfect for application-wide theme switching and user preferences.</div>
+          Apply themes globally or to specific sections using <code>data-theme</code> attributes. Perfect for application-wide theme switching and user preferences.
         </Card>
         <Card title="Dynamic Token Overrides">
-          <div>Customize individual components using the <code>.tokens</code> property. Ideal for component-specific styling and fine-grained control.</div>
+          Customize individual components using the <code>.tokens</code> property. Ideal for component-specific styling and fine-grained control.
         </Card>
         <Card title="Nested Theme Contexts">
-          <div>Create theme hierarchies where child elements inherit and override parent theme values. Useful for complex layouts with multiple theme zones.</div>
+          Create theme hierarchies where child elements inherit and override parent theme values. Useful for complex layouts with multiple theme zones.
         </Card>
       </div>
 
@@ -76,3 +74,64 @@ import { Callout, Card, ThemePreview } from '../components';
     </Unstyled>
   </div>
 </div>
+
+
+export const ThemePreview = ({ themeName, themeConfig, colors }) => {
+  return (
+    <div
+      className="theme-preview-item"
+      style={{
+        border: `1px solid ${themeConfig['accent-base']}`,
+        backgroundColor: themeConfig['white'],
+      }}
+    >
+      <div className="theme-preview-header">
+        <h4
+          style={{
+            color: themeConfig['accent-base'],
+          }}
+        >{themeName.charAt(0).toUpperCase() + themeName.slice(1)} Theme</h4>
+        <div
+          className="theme-preview-badge"
+          style={{
+            backgroundColor: themeConfig['base-light'],
+            color: themeConfig['base-alt'],
+          }}
+        >
+          {themeName}
+        </div>
+      </div>
+      <div className="theme-preview-colors-table">
+        {colors.map((color, index) => (
+          <div
+            key={`${themeName}-${color}-${index}`}
+            className="theme-color-row"
+            style={{
+            backgroundColor: themeConfig['neutral-50'],
+          }}>
+            <div
+              className="theme-color-swatch-circle"
+              style={{
+                backgroundColor: themeConfig[color],
+                color: themeConfig['base-dark'],
+              }}
+            />
+            <div
+              className="theme-color-token-name"
+              style={{
+                color: themeConfig['primary-base'],
+              }}
+            >--col-theme-{color}</div>
+            <div
+              className="theme-color-hex-value"
+              style={{
+                backgroundColor: themeConfig['base-light'],
+                color: themeConfig['base-alt'],
+              }}
+            >{themeConfig[color]}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
