@@ -1,0 +1,57 @@
+.container {
+  border: 1px solid var(--col-colors-stroke-default, #dddde2);
+  border-radius: 8px;
+  padding: 1.5rem;
+  background: var(--col-colors-bg-default, #ffffff);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--col-colors-text-primary, #171717);
+}
+
+.badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badgeDefault {
+  background: var(--col-colors-bg-info-lighter, #dff6ff);
+  color: var(--col-colors-text-info, #077392);
+}
+
+.badgeMassive {
+  background: var(--col-colors-bg-accent-lighter, #f9f9ff);
+  color: var(--col-colors-text-accent, #1f5bff);
+}
+
+.description {
+  color: var(--col-colors-text-secondary, #57576b);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.colorsContainer {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.colorSwatch {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 4px;
+  border: 1px solid var(--col-colors-stroke-subtle, #e9eaec);
+}
