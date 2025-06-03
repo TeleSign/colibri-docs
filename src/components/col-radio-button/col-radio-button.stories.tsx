@@ -200,6 +200,29 @@ export const RadioButtonGroup: Story = {
   `,
 };
 
+export const GroupRadioWithColGroup: Story = {
+  render: () => html`
+    <col-group
+      label="Checkbox group button horizontal"
+      role="group"
+      withoutGap
+    >
+      <col-radio-button group="options" value="option1" checked>
+        <col-icon name="emoji-circle" slot="icon"></col-icon>
+        Option 1
+      </col-radio-button>
+      <col-radio-button group="options" value="option2">
+        <col-icon name="emoji-circle" slot="icon"></col-icon>
+        Option 2
+      </col-radio-button>
+      <col-radio-button group="options" value="option3">
+        <col-icon name="emoji-circle" slot="icon"></col-icon>
+        Option 3
+      </col-radio-button>
+    </col-group>
+  `,
+}
+
 export const InteractiveExample: Story = {
   render: () => {
     const updateSelection = (e: Event) => {
