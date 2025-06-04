@@ -1,6 +1,8 @@
+import React from 'react';
 import { Meta, Title, Subtitle, Unstyled } from '@storybook/blocks';
 import { themes } from '@telesign/colibri';
 import { Callout, Card } from '../components';
+import { useStorybookTheme } from '../hooks/useStorybookTheme';
 
 <Meta title="Foundation/Themes" />
 
@@ -28,6 +30,12 @@ import { Callout, Card } from '../components';
         - [CSS Cascade Behavior](#css-cascade-behavior)
         - [Parent-Child Relationships](#parent-child-relationships)
         - [Best Practices](#best-practices)
+      - [Dynamic Token System](#dynamic-token-system)
+        - [Component Token Overrides](#component-token-overrides)
+        - [TypeScript Integration](#typescript-integration)
+        - [Tokens vs Inline Styles](#tokens-vs-inline-styles)
+        - [Advanced Token Usage](#advanced-token-usage)
+        - [Token Performance](#token-performance)
 
       ## Theme System Overview
 
@@ -218,6 +226,364 @@ import { Callout, Card } from '../components';
           <li><strong>User preferences:</strong> Allow users to theme specific areas independently</li>
         </ul>
       </Callout>
+
+      ## Dynamic Token System
+
+      ### Component Token Overrides
+      <div>
+        For fine-grained control over individual component styling, Colibri provides the <code>.tokens</code> property on <code>ThemedComponent</code> instances. This approach allows you to override specific design tokens at the component level while maintaining theme consistency for unspecified tokens.
+      </div>
+
+      <Callout variant="info" icon="🎯">
+        <strong>Important:</strong> Themes are applied using <code>data-theme</code> attributes on parent containers, and individual components can override specific tokens using the <code>.tokens</code> property.
+      </Callout>
+
+      <div>
+        When using HTML files, you can set tokens programmatically using the <code>.tokens</code> property after the DOM is ready.
+      </div>
+
+      <Callout variant="tip" icon="💡">
+        When setting tokens, you must <strong>use the correct token path structure</strong>. For instance, to modify the <strong>primary</strong> color, use the path <code>colors.ui.primary</code>. The <code>--col-</code> prefix is automatically appended to token names. For a complete reference of available colors and their corresponding token paths, see the [Colors](/docs/foundation-colors--overview) documentation. For other tokens like <strong>spacing</strong>, <strong>typography</strong>, and more, refer to their respective sections in the <strong>Foundation</strong> section of the documentation.
+      </Callout>
+
+      #### HTML Files
+
+      ```html
+      <!-- Add a button to the DOM and give it an id -->
+      <col-button color="primary" id="custom-button">Custom Themed Button</col-button>
+
+      <!-- Register the component and set tokens -->
+      <script type="module">
+        import { registerColibriComponents, ColButton } from '@telesign/colibri';
+
+        registerColibriComponents([ColButton]);
+
+        // Set tokens after DOM is ready
+        window.addEventListener('DOMContentLoaded', () => {
+          // Get the button element by id
+          const button = document.getElementById('custom-button');
+          // If the button element exists, set the tokens
+          if (button) {
+            // Set the tokens by following the appropriate token path
+            button.tokens = {
+              colors: {
+                ui: {
+                  primary: '#ff6b35',
+                }
+            };
+          }
+        });
+      </script>
+      ```
+
+      #### JavaScript Files
+
+      ```javascript
+      import { registerColibriComponents, ColButton } from '@telesign/colibri';
+
+      registerColibriComponents([ColButton]);
+
+      // Define custom tokens
+      const customTokens = {
+        colors: {
+          ui: {
+            primary: '#ff6b35',
+          }
+        }
+      };
+
+      // Method 1: Query existing element (with DOM event listener)
+      document.addEventListener('DOMContentLoaded', () => {
+        const existingButton = document.querySelector('col-button');
+        if (existingButton) {
+          existingButton.tokens = customTokens;
+        }
+      });
+
+      // Method 2: Create new element dynamically (no event listener needed)
+      const newButton = document.createElement('col-button');
+      newButton.tokens = customTokens;
+      newButton.textContent = 'Custom Themed Button';
+      document.body.appendChild(newButton);
+
+      // The component automatically generates CSS custom properties:
+      // --col-colors-ui-primary: #ff6b35
+      ```
+
+      <Callout variant="info" icon="💡">
+        Use the theme switcher in Storybook's toolbar (🌐 icon) to see how themes affect the <strong>Default Button</strong> component in real-time.
+      </Callout>
+
+      <div className="token-override-demo">
+        <TokenOverrideDemo />
+      </div>
+
+      ### TypeScript Integration
+      <div>
+        When using TypeScript, you can cast web component elements to their specific types for better development experience with component properties and type safety.
+      </div>
+
+      ```typescript
+      import { COLORS, ColButton } from '@telesign/colibri';
+      import { registerColibriComponents } from '@telesign/colibri';
+
+      registerColibriComponents([ColButton]);
+
+      // Method 1: Query existing element (with DOM event listener) and cast to the appropriate type
+      document.addEventListener('DOMContentLoaded', () => {
+        const buttonElement = document.querySelector('col-button') as ColButton;
+        if (buttonElement) {
+          buttonElement.tokens = {
+            colors: {
+              ui: {
+                primary: '#ff6b35',
+              },
+            },
+          };
+          // Enum provides autocomplete and validation
+          buttonElement.color = COLORS.PRIMARY;
+          buttonElement.disabled = false;
+        }
+      });
+
+      // Method 2: Create new element dynamically (no event listener needed) and cast to the appropriate type
+      const newButton = document.createElement('col-button') as ColButton;
+      newButton.tokens = {
+        colors: {
+          ui: {
+            primary: '#ff6b35',
+          },
+        },
+      };
+
+      newButton.textContent = 'Type-safe themed button';
+      // Enum provides autocomplete and validation
+      newButton.color = COLORS.PRIMARY;
+      document.body.appendChild(newButton);
+      ```
+
+      <Callout variant="tip" icon="💡">
+        <strong>TypeScript Benefits:</strong>
+        <ul>
+          <li>Type safety and autocomplete for component properties</li>
+          <li>Compile-time validation prevents invalid property values</li>
+          <li>IntelliSense support for component-specific properties</li>
+        </ul>
+      </Callout>
+
+      ### Tokens vs Inline Styles
+      <div>
+        The <code>.tokens</code> property and inline styles are <strong>mutually exclusive</strong>. When tokens are applied to a component, they will override any conflicting inline styles. You should choose one approach or the other, not combine them.
+      </div>
+
+      #### Using tokens Property
+
+      ```javascript
+      import { registerColibriComponents, ColButton } from '@telesign/colibri';
+
+      registerColibriComponents([ColButton]);
+
+      // ✅ CORRECT: Use tokens to override the default primary color
+      const tokenButton = document.createElement('col-button');
+      tokenButton.tokens = {
+        colors: {
+          ui: {
+            'primary-base': '#011ac2',
+          }
+        }
+      };
+      tokenButton.textContent = 'Token-styled Button';
+      document.body.appendChild(tokenButton);
+      ```
+
+      <div className="token-style-demo-wrapper">
+        <TokenStyleDemo type="tokens" title="✅ Using tokens Property" description="Override the default primary color with a custom color." />
+      </div>
+
+      #### Using Inline Styles
+
+      ```javascript
+      import { registerColibriComponents, ColButton } from '@telesign/colibri';
+
+      registerColibriComponents([ColButton]);
+
+      // ✅ CORRECT: Use inline styles to override the default primary color
+      const styledButton = document.createElement('col-button');
+      styledButton.style.backgroundColor = '#e74c3c';
+      document.body.appendChild(styledButton);
+      ```
+
+      <div className="token-style-demo-wrapper">
+        <TokenStyleDemo type="inline" title="✅ Using Inline Styles" description="Override the default primary color with a custom color." />
+      </div>
+
+      #### Mixing Both (Invalid)
+
+      ```javascript
+      import { registerColibriComponents, ColButton } from '@telesign/colibri';
+
+      registerColibriComponents([ColButton]);
+
+      // ❌ INCORRECT: Don't mix both approaches, it will cause unpredictable behavior
+      const conflictingButton = document.createElement('col-button');
+      conflictingButton.style.backgroundColor = '#e74c3c'; // This will be overridden
+      conflictingButton.tokens = {
+        colors: {
+          ui: {
+            primary: '#df1b42' // This will win and override the inline style
+          }
+        }
+      };
+      conflictingButton.textContent = 'Conflicting tokens + inline styles';
+      document.body.appendChild(conflictingButton);
+      ```
+
+      <div className="token-style-demo-wrapper">
+        <TokenStyleDemo type="invalid" title="❌ Mixing Both (Invalid)" description="Mixing tokens and inline styles is not supported and will cause unpredictable behavior. The inline style will win and override the token." />
+      </div>
+
+      <Callout variant="warning" icon="⚠️">
+        <strong>Decision Matrix: When to Use Each Approach</strong>
+        <ul>
+          <li><strong>Use <code>tokens</code> when:</strong> You want theme-aware styling, need design system consistency, or plan to switch themes dynamically</li>
+          <li><strong>Use inline styles when:</strong> You need one-off styling, have specific pixel values, or are prototyping quickly</li>
+          <li><strong>Use <code>data-theme</code> when:</strong> You want to apply themes globally or to sections with multiple components</li>
+        </ul>
+      </Callout>
+
+      ### Advanced Token Usage
+      <div>
+        Token overrides support complex patterns including conditional theming, responsive tokens, and composite token values for sophisticated component customization.
+      </div>
+
+      #### Conditional Token Overrides
+
+      ```javascript
+      import { registerColibriComponents, ColButton } from '@telesign/colibri';
+
+      registerColibriComponents([ColButton]);
+
+      const getAdaptiveTokens = (isDisabled: boolean) => ({
+        colors: {
+          ui: {
+            primary: isDisabled ? '#00b733' : '#b7b7c0',
+          }
+        }
+      });
+
+      // Apply conditional tokens
+      const button = document.querySelector('col-button');
+      if (button) {
+        button.tokens = getAdaptiveTokens(false);
+
+        // Toggle state on click
+        button.addEventListener('click', () => {
+          const isCurrentlyDisabled = button.disabled;
+          button.disabled = !isCurrentlyDisabled;
+          button.tokens = getAdaptiveTokens(!isCurrentlyDisabled);
+        });
+      }
+      ```
+
+      <div className="advanced-token-demo-wrapper">
+        <AdvancedTokenDemo type="conditional" title="Conditional Token Overrides" description="Tokens change based on component state: click to toggle between active and disabled colors." />
+      </div>
+
+      #### Responsive Token Values
+
+      ```javascript
+      import { registerColibriComponents, ColButton } from '@telesign/colibri';
+
+      registerColibriComponents([ColButton]);
+
+      // Responsive token values using CSS functions
+      const responsiveTokens = {
+        spacing: {
+          padding: 'clamp(12px, 4vw, 24px)',
+          margin: 'max(8px, 1vw)'
+        },
+        typography: {
+          size: 'clamp(14px, 2.5vw, 18px)'
+        }
+      };
+
+      // Apply to components
+      const responsiveCard = document.createElement('col-card');
+      responsiveCard.tokens = responsiveTokens;
+      document.body.appendChild(responsiveCard);
+      ```
+
+      <div className="advanced-token-demo-wrapper">
+        <AdvancedTokenDemo type="responsive" title="Responsive Token Values" description="Resize your browser to see responsive token values in action using clamp() and max() functions." />
+      </div>
+
+      #### Complex Nested Token Structure
+
+      ```javascript
+      import { registerColibriComponents, ColButton } from '@telesign/colibri';
+
+      registerColibriComponents([ColButton]);
+
+      const complexTokens = {
+        colors: {
+          ui: {
+            accent: '#1f5bff',
+          }
+        },
+        depth: {
+          'box-shadow': {
+            l: '0 8px 32px rgba(31, 91, 255, 0.15)',
+          }
+        }
+      };
+
+      const complexButton = document.createElement('col-button');
+      complexButton.tokens = complexTokens;
+      document.body.appendChild(complexButton);
+      ```
+
+      <div className="advanced-token-demo-wrapper">
+        <AdvancedTokenDemo type="composite" title="Complex Nested Token Structure" description="Multiple tokens working together for sophisticated component styling with coordinated colors and spacing." />
+      </div>
+
+      ### Token Performance
+      <div>
+        Token overrides are highly performant because they leverage CSS custom properties, which are processed natively by the browser. The updated token flattening system uses the <code>--col-</code> prefix for optimal CSS generation and minimal runtime overhead.
+      </div>
+
+      <Callout variant="info" icon="⚡">
+        <strong>Performance Benefits:</strong>
+        <ul>
+          <li><strong>Native CSS processing:</strong> Tokens become CSS custom properties, processed by the browser's CSS engine</li>
+          <li><strong>Minimal JavaScript overhead:</strong> Token flattening happens once during component creation</li>
+          <li><strong>Optimal prefix structure:</strong> <code>--col-</code> prefix reduces CSS size and improves parsing speed</li>
+          <li><strong>Dynamic updates:</strong> Changing token values updates all dependent styles automatically</li>
+        </ul>
+      </Callout>
+
+      ```css
+      /* Generated CSS custom properties with optimized --col- prefix */
+      .themed-component {
+        --col-colors-primary: #007bff;
+        --col-colors-brand-primary: #ff6b35;
+        --col-spacing-medium: 16px;
+        --col-spacing-padding: clamp(12px, 4vw, 24px);
+
+        /* Component styles automatically use these tokens */
+        background-color: var(--col-colors-primary);
+        padding: var(--col-spacing-medium);
+      }
+      ```
+
+      <Callout variant="tip" icon="🚀">
+        <strong>Best Practices for Performance:</strong>
+        <ul>
+          <li>Prefer token overrides over frequent inline style changes for better browser optimization</li>
+          <li>Use semantic token names that can be shared across multiple components</li>
+          <li>Leverage CSS custom property inheritance for efficient theme propagation</li>
+          <li>Test theme switching performance with large numbers of themed components</li>
+        </ul>
+      </Callout>
     </Unstyled>
   </div>
 </div>
@@ -349,6 +715,153 @@ export const NestedThemesDemo = () => {
           </div>
         </div>
       ))}
+    </div>
+  );
+};
+
+export const TokenOverrideDemo = () => {
+  const currentTheme = useStorybookTheme();
+  const themeConfig = themes[currentTheme];
+  const primaryColor = themeConfig?.['primary-base'] || '#011ac2';
+
+  return (
+    <div className="token-override-container">
+      <div className="token-override-showcase">
+        <h4>Before and After Token Override</h4>
+        <div className="token-override-comparison">
+          <div className="token-override-before">
+            <h5>Before ({currentTheme.charAt(0).toUpperCase() + currentTheme.slice(1)} Theme)</h5>
+            <div className="token-override-component token-override-component--default">
+              Default Button
+            </div>
+            <p>Uses active theme tokens</p>
+            <div className="token-override-tokens">
+              <span className="token-override-token">--col-colors-ui-primary: {primaryColor}</span>
+            </div>
+          </div>
+          <div className="token-override-after">
+            <h5>After (Custom Tokens)</h5>
+            <div
+              className="token-override-component"
+              style={{
+                backgroundColor: '#ff6b35',
+                color: '#ffffff',
+                borderRadius: '12px',
+                padding: '12px 24px',
+                border: '2px solid #e55a2b',
+                width: 'fit-content',
+                margin: '0 auto'
+              }}
+            >
+              Custom Themed Button
+            </div>
+            <p>Uses custom token overrides</p>
+            <div className="token-override-tokens">
+              <span className="token-override-token">--col-colors-ui-primary: #ff6b35</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const TokenStyleDemo = ({ type, title, description }) => {
+  const getComponentClass = () => {
+    switch (type) {
+      case 'tokens':
+        return 'token-style-component--tokens';
+      case 'inline':
+        return 'token-style-component--inline';
+      case 'invalid':
+        return 'token-style-component--invalid';
+      default:
+        return 'token-style-component--tokens';
+    }
+  };
+
+  const getButtonText = () => {
+    switch (type) {
+      case 'tokens':
+        return 'Token-styled Button';
+      case 'inline':
+        return 'Inline-styled Button';
+      case 'invalid':
+        return 'Conflicting tokens + inline styles';
+      default:
+        return 'Demo button';
+    }
+  };
+
+  return (
+    <div className="token-style-demo">
+      <div className="token-style-demo-header">
+        <h5>{title}</h5>
+      </div>
+      <div className="token-style-demo-content">
+        <div className={`token-style-component ${getComponentClass()}`}>
+          {getButtonText()}
+        </div>
+        <p className="token-style-demo-description">
+          {description}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export const AdvancedTokenDemo = ({ type, title, description }) => {
+  const [isDisabled, setIsDisabled] = React.useState(false);
+
+  const getComponentClass = () => {
+    switch (type) {
+      case 'conditional':
+        return 'advanced-token-component--adaptive';
+      case 'responsive':
+        return 'advanced-token-component--responsive';
+      case 'composite':
+        return 'advanced-token-component--composite';
+      default:
+        return 'advanced-token-component--adaptive';
+    }
+  };
+
+  const getButtonText = () => {
+    switch (type) {
+      case 'conditional':
+        return isDisabled ? 'Disabled State' : 'Active State (Click to toggle)';
+      case 'responsive':
+        return 'Responsive padding, font-size, and border-radius using clamp() and max()';
+      case 'composite':
+        return 'Complex styling with multiple coordinated tokens';
+      default:
+        return 'Advanced token demo';
+    }
+  };
+
+  const handleClick = () => {
+    if (type === 'conditional') {
+      setIsDisabled(!isDisabled);
+    }
+  };
+
+  return (
+    <div className="advanced-token-demo">
+      <div className="advanced-token-demo-header">
+        <h5>{title}</h5>
+      </div>
+      <div className="advanced-token-demo-content">
+        <div
+          className={`advanced-token-component ${getComponentClass()} ${type === 'conditional' && isDisabled ? 'disabled' : ''}`}
+          onClick={handleClick}
+          style={{ cursor: type === 'conditional' ? 'pointer' : 'default' }}
+        >
+          {getButtonText()}
+        </div>
+        <p className="advanced-token-demo-description">
+          {description}
+        </p>
+      </div>
     </div>
   );
 };
