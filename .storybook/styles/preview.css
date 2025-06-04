@@ -492,6 +492,14 @@ div.token-item__code-container {
   .advanced-token-demo {
     padding: 1rem;
   }
+
+  .custom-theme-demo-controls {
+    flex-direction: column;
+  }
+
+  .custom-theme-demo {
+    padding: 1rem;
+  }
 }
 
 .nested-themes-container {
@@ -931,6 +939,88 @@ div.token-item__code-container {
 .advanced-token-component--composite {
   background-color: var(--col-theme-white);
   color: var(--col-theme-neutral-700);
-  border: 2px solid #1f5bff;
+  border: 2px solid var(--col-theme-accent-base);
   box-shadow: 0 8px 32px rgba(31, 91, 255, 0.15);
+}
+
+.custom-theme-demo-wrapper {
+  margin: 1.5rem 0;
+}
+
+.custom-theme-demo {
+  padding: 1.5rem;
+  background-color: var(--col-theme-neutral-25);
+  border: 1px solid var(--col-theme-neutral-200);
+  border-radius: var(--col-radius-size-s);
+}
+
+.custom-theme-demo-header {
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--col-theme-neutral-300);
+}
+
+.custom-theme-demo-header h5 {
+  margin: 0;
+  color: var(--col-theme-accent-base);
+  font-size: var(--col-typography-font-size-m);
+}
+
+.custom-theme-demo-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.custom-theme-demo-controls {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.custom-theme-demo-button {
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--col-theme-primary-base);
+  background-color: var(--col-theme-white);
+  color: var(--col-theme-primary-base);
+  border-radius: var(--col-radius-size-xs);
+  cursor: pointer;
+  font-size: var(--col-typography-font-size-s);
+  transition: all 0.2s ease;
+}
+
+.custom-theme-demo-button:hover:not(:disabled) {
+  background-color: var(--col-theme-primary-base);
+  color: var(--col-theme-white);
+}
+
+.custom-theme-demo-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.custom-theme-demo-container {
+  padding: 1.5rem;
+  border: 2px solid var(--col-theme-neutral-200);
+  border-radius: var(--col-radius-size-s);
+  background-color: var(--col-theme-white);
+  transition: all 0.3s ease;
+}
+
+.custom-theme-demo-component {
+  padding: 1rem;
+  background-color: var(--col-theme-primary-base);
+  color: var(--col-theme-white);
+  border-radius: var(--col-radius-size-xs);
+  text-align: center;
+  font-size: var(--col-typography-font-size-s);
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.custom-theme-demo-description {
+  margin: 0;
+  font-size: var(--col-typography-font-size-s);
+  color: var(--col-theme-neutral-600);
+  text-align: center;
 }

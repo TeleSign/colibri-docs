@@ -36,6 +36,7 @@ import { useStorybookTheme } from '../hooks/useStorybookTheme';
         - [Tokens vs Inline Styles](#tokens-vs-inline-styles)
         - [Advanced Token Usage](#advanced-token-usage)
         - [Token Performance](#token-performance)
+      - [Custom Theme Registration](#custom-theme-registration)
 
       ## Theme System Overview
 
@@ -584,6 +585,43 @@ import { useStorybookTheme } from '../hooks/useStorybookTheme';
           <li>Test theme switching performance with large numbers of themed components</li>
         </ul>
       </Callout>
+
+      ## Custom Theme Registration
+      <div>
+        For runtime theme creation, Colibri provides the <code>registerTheme()</code> function to dynamically register custom themes that can be used with <code>data-theme</code> attributes.
+      </div>
+
+      ```javascript
+      import { registerTheme } from '@telesign/colibri';
+
+      // Register a custom neon theme
+      registerTheme('neon', {
+        'primary-base': '#ff00ff',
+        'primary-dark': '#cc00cc',
+        'accent-base': '#00ffff',
+        'accent-dark': '#00cccc',
+        'neutral-900': '#1a1a1a',
+        'white': '#ffffff'
+      });
+
+      // Apply the custom theme to a container
+      const container = document.querySelector('.my-app');
+      container.setAttribute('data-theme', 'neon');
+      ```
+
+      <div className="custom-theme-demo-wrapper">
+        <CustomThemeDemo />
+      </div>
+
+      <Callout variant="tip" icon="🎨">
+        <strong>Custom Theme Best Practices:</strong>
+        <ul>
+          <li>Only override the tokens you need - unspecified tokens will fall back to defaults</li>
+          <li>Use semantic theme names that describe the purpose (e.g., 'dark', 'high-contrast')</li>
+          <li>Test custom themes across all components to ensure consistency</li>
+          <li>Consider accessibility when choosing color combinations</li>
+        </ul>
+      </Callout>
     </Unstyled>
   </div>
 </div>
@@ -861,6 +899,79 @@ export const AdvancedTokenDemo = ({ type, title, description }) => {
         <p className="advanced-token-demo-description">
           {description}
         </p>
+      </div>
+    </div>
+  );
+};
+
+export const CustomThemeDemo = () => {
+  const [isRegistered, setIsRegistered] = React.useState(false);
+
+  const registerNeonTheme = () => {
+    // Import registerTheme dynamically to avoid issues in Storybook
+    import('@telesign/colibri').then(({ registerTheme }) => {
+      registerTheme('neon', {
+        'primary-base': '#ff00ff',
+        'primary-dark': '#cc00cc',
+        'accent-base': '#00ffff',
+        'accent-dark': '#00cccc',
+        'neutral-900': '#1a1a1a',
+        'white': '#ffffff'
+      });
+      setIsRegistered(true);
+    });
+  };
+
+  const applyNeonTheme = () => {
+    const demoContainer = document.querySelector('.custom-theme-demo-container');
+    if (demoContainer) {
+      demoContainer.setAttribute('data-theme', 'neon');
+    }
+  };
+
+  const resetTheme = () => {
+    const demoContainer = document.querySelector('.custom-theme-demo-container');
+    if (demoContainer) {
+      demoContainer.setAttribute('data-theme', 'default');
+    }
+  };
+
+  return (
+    <div className="custom-theme-demo">
+      <div className="custom-theme-demo-header">
+        <h5>Custom Theme Registration Demo</h5>
+      </div>
+      <div className="custom-theme-demo-content">
+        <div className="custom-theme-demo-controls">
+          <button
+            onClick={registerNeonTheme}
+            disabled={isRegistered}
+            className="custom-theme-demo-button"
+          >
+            {isRegistered ? '✅ Neon Theme Registered' : 'Register Neon Theme'}
+          </button>
+          <button
+            onClick={applyNeonTheme}
+            disabled={!isRegistered}
+            className="custom-theme-demo-button"
+          >
+            Apply Neon Theme
+          </button>
+          <button
+            onClick={resetTheme}
+            className="custom-theme-demo-button"
+          >
+            Reset to Default
+          </button>
+        </div>
+        <div className="custom-theme-demo-container" data-theme="default">
+          <div className="custom-theme-demo-component">
+            Custom Themed Component
+          </div>
+          <p className="custom-theme-demo-description">
+            This component will change appearance when the custom neon theme is applied.
+          </p>
+        </div>
       </div>
     </div>
   );
