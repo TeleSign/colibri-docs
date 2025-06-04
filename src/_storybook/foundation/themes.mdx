@@ -12,14 +12,27 @@ import { Callout, Card } from '../components';
         The theme system provides a powerful and flexible way to customize the visual appearance of components across different contexts, brands, and user preferences. Built on a foundation of design tokens and CSS custom properties, themes enable consistent styling while maintaining the flexibility to adapt to diverse design requirements.
       </div>
 
-      <Subtitle>Theme System Overview</Subtitle>
+      <Subtitle>Table of contents</Subtitle>
+      - [Theme System Overview](#theme-system-overview)
+        - [What are Themes?](#what-are-themes)
+        - [How Themes Work](#how-themes-work)
+        - [Interactive Theme Testing](#interactive-theme-testing)
+        - [Available Themes](#available-themes)
+        - [Theme Implementation Methods](#theme-implementation-methods)
+        - [Getting Started](#getting-started)
+      - [Data-Theme Implementation](#data-theme-implementation)
+        - [Basic Usage](#basic-usage)
+        - [CSS Custom Properties](#css-custom-properties)
+        - [Theme Inheritance](#theme-inheritance)
 
-      <h3>What are Themes?</h3>
+      ## Theme System Overview
+
+      ### What are Themes?
       <div>
         Themes are collections of design token values that define the visual appearance of your interface. Each theme contains the same set of tokens but with different values, allowing you to create variations like light and dark modes, brand-specific styling, or accessibility-focused alternatives without changing your component code.
       </div>
 
-      <h3>How Themes Work</h3>
+      ### How Themes Work
       <div>
         The Colibri theme system operates on three key principles:
       </div>
@@ -29,12 +42,12 @@ import { Callout, Card } from '../components';
         <li><strong>Component Integration:</strong> Seamless theme application through data attributes and token overrides</li>
       </ul>
 
-      <h3>Interactive Theme Testing</h3>
+      ### Interactive Theme Testing
       <Callout variant="info" icon="💡">
         Use the theme switcher in Storybook's toolbar (🌐 icon) to see how themes affect components in real-time throughout this documentation.
       </Callout>
 
-      <h3>Available Themes</h3>
+      ### Available Themes
       <div>
         Colibri currently provides {Object.keys(themes).length} built-in themes, each designed for different use cases and aesthetic preferences. The themes include main color categories such as <strong>primary</strong>, <strong>accent</strong>, <strong>neutral</strong>, <strong>success</strong>, <strong>danger</strong>, <strong>warning</strong>, and <strong>information</strong> colors. For a complete overview of all available colors and their usage, please refer to the [Colors](/docs/foundation-colors--overview)  section in the documentation.
       </div>
@@ -50,7 +63,7 @@ import { Callout, Card } from '../components';
         ))}
       </div>
 
-      <h3>Theme Implementation Methods</h3>
+      ### Theme Implementation Methods
       <div>
         Colibri supports multiple approaches to theme implementation, each suited to different use cases:
       </div>
@@ -67,14 +80,122 @@ import { Callout, Card } from '../components';
         </Card>
       </div>
 
-      <Subtitle>Getting Started</Subtitle>
+      ### Getting Started
       <div>
         Ready to implement themes in your project? The following sections will guide you through each implementation method, from basic theme switching to advanced customization techniques. Each approach is designed to work seamlessly with Colibri's component library while providing the flexibility you need for your specific use case.
       </div>
+
+      ## Data-Theme Implementation
+
+      ### Basic Usage
+      <div>
+        The most straightforward way to apply themes is using the <code>data-theme</code> attribute on parent containers. This approach leverages CSS cascade to automatically theme all child elements without requiring individual component configuration.
+      </div>
+
+      ```html
+      <!-- Apply theme to entire application -->
+      <div data-theme="default">
+        <header>
+          <h1>My Application</h1>
+          <nav>Navigation items inherit theme</nav>
+        </header>
+        <main>
+          <p>All content automatically themed</p>
+        </main>
+      </div>
+
+      <!-- Apply theme to specific sections -->
+      <div data-theme="massive">
+        <section>
+          <h2>This section uses massive theme</h2>
+          <p>All child elements inherit the theme</p>
+        </section>
+      </div>
+      ```
+
+      <Callout variant="tip" icon="💡">
+        The <code>data-theme</code> attribute can be applied to any HTML element, making it flexible for both global application theming and section-specific styling.
+      </Callout>
+
+      ### CSS Custom Properties
+      <div>
+        When you apply a <code>data-theme</code> attribute, Colibri automatically makes theme-specific CSS custom properties available to all child elements. These properties follow a consistent naming convention using the <code>--col-theme-*</code> prefix.
+      </div>
+
+      ```css
+      /* Theme tokens are automatically available as CSS custom properties */
+      :root [data-theme="default"] {
+        --col-theme-primary-base: #011ac2;
+        --col-theme-accent-base: #1f5bff;
+        --col-theme-neutral-500: #8c8ca1;
+        --col-theme-success-base: #00b733;
+        --col-theme-danger-base: #df1b42;
+        --col-theme-warning-base: #ffa244;
+        --col-theme-information-base: #077392;
+        --col-theme-focus: #e5e8f9;
+        /* ... and many more tokens */
+      }
+
+      /* Use theme tokens in your custom CSS */
+      .my-custom-component {
+        background-color: var(--col-theme-primary-base);
+        color: var(--col-theme-white);
+        border: 1px solid var(--col-theme-accent-base);
+      }
+      ```
+
+      ### Theme Inheritance
+      <div>
+        Child elements automatically inherit theme properties from their parent containers. This cascading behavior ensures consistent theming throughout your application without requiring explicit theme configuration on every element.
+      </div>
+
+      <div className="data-theme-inheritance-demo">
+        <DataThemeInheritanceDemo />
+      </div>
+
+      <Callout variant="info" icon="📋">
+        <strong>Key Benefits:</strong>
+        <ul>
+          <li>Automatic theme inheritance for all child elements</li>
+          <li>No individual component configuration required</li>
+          <li>CSS custom properties available for custom styling</li>
+          <li>Consistent <code>--col-theme-*</code> naming convention</li>
+          <li>Works with any HTML structure or framework</li>
+        </ul>
+      </Callout>
     </Unstyled>
   </div>
 </div>
 
+export const DataThemeInheritanceDemo = () => {
+  return (
+    <div className="inheritance-demo-container">
+      {Object.keys(themes).map((themeName) => (
+        <div key={themeName} className="inheritance-demo-section" data-theme={themeName}>
+          <div className="inheritance-demo-header">
+            <h4>{themeName.charAt(0).toUpperCase() + themeName.slice(1)} Theme Container</h4>
+            <code>data-theme="{themeName}"</code>
+          </div>
+          <div className="inheritance-demo-content">
+            <div className="inheritance-demo-card">
+              <h5>Child Card</h5>
+              <p>This card inherits the {themeName} theme automatically</p>
+              <button className="inheritance-demo-button">Themed Button</button>
+            </div>
+            <div className="inheritance-demo-list">
+              <h5>Child List</h5>
+              <ul>
+                <li>List item inherits {themeName} theme</li>
+                <li>No explicit theming needed</li>
+                <li>Automatic theme adaptation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
 
 export const ThemePreview = ({ themeName, themeConfig, colors }) => {
   return (
