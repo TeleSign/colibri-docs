@@ -24,6 +24,10 @@ import { Callout, Card } from '../components';
         - [Basic Usage](#basic-usage)
         - [CSS Custom Properties](#css-custom-properties)
         - [Theme Inheritance](#theme-inheritance)
+      - [Nested Themes](#nested-themes)
+        - [CSS Cascade Behavior](#css-cascade-behavior)
+        - [Parent-Child Relationships](#parent-child-relationships)
+        - [Best Practices](#best-practices)
 
       ## Theme System Overview
 
@@ -163,6 +167,57 @@ import { Callout, Card } from '../components';
           <li>Works with any HTML structure or framework</li>
         </ul>
       </Callout>
+
+      ## Nested Themes
+
+      ### CSS Cascade Behavior
+      <div>
+        When multiple <code>data-theme</code> attributes are nested, CSS cascade rules determine which theme properties apply to each element. Child themes override parent themes, allowing for sophisticated theming hierarchies within your application.
+      </div>
+
+      ```html
+      <!-- Parent theme applies to entire application -->
+      <div data-theme="default">
+        <header>Header uses default theme</header>
+
+        <!-- Child theme overrides parent for this section -->
+        <main data-theme="massive">
+          <h1>This content uses massive theme</h1>
+          <p>Overrides the parent default theme</p>
+        </main>
+
+        <footer>Footer returns to default theme</footer>
+      </div>
+      ```
+
+      ### Parent-Child Relationships
+      <div>
+        Nested themes create clear boundaries where child elements inherit from their nearest themed ancestor. This enables complex layouts with multiple theme zones while maintaining predictable styling behavior.
+      </div>
+
+      <div className="nested-themes-demo">
+        <NestedThemesDemo />
+      </div>
+
+      ### Best Practices
+      <Callout variant="warning" icon="⚠️">
+        <strong>Performance Considerations:</strong>
+        <ul>
+          <li>Limit nesting depth to 2-3 levels to avoid CSS specificity conflicts</li>
+          <li>Prefer component-level token overrides for fine-grained control</li>
+          <li>Use nested themes for distinct application sections, not individual components</li>
+        </ul>
+      </Callout>
+
+      <Callout variant="tip" icon="💡">
+        <strong>When to Use Nested Themes:</strong>
+        <ul>
+          <li><strong>Application sections:</strong> Different themes for header, main, sidebar</li>
+          <li><strong>Modal overlays:</strong> Contrasting themes for focus and accessibility</li>
+          <li><strong>Brand variations:</strong> Partner or white-label sections within main app</li>
+          <li><strong>User preferences:</strong> Allow users to theme specific areas independently</li>
+        </ul>
+      </Callout>
     </Unstyled>
   </div>
 </div>
@@ -253,6 +308,47 @@ export const ThemePreview = ({ themeName, themeConfig, colors }) => {
           </div>
         ))}
       </div>
+    </div>
+  );
+};
+
+export const NestedThemesDemo = () => {
+  return (
+    <div className="nested-themes-container">
+      {Object.keys(themes).map((parentTheme) => (
+        <div key={parentTheme} className="nested-themes-example" data-theme={parentTheme}>
+          <div className="nested-themes-parent">
+            <div className="nested-themes-parent-header">
+              <h4>Application Container</h4>
+              <code>data-theme="{parentTheme}"</code>
+            </div>
+            <div className="nested-themes-parent-content">
+              <p>This is the parent application using {parentTheme} theme.</p>
+
+              {Object.keys(themes)
+                .filter(childTheme => childTheme !== parentTheme)
+                .slice(0, 1)
+                .map((childTheme) => (
+                <div key={childTheme} className="nested-themes-child" data-theme={childTheme}>
+                  <div className="nested-themes-child-header">
+                    <h5>Nested Section</h5>
+                    <code>data-theme="{childTheme}"</code>
+                  </div>
+                  <div className="nested-themes-child-content">
+                    <p>This nested section overrides with {childTheme} theme.</p>
+                    <button className="nested-themes-button">Child Button</button>
+                  </div>
+                </div>
+              ))}
+
+              <div className="nested-themes-parent-footer">
+                <p>Footer content returns to parent {parentTheme} theme.</p>
+                <button className="nested-themes-button">Parent Button</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
