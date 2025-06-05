@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, Title, Subtitle, Unstyled } from '@storybook/blocks';
 import { themes } from '@telesign/colibri';
-import { Callout, Card } from '../components';
+import { Callout, Card, Container, Component } from '../components';
 import { useStorybookTheme } from '../hooks/useStorybookTheme';
 
 <Meta title="Foundation/Themes" />
@@ -398,7 +398,7 @@ import { useStorybookTheme } from '../hooks/useStorybookTheme';
       ```
 
       <div className="token-style-demo-wrapper">
-        <TokenStyleDemo type="tokens" title="✅ Using tokens Property" description="Override the default primary color with a custom color." />
+        <TokenDemo type="tokens" title="✅ Using tokens Property" description="Override the default primary color with a custom color." />
       </div>
 
       #### Using Inline Styles
@@ -415,7 +415,7 @@ import { useStorybookTheme } from '../hooks/useStorybookTheme';
       ```
 
       <div className="token-style-demo-wrapper">
-        <TokenStyleDemo type="inline" title="✅ Using Inline Styles" description="Override the default primary color with a custom color." />
+        <TokenDemo type="inline" title="✅ Using Inline Styles" description="Override the default primary color with a custom color." />
       </div>
 
       #### Mixing Both (Invalid)
@@ -440,7 +440,7 @@ import { useStorybookTheme } from '../hooks/useStorybookTheme';
       ```
 
       <div className="token-style-demo-wrapper">
-        <TokenStyleDemo type="invalid" title="❌ Mixing Both (Invalid)" description="Mixing tokens and inline styles is not supported and will cause unpredictable behavior. The inline style will win and override the token." />
+        <TokenDemo type="invalid" title="❌ Mixing Both (Invalid)" description="Mixing tokens and inline styles is not supported and will cause unpredictable behavior. The inline style will win and override the token." />
       </div>
 
       <Callout variant="warning" icon="⚠️">
@@ -487,7 +487,7 @@ import { useStorybookTheme } from '../hooks/useStorybookTheme';
       ```
 
       <div className="advanced-token-demo-wrapper">
-        <AdvancedTokenDemo type="conditional" title="Conditional Token Overrides" description="Tokens change based on component state: click to toggle between active and disabled colors." />
+        <TokenDemo type="conditional" title="Conditional Token Overrides" description="Tokens change based on component state: click to toggle between active and disabled colors." />
       </div>
 
       #### Responsive Token Values
@@ -515,7 +515,7 @@ import { useStorybookTheme } from '../hooks/useStorybookTheme';
       ```
 
       <div className="advanced-token-demo-wrapper">
-        <AdvancedTokenDemo type="responsive" title="Responsive Token Values" description="Resize your browser to see responsive token values in action using clamp() and max() functions." />
+        <TokenDemo type="responsive" title="Responsive Token Values" description="Resize your browser to see responsive token values in action using clamp() and max() functions." />
       </div>
 
       #### Complex Nested Token Structure
@@ -544,7 +544,7 @@ import { useStorybookTheme } from '../hooks/useStorybookTheme';
       ```
 
       <div className="advanced-token-demo-wrapper">
-        <AdvancedTokenDemo type="composite" title="Complex Nested Token Structure" description="Multiple tokens working together for sophisticated component styling with coordinated colors and spacing." />
+        <TokenDemo type="composite" title="Complex Nested Token Structure" description="Multiple tokens working together for sophisticated component styling with coordinated colors and spacing." />
       </div>
 
       ### Token Performance
@@ -719,7 +719,9 @@ export const ThemePreview = ({ themeName, themeConfig, colors }) => {
 export const NestedThemesDemo = () => {
   return (
     <div className="nested-themes-container">
-      {Object.keys(themes).map((parentTheme) => (
+      {Object.keys(themes)
+        .filter(parentTheme => parentTheme !== 'default')
+        .map((parentTheme) => (
         <div key={parentTheme} className="nested-themes-example" data-theme={parentTheme}>
           <div className="nested-themes-parent">
             <div className="nested-themes-parent-header">
@@ -763,144 +765,36 @@ export const TokenOverrideDemo = () => {
   const primaryColor = themeConfig?.['primary-base'] || '#011ac2';
 
   return (
-    <div className="token-override-container">
-      <div className="token-override-showcase">
-        <h4>Before and After Token Override</h4>
-        <div className="token-override-comparison">
-          <div className="token-override-before">
-            <h5>Before ({currentTheme.charAt(0).toUpperCase() + currentTheme.slice(1)} Theme)</h5>
-            <div className="token-override-component token-override-component--default">
-              Default Button
-            </div>
-            <p>Uses active theme tokens</p>
-            <div className="token-override-tokens">
-              <span className="token-override-token">--col-colors-ui-primary: {primaryColor}</span>
-            </div>
+    <Container
+      title="Before and After Token Override"
+      variant="showcase"
+      className="token-override-showcase"
+    >
+      <div className="token-override-comparison">
+        <div className="token-override-before">
+          <h5>Before ({currentTheme.charAt(0).toUpperCase() + currentTheme.slice(1)} Theme)</h5>
+          <Component
+            text="Default Button"
+            variant="default"
+          />
+          <p>Uses active theme tokens</p>
+          <div className="token-override-tokens">
+            <span className="token-override-token">--col-colors-ui-primary: {primaryColor}</span>
           </div>
-          <div className="token-override-after">
-            <h5>After (Custom Tokens)</h5>
-            <div
-              className="token-override-component"
-              style={{
-                backgroundColor: '#ff6b35',
-                color: '#ffffff',
-                borderRadius: '12px',
-                padding: '12px 24px',
-                border: '2px solid #e55a2b',
-                width: 'fit-content',
-                margin: '0 auto'
-              }}
-            >
-              Custom Themed Button
-            </div>
-            <p>Uses custom token overrides</p>
-            <div className="token-override-tokens">
-              <span className="token-override-token">--col-colors-ui-primary: #ff6b35</span>
-            </div>
+        </div>
+        <div className="token-override-after">
+          <h5>After (Custom Tokens)</h5>
+          <Component
+            text="Custom Themed Button"
+            variant="custom"
+          />
+          <p>Uses custom token overrides</p>
+          <div className="token-override-tokens">
+            <span className="token-override-token">--col-colors-ui-primary: #ff6b35</span>
           </div>
         </div>
       </div>
-    </div>
-  );
-};
-
-export const TokenStyleDemo = ({ type, title, description }) => {
-  const getComponentClass = () => {
-    switch (type) {
-      case 'tokens':
-        return 'token-style-component--tokens';
-      case 'inline':
-        return 'token-style-component--inline';
-      case 'invalid':
-        return 'token-style-component--invalid';
-      default:
-        return 'token-style-component--tokens';
-    }
-  };
-
-  const getButtonText = () => {
-    switch (type) {
-      case 'tokens':
-        return 'Token-styled Button';
-      case 'inline':
-        return 'Inline-styled Button';
-      case 'invalid':
-        return 'Conflicting tokens + inline styles';
-      default:
-        return 'Demo button';
-    }
-  };
-
-  return (
-    <div className="token-style-demo">
-      <div className="token-style-demo-header">
-        <h5>{title}</h5>
-      </div>
-      <div className="token-style-demo-content">
-        <div className={`token-style-component ${getComponentClass()}`}>
-          {getButtonText()}
-        </div>
-        <p className="token-style-demo-description">
-          {description}
-        </p>
-      </div>
-    </div>
-  );
-};
-
-export const AdvancedTokenDemo = ({ type, title, description }) => {
-  const [isDisabled, setIsDisabled] = React.useState(false);
-
-  const getComponentClass = () => {
-    switch (type) {
-      case 'conditional':
-        return 'advanced-token-component--adaptive';
-      case 'responsive':
-        return 'advanced-token-component--responsive';
-      case 'composite':
-        return 'advanced-token-component--composite';
-      default:
-        return 'advanced-token-component--adaptive';
-    }
-  };
-
-  const getButtonText = () => {
-    switch (type) {
-      case 'conditional':
-        return isDisabled ? 'Disabled State' : 'Active State (Click to toggle)';
-      case 'responsive':
-        return 'Responsive padding, font-size, and border-radius using clamp() and max()';
-      case 'composite':
-        return 'Complex styling with multiple coordinated tokens';
-      default:
-        return 'Advanced token demo';
-    }
-  };
-
-  const handleClick = () => {
-    if (type === 'conditional') {
-      setIsDisabled(!isDisabled);
-    }
-  };
-
-  return (
-    <div className="advanced-token-demo">
-      <div className="advanced-token-demo-header">
-        <h5>{title}</h5>
-      </div>
-      <div className="advanced-token-demo-content">
-        <div
-          className={`advanced-token-component ${getComponentClass()} ${type === 'conditional' && isDisabled ? 'disabled' : ''}`}
-          onClick={handleClick}
-          style={{ cursor: type === 'conditional' ? 'pointer' : 'default' }}
-        >
-          {getButtonText()}
-        </div>
-        <p className="advanced-token-demo-description">
-          {description}
-        </p>
-      </div>
-    </div>
+    </Container>
   );
 };
 
@@ -923,56 +817,104 @@ export const CustomThemeDemo = () => {
   };
 
   const applyNeonTheme = () => {
-    const demoContainer = document.querySelector('.custom-theme-demo-container');
-    if (demoContainer) {
-      demoContainer.setAttribute('data-theme', 'neon');
+    const Container = document.querySelector('.custom-theme-demo-container');
+    if (Container) {
+      Container.setAttribute('data-theme', 'neon');
     }
   };
 
   const resetTheme = () => {
-    const demoContainer = document.querySelector('.custom-theme-demo-container');
-    if (demoContainer) {
-      demoContainer.setAttribute('data-theme', 'default');
+    const Container = document.querySelector('.custom-theme-demo-container');
+    if (Container) {
+      Container.setAttribute('data-theme', 'default');
     }
   };
 
   return (
-    <div className="custom-theme-demo">
-      <div className="custom-theme-demo-header">
-        <h5>Custom Theme Registration Demo</h5>
+    <Container
+      title="Custom Theme Registration Demo"
+      className="custom-theme-demo-wrapper"
+    >
+      <div className="custom-theme-demo-controls">
+        <button
+          onClick={registerNeonTheme}
+          disabled={isRegistered}
+          className="custom-theme-demo-button"
+        >
+          {isRegistered ? '✅ Neon Theme Registered' : 'Register Neon Theme'}
+        </button>
+        <button
+          onClick={applyNeonTheme}
+          disabled={!isRegistered}
+          className="custom-theme-demo-button"
+        >
+          Apply Neon Theme
+        </button>
+        <button
+          onClick={resetTheme}
+          className="custom-theme-demo-button"
+        >
+          Reset to Default
+        </button>
       </div>
-      <div className="custom-theme-demo-content">
-        <div className="custom-theme-demo-controls">
-          <button
-            onClick={registerNeonTheme}
-            disabled={isRegistered}
-            className="custom-theme-demo-button"
-          >
-            {isRegistered ? '✅ Neon Theme Registered' : 'Register Neon Theme'}
-          </button>
-          <button
-            onClick={applyNeonTheme}
-            disabled={!isRegistered}
-            className="custom-theme-demo-button"
-          >
-            Apply Neon Theme
-          </button>
-          <button
-            onClick={resetTheme}
-            className="custom-theme-demo-button"
-          >
-            Reset to Default
-          </button>
-        </div>
-        <div className="custom-theme-demo-container" data-theme="default">
-          <div className="custom-theme-demo-component">
-            Custom Themed Component
-          </div>
-          <p className="custom-theme-demo-description">
-            This component will change appearance when the custom neon theme is applied.
-          </p>
-        </div>
+      <div className="custom-theme-demo-container" data-theme="default">
+        <Component
+          text="Custom Themed Component"
+          variant="default"
+        />
+        <p className="custom-theme-demo-description">
+          This component will change appearance when the custom neon theme is applied.
+        </p>
       </div>
-    </div>
+    </Container>
+  );
+};
+
+export const TokenDemo = ({
+  type,
+  title,
+  description,
+  className = '',
+}) => {
+  const [isDisabled, setIsDisabled] = React.useState(false);
+
+  const getButtonText = () => {
+    switch (type) {
+      case 'tokens':
+        return 'Token-styled Button';
+      case 'inline':
+        return 'Inline-styled Button';
+      case 'invalid':
+        return 'Conflicting tokens + inline styles';
+      case 'conditional':
+        return isDisabled ? 'Disabled State' : 'Active State (Click to toggle)';
+      case 'responsive':
+        return 'Responsive padding, font-size, and border-radius using clamp() and max()';
+      case 'composite':
+        return 'Complex styling with multiple coordinated tokens';
+      default:
+        return 'Demo button';
+    }
+  };
+
+  const handleClick = () => {
+    if (type === 'conditional') {
+      setIsDisabled(!isDisabled);
+    }
+  };
+
+  const componentClassName = type === 'conditional' && isDisabled ? 'disabled' : '';
+  const isInteractive = type === 'conditional';
+
+  return (
+    <Container title={title} description={description} className={className}>
+      <Component
+        text={getButtonText()}
+        variant={type}
+        onClick={isInteractive ? handleClick : undefined}
+        disabled={isDisabled}
+        className={componentClassName}
+      />
+    </Container>
   );
 };
