@@ -44,7 +44,7 @@ const meta = {
     },
     size: {
       control: 'text',
-      description: 'The size of the icon. Can be specified in px, rem, or em',
+      description: 'The size of the icon. Can be specified in `px`, `rem`, or `em`',
       table: {
         type: { summary: 'string | number' },
         defaultValue: { summary: '24px' },
