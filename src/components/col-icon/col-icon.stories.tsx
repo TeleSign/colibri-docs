@@ -2,6 +2,7 @@ import { html, css } from 'lit';
 import { icons } from '@telesign/colibri-icons/icons-list';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { removeStyleTags } from '@/utils/formatters';
+import { disableControls } from '@/utils/helpers';
 
 type StoryArgs = {
   name: string;
@@ -128,6 +129,7 @@ const styles = css`
  * Use the controls panel to experiment with different values.
  */
 export const Default: Story = {
+  argTypes: disableControls('search'),
   render: args => html`
     <style>
       ${styles}
@@ -149,6 +151,7 @@ export const AllIcons: Story = {
       },
     },
   },
+  argTypes: disableControls('name'),
   render: args => {
     const searchTerm = args.search?.toLowerCase() || '';
     const filteredIcons = icons.filter(icon => icon.toLowerCase().includes(searchTerm));
@@ -171,7 +174,7 @@ export const AllIcons: Story = {
         ${filteredIcons.map(
           (icon: string) => html`
             <div class="icon-item">
-              <col-icon name=${icon} size="32px"></col-icon>
+              <col-icon name=${icon} size=${args.size} color=${args.color}></col-icon>
               <span class="icon-name">${icon}</span>
             </div>
           `
