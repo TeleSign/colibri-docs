@@ -5,13 +5,13 @@
  */
 export function disableControls<T extends string>(
   ...keys: T[]
-): { [K in T]: { control: { disable: boolean } } } {
+): Record<T, { control: { disable: boolean } }> {
   return keys.reduce(
     (acc, key) => ({
       ...acc,
       [key]: { control: { disable: true } },
     }),
-    {} as { [K in T]: { control: { disable: boolean } } }
+    {} as Record<T, { control: { disable: boolean } }>
   );
 }
 
