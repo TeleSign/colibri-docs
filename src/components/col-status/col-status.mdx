@@ -1,0 +1,87 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as ColStatusStories from './col-status.stories';
+
+<Meta of={ColStatusStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Status</Title>
+    An indicator highlights a page element and informs the user of something that needs the user’s attention. Often, the indicator will denote that there has been a change to a particular item. They are frequently used to signal validation errors or notifications, changes, or updates. They can also be used on their own. Indicators are visual cues intended to attract the user’s attention to a piece of content or UI element that is dynamic in nature.
+
+    <Subtitle>How to use it</Subtitle>
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, registerAllComponents, ColStatus } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web components:
+        ```typescript
+        // Option 1: Register specific components
+        registerColibriComponents([ColStatus]);
+
+        // Option 2: Register all Colibri components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-status status="inprogress">
+          <col-icon name="check-circle-fill"></col-icon>
+          In Progress
+        </col-status>
+        ```
+
+    <Subtitle>Use cases</Subtitle>
+    The Status component is a key tool for quickly communicating the status of a system, task, or process. Several common use cases for this component are described below:
+
+    - **System Status Indicator:** The Status component is used to display the current status of a system or service.
+    - **Status Notifications:** The Status component can be used to provide feedback on data validation (correct, incorrect, under review).
+    - **Workflow Progress Indicator:** In complex workflows, the Status component can indicate the current status of each step (started, in progress, completed).
+    - **Status Monitoring in Administration Panels:** In administration panels, the Status component can show the status of different services or system components (active, inactive, with problems).
+
+    <Subtitle>Component preview</Subtitle>
+    You can click on the **Show code** button in the bottom-right section of the following code snippets to see how to use the component:
+
+    <h4>Variant: Default</h4>
+    <Canvas of={ColStatusStories.Default}/>
+
+    <h4>Variant: Pending</h4>
+    <Canvas of={ColStatusStories.StatusPending} />
+
+    <h4>Variant: InProgress</h4>
+    <Canvas of={ColStatusStories.StatusInProgress} />
+
+    <h4>Variant: Cancel</h4>
+    <Canvas of={ColStatusStories.StatusCancel} />
+
+    <h4>Variant: Complete</h4>
+    <Canvas of={ColStatusStories.StatusComplete} />
+
+    <h4>Variant: Neutral with dot</h4>
+    <Canvas of={ColStatusStories.StatusWithDot} />
+
+    <h4>Variant: Pending with dot</h4>
+    <Canvas of={ColStatusStories.StatusPendingWithDot} />
+
+    <h4>Variant: In Progress with dot</h4>
+    <Canvas of={ColStatusStories.StatusInProgressWithDot} />
+
+    <h4>Variant: Complete with dot</h4>
+    <Canvas of={ColStatusStories.StatusCompleteWithDot} />
+
+    <h4>Variant: Cancel with dot</h4>
+    <Canvas of={ColStatusStories.StatusCancelWithDot} />
+
+
+    <Subtitle>Properties</Subtitle>
+
+    <ArgTypes of={ColStatusStories} />
+
+    <Subtitle>Interact with the component</Subtitle>
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the **Default** section.
+
+  </div>
+</div>
