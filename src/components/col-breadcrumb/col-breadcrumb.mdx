@@ -1,5 +1,6 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
 import * as ColBreadcrumbStories from './col-breadcrumb.stories';
+import { Callout } from '../../_storybook/components';
 
 <Meta of={ColBreadcrumbStories} />
 
@@ -60,12 +61,10 @@ import * as ColBreadcrumbStories from './col-breadcrumb.stories';
       The basic breadcrumb container wraps breadcrumb items and provides the navigation structure. By default, it uses a forward slash (/) as the separator between items.
     </div>
     <h4>Overview</h4>
-    <div className="col-doc__callout col-doc__callout--tip">
-      <p>💡</p>
-      <p>
-        You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
-      </p>
-    </div>
+
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
 
     <Canvas of={ColBreadcrumbStories.Default} />
 
@@ -123,11 +122,8 @@ import * as ColBreadcrumbStories from './col-breadcrumb.stories';
     - Keep the breadcrumb trail concise and logical
     - Always mark the current page item with the `current` attribute
 
-    <div className="col-doc__callout col-doc__callout--info">
-      <p>ℹ️</p>
-      <p>
-        For more information about individual breadcrumb items and their interactive features, see the [Breadcrumb Item](/docs/atoms-breadcrumb-item--overview) documentation.
-      </p>
-    </div>
+    <Callout variant="info" icon="ℹ️">
+      For more information about individual breadcrumb items and their interactive features, see the [Breadcrumb Item](/docs/atoms-breadcrumb-item--overview) documentation.
+    </Callout>
   </div>
 </div>

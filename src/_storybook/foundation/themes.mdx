@@ -1,0 +1,920 @@
+import React from 'react';
+import { Meta, Title, Subtitle, Unstyled } from '@storybook/blocks';
+import { themes } from '@telesign/colibri';
+import { Callout, Card, Container, Component } from '../components';
+import { useStorybookTheme } from '../hooks/useStorybookTheme';
+
+<Meta title="Foundation/Themes" />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Unstyled>
+      <Title>Themes</Title>
+      <div className="col-intro-text">
+        The theme system provides a powerful and flexible way to customize the visual appearance of components across different contexts, brands, and user preferences. Built on a foundation of design tokens and CSS custom properties, themes enable consistent styling while maintaining the flexibility to adapt to diverse design requirements.
+      </div>
+
+      <Subtitle>Table of contents</Subtitle>
+      - [Theme System Overview](#theme-system-overview)
+        - [What are Themes?](#what-are-themes)
+        - [How Themes Work](#how-themes-work)
+        - [Interactive Theme Testing](#interactive-theme-testing)
+        - [Available Themes](#available-themes)
+        - [Theme Implementation Methods](#theme-implementation-methods)
+        - [Getting Started](#getting-started)
+      - [Data-Theme Implementation](#data-theme-implementation)
+        - [Basic Usage](#basic-usage)
+        - [CSS Custom Properties](#css-custom-properties)
+        - [Theme Inheritance](#theme-inheritance)
+      - [Nested Themes](#nested-themes)
+        - [CSS Cascade Behavior](#css-cascade-behavior)
+        - [Parent-Child Relationships](#parent-child-relationships)
+        - [Best Practices](#best-practices)
+      - [Dynamic Token System](#dynamic-token-system)
+        - [Component Token Overrides](#component-token-overrides)
+        - [TypeScript Integration](#typescript-integration)
+        - [Tokens vs Inline Styles](#tokens-vs-inline-styles)
+        - [Advanced Token Usage](#advanced-token-usage)
+        - [Token Performance](#token-performance)
+      - [Custom Theme Registration](#custom-theme-registration)
+
+      ## Theme System Overview
+
+      ### What are Themes?
+      <div>
+        Themes are collections of design token values that define the visual appearance of your interface. Each theme contains the same set of tokens but with different values, allowing you to create variations like light and dark modes, brand-specific styling, or accessibility-focused alternatives without changing your component code.
+      </div>
+
+      ### How Themes Work
+      <div>
+        The Colibri theme system operates on three key principles:
+      </div>
+      <ul>
+        <li><strong>Design Tokens:</strong> Universal variables that define colors, spacing, typography, and other design properties</li>
+        <li><strong>CSS Custom Properties:</strong> Browser-native variables that enable dynamic theme switching</li>
+        <li><strong>Component Integration:</strong> Seamless theme application through data attributes and token overrides</li>
+      </ul>
+
+      ### Interactive Theme Testing
+      <Callout variant="info" icon="💡">
+        Use the theme switcher in Storybook's toolbar (🌐 icon) to see how themes affect components in real-time throughout this documentation.
+      </Callout>
+
+      ### Available Themes
+      <div>
+        Colibri currently provides {Object.keys(themes).length} built-in themes, each designed for different use cases and aesthetic preferences. The themes include main color categories such as <strong>primary</strong>, <strong>accent</strong>, <strong>neutral</strong>, <strong>success</strong>, <strong>danger</strong>, <strong>warning</strong>, and <strong>information</strong> colors. For a complete overview of all available colors and their usage, please refer to the [Colors](/docs/foundation-colors--overview)  section in the documentation.
+      </div>
+
+      <div className="theme-preview-container">
+        {Object.keys(themes).map((themeName) => (
+          <ThemePreview
+            key={themeName}
+            themeName={themeName}
+            themeConfig={themes[themeName]}
+            colors={['primary-base', 'accent-base', 'neutral-500', 'success-base', 'danger-base', 'warning-base', 'information-base', 'focus']}
+          />
+        ))}
+      </div>
+
+      ### Theme Implementation Methods
+      <div>
+        Colibri supports multiple approaches to theme implementation, each suited to different use cases:
+      </div>
+
+      <div className="implementation-methods">
+        <Card title="Data Attribute Themes">
+          Apply themes globally or to specific sections using <code>data-theme</code> attributes. Perfect for application-wide theme switching and user preferences.
+        </Card>
+        <Card title="Dynamic Token Overrides">
+          Customize individual components using the <code>.tokens</code> property. Ideal for component-specific styling and fine-grained control.
+        </Card>
+        <Card title="Nested Theme Contexts">
+          Create theme hierarchies where child elements inherit and override parent theme values. Useful for complex layouts with multiple theme zones.
+        </Card>
+      </div>
+
+      ### Getting Started
+      <div>
+        Ready to implement themes in your project? The following sections will guide you through each implementation method, from basic theme switching to advanced customization techniques. Each approach is designed to work seamlessly with Colibri's component library while providing the flexibility you need for your specific use case.
+      </div>
+
+      ## Data-Theme Implementation
+
+      ### Basic Usage
+      <div>
+        The most straightforward way to apply themes is using the <code>data-theme</code> attribute on parent containers. This approach leverages CSS cascade to automatically theme all child elements without requiring individual component configuration.
+      </div>
+
+      ```html
+      <!-- Apply theme to entire application -->
+      <div data-theme="default">
+        <header>
+          <h1>My Application</h1>
+          <nav>Navigation items inherit theme</nav>
+        </header>
+        <main>
+          <p>All content automatically themed</p>
+        </main>
+      </div>
+
+      <!-- Apply theme to specific sections -->
+      <div data-theme="massive">
+        <section>
+          <h2>This section uses massive theme</h2>
+          <p>All child elements inherit the theme</p>
+        </section>
+      </div>
+      ```
+
+      <Callout variant="tip" icon="💡">
+        The <code>data-theme</code> attribute can be applied to any HTML element, making it flexible for both global application theming and section-specific styling.
+      </Callout>
+
+      ### CSS Custom Properties
+      <div>
+        When you apply a <code>data-theme</code> attribute, Colibri automatically makes theme-specific CSS custom properties available to all child elements. These properties follow a consistent naming convention using the <code>--col-theme-*</code> prefix.
+      </div>
+
+      ```css
+      /* Theme tokens are automatically available as CSS custom properties */
+      :root [data-theme="default"] {
+        --col-theme-primary-base: #011ac2;
+        --col-theme-accent-base: #1f5bff;
+        --col-theme-neutral-500: #8c8ca1;
+        --col-theme-success-base: #00b733;
+        --col-theme-danger-base: #df1b42;
+        --col-theme-warning-base: #ffa244;
+        --col-theme-information-base: #077392;
+        --col-theme-focus: #e5e8f9;
+        /* ... and many more tokens */
+      }
+
+      /* Use theme tokens in your custom CSS */
+      .my-custom-component {
+        background-color: var(--col-theme-primary-base);
+        color: var(--col-theme-white);
+        border: 1px solid var(--col-theme-accent-base);
+      }
+      ```
+
+      ### Theme Inheritance
+      <div>
+        Child elements automatically inherit theme properties from their parent containers. This cascading behavior ensures consistent theming throughout your application without requiring explicit theme configuration on every element.
+      </div>
+
+      <div className="data-theme-inheritance-demo">
+        <DataThemeInheritanceDemo />
+      </div>
+
+      <Callout variant="info" icon="📋">
+        <strong>Key Benefits:</strong>
+        <ul>
+          <li>Automatic theme inheritance for all child elements</li>
+          <li>No individual component configuration required</li>
+          <li>CSS custom properties available for custom styling</li>
+          <li>Consistent <code>--col-theme-*</code> naming convention</li>
+          <li>Works with any HTML structure or framework</li>
+        </ul>
+      </Callout>
+
+      ## Nested Themes
+
+      ### CSS Cascade Behavior
+      <div>
+        When multiple <code>data-theme</code> attributes are nested, CSS cascade rules determine which theme properties apply to each element. Child themes override parent themes, allowing for sophisticated theming hierarchies within your application.
+      </div>
+
+      ```html
+      <!-- Parent theme applies to entire application -->
+      <div data-theme="default">
+        <header>Header uses default theme</header>
+
+        <!-- Child theme overrides parent for this section -->
+        <main data-theme="massive">
+          <h1>This content uses massive theme</h1>
+          <p>Overrides the parent default theme</p>
+        </main>
+
+        <footer>Footer returns to default theme</footer>
+      </div>
+      ```
+
+      ### Parent-Child Relationships
+      <div>
+        Nested themes create clear boundaries where child elements inherit from their nearest themed ancestor. This enables complex layouts with multiple theme zones while maintaining predictable styling behavior.
+      </div>
+
+      <div className="nested-themes-demo">
+        <NestedThemesDemo />
+      </div>
+
+      ### Best Practices
+      <Callout variant="warning" icon="⚠️">
+        <strong>Performance Considerations:</strong>
+        <ul>
+          <li>Limit nesting depth to 2-3 levels to avoid CSS specificity conflicts</li>
+          <li>Prefer component-level token overrides for fine-grained control</li>
+          <li>Use nested themes for distinct application sections, not individual components</li>
+        </ul>
+      </Callout>
+
+      <Callout variant="tip" icon="💡">
+        <strong>When to Use Nested Themes:</strong>
+        <ul>
+          <li><strong>Application sections:</strong> Different themes for header, main, sidebar</li>
+          <li><strong>Modal overlays:</strong> Contrasting themes for focus and accessibility</li>
+          <li><strong>Brand variations:</strong> Partner or white-label sections within main app</li>
+          <li><strong>User preferences:</strong> Allow users to theme specific areas independently</li>
+        </ul>
+      </Callout>
+
+      ## Dynamic Token System
+
+      ### Component Token Overrides
+      <div>
+        For fine-grained control over individual component styling, Colibri provides the <code>.tokens</code> property on <code>ThemedComponent</code> instances. This approach allows you to override specific design tokens at the component level while maintaining theme consistency for unspecified tokens.
+      </div>
+
+      <Callout variant="info" icon="🎯">
+        <strong>Important:</strong> Themes are applied using <code>data-theme</code> attributes on parent containers, and individual components can override specific tokens using the <code>.tokens</code> property.
+      </Callout>
+
+      <div>
+        When using HTML files, you can set tokens programmatically using the <code>.tokens</code> property after the DOM is ready.
+      </div>
+
+      <Callout variant="tip" icon="💡">
+        When setting tokens, you must <strong>use the correct token path structure</strong>. For instance, to modify the <strong>primary</strong> color, use the path <code>colors.ui.primary</code>. The <code>--col-</code> prefix is automatically appended to token names. For a complete reference of available colors and their corresponding token paths, see the [Colors](/docs/foundation-colors--overview) documentation. For other tokens like <strong>spacing</strong>, <strong>typography</strong>, and more, refer to their respective sections in the <strong>Foundation</strong> section of the documentation.
+      </Callout>
+
+      #### HTML Files
+
+      ```html
+      <!-- Add a button to the DOM and give it an id -->
+      <col-button color="primary" id="custom-button">Custom Themed Button</col-button>
+
+      <!-- Register the component and set tokens -->
+      <script type="module">
+        import { registerColibriComponents, ColButton } from '@telesign/colibri';
+
+        registerColibriComponents([ColButton]);
+
+        // Set tokens after DOM is ready
+        window.addEventListener('DOMContentLoaded', () => {
+          // Get the button element by id
+          const button = document.getElementById('custom-button');
+          // If the button element exists, set the tokens
+          if (button) {
+            // Set the tokens by following the appropriate token path
+            button.tokens = {
+              colors: {
+                ui: {
+                  primary: '#ff6b35',
+                }
+            };
+          }
+        });
+      </script>
+      ```
+
+      #### JavaScript Files
+
+      ```javascript
+      import { registerColibriComponents, ColButton } from '@telesign/colibri';
+
+      registerColibriComponents([ColButton]);
+
+      // Define custom tokens
+      const customTokens = {
+        colors: {
+          ui: {
+            primary: '#ff6b35',
+          }
+        }
+      };
+
+      // Method 1: Query existing element (with DOM event listener)
+      document.addEventListener('DOMContentLoaded', () => {
+        const existingButton = document.querySelector('col-button');
+        if (existingButton) {
+          existingButton.tokens = customTokens;
+        }
+      });
+
+      // Method 2: Create new element dynamically (no event listener needed)
+      const newButton = document.createElement('col-button');
+      newButton.tokens = customTokens;
+      newButton.textContent = 'Custom Themed Button';
+      document.body.appendChild(newButton);
+
+      // The component automatically generates CSS custom properties:
+      // --col-colors-ui-primary: #ff6b35
+      ```
+
+      <Callout variant="info" icon="💡">
+        Use the theme switcher in Storybook's toolbar (🌐 icon) to see how themes affect the <strong>Default Button</strong> component in real-time.
+      </Callout>
+
+      <div className="token-override-demo">
+        <TokenOverrideDemo />
+      </div>
+
+      ### TypeScript Integration
+      <div>
+        When using TypeScript, you can cast web component elements to their specific types for better development experience with component properties and type safety.
+      </div>
+
+      ```typescript
+      import { COLORS, ColButton } from '@telesign/colibri';
+      import { registerColibriComponents } from '@telesign/colibri';
+
+      registerColibriComponents([ColButton]);
+
+      // Method 1: Query existing element (with DOM event listener) and cast to the appropriate type
+      document.addEventListener('DOMContentLoaded', () => {
+        const buttonElement = document.querySelector('col-button') as ColButton;
+        if (buttonElement) {
+          buttonElement.tokens = {
+            colors: {
+              ui: {
+                primary: '#ff6b35',
+              },
+            },
+          };
+          // Enum provides autocomplete and validation
+          buttonElement.color = COLORS.PRIMARY;
+          buttonElement.disabled = false;
+        }
+      });
+
+      // Method 2: Create new element dynamically (no event listener needed) and cast to the appropriate type
+      const newButton = document.createElement('col-button') as ColButton;
+      newButton.tokens = {
+        colors: {
+          ui: {
+            primary: '#ff6b35',
+          },
+        },
+      };
+
+      newButton.textContent = 'Type-safe themed button';
+      // Enum provides autocomplete and validation
+      newButton.color = COLORS.PRIMARY;
+      document.body.appendChild(newButton);
+      ```
+
+      <Callout variant="tip" icon="💡">
+        <strong>TypeScript Benefits:</strong>
+        <ul>
+          <li>Type safety and autocomplete for component properties</li>
+          <li>Compile-time validation prevents invalid property values</li>
+          <li>IntelliSense support for component-specific properties</li>
+        </ul>
+      </Callout>
+
+      ### Tokens vs Inline Styles
+      <div>
+        The <code>.tokens</code> property and inline styles are <strong>mutually exclusive</strong>. When tokens are applied to a component, they will override any conflicting inline styles. You should choose one approach or the other, not combine them.
+      </div>
+
+      #### Using tokens Property
+
+      ```javascript
+      import { registerColibriComponents, ColButton } from '@telesign/colibri';
+
+      registerColibriComponents([ColButton]);
+
+      // ✅ CORRECT: Use tokens to override the default primary color
+      const tokenButton = document.createElement('col-button');
+      tokenButton.tokens = {
+        colors: {
+          ui: {
+            'primary-base': '#011ac2',
+          }
+        }
+      };
+      tokenButton.textContent = 'Token-styled Button';
+      document.body.appendChild(tokenButton);
+      ```
+
+      <div className="token-style-demo-wrapper">
+        <TokenDemo type="tokens" title="✅ Using tokens Property" description="Override the default primary color with a custom color." />
+      </div>
+
+      #### Using Inline Styles
+
+      ```javascript
+      import { registerColibriComponents, ColButton } from '@telesign/colibri';
+
+      registerColibriComponents([ColButton]);
+
+      // ✅ CORRECT: Use inline styles to override the default primary color
+      const styledButton = document.createElement('col-button');
+      styledButton.style.backgroundColor = '#e74c3c';
+      document.body.appendChild(styledButton);
+      ```
+
+      <div className="token-style-demo-wrapper">
+        <TokenDemo type="inline" title="✅ Using Inline Styles" description="Override the default primary color with a custom color." />
+      </div>
+
+      #### Mixing Both (Invalid)
+
+      ```javascript
+      import { registerColibriComponents, ColButton } from '@telesign/colibri';
+
+      registerColibriComponents([ColButton]);
+
+      // ❌ INCORRECT: Don't mix both approaches, it will cause unpredictable behavior
+      const conflictingButton = document.createElement('col-button');
+      conflictingButton.style.backgroundColor = '#e74c3c'; // This will be overridden
+      conflictingButton.tokens = {
+        colors: {
+          ui: {
+            primary: '#df1b42' // This will win and override the inline style
+          }
+        }
+      };
+      conflictingButton.textContent = 'Conflicting tokens + inline styles';
+      document.body.appendChild(conflictingButton);
+      ```
+
+      <div className="token-style-demo-wrapper">
+        <TokenDemo type="invalid" title="❌ Mixing Both (Invalid)" description="Mixing tokens and inline styles is not supported and will cause unpredictable behavior. The inline style will win and override the token." />
+      </div>
+
+      <Callout variant="warning" icon="⚠️">
+        <strong>Decision Matrix: When to Use Each Approach</strong>
+        <ul>
+          <li><strong>Use <code>tokens</code> when:</strong> You want theme-aware styling, need design system consistency, or plan to switch themes dynamically</li>
+          <li><strong>Use inline styles when:</strong> You need one-off styling, have specific pixel values, or are prototyping quickly</li>
+          <li><strong>Use <code>data-theme</code> when:</strong> You want to apply themes globally or to sections with multiple components</li>
+        </ul>
+      </Callout>
+
+      ### Advanced Token Usage
+      <div>
+        Token overrides support complex patterns including conditional theming, responsive tokens, and composite token values for sophisticated component customization.
+      </div>
+
+      #### Conditional Token Overrides
+
+      ```javascript
+      import { registerColibriComponents, ColButton } from '@telesign/colibri';
+
+      registerColibriComponents([ColButton]);
+
+      const getAdaptiveTokens = (isDisabled: boolean) => ({
+        colors: {
+          ui: {
+            primary: isDisabled ? '#00b733' : '#b7b7c0',
+          }
+        }
+      });
+
+      // Apply conditional tokens
+      const button = document.querySelector('col-button');
+      if (button) {
+        button.tokens = getAdaptiveTokens(false);
+
+        // Toggle state on click
+        button.addEventListener('click', () => {
+          const isCurrentlyDisabled = button.disabled;
+          button.disabled = !isCurrentlyDisabled;
+          button.tokens = getAdaptiveTokens(!isCurrentlyDisabled);
+        });
+      }
+      ```
+
+      <div className="advanced-token-demo-wrapper">
+        <TokenDemo type="conditional" title="Conditional Token Overrides" description="Tokens change based on component state: click to toggle between active and disabled colors." />
+      </div>
+
+      #### Responsive Token Values
+
+      ```javascript
+      import { registerColibriComponents, ColButton } from '@telesign/colibri';
+
+      registerColibriComponents([ColButton]);
+
+      // Responsive token values using CSS functions
+      const responsiveTokens = {
+        spacing: {
+          padding: 'clamp(12px, 4vw, 24px)',
+          margin: 'max(8px, 1vw)'
+        },
+        typography: {
+          size: 'clamp(14px, 2.5vw, 18px)'
+        }
+      };
+
+      // Apply to components
+      const responsiveCard = document.createElement('col-card');
+      responsiveCard.tokens = responsiveTokens;
+      document.body.appendChild(responsiveCard);
+      ```
+
+      <div className="advanced-token-demo-wrapper">
+        <TokenDemo type="responsive" title="Responsive Token Values" description="Resize your browser to see responsive token values in action using clamp() and max() functions." />
+      </div>
+
+      #### Complex Nested Token Structure
+
+      ```javascript
+      import { registerColibriComponents, ColButton } from '@telesign/colibri';
+
+      registerColibriComponents([ColButton]);
+
+      const complexTokens = {
+        colors: {
+          ui: {
+            accent: '#1f5bff',
+          }
+        },
+        depth: {
+          'box-shadow': {
+            l: '0 8px 32px rgba(31, 91, 255, 0.15)',
+          }
+        }
+      };
+
+      const complexButton = document.createElement('col-button');
+      complexButton.tokens = complexTokens;
+      document.body.appendChild(complexButton);
+      ```
+
+      <div className="advanced-token-demo-wrapper">
+        <TokenDemo type="composite" title="Complex Nested Token Structure" description="Multiple tokens working together for sophisticated component styling with coordinated colors and spacing." />
+      </div>
+
+      ### Token Performance
+      <div>
+        Token overrides are highly performant because they leverage CSS custom properties, which are processed natively by the browser. The updated token flattening system uses the <code>--col-</code> prefix for optimal CSS generation and minimal runtime overhead.
+      </div>
+
+      <Callout variant="info" icon="⚡">
+        <strong>Performance Benefits:</strong>
+        <ul>
+          <li><strong>Native CSS processing:</strong> Tokens become CSS custom properties, processed by the browser's CSS engine</li>
+          <li><strong>Minimal JavaScript overhead:</strong> Token flattening happens once during component creation</li>
+          <li><strong>Optimal prefix structure:</strong> <code>--col-</code> prefix reduces CSS size and improves parsing speed</li>
+          <li><strong>Dynamic updates:</strong> Changing token values updates all dependent styles automatically</li>
+        </ul>
+      </Callout>
+
+      ```css
+      /* Generated CSS custom properties with optimized --col- prefix */
+      .themed-component {
+        --col-colors-primary: #007bff;
+        --col-colors-brand-primary: #ff6b35;
+        --col-spacing-medium: 16px;
+        --col-spacing-padding: clamp(12px, 4vw, 24px);
+
+        /* Component styles automatically use these tokens */
+        background-color: var(--col-colors-primary);
+        padding: var(--col-spacing-medium);
+      }
+      ```
+
+      <Callout variant="tip" icon="🚀">
+        <strong>Best Practices for Performance:</strong>
+        <ul>
+          <li>Prefer token overrides over frequent inline style changes for better browser optimization</li>
+          <li>Use semantic token names that can be shared across multiple components</li>
+          <li>Leverage CSS custom property inheritance for efficient theme propagation</li>
+          <li>Test theme switching performance with large numbers of themed components</li>
+        </ul>
+      </Callout>
+
+      ## Custom Theme Registration
+      <div>
+        For runtime theme creation, Colibri provides the <code>registerTheme()</code> function to dynamically register custom themes that can be used with <code>data-theme</code> attributes.
+      </div>
+
+      ```javascript
+      import { registerTheme } from '@telesign/colibri';
+
+      // Register a custom neon theme
+      registerTheme('neon', {
+        'primary-base': '#ff00ff',
+        'primary-dark': '#cc00cc',
+        'accent-base': '#00ffff',
+        'accent-dark': '#00cccc',
+        'neutral-900': '#1a1a1a',
+        'white': '#ffffff'
+      });
+
+      // Apply the custom theme to a container
+      const container = document.querySelector('.my-app');
+      container.setAttribute('data-theme', 'neon');
+      ```
+
+      <div className="custom-theme-demo-wrapper">
+        <CustomThemeDemo />
+      </div>
+
+      <Callout variant="tip" icon="🎨">
+        <strong>Custom Theme Best Practices:</strong>
+        <ul>
+          <li>Only override the tokens you need - unspecified tokens will fall back to defaults</li>
+          <li>Use semantic theme names that describe the purpose (e.g., 'dark', 'high-contrast')</li>
+          <li>Test custom themes across all components to ensure consistency</li>
+          <li>Consider accessibility when choosing color combinations</li>
+        </ul>
+      </Callout>
+    </Unstyled>
+  </div>
+</div>
+
+export const DataThemeInheritanceDemo = () => {
+  return (
+    <div className="inheritance-demo-container">
+      {Object.keys(themes).map((themeName) => (
+        <div key={themeName} className="inheritance-demo-section" data-theme={themeName}>
+          <div className="inheritance-demo-header">
+            <h4>{themeName.charAt(0).toUpperCase() + themeName.slice(1)} Theme Container</h4>
+            <code>data-theme="{themeName}"</code>
+          </div>
+          <div className="inheritance-demo-content">
+            <div className="inheritance-demo-card">
+              <h5>Child Card</h5>
+              <p>This card inherits the {themeName} theme automatically</p>
+              <button className="inheritance-demo-button">Themed Button</button>
+            </div>
+            <div className="inheritance-demo-list">
+              <h5>Child List</h5>
+              <ul>
+                <li>List item inherits {themeName} theme</li>
+                <li>No explicit theming needed</li>
+                <li>Automatic theme adaptation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export const ThemePreview = ({ themeName, themeConfig, colors }) => {
+  return (
+    <div
+      className="theme-preview-item"
+      style={{
+        border: `1px solid ${themeConfig['accent-base']}`,
+        backgroundColor: themeConfig['white'],
+      }}
+    >
+      <div className="theme-preview-header">
+        <h4
+          style={{
+            color: themeConfig['accent-base'],
+          }}
+        >{themeName.charAt(0).toUpperCase() + themeName.slice(1)} Theme</h4>
+        <div
+          className="theme-preview-badge"
+          style={{
+            backgroundColor: themeConfig['base-light'],
+            color: themeConfig['base-alt'],
+          }}
+        >
+          {themeName}
+        </div>
+      </div>
+      <div className="theme-preview-colors-table">
+        {colors.map((color, index) => (
+          <div
+            key={`${themeName}-${color}-${index}`}
+            className="theme-color-row"
+            style={{
+            backgroundColor: themeConfig['neutral-50'],
+          }}>
+            <div
+              className="theme-color-swatch-circle"
+              style={{
+                backgroundColor: themeConfig[color],
+                color: themeConfig['base-dark'],
+              }}
+            />
+            <div
+              className="theme-color-token-name"
+              style={{
+                color: themeConfig['primary-base'],
+              }}
+            >--col-theme-{color}</div>
+            <div
+              className="theme-color-hex-value"
+              style={{
+                backgroundColor: themeConfig['base-light'],
+                color: themeConfig['base-alt'],
+              }}
+            >{themeConfig[color]}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export const NestedThemesDemo = () => {
+  return (
+    <div className="nested-themes-container">
+      {Object.keys(themes)
+        .filter(parentTheme => parentTheme !== 'default')
+        .map((parentTheme) => (
+        <div key={parentTheme} className="nested-themes-example" data-theme={parentTheme}>
+          <div className="nested-themes-parent">
+            <div className="nested-themes-parent-header">
+              <h4>Application Container</h4>
+              <code>data-theme="{parentTheme}"</code>
+            </div>
+            <div className="nested-themes-parent-content">
+              <p>This is the parent application using {parentTheme} theme.</p>
+
+              {Object.keys(themes)
+                .filter(childTheme => childTheme !== parentTheme)
+                .slice(0, 1)
+                .map((childTheme) => (
+                <div key={childTheme} className="nested-themes-child" data-theme={childTheme}>
+                  <div className="nested-themes-child-header">
+                    <h5>Nested Section</h5>
+                    <code>data-theme="{childTheme}"</code>
+                  </div>
+                  <div className="nested-themes-child-content">
+                    <p>This nested section overrides with {childTheme} theme.</p>
+                    <button className="nested-themes-button">Child Button</button>
+                  </div>
+                </div>
+              ))}
+
+              <div className="nested-themes-parent-footer">
+                <p>Footer content returns to parent {parentTheme} theme.</p>
+                <button className="nested-themes-button">Parent Button</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export const TokenOverrideDemo = () => {
+  const currentTheme = useStorybookTheme();
+  const themeConfig = themes[currentTheme];
+  const primaryColor = themeConfig?.['primary-base'] || '#011ac2';
+
+  return (
+    <Container
+      title="Before and After Token Override"
+      variant="showcase"
+      className="token-override-showcase"
+    >
+      <div className="token-override-comparison">
+        <div className="token-override-before">
+          <h5>Before ({currentTheme.charAt(0).toUpperCase() + currentTheme.slice(1)} Theme)</h5>
+          <Component
+            text="Default Button"
+            variant="default"
+          />
+          <p>Uses active theme tokens</p>
+          <div className="token-override-tokens">
+            <span className="token-override-token">--col-colors-ui-primary: {primaryColor}</span>
+          </div>
+        </div>
+        <div className="token-override-after">
+          <h5>After (Custom Tokens)</h5>
+          <Component
+            text="Custom Themed Button"
+            variant="custom"
+          />
+          <p>Uses custom token overrides</p>
+          <div className="token-override-tokens">
+            <span className="token-override-token">--col-colors-ui-primary: #ff6b35</span>
+          </div>
+        </div>
+      </div>
+    </Container>
+  );
+};
+
+export const CustomThemeDemo = () => {
+  const [isRegistered, setIsRegistered] = React.useState(false);
+
+  const registerNeonTheme = () => {
+    // Import registerTheme dynamically to avoid issues in Storybook
+    import('@telesign/colibri').then(({ registerTheme }) => {
+      registerTheme('neon', {
+        'primary-base': '#ff00ff',
+        'primary-dark': '#cc00cc',
+        'accent-base': '#00ffff',
+        'accent-dark': '#00cccc',
+        'neutral-900': '#1a1a1a',
+        'white': '#ffffff'
+      });
+      setIsRegistered(true);
+    });
+  };
+
+  const applyNeonTheme = () => {
+    const Container = document.querySelector('.custom-theme-demo-container');
+    if (Container) {
+      Container.setAttribute('data-theme', 'neon');
+    }
+  };
+
+  const resetTheme = () => {
+    const Container = document.querySelector('.custom-theme-demo-container');
+    if (Container) {
+      Container.setAttribute('data-theme', 'default');
+    }
+  };
+
+  return (
+    <Container
+      title="Custom Theme Registration Demo"
+      className="custom-theme-demo-wrapper"
+    >
+      <div className="custom-theme-demo-controls">
+        <button
+          onClick={registerNeonTheme}
+          disabled={isRegistered}
+          className="custom-theme-demo-button"
+        >
+          {isRegistered ? '✅ Neon Theme Registered' : 'Register Neon Theme'}
+        </button>
+        <button
+          onClick={applyNeonTheme}
+          disabled={!isRegistered}
+          className="custom-theme-demo-button"
+        >
+          Apply Neon Theme
+        </button>
+        <button
+          onClick={resetTheme}
+          className="custom-theme-demo-button"
+        >
+          Reset to Default
+        </button>
+      </div>
+      <div className="custom-theme-demo-container" data-theme="default">
+        <Component
+          text="Custom Themed Component"
+          variant="default"
+        />
+        <p className="custom-theme-demo-description">
+          This component will change appearance when the custom neon theme is applied.
+        </p>
+      </div>
+    </Container>
+  );
+};
+
+export const TokenDemo = ({
+  type,
+  title,
+  description,
+  className = '',
+}) => {
+  const [isDisabled, setIsDisabled] = React.useState(false);
+
+  const getButtonText = () => {
+    switch (type) {
+      case 'tokens':
+        return 'Token-styled Button';
+      case 'inline':
+        return 'Inline-styled Button';
+      case 'invalid':
+        return 'Conflicting tokens + inline styles';
+      case 'conditional':
+        return isDisabled ? 'Disabled State' : 'Active State (Click to toggle)';
+      case 'responsive':
+        return 'Responsive padding, font-size, and border-radius using clamp() and max()';
+      case 'composite':
+        return 'Complex styling with multiple coordinated tokens';
+      default:
+        return 'Demo button';
+    }
+  };
+
+  const handleClick = () => {
+    if (type === 'conditional') {
+      setIsDisabled(!isDisabled);
+    }
+  };
+
+  const componentClassName = type === 'conditional' && isDisabled ? 'disabled' : '';
+  const isInteractive = type === 'conditional';
+
+  return (
+    <Container title={title} description={description} className={className}>
+      <Component
+        text={getButtonText()}
+        variant={type}
+        onClick={isInteractive ? handleClick : undefined}
+        disabled={isDisabled}
+        className={componentClassName}
+      />
+    </Container>
+  );
+};

@@ -1,5 +1,6 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
 import * as ColGroupStories from './col-group.stories';
+import { Callout } from '../../_storybook/components';
 
 <Meta of={ColGroupStories} />
 
@@ -48,12 +49,9 @@ import * as ColGroupStories from './col-group.stories';
         </col-group>
         ```
 
-    <div className="col-doc__callout col-doc__callout--info">
-      <p>ℹ️</p>
-      <p>
-        The Group component uses `col-typography` internally for labels and helper text. Make sure to register the ColTypography component when using groups with labels or helper text.
-      </p>
-    </div>
+    <Callout variant="info" icon="ℹ️">
+      The Group component uses `col-typography` internally for labels and helper text. Make sure to register the ColTypography component when using groups with labels or helper text.
+    </Callout>
 
     ## When to use it
     Here are common use cases for the Group component:
@@ -97,12 +95,9 @@ import * as ColGroupStories from './col-group.stories';
       Remove spacing between items using the `withoutGap` property. This is useful for creating segmented controls or button groups that appear as a single unit.
     </div>
 
-    <div className="col-doc__callout col-doc__callout--info">
-      <p>ℹ️</p>
-      <p>
-        Some components like `checkbox-button`, `radio-button` includes styles when are inside `col-group` requires withoutGap property.
-      </p>
-    </div>
+    <Callout variant="info" icon="ℹ️">
+      Some components like `checkbox-button`, `radio-button` includes styles when are inside `col-group` requires `withoutGap` property.
+    </Callout>
 
     <Canvas of={ColGroupStories.WithoutGap} />
 
@@ -159,12 +154,9 @@ import * as ColGroupStories from './col-group.stories';
     - Form sections benefit from clear, descriptive labels
     - Complex nested groups should maintain a logical structure
 
-    <div className="col-doc__callout col-doc__callout--warning">
-      <p>⚠️</p>
-      <p>
-        Remember to register the `ColTypography` component when using groups with labels or helper text, as it's a required dependency for these features.
-      </p>
-    </div>
+    <Callout variant="warning" icon="⚠️">
+      Remember to register the `ColTypography` component when using groups with labels or helper text, as it's a required dependency for these features.
+    </Callout>
 
     ## Interact with the component
     To interact with the component, test different configurations, and verify accessibility compliance, navigate to the canvas tab of any story above.
