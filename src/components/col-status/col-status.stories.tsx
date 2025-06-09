@@ -1,7 +1,8 @@
 import { html } from 'lit';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
-import { formatCodeString } from '@/utils/formatters';
 import { STATUS_STATES } from '@telesign/colibri';
+import { disableControls } from '@/utils';
+import { formatCodeString } from '@/utils/formatters';
 
 type StoryArgs = {
   dot: boolean;
@@ -60,17 +61,9 @@ export const StatusNeutral: Story = {
       <col-icon name="check-circle-fill"></col-icon>
       In Progress
     </col-status>`,
+  argTypes: disableControls('dot'),
   args: {
     status: STATUS_STATES.NEUTRAL,
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: formatCodeString(
-          `<col-status><col-icon name="a-third-circle"></col-icon>Neutral</col-status>`
-        ),
-      },
-    },
   },
 };
 
@@ -83,17 +76,9 @@ export const StatusPending: Story = {
       <col-icon name="three-dots-circle-fill"></col-icon>
       To be approved
     </col-status>`,
+  argTypes: disableControls('dot'),
   args: {
     status: STATUS_STATES.PENDING,
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: formatCodeString(
-          `<col-status status="pending"><col-icon name="three-dots-circle-fill"></col-icon>To be approved</col-status>`
-        ),
-      },
-    },
   },
 };
 
@@ -106,17 +91,9 @@ export const StatusInProgress: Story = {
       <col-icon name="a-third-circle"></col-icon>
       In Progress
     </col-status>`,
+  argTypes: disableControls('dot'),
   args: {
     status: STATUS_STATES.INPROGRESS,
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: formatCodeString(
-          `<col-status status="inprogress"><col-icon name="a-third-circle"></col-icon>In Progress</col-status>`
-        ),
-      },
-    },
   },
 };
 
@@ -129,17 +106,9 @@ export const StatusCancel: Story = {
       <col-icon name="close-circle"></col-icon>
       Cancelled
     </col-status>`,
+  argTypes: disableControls('dot'),
   args: {
     status: STATUS_STATES.CANCEL,
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: formatCodeString(
-          `<col-status status="cancel"><col-icon name="close-circle"></col-icon>Cancelled</col-status>`
-        ),
-      },
-    },
   },
 };
 
@@ -152,17 +121,9 @@ export const StatusComplete: Story = {
       <col-icon name="check-circle"></col-icon>
       Finalized
     </col-status>`,
+  argTypes: disableControls('dot'),
   args: {
     status: STATUS_STATES.COMPLETE,
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: formatCodeString(
-          `<col-status status="inprogress"><col-icon name="check-circle"></col-icon>Finalized</col-status>`
-        ),
-      },
-    },
   },
 };
 
@@ -173,13 +134,6 @@ export const StatusWithDot: Story = {
   render: renderStatus,
   args: {
     dot: true,
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: formatCodeString(`<col-status dot>Neutral</col-status>`),
-      },
-    },
   },
 };
 
@@ -192,13 +146,6 @@ export const StatusPendingWithDot: Story = {
     dot: true,
     status: STATUS_STATES.PENDING,
   },
-  parameters: {
-    docs: {
-      source: {
-        code: formatCodeString(`<col-status dot status="pending">To be approved</col-status>`),
-      },
-    },
-  },
 };
 
 /**
@@ -209,13 +156,6 @@ export const StatusInProgressWithDot: Story = {
   args: {
     dot: true,
     status: STATUS_STATES.INPROGRESS,
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: formatCodeString(`<col-status dot status="inprogress">In progress</col-status>`),
-      },
-    },
   },
 };
 
@@ -228,13 +168,6 @@ export const StatusCompleteWithDot: Story = {
     dot: true,
     status: STATUS_STATES.COMPLETE,
   },
-  parameters: {
-    docs: {
-      source: {
-        code: formatCodeString(`<col-status dot status="complete">Finalized</col-status>`),
-      },
-    },
-  },
 };
 
 /**
@@ -245,12 +178,5 @@ export const StatusCancelWithDot: Story = {
   args: {
     dot: true,
     status: STATUS_STATES.CANCEL,
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: formatCodeString(`<col-status dot status="cancel">Cancelled</col-status>`),
-      },
-    },
   },
 };
