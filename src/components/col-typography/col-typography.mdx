@@ -1,5 +1,6 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title, Typeset } from '@storybook/blocks';
 import * as ColTypographyStories from './col-typography.stories';
+import { Callout } from '../../_storybook/components';
 
 <Meta of={ColTypographyStories} />
 
@@ -10,12 +11,9 @@ export const SampleText = 'Lorem ipsum dolor sit amet';
     <Title>Typography</Title>
     The Colibri Typography component provides consistent text styling across the application, with multiple variants, sizes, and states to match different design contexts.
 
-    <div className="col-doc__callout col-doc__callout--info">
-      <p>ℹ️</p>
-      <p>
-        For details on the core font families used by the Colibri Design System, please refer to the [Foundation Typography documentation](/docs/foundation-typography--overview#font-families).
-      </p>
-    </div>
+    <Callout variant="info" icon="ℹ️">
+      For details on the core font families used by the Colibri Design System, please refer to the [Foundation Typography documentation](/docs/foundation-typography--overview#font-families).
+    </Callout>
 
     <Subtitle>Table of contents</Subtitle>
     - [How to use it](#how-to-use-it)
@@ -74,12 +72,9 @@ export const SampleText = 'Lorem ipsum dolor sit amet';
       The Heading component is used to display a title or heading for a section of content. It can be used to create a main title, a section title, or for content organization.
     </div>
     <h4>Overview</h4>
-    <div className="col-doc__callout col-doc__callout--tip">
-      <p>💡</p>
-      <p>
-        You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
-      </p>
-    </div>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
     By default, the Heading component is styled with a `color` of `default` based on the current theme and a `font-weight` of `400`.
 
     **Basic version:**
@@ -123,12 +118,9 @@ export const SampleText = 'Lorem ipsum dolor sit amet';
       The Subheading component is used to display a subtitle for a section of content. It can be used to create a subtitle, a section subtitle, or for content organization.
     </div>
     <h4>Overview</h4>
-    <div className="col-doc__callout col-doc__callout--tip">
-      <p>💡</p>
-      <p>
-        You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
-      </p>
-    </div>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
     By default, the Subheading component is styled with a `color` of `default` based on the current theme and a `font-weight` of `600`.
 
     **Basic version:**
@@ -154,12 +146,9 @@ export const SampleText = 'Lorem ipsum dolor sit amet';
       The Display variant is used for rendering general text content within the application interface. It's suitable for paragraphs, descriptions, and other standard textual elements where specific heading, subheading, or caption styling isn't required.
     </div>
     <h4>Overview</h4>
-    <div className="col-doc__callout col-doc__callout--tip">
-      <p>💡</p>
-      <p>
-        You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
-      </p>
-    </div>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
     By default, the Display component is styled with a `color` of `default` based on the current theme and a `font-weight` of `350` for the `xl` and `lg` size, `400` for the `md` and `sm` sizes.
 
     <Canvas of={ColTypographyStories.Display}/>
@@ -206,12 +195,9 @@ export const SampleText = 'Lorem ipsum dolor sit amet';
       The Label variant is specifically designed to accompany form controls, clearly identifying their purpose. It supports visual states like `required` (often indicated by an asterisk) and `disabled`, and can optionally include an icon for additional context or visual cues.
     </div>
     <h4>Overview</h4>
-    <div className="col-doc__callout col-doc__callout--tip">
-      <p>💡</p>
-      <p>
-        You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
-      </p>
-    </div>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
     By default, the Label component is styled with a `color` of `default-darker` based on the current theme and a `font-weight` of `600`.
 
     **Basic version:**
@@ -248,12 +234,9 @@ export const SampleText = 'Lorem ipsum dolor sit amet';
       The Helper variant is used to provide additional context or assistance, including error messages.
     </div>
     <h4>Overview</h4>
-    <div className="col-doc__callout col-doc__callout--tip">
-      <p>💡</p>
-      <p>
-        You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
-      </p>
-    </div>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
     By default, the Helper component is styled with a `color` of `default-light` based on the current theme and a `font-weight` of `400`.
 
     **Basic version:**
@@ -278,22 +261,16 @@ export const SampleText = 'Lorem ipsum dolor sit amet';
       The Link variant is used to create interactive text elements that navigate to new content.
     </div>
     <h4>Overview</h4>
-    <div className="col-doc__callout col-doc__callout--tip">
-      <p>💡</p>
-      <p>
-        You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
-      </p>
-    </div>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
     By default, the Link component is styled with a `color` of `primary` based on the current theme and a `font-weight` of `400`.
 
     **Basic version:**
 
-    <div className="col-doc__callout col-doc__callout--tip">
-      <p>💡</p>
-      <p>
-        Try hovering over the link to observe its hover state. For a detailed understanding of the link handling, please visit the [Link](/story/atoms-typography--link) section.
-      </p>
-    </div>
+    <Callout variant="tip" icon="💡">
+      Try hovering over the link to observe its hover state. For a detailed understanding of the link handling, please visit the [Link](/story/atoms-typography--link) section.
+    </Callout>
     <Canvas of={ColTypographyStories.Link} />
 
     **With disabled state:**
@@ -329,12 +306,9 @@ export const SampleText = 'Lorem ipsum dolor sit amet';
       The Caption variant is used to provide additional context or assistance.
     </div>
     <h4>Overview</h4>
-    <div className="col-doc__callout col-doc__callout--tip">
-      <p>💡</p>
-      <p>
-        You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
-      </p>
-    </div>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
     By default, the Caption component is styled with a `color` of `default-light` based on the current theme and a `font-weight` of `400`.
 
 
@@ -356,12 +330,9 @@ export const SampleText = 'Lorem ipsum dolor sit amet';
       The Code variant is used to display inline code snippets or technical content.
     </div>
     <h4>Overview</h4>
-    <div className="col-doc__callout col-doc__callout--tip">
-      <p>💡</p>
-      <p>
-        You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
-      </p>
-    </div>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
     By default, the Code component is styled with a `color` of `default` based on the current theme, a `font-weight` of `400` and a `font-family` of `Courier` `monospace`.
 
     <Canvas of={ColTypographyStories.Code} />

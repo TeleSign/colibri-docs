@@ -1,5 +1,6 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
 import * as ColBreadcrumbItemStories from './col-breadcrumb-item.stories';
+import { Callout } from '../../_storybook/components';
 
 <Meta of={ColBreadcrumbItemStories} />
 
@@ -72,12 +73,10 @@ import * as ColBreadcrumbItemStories from './col-breadcrumb-item.stories';
       A basic breadcrumb item without any navigation functionality. This is typically used for items that shouldn't be clickable, though usually only the current page should be non-interactive.
     </div>
     <h4>Overview</h4>
-    <div className="col-doc__callout col-doc__callout--tip">
-      <p>💡</p>
-      <p>
-        You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
-      </p>
-    </div>
+
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
 
     <Canvas of={ColBreadcrumbItemStories.TextItem} />
 
