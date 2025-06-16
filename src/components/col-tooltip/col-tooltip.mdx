@@ -1,5 +1,6 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
 import * as ColTooltipStories from './col-tooltip.stories';
+import { Callout } from '../../_storybook/components';
 
 <Meta of={ColTooltipStories} />
 
@@ -44,7 +45,10 @@ import * as ColTooltipStories from './col-tooltip.stories';
     4. Use it in your HTML:
         ```html
         <col-tooltip>
-          Text
+          Text, Icon or Label
+          <div slot="tooltip-content">
+            Tooltip Content
+          </div>
         </col-tooltip>
         ```
     ### Behavior
@@ -93,12 +97,28 @@ import * as ColTooltipStories from './col-tooltip.stories';
         - **Progress Indicators**: Explain the current status or purpose of a progress indicator.
 
     ## Component preview
-    <div className="col-doc__callout col-doc__callout--tip">
-      <p>💡</p>
-      <p>
-        You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
-      </p>
-    </div>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+    ### Basic Tooltip
+
+    <Canvas of={ColTooltipStories.Default} />
+
+    ### Singleline Tooltip with Hover action
+
+    <Canvas of={ColTooltipStories.SinglelineTooltipHover} />
+
+    ### Multiline Tooltip with Click action
+
+    <Canvas of={ColTooltipStories.MultilineTooltipClick} />
+
+    ### Singleline Tooltip with Keyboard actions
+
+    <Canvas of={ColTooltipStories.SinglelineTooltipKeyboard} />
+
+    ### Multiline Tooltip with large paragraph to show
+
+    <Canvas of={ColTooltipStories.MultilineTooltipLargeText} />
 
     ## Properties
 

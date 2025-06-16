@@ -75,3 +75,72 @@ export const Default: Story = {
     </col-tooltip>
   `,
 };
+
+export const SinglelineTooltipHover: Story = {
+  args: {
+    position: TOOLTIP_POSITIONS.Bottom,
+    multiline: false,
+  },
+  render: args => html`
+    <div style="margin-left: 45%;">
+      <col-tooltip ?multiline=${args.multiline} width=${args.width} position=${args.position}>
+        Hover me
+        <div slot="tooltip-content">Tooltip message</div>
+      </col-tooltip>
+    </div>
+  `,
+};
+
+export const MultilineTooltipClick: Story = {
+  args: {
+    position: TOOLTIP_POSITIONS.Right,
+    multiline: true,
+    width: 200,
+  },
+  render: args => html`
+    <col-tooltip ?multiline=${args.multiline} width=${args.width} position=${args.position}>
+      <col-button variant="outlined"> Click Me </col-button>
+      <div slot="tooltip-content">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+        labore et dolore magna aliqua.
+      </div>
+    </col-tooltip>
+  `,
+};
+
+export const SinglelineTooltipKeyboard: Story = {
+  args: {
+    position: TOOLTIP_POSITIONS.Left,
+    multiline: true,
+    width: 200,
+  },
+  render: args => html`
+    <div style="margin-left: 45%;">
+      <col-tooltip ?multiline=${args.multiline} width=${args.width} position=${args.position}>
+        <col-button variant="outlined">
+          <col-icon name="info-circle"></col-icon>
+        </col-button>
+        <div slot="tooltip-content">Tooltip message very very large in order to see multiline</div>
+      </col-tooltip>
+    </div>
+  `,
+};
+
+export const MultilineTooltipLargeText: Story = {
+  args: {
+    position: TOOLTIP_POSITIONS.Top,
+    multiline: true,
+    width: 500,
+  },
+  render: args => html`
+    <div style="margin: 30px 0 0 40%;">
+      <col-tooltip ?multiline=${args.multiline} width=${args.width} position=${args.position}>
+        <col-button variant="outlined"> Click or Hover Me </col-button>
+        <div slot="tooltip-content">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua.
+        </div>
+      </col-tooltip>
+    </div>
+  `,
+};
