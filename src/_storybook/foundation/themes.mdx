@@ -321,7 +321,7 @@ import { useStorybookTheme } from '../hooks/useStorybookTheme';
 
       ### TypeScript Integration
       <div>
-        When using TypeScript, you can cast web component elements to their specific types for better development experience with component properties and type safety.
+        With native global types support, TypeScript automatically recognizes all Colibri web components without requiring manual type casting. The global types plugin generates `HTMLElementTagNameMap` declarations, providing full type safety and IntelliSense support out of the box.
       </div>
 
       ```typescript
@@ -330,9 +330,9 @@ import { useStorybookTheme } from '../hooks/useStorybookTheme';
 
       registerColibriComponents([ColButton]);
 
-      // Method 1: Query existing element (with DOM event listener) and cast to the appropriate type
+      // Method 1: Query existing element (with DOM event listener)
       document.addEventListener('DOMContentLoaded', () => {
-        const buttonElement = document.querySelector('col-button') as ColButton;
+        const buttonElement = document.querySelector('col-button'); // TypeScript knows this is ColButton
         if (buttonElement) {
           buttonElement.tokens = {
             colors: {
@@ -341,14 +341,14 @@ import { useStorybookTheme } from '../hooks/useStorybookTheme';
               },
             },
           };
-          // Enum provides autocomplete and validation
+          // Full autocomplete and type checking available
           buttonElement.color = COLORS.PRIMARY;
           buttonElement.disabled = false;
         }
       });
 
-      // Method 2: Create new element dynamically (no event listener needed) and cast to the appropriate type
-      const newButton = document.createElement('col-button') as ColButton;
+      // Method 2: Create new element dynamically (no event listener needed)
+      const newButton = document.createElement('col-button'); // TypeScript knows this is ColButton
       newButton.tokens = {
         colors: {
           ui: {
@@ -364,11 +364,13 @@ import { useStorybookTheme } from '../hooks/useStorybookTheme';
       ```
 
       <Callout variant="tip" icon="💡">
-        <strong>TypeScript Benefits:</strong>
+        <strong>Native TypeScript Benefits:</strong>
         <ul>
-          <li>Type safety and autocomplete for component properties</li>
+          <li>Automatic type recognition for all Colibri components via `HTMLElementTagNameMap`</li>
+          <li>No manual type casting required - types are inferred automatically</li>
+          <li>Full IntelliSense support for component properties and methods</li>
           <li>Compile-time validation prevents invalid property values</li>
-          <li>IntelliSense support for component-specific properties</li>
+          <li>Generated global types stay in sync with component definitions</li>
         </ul>
       </Callout>
 
