@@ -1,0 +1,138 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as ColGridStories from './col-grid.stories';
+import { Callout } from '../../_storybook/components';
+
+<Meta of={ColGridStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Grid</Title>
+    The Colibri Grid system provides powerful layout capabilities with responsive design, flexible spacing, and semantic grid areas. It includes both container (`col-grid`) and item (`col-grid-item`) components for building complex, adaptive layouts.
+
+    <Callout variant="info" icon="ℹ️">
+      For details on the foundational grid utilities and CSS classes, please refer to the [Foundation Grid documentation](/docs/foundation-grid--overview#grid-utilities).
+    </Callout>
+
+    <Subtitle>Component vs Utility Approach</Subtitle>
+    The Colibri Design System offers two approaches for creating grid layouts:
+
+    - **Components** (`col-grid`, `col-grid-item`) - Declarative, type-safe, with built-in validation
+    - **Utilities** (CSS classes like `.col-grid-cols-3`) - Direct styling, maximum flexibility
+
+    This documentation focuses on the component approach. For utility classes, see the Foundation Grid documentation linked above.
+
+    <Subtitle>Table of contents</Subtitle>
+    - [How to use it](#how-to-use-it)
+    - [When to use it](#when-to-use-it)
+    - [Component preview](#component-preview)
+      - [Basic layouts](#basic-layouts)
+      - [Responsive grids](#responsive-grids)
+      - [Gap variations](#gap-variations)
+      - [Auto-fit grids](#auto-fit-grids)
+      - [Grid areas](#grid-areas)
+      - [Column spanning](#column-spanning)
+      - [Row spanning](#row-spanning)
+      - [Complex layouts](#complex-layouts)
+    - [Properties](#properties)
+      - [col-grid properties](#col-grid-properties)
+      - [col-grid-item properties](#col-grid-item-properties)
+    - [Interact with the component](#interact-with-the-component)
+
+    ## How to use it
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, registerAllComponents, ColGrid, ColGridItem } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web components:
+        ```typescript
+        // Option 1: Register specific components
+        registerColibriComponents([ColGrid, ColGridItem]);
+
+        // Option 2: Register all Colibri components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <!-- Basic 3-column grid -->
+        <col-grid cols="3" gap="m">
+          <col-grid-item>Item 1</col-grid-item>
+          <col-grid-item>Item 2</col-grid-item>
+          <col-grid-item>Item 3</col-grid-item>
+        </col-grid>
+
+        <!-- Responsive grid with column spanning -->
+        <col-grid cols="1" sm="2" md="3" lg="4" gap="l">
+          <col-grid-item col-span="1" sm="2" md="3" lg="4">
+            Full width header
+          </col-grid-item>
+          <col-grid-item>Card 1</col-grid-item>
+          <col-grid-item>Card 2</col-grid-item>
+          <col-grid-item>Card 3</col-grid-item>
+          <col-grid-item>Card 4</col-grid-item>
+        </col-grid>
+
+        <!-- Grid with named areas -->
+        <col-grid areas="header-sidebar-main" gap="m">
+          <col-grid-item area="header">Header Content</col-grid-item>
+          <col-grid-item area="sidebar">Sidebar Content</col-grid-item>
+          <col-grid-item area="main">Main Content</col-grid-item>
+        </col-grid>
+        ```
+
+    ## When to use it
+    The Grid system provides flexible layout solutions for various design patterns and use cases:
+
+    ### `col-grid` (Container)
+    Use the `col-grid` component for creating layout containers with:
+
+    - **Product grids** - E-commerce listings, image galleries, card layouts
+    - **Dashboard layouts** - Multi-panel interfaces with metrics, charts, and widgets
+    - **Content layouts** - Article grids, blog post listings, news feeds
+    - **Form layouts** - Multi-column forms with grouped fields
+    - **Navigation layouts** - Menu systems, tab containers, breadcrumb structures
+    - **Responsive page layouts** - Headers, sidebars, main content areas, footers
+    - **Auto-fit content** - Dynamic layouts that adapt to available space
+    - **Semantic areas** - Named grid regions for consistent page structure
+
+    ### `col-grid-item` (Items)
+    Use `col-grid-item` components for positioning content within grids:
+
+    - **Spanning elements** - Headers, footers, or featured content that spans multiple columns/rows
+    - **Responsive positioning** - Items that change size or position across breakpoints
+    - **Named area placement** - Content assigned to specific semantic regions
+    - **Flexible sizing** - Items that adapt to grid constraints while maintaining proportions
+    - **Accessibility labeling** - Content with specific ARIA labels for screen readers
+
+    ### Best Practices
+
+    **Choose `col-grid` when you need:**
+    - Type-safe grid properties with built-in validation
+    - Responsive design with breakpoint-specific configurations
+    - Semantic grid areas for consistent layouts
+    - Component-based architecture with clear APIs
+
+    **Consider utility classes when you need:**
+    - Maximum performance with minimal JavaScript overhead
+    - Direct control over CSS classes
+    - Integration with existing utility-first CSS frameworks
+    - Static layouts that don't require dynamic property changes
+
+    **Accessibility considerations:**
+    - Use `aria-label` or `aria-labelledby` on grid containers for screen readers
+    - Ensure logical tab order matches visual layout
+    - Consider reading order when using grid areas or spanning elements
+    - Test with keyboard navigation and screen readers
+
+    **Performance recommendations:**
+    - Use `auto-fit` for dynamic layouts instead of media queries when possible
+    - Prefer semantic grid areas over complex spanning for better maintainability
+    - Consider CSS Grid native features for simple layouts
+    - Use gap properties instead of margin/padding for consistent spacing
+
+  </div>
+</div>
