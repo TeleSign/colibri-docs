@@ -1,6 +1,7 @@
 import { html } from 'lit';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
+import { fn } from '@storybook/test';
 
 type StoryArgs = {
   length: Number;
@@ -21,6 +22,7 @@ type StoryArgs = {
     ellipsisWidth?: number;
     padding?: number;
   };
+  onPageChange?: () => void;
 };
 
 const meta = {
@@ -96,6 +98,13 @@ const meta = {
         category: 'Core',
       },
     },
+    onPageChange: {
+      action: 'clicked',
+      description: 'Callback function that is called when the pages or the arrows are clicked.',
+      table: {
+        category: 'Events',
+      },
+    },
   },
   args: {
     length: 4,
@@ -116,6 +125,7 @@ const meta = {
       ellipsisWidth: 30,
       padding: 0,
     },
+    onPageChange: fn(),
   },
 } satisfies ColibriStoryMeta<StoryArgs>;
 
@@ -130,6 +140,7 @@ const renderPaginator: Story['render'] = ({
   align,
   responsive,
   sizeConfig,
+  onPageChange,
 }) =>
   html`<col-paginator
     length=${length}
@@ -138,10 +149,11 @@ const renderPaginator: Story['render'] = ({
     align=${align}
     .responsive=${responsive}
     .sizeConfig=${sizeConfig}
+    @click=${onPageChange}
   ></col-paginator>`;
 
 export const Default: Story = {
-  render: ({ length, value, disabled, align, responsive, sizeConfig }) => html`
+  render: ({ length, value, disabled, align, responsive, sizeConfig, onPageChange }) => html`
     <col-paginator
       length=${length}
       value=${value}
@@ -149,6 +161,7 @@ export const Default: Story = {
       align=${align}
       .responsive=${responsive}
       .sizeConfig=${sizeConfig}
+      @click=${onPageChange}
     ></col-paginator>
   `,
 };
