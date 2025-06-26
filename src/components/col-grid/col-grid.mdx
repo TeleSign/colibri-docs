@@ -134,5 +134,200 @@ import { Callout } from '../../_storybook/components';
     - Consider CSS Grid native features for simple layouts
     - Use gap properties instead of margin/padding for consistent spacing
 
+    ## Component preview
+
+    ### Basic layouts
+    <div>
+      Start with simple grid layouts using columns and gaps. These examples show common patterns for organizing content in clean, structured layouts.
+    </div>
+    <h4>Overview</h4>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+    Basic grids use the `cols` property to define the number of columns and the `gap` property for consistent spacing between grid items.
+
+    <Canvas of={ColGridStories.BasicLayouts} />
+
+    ### Responsive grids
+    <div>
+      Create layouts that adapt to different screen sizes using responsive column properties. The grid automatically adjusts the number of columns based on the viewport width.
+    </div>
+    <h4>Overview</h4>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+    Responsive grids use breakpoint-specific properties (`sm`, `md`, `lg`, `xl`, `xxl`) to change the number of columns at different screen sizes.
+
+    **Responsive behavior:**
+    - **Mobile (default)**: 1 column
+    - **Small (320px+)**: 2 columns
+    - **Medium (769px+)**: 3 columns
+    - **Large (960px+)**: 4 columns
+
+    <Canvas of={ColGridStories.ResponsiveGrid} />
+
+    ### Gap variations
+    <div>
+      Control spacing between grid items using gap properties. You can set uniform gaps or use separate column and row gaps for asymmetric layouts.
+    </div>
+    <h4>Overview</h4>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+    Gap properties use design tokens for consistent spacing: `xs`, `s`, `m`, `l`, `xl`, `2xl`.
+
+    **Gap options:**
+    - `gap` - Sets both column and row gaps
+    - `col-gap` - Sets only horizontal spacing
+    - `row-gap` - Sets only vertical spacing
+
+    <Canvas of={ColGridStories.GapVariations} />
+
+    ### Auto-fit grids
+    <div>
+      Create responsive layouts that automatically adjust the number of columns based on available space and minimum column width. Perfect for card layouts and dynamic content.
+    </div>
+    <h4>Overview</h4>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+    Auto-fit grids use the `auto-fit` property with size tokens to set minimum column widths: `xs` (~100px), `s` (~150px), `m` (~200px), `l` (~300px).
+
+    **Auto-fit sizes:**
+    - `auto-fit="xs"` - Minimum ~100px per column
+    - `auto-fit="s"` - Minimum ~150px per column
+    - `auto-fit="m"` - Minimum ~200px per column
+    - `auto-fit="l"` - Minimum ~300px per column
+
+    <Canvas of={ColGridStories.AutoFitGrid} />
+
+    ### Grid areas
+    <div>
+      Use named grid areas to create semantic layouts with predefined regions. This approach provides consistent, maintainable layouts for common page structures.
+    </div>
+    <h4>Overview</h4>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+    Grid areas use the `areas` property on the container and `area` property on items to assign content to specific regions.
+
+    **Available area templates:**
+    - `header-main` - Simple header and main content
+    - `header-sidebar-main` - Classic three-section layout
+    - `dashboard-simple` - Navigation with header and main
+    - `article-layout` - Article with sidebar and footer
+    - And more semantic layouts...
+
+    <Canvas of={ColGridStories.GridAreas} />
+
+    ### Column spanning
+    <div>
+      Make grid items span multiple columns using the `col-span` property. Combine with responsive properties to create adaptive layouts that change spanning behavior across screen sizes.
+    </div>
+    <h4>Overview</h4>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+    Column spanning allows items to occupy multiple grid columns, creating featured content areas and flexible layouts.
+
+    **Spanning options:**
+    - `col-span="1"` through `col-span="12"` - Span specific number of columns
+    - `col-span="full"` - Span entire grid width
+    - Responsive spanning with `sm`, `md`, `lg`, `xl`, `xxl` properties
+
+    <Canvas of={ColGridStories.ColumnSpanning} />
+
+    ### Row spanning
+    <div>
+      Make grid items span multiple rows using the `row-span` property. Perfect for creating sidebar layouts, featured content blocks, and complex dashboard arrangements.
+    </div>
+    <h4>Overview</h4>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+    Row spanning works with explicit row definitions using the `rows` property on the grid container.
+
+    **Row spanning features:**
+    - `row-span="1"` through `row-span="6"` - Span specific number of rows
+    - Combine with column spanning for complex layouts
+    - Works with grid areas for semantic structure
+
+    <Canvas of={ColGridStories.RowSpanning} />
+
+    ### Complex layouts
+    <div>
+      The grid system supports sophisticated real-world layouts by combining responsive design, spanning, grid areas, and gaps.
+    </div>
+
+    <Callout variant="info" icon="📋">
+      **Explore comprehensive examples** including e-commerce homepages, application dashboards, news layouts, and social media feeds in the [Complex Layout story](/story/atoms-grid--complex-layout). These examples demonstrate practical applications with full responsive behavior and detailed implementation notes.
+    </Callout>
+
+    ## Properties
+
+    ### `col-grid` properties
+    <div>
+      The grid container component that defines the overall layout structure, responsive behavior, and spacing.
+    </div>
+
+    <ArgTypes of="col-grid" />
+
+    ### `col-grid-item` properties
+    <div>
+      The grid item component that positions content within the grid, supports spanning, and provides semantic area assignment.
+    </div>
+
+    <ArgTypes of="col-grid-item" />
+
+    ## Interact with the component
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-grid--default) section.
+
+    ### Testing your implementation
+
+    **Visual testing:**
+    - Test responsive behavior by resizing your browser window
+    - Verify gap spacing is consistent across different gap values
+    - Check that column and row spanning works as expected
+    - Ensure grid areas assign content to the correct regions
+
+    **Accessibility testing:**
+    - Use screen readers to verify `aria-label` and `aria-labelledby` are properly announced
+    - Test keyboard navigation through grid items maintains logical tab order
+    - Verify that visual grid structure matches the reading order for assistive technologies
+    - Check that spanning elements don't disrupt screen reader navigation
+
+    **Cross-browser compatibility:**
+    - Test in modern browsers (Chrome, Firefox, Safari, Edge)
+    - Verify CSS Grid support in your target browsers
+    - Check responsive breakpoints work consistently across browsers
+    - Test auto-fit behavior with different content sizes
+
+    **Performance considerations:**
+    - Monitor layout performance with large numbers of grid items
+    - Test responsive property changes during browser resizing
+    - Verify that grid area templates don't cause layout thrashing
+    - Check memory usage with dynamic grid content updates
+
+    ### Accessibility guidelines
+
+    **Screen reader support:**
+    - Use `aria-label` on grid containers to describe the layout purpose
+    - Consider `aria-labelledby` when grid has a visible heading
+    - Test with multiple screen readers (NVDA, JAWS, VoiceOver)
+
+    **Keyboard navigation:**
+    - Ensure logical tab order follows visual layout
+    - Test that spanning elements don't break navigation flow
+    - Verify focus indicators are visible on interactive grid items
+
+    **Content structure:**
+    - Maintain semantic HTML within grid items
+    - Use appropriate heading hierarchy regardless of visual positioning
+    - Consider reading order when using grid areas or complex spanning
+
+    **Responsive considerations:**
+    - Test accessibility at all responsive breakpoints
+    - Ensure content remains accessible when layout changes
+    - Verify that responsive spanning doesn't affect screen reader navigation
   </div>
 </div>
