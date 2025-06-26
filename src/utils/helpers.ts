@@ -1,4 +1,5 @@
 import { html, TemplateResult } from 'lit';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 /**
  * Creates an argTypes configuration with disabled controls
@@ -107,7 +108,7 @@ export function wrapStoryContent(
   if (!showContainer) {
     return html`
       <div class="${titleClass}">${title}</div>
-      ${description ? html`<div class="${descriptionClass}">${description}</div>` : ''}
+      ${description ? html`<div class="${descriptionClass}">${unsafeHTML(description)}</div>` : ''}
       ${renderedContent}
     `;
   }
@@ -115,7 +116,7 @@ export function wrapStoryContent(
   return html`
     <div class="${containerClass}">
       <div class="${titleClass}">${title}</div>
-      ${description ? html`<div class="${descriptionClass}">${description}</div>` : ''}
+      ${description ? html`<div class="${descriptionClass}">${unsafeHTML(description)}</div>` : ''}
       ${renderedContent}
     </div>
   `;
