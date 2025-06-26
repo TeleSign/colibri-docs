@@ -15,10 +15,12 @@ export function removeStyleTags(code: string): string {
  * This function:
  * 1. Removes `<style>` tags and their content.
  * 2. Formats HTML boolean attributes (e.g., `disabled=""` becomes `disabled`).
- * 3. Pretty-prints the code: removes empty lines, trims whitespace, and indents multi-line snippets.
+ * 3. Pretty-prints the code with structure-aware indentation based on HTML nesting levels.
+ *    - Analyzes opening and closing tags to determine proper indentation depth
+ * 4. Removes empty lines and trims whitespace.
  *
  * @param code - The raw code string to transform.
- * @returns The formatted and cleaned code string.
+ * @returns The formatted and cleaned code string with proper nested indentation.
  */
 export function formatCodeString(code: string): string {
   let transformedCode = code.replace(/<style>[\s\S]*?<\/style>\s*/, '');
@@ -34,9 +36,27 @@ export function formatCodeString(code: string): string {
     return lines.join('').trim();
   }
 
-  const firstLine = lines[0].trim();
-  const lastLine = lines[lines.length - 1].trim();
-  const innerLines = lines.slice(1, -1).map(line => '  ' + line.trim());
+  let indentLevel = 0;
+  const formattedLines = lines.map(line => {
+    const trimmedLine = line.trim();
 
-  return [firstLine, ...innerLines, lastLine].join('\n');
+    if (trimmedLine.startsWith('</')) {
+      indentLevel = Math.max(0, indentLevel - 1);
+    }
+
+    const formattedLine = '  '.repeat(indentLevel) + trimmedLine;
+
+    if (
+      trimmedLine.startsWith('<') &&
+      !trimmedLine.startsWith('</') &&
+      !trimmedLine.endsWith('/>') &&
+      !trimmedLine.includes('</' + trimmedLine.substring(1).split(/[\s>]/)[0] + '>')
+    ) {
+      indentLevel++;
+    }
+
+    return formattedLine;
+  });
+
+  return formattedLines.join('\n');
 }
