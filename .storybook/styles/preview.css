@@ -56,6 +56,23 @@
   font-size: 16px;
 }
 
+.sbdocs-content table {
+  width: 100%;
+  max-width: 1000px;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sbdocs-content table th,
+.sbdocs-content table td {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
 .col-intro-text {
   margin-block-end: 2rem;
 }
