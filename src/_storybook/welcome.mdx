@@ -1,4 +1,5 @@
 import { Meta, Title, Subtitle } from '@storybook/blocks';
+import packageJson from './../../package.json';
 
 <Meta title="Welcome" />
 
@@ -10,6 +11,14 @@ import { Meta, Title, Subtitle } from '@storybook/blocks';
   <Subtitle>Welcome</Subtitle>
   Colibri is a themeable Web Components library built with Lit, designed to provide a
   consistent and customizable design system for your web applications.
+</div>
+
+<div className="sb-section">
+  <Subtitle>Current Versions</Subtitle>
+  <ul>
+    <li><strong>Colibri:</strong> {packageJson.dependencies['@telesign/colibri']}</li>
+    <li><strong>Colibri-icons:</strong> {packageJson.dependencies['@telesign/colibri-icons']}</li>
+  </ul>
 </div>
 
 <Subtitle>Quick Start</Subtitle>
@@ -35,8 +44,22 @@ registerAllComponents();
 // Always register external components like icons separately
 registerColibriComponents([ColIcon]);
 
+// Add data-theme attribute on root - parent element
+<div data-theme="default">
+
 // Use components
 <col-icon name="home"></col-icon>
+```
+
+Now you're ready to use the ColButton component:
+
+```html
+<div data-theme="default">
+  <col-button color="primary">
+    Send
+    <col-icon name="send"></col-icon>
+  </col-button>
+</div>
 ```
 
 <Subtitle>Core Features</Subtitle>
