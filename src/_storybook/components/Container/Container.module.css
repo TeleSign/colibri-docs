@@ -18,7 +18,6 @@
 .header {
   margin-bottom: 1rem;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--col-theme-neutral-300);
 }
 
 .title {
