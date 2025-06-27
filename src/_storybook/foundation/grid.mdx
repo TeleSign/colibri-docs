@@ -4,9 +4,11 @@ import { Callout, Container } from '../components';
 import {
   GRID_COLUMNS,
   GRID_ROWS,
+  GRID_ROW_SPANS,
   GRID_COLUMN_SPANS,
   GRID_TOKEN_VALUES,
-  getGridUtilityClass
+  getGridUtilityClass,
+  LAYOUT_SIZES
 } from './utils';
 
 <Meta title="Foundation/Grid" />
@@ -129,10 +131,11 @@ import {
           <p>All column utilities follow the pattern <code>.col-grid-cols-[number]</code>:</p>
           <div className="grid-token-list">
             {GRID_COLUMNS.filter(col => col !== 'none').slice(0, 12).map(colCount => (
-              <div key={colCount} className="grid-token-item">
+                <div key={colCount} className="grid-token-item">
                   .col-grid-cols-{colCount}
                 </div>
-              ))}
+              )
+            )}
             <div className="grid-token-item">.col-grid-cols-none</div>
           </div>
           <p className="grid-token-note">
@@ -188,6 +191,167 @@ import {
           <p className="grid-token-note">
             <strong>Note:</strong> Row templates are most useful when you need explicit control over row heights.
             In many cases, letting rows auto-size based on content is preferred.
+          </p>
+        </div>
+      </div>
+
+      <Subtitle>Gap Utilities</Subtitle>
+      <p>
+        Gap utilities control the spacing between grid items using the design system's layout tokens.
+        These utilities provide consistent spacing that adapts to your theme while offering fine-grained
+        control over both universal gaps and directional spacing for columns and rows.
+      </p>
+
+      <div className="grid-section">
+        <h3>Universal Gap</h3>
+        <p>
+          Universal gap utilities apply spacing between all grid items, both horizontally and vertically.
+          These classes use the layout token system to ensure consistent spacing across your application.
+        </p>
+
+        <GridExample
+          title="Extra Small Gap"
+          description="Minimal spacing using .col-grid-gap-xs"
+          gridClasses="col-grid col-grid-cols-3 col-grid-gap-xs"
+          cellCount={6}
+          cellVariant="primary"
+        />
+
+        <GridExample
+          title="Small Gap"
+          description="Small spacing using .col-grid-gap-s"
+          gridClasses="col-grid col-grid-cols-3 col-grid-gap-s"
+          cellCount={6}
+          cellVariant="secondary"
+        />
+
+        <GridExample
+          title="Medium Gap"
+          description="Medium spacing using .col-grid-gap-m"
+          gridClasses="col-grid col-grid-cols-3 col-grid-gap-m"
+          cellCount={6}
+          cellVariant="accent"
+        />
+
+        <GridExample
+          title="Large Gap"
+          description="Large spacing using .col-grid-gap-l"
+          gridClasses="col-grid col-grid-cols-3 col-grid-gap-l"
+          cellCount={6}
+          cellVariant="default"
+        />
+
+        <GridExample
+          title="Extra Large Gap"
+          description="Extra large spacing using .col-grid-gap-xl"
+          gridClasses="col-grid col-grid-cols-2 col-grid-gap-xl"
+          cellCount={4}
+          cellVariant="primary"
+        />
+
+        <div className="grid-token-reference">
+          <h4>Available Gap Classes</h4>
+          <p>All gap utilities follow the pattern <code>.col-grid-gap-[size]</code>:</p>
+          <div className="grid-token-list">
+            {LAYOUT_SIZES.map(size => (
+              <div key={size} className="grid-token-item">.col-grid-gap-{size}</div>
+            ))}
+          </div>
+          <p className="grid-token-note">
+            <strong>CSS Variables:</strong> Each class maps to <code>--col-layout-spacing-[size]</code> tokens
+            which provide consistent spacing values across the design system.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid-section">
+        <h3>Column Gap</h3>
+        <p>
+          Column gap utilities apply spacing only between columns (horizontally), leaving rows to touch vertically.
+          This is useful for card grids, image galleries, or layouts where you want horizontal separation without vertical spacing.
+        </p>
+
+        <GridExample
+          title="Column Gap Only - Small"
+          description="Horizontal spacing only using .col-grid-gap-col-s"
+          gridClasses="col-grid col-grid-cols-3 col-grid-gap-col-s"
+          cellCount={9}
+          cellVariant="primary"
+        />
+
+        <GridExample
+          title="Column Gap Only - Medium"
+          description="Horizontal spacing only using .col-grid-gap-col-m"
+          gridClasses="col-grid col-grid-cols-4 col-grid-gap-col-m"
+          cellCount={8}
+          cellVariant="secondary"
+        />
+
+        <GridExample
+          title="Column Gap Only - Large"
+          description="Horizontal spacing only using .col-grid-gap-col-l"
+          gridClasses="col-grid col-grid-cols-2 col-grid-gap-col-l"
+          cellCount={6}
+          cellVariant="accent"
+        />
+
+        <div className="grid-token-reference">
+          <h4>Available Column Gap Classes</h4>
+          <p>All column gap utilities follow the pattern <code>.col-grid-gap-col-[size]</code>:</p>
+          <div className="grid-token-list">
+            {LAYOUT_SIZES.map(size => (
+              <div key={size} className="grid-token-item">.col-grid-gap-col-{size}</div>
+            ))}
+          </div>
+          <p className="grid-token-note">
+            <strong>Use Cases:</strong> Perfect for card grids, image galleries, or content where you want
+            items to stack closely vertically but have clear horizontal separation.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid-section">
+        <h3>Row Gap</h3>
+        <p>
+          Row gap utilities apply spacing only between rows (vertically), leaving columns to touch horizontally.
+          This is useful for stacked content, vertical lists, or layouts where you want vertical separation without horizontal spacing.
+        </p>
+
+        <GridExample
+          title="Row Gap Only - Small"
+          description="Vertical spacing only using .col-grid-gap-row-s"
+          gridClasses="col-grid col-grid-cols-4 col-grid-gap-row-s"
+          cellCount={8}
+          cellVariant="primary"
+        />
+
+        <GridExample
+          title="Row Gap Only - Medium"
+          description="Vertical spacing only using .col-grid-gap-row-m"
+          gridClasses="col-grid col-grid-cols-3 col-grid-gap-row-m"
+          cellCount={9}
+          cellVariant="secondary"
+        />
+
+        <GridExample
+          title="Row Gap Only - Large"
+          description="Vertical spacing only using .col-grid-gap-row-l"
+          gridClasses="col-grid col-grid-cols-2 col-grid-gap-row-l"
+          cellCount={6}
+          cellVariant="accent"
+        />
+
+        <div className="grid-token-reference">
+          <h4>Available Row Gap Classes</h4>
+          <p>All row gap utilities follow the pattern <code>.col-grid-gap-row-[size]</code>:</p>
+          <div className="grid-token-list">
+            {LAYOUT_SIZES.map(size => (
+              <div key={size} className="grid-token-item">.col-grid-gap-row-{size}</div>
+            ))}
+          </div>
+          <p className="grid-token-note">
+            <strong>Use Cases:</strong> Ideal for stacked content sections, vertical navigation lists,
+            or content where items should flow horizontally but have clear vertical separation.
           </p>
         </div>
       </div>
