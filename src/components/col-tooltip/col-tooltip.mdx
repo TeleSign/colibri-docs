@@ -1,0 +1,132 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as ColTooltipStories from './col-tooltip.stories';
+import { Callout } from '../../_storybook/components';
+
+<Meta of={ColTooltipStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Tooltip</Title>
+    Tooltips display additional information upon hover or focus. The information included should be contextual, helpful, and nonessential while providing that extra ability to communicate and give clarity to a user.
+
+    <Subtitle>Table of contents</Subtitle>
+    - [How to use it](#how-to-use-it)
+      - [Installation](#installation)
+      - [Content](#content)
+      - [Alignment](#alignment)
+    - [When to use it](#when-to-use-it)
+    - [Component preview](#component-preview)
+      - [Basic Tooltip](#basic-tooltip)
+      - [Singleline Tooltip with Hover action](#singleline-tooltip-with-hover-action)
+      - [Multiline Tooltip with Click action](#multiline-tooltip-with-click-action)
+      - [Singleline Tooltip with Keyboard actions](#singleline-tooltip-with-keyboard-actions)
+      - [Multiline Tooltip with large paragraph to show](#multiline-tooltip-with-large-paragraph-to-show)
+    - [Properties](#properties)
+    - [Accessibility](#accessibility)
+    - [Interact with the component](#interact-with-the-component)
+
+    ## How to use it
+
+    ### Installation
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, ColTooltip } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web component:
+        ```typescript
+        registerColibriComponents([ColTooltip]);
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-tooltip>
+          Text, Icon or Label
+          <div slot="tooltip-content">
+            Tooltip Content
+          </div>
+        </col-tooltip>
+        ```
+
+    ### Content
+
+    - Should contain relevant, specific content.
+    - Keep tooltips short and concise, no longer than a sentence or two.
+    - Should not contain required information essential for a user to complete their task since a tooltip is not persistent.
+
+    ### Alignment
+
+    **Mouse**
+
+    Tooltips are triggered when the mouse hovers over or focuses on the UI trigger. The tooltip persists as long as the mouse remains over the active container or the UI trigger. The tooltip is dismissed by hovering away or moving focus to another element. Definition tooltip can additionally be activated on click or enter and dismissed by clicking outside of active container or UI element.
+
+    **Keyboard**
+
+    Users can trigger a tooltip by focusing on element. Additionally, a definition tooltip can be triggered by using the `enter` key. A tooltip dismissible by use of the `escape` key.
+
+
+    ## When to use it
+    The Tooltip component is a small pop-up window that provides additional information about an element when the user hovers over it or touches it. Tooltips are useful for providing explanations, definitions or details without cluttering the main interface. Here are some common use cases for the Tooltip component:
+
+    * **Icon Labels**
+        - **Icon Descriptions**: When icons are used instead of text for buttons or options, a tooltip can provide the icon description to improve accessibility and user understanding.
+        - **Keyboard Shortcuts**: Show available keyboard shortcuts for actions that can be performed via icons.
+    * **Form Field Explanations**
+        - **Input Fields**: Provide additional information or examples about what is expected in a specific input field.
+        - **Error Messages**: Explain why an input field is invalid when the user hovers over the field after an error message is displayed.
+    * **Product Information**
+        - **Specifics**: On an e-commerce site, provide additional details or product specifications when hovering over the product name or image.
+        - **Special Offers**: Show additional offers or discounts available for a specific product.
+    * **Navigation and Menus**
+        - **Menu Items**: Explain menu items that are not self-explanatory by providing a brief description or the purpose of the menu.
+        - **Submenus**: Indicate that a menu item has additional options or submenus available.
+    * **Charts and Data Visualisations**
+        - **Data Details**: In interactive graphs, display specific details of the data point, such as exact values, percentages, or descriptions.
+        - **Axis Explanations**: Provide descriptions or units of measure for the axes of a chart.
+    * **Interactive Elements**
+        - **Buttons and Controls**: Provide information about what a specific button or control does, especially if the action is not obvious.
+        - **Progress Indicators**: Explain the current status or purpose of a progress indicator.
+
+    ## Component preview
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+    ### Basic Tooltip
+
+    <Canvas of={ColTooltipStories.Default} />
+
+    ### Singleline Tooltip with Hover action
+
+    <Canvas of={ColTooltipStories.SinglelineTooltipHover} />
+
+    ### Multiline Tooltip with Click action
+
+    <Canvas of={ColTooltipStories.MultilineTooltipClick} />
+
+    ### Singleline Tooltip with Keyboard actions
+
+    <Canvas of={ColTooltipStories.SinglelineTooltipKeyboard} />
+
+    ### Multiline Tooltip with large paragraph to show
+
+    <Canvas of={ColTooltipStories.MultilineTooltipLargeText} />
+
+    ## Properties
+
+    <ArgTypes of={ColTooltipStories} />
+
+    ## Accessibility
+
+    Considerations of the tooltip:
+    - The position will change automatically when the size of the tooltip does not fit in the window.
+    - By default the width will be 200px when the multiline property is true.
+    - The positions are case sensitive, it will only render `top`, `right`, `left` or `bottom`.
+
+    ## Interact with the component
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the **Default** section.
+
+  </div>
+</div>
