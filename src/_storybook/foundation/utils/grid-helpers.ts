@@ -63,6 +63,7 @@ export const LAYOUT_SIZES = extractKeys(tokens.layout?.size);
 
 // Breakpoints for responsive utilities
 export const BREAKPOINTS = extractKeys(tokens.layout?.breakpoints);
+export const BREAKPOINT_VALUES = tokens.layout?.breakpoints;
 
 // Token values for display
 export const GRID_TOKEN_VALUES = {

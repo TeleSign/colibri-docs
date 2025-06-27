@@ -4,6 +4,8 @@ import { Callout, Container } from '../components';
 import {
   GRID_COLUMNS,
   GRID_ROWS,
+  BREAKPOINTS,
+  BREAKPOINT_VALUES,
   GRID_ROW_SPANS,
   GRID_COLUMN_SPANS,
   GRID_TOKEN_VALUES,
@@ -384,36 +386,6 @@ import {
           <GridCell variant="secondary">3</GridCell>
         </GridExample>
 
-        <GridExample
-          title="Full Width Spanning"
-          description="Items spanning the full width using .col-span-full"
-          gridClasses="col-grid col-grid-cols-3 col-grid-gap-m"
-          cellCount={0}
-          showCode={false}
-        >
-          <GridCell variant="primary" className="col-span-full">Full Width Header</GridCell>
-          <GridCell variant="secondary">Column 1</GridCell>
-          <GridCell variant="secondary">Column 2</GridCell>
-          <GridCell variant="secondary">Column 3</GridCell>
-          <GridCell variant="accent" className="col-span-2">Spans 2 Columns</GridCell>
-          <GridCell variant="secondary">Column 3</GridCell>
-        </GridExample>
-
-        <GridExample
-          title="Mixed Spanning Layout"
-          description="Complex layout with various column spans"
-          gridClasses="col-grid col-grid-cols-6 col-grid-gap-s"
-          cellCount={0}
-          showCode={false}
-        >
-          <GridCell variant="primary" className="col-span-4">Main Content (4 cols)</GridCell>
-          <GridCell variant="secondary" className="col-span-2">Sidebar (2 cols)</GridCell>
-          <GridCell variant="accent" className="col-span-2">Feature 1</GridCell>
-          <GridCell variant="accent" className="col-span-2">Feature 2</GridCell>
-          <GridCell variant="accent" className="col-span-2">Feature 3</GridCell>
-          <GridCell variant="default" className="col-span-3">Half Width 1</GridCell>
-          <GridCell variant="default" className="col-span-3">Half Width 2</GridCell>
-        </GridExample>
 
         <div className="grid-token-reference">
           <h4>Available Column Span Classes</h4>
@@ -459,22 +431,6 @@ import {
           <GridCell variant="secondary">Item 10</GridCell>
         </GridExample>
 
-        <GridExample
-          title="Sidebar Layout with Row Spanning"
-          description="Classic sidebar layout using row spanning"
-          gridClasses="col-grid col-grid-cols-4 col-grid-gap-m"
-          cellCount={0}
-          showCode={false}
-        >
-          <GridCell variant="primary" className="col-span-3">Header Content</GridCell>
-          <GridCell variant="accent" className="row-span-3" size="large">Sidebar<br/>(spans 3 rows)</GridCell>
-          <GridCell variant="secondary">Main 1</GridCell>
-          <GridCell variant="secondary">Main 2</GridCell>
-          <GridCell variant="secondary">Main 3</GridCell>
-          <GridCell variant="secondary">Main 4</GridCell>
-          <GridCell variant="secondary">Main 5</GridCell>
-          <GridCell variant="secondary">Main 6</GridCell>
-        </GridExample>
 
         <div className="grid-token-reference">
           <h4>Available Row Span Classes</h4>
@@ -488,6 +444,91 @@ import {
           <p className="grid-token-note">
             <strong>CSS Variables:</strong> Each class maps to <code>span [number]</code> which tells the item
             to span across that many rows. <code>.row-span-full</code> spans across all available rows.
+          </p>
+        </div>
+      </div>
+
+      <Subtitle>Responsive Utilities</Subtitle>
+      <p>
+        Responsive grid utilities enable mobile-first responsive design by applying different grid behaviors
+        at specific breakpoints. These utilities follow the same patterns as other grid classes but include
+        responsive prefixes to control when they take effect, allowing for adaptive layouts across devices.
+      </p>
+
+      <div className="grid-section">
+        <h3>Responsive Columns</h3>
+        <p>
+          Responsive column utilities allow you to define different column layouts at different screen sizes.
+          Start with a mobile-first approach and progressively enhance the layout for larger screens using
+          breakpoint prefixes.
+        </p>
+
+        <GridExample
+          title="Mobile-First Responsive Grid"
+          description="1 column on mobile, 2 on small screens, 3 on medium, 4 on large"
+          gridClasses="col-grid col-grid-cols-1 col-sm:grid-cols-2 col-md:grid-cols-3 col-lg:grid-cols-4 col-grid-gap-m"
+          cellCount={8}
+          cellVariant="primary"
+        />
+
+        <GridExample
+          title="Simple Responsive Layout"
+          description="Stack on mobile (1 col), side-by-side on tablet+ (2 cols)"
+          gridClasses="col-grid col-grid-cols-1 col-md:grid-cols-2 col-grid-gap-l"
+          cellCount={4}
+          cellVariant="secondary"
+        />
+
+        <div className="grid-token-reference">
+          <h4>Available Responsive Prefixes</h4>
+          <p>All grid utilities can be prefixed with breakpoint modifiers:</p>
+          <div className="grid-token-list">
+            {BREAKPOINTS.map(bp => (
+              <div key={bp} className="grid-token-item">col-{bp}: ({BREAKPOINT_VALUES[bp]}+)</div>
+            ))}
+          </div>
+          <p className="grid-token-note">
+            <strong>Mobile-First:</strong> Use base classes for mobile, then add responsive modifiers.
+            For example: <code>.col-grid-cols-1 .col-md:grid-cols-2 .col-lg:grid-cols-4</code>
+          </p>
+        </div>
+      </div>
+
+      <div className="grid-section">
+        <h3>Responsive Spanning</h3>
+        <p>
+          Responsive spanning utilities allow grid items to span different amounts of columns or rows
+          at different breakpoints. This enables sophisticated layouts where content reflows and resizes
+          based on available screen space.
+        </p>
+
+        <GridExample
+          title="Responsive Column Spanning"
+          description="Item 1 spans 2 columns on lg"
+          gridClasses="col-grid col-grid-cols-1 col-md:grid-cols-2 col-lg:grid-cols-3 col-grid-gap-m"
+          cellCount={0}
+          showCode={false}
+        >
+          <GridCell variant="primary" className="col-span-full col-md:col-span-1 col-lg:col-span-1">
+            Featured Content (full width)
+          </GridCell>
+          <GridCell variant="secondary" className='col-lg:span-2'>Item 1</GridCell>
+          <GridCell variant="secondary">Item 2</GridCell>
+        </GridExample>
+
+        <div className="grid-token-reference">
+          <h4>Responsive Spanning Patterns</h4>
+          <p>Combine base spanning with responsive modifiers for adaptive layouts:</p>
+          <div className="grid-token-list">
+            <div className="grid-token-item">.col-span-full .col-md:span-2</div>
+            <div className="grid-token-item">.col-span-1 .col-lg:span-3</div>
+            <div className="grid-token-item">.row-span-1 .col-md:row-span-2</div>
+            <div className="grid-token-item">.col-span-2 .col-xl:span-4</div>
+          </div>
+          <p className="grid-token-note">
+            <strong>Best Practice:</strong> Start with the most constrained layout (mobile) and progressively
+            enhance with more complex spanning for larger screens. This ensures content remains accessible
+            and readable across all devices.
           </p>
         </div>
       </div>
