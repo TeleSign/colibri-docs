@@ -355,6 +355,142 @@ import {
           </p>
         </div>
       </div>
+
+      <Subtitle>Grid Item Utilities</Subtitle>
+      <p>
+        Grid item utilities control how individual grid items span across columns and rows. These utilities
+        enable flexible layouts where some items take up more space than others, creating dynamic and
+        visually interesting grid compositions while maintaining alignment and structure.
+      </p>
+
+      <div className="grid-section">
+        <h3>Column Spanning</h3>
+        <p>
+          Column spanning utilities allow grid items to stretch across multiple columns. Use these classes
+          to create featured content, wide headers, or any layout where certain items need more horizontal space.
+        </p>
+
+        <GridExample
+          title="Basic Column Spanning"
+          description="Items spanning 2 and 3 columns in a 4-column grid"
+          gridClasses="col-grid col-grid-cols-4 col-grid-gap-m"
+          cellCount={0}
+          showCode={false}
+        >
+          <GridCell variant="primary" className="col-span-2">Span 2</GridCell>
+          <GridCell variant="secondary">1</GridCell>
+          <GridCell variant="secondary">2</GridCell>
+          <GridCell variant="accent" className="col-span-3">Span 3</GridCell>
+          <GridCell variant="secondary">3</GridCell>
+        </GridExample>
+
+        <GridExample
+          title="Full Width Spanning"
+          description="Items spanning the full width using .col-span-full"
+          gridClasses="col-grid col-grid-cols-3 col-grid-gap-m"
+          cellCount={0}
+          showCode={false}
+        >
+          <GridCell variant="primary" className="col-span-full">Full Width Header</GridCell>
+          <GridCell variant="secondary">Column 1</GridCell>
+          <GridCell variant="secondary">Column 2</GridCell>
+          <GridCell variant="secondary">Column 3</GridCell>
+          <GridCell variant="accent" className="col-span-2">Spans 2 Columns</GridCell>
+          <GridCell variant="secondary">Column 3</GridCell>
+        </GridExample>
+
+        <GridExample
+          title="Mixed Spanning Layout"
+          description="Complex layout with various column spans"
+          gridClasses="col-grid col-grid-cols-6 col-grid-gap-s"
+          cellCount={0}
+          showCode={false}
+        >
+          <GridCell variant="primary" className="col-span-4">Main Content (4 cols)</GridCell>
+          <GridCell variant="secondary" className="col-span-2">Sidebar (2 cols)</GridCell>
+          <GridCell variant="accent" className="col-span-2">Feature 1</GridCell>
+          <GridCell variant="accent" className="col-span-2">Feature 2</GridCell>
+          <GridCell variant="accent" className="col-span-2">Feature 3</GridCell>
+          <GridCell variant="default" className="col-span-3">Half Width 1</GridCell>
+          <GridCell variant="default" className="col-span-3">Half Width 2</GridCell>
+        </GridExample>
+
+        <div className="grid-token-reference">
+          <h4>Available Column Span Classes</h4>
+          <p>All column span utilities follow the pattern <code>.col-span-[number]</code>:</p>
+          <div className="grid-token-list">
+            {GRID_COLUMN_SPANS.map(span => (
+              <div key={span} className="grid-token-item">.col-span-{span}</div>
+            ))}
+            <div className="grid-token-item">.col-span-full</div>
+          </div>
+          <p className="grid-token-note">
+            <strong>CSS Variables:</strong> Each class maps to <code>span [number]</code> which tells the item
+            to span across that many columns. <code>.col-span-full</code> spans across all available columns.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid-section">
+        <h3>Row Spanning</h3>
+        <p>
+          Row spanning utilities allow grid items to stretch across multiple rows. These are particularly useful
+          for creating sidebars, featured cards, or content that needs more vertical space while other items flow around it.
+        </p>
+
+        <GridExample
+          title="Basic Row Spanning"
+          description="Items spanning 2 and 3 rows with automatic content flow"
+          gridClasses="col-grid col-grid-cols-3 col-grid-gap-m"
+          cellCount={0}
+          showCode={false}
+        >
+          <GridCell variant="primary" className="row-span-2" size="large">Tall Item<br/>(2 rows)</GridCell>
+          <GridCell variant="secondary">Item 1</GridCell>
+          <GridCell variant="secondary">Item 2</GridCell>
+          <GridCell variant="secondary">Item 3</GridCell>
+          <GridCell variant="secondary">Item 4</GridCell>
+          <GridCell variant="accent" className="row-span-3" size="large">Very Tall<br/>(3 rows)</GridCell>
+          <GridCell variant="secondary">Item 5</GridCell>
+          <GridCell variant="secondary">Item 6</GridCell>
+          <GridCell variant="secondary">Item 7</GridCell>
+          <GridCell variant="secondary">Item 8</GridCell>
+          <GridCell variant="secondary">Item 9</GridCell>
+          <GridCell variant="secondary">Item 10</GridCell>
+        </GridExample>
+
+        <GridExample
+          title="Sidebar Layout with Row Spanning"
+          description="Classic sidebar layout using row spanning"
+          gridClasses="col-grid col-grid-cols-4 col-grid-gap-m"
+          cellCount={0}
+          showCode={false}
+        >
+          <GridCell variant="primary" className="col-span-3">Header Content</GridCell>
+          <GridCell variant="accent" className="row-span-3" size="large">Sidebar<br/>(spans 3 rows)</GridCell>
+          <GridCell variant="secondary">Main 1</GridCell>
+          <GridCell variant="secondary">Main 2</GridCell>
+          <GridCell variant="secondary">Main 3</GridCell>
+          <GridCell variant="secondary">Main 4</GridCell>
+          <GridCell variant="secondary">Main 5</GridCell>
+          <GridCell variant="secondary">Main 6</GridCell>
+        </GridExample>
+
+        <div className="grid-token-reference">
+          <h4>Available Row Span Classes</h4>
+          <p>All row span utilities follow the pattern <code>.row-span-[number]</code>:</p>
+          <div className="grid-token-list">
+            {GRID_ROW_SPANS.map(span => (
+              <div key={span} className="grid-token-item">.row-span-{span}</div>
+            ))}
+            <div className="grid-token-item">.row-span-full</div>
+          </div>
+          <p className="grid-token-note">
+            <strong>CSS Variables:</strong> Each class maps to <code>span [number]</code> which tells the item
+            to span across that many rows. <code>.row-span-full</code> spans across all available rows.
+          </p>
+        </div>
+      </div>
     </Unstyled>
   </div>
 </div>
