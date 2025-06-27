@@ -36,6 +36,8 @@ import { Callout } from '../../_storybook/components';
     - [Properties](#properties)
       - [col-grid properties](#col-grid-properties)
       - [col-grid-item properties](#col-grid-item-properties)
+      - [Shared responsive properties](#shared-responsive-properties)
+      - [Accessibility properties](#accessibility-properties)
     - [Interact with the component](#interact-with-the-component)
 
     ## How to use it
@@ -363,67 +365,34 @@ import { Callout } from '../../_storybook/components';
 
     ### `col-grid` properties
     <div>
-      The grid container component that defines the overall layout structure, responsive behavior, and spacing.
+      Properties for the grid container component that defines the overall layout structure, responsive behavior, and spacing.
     </div>
 
-    <ArgTypes of="col-grid" />
+    <ArgTypes of={ColGridStories} include="^(cols|rows|gap|col-gap|row-gap|inline|auto-fit|areas)$" />
 
     ### `col-grid-item` properties
     <div>
-      The grid item component that positions content within the grid, supports spanning, and provides semantic area assignment.
+      Properties for grid items that control positioning, spanning, and area assignment within the grid.
     </div>
 
-    <ArgTypes of="col-grid-item" />
+    <ArgTypes of={ColGridStories} include="^(col-span|row-span|area)$" />
+
+    ### Shared responsive properties
+    <div>
+      Breakpoint-specific properties that work on both components but with different meanings. For `col-grid`: controls number of columns. For `col-grid-item`: controls column spanning.
+    </div>
+
+    <ArgTypes of={ColGridStories} include="^(sm|md|lg|xl|xxl)$" />
+
+    ### Accessibility properties
+    <div>
+      ARIA properties for improving screen reader support and accessibility for both grid containers and items.
+    </div>
+
+    <ArgTypes of={ColGridStories} include="^(aria-label|aria-labelledby)$" />
 
     ## Interact with the component
     To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-grid--default) section.
 
-    ### Testing your implementation
-
-    **Visual testing:**
-    - Test responsive behavior by resizing your browser window
-    - Verify gap spacing is consistent across different gap values
-    - Check that column and row spanning works as expected
-    - Ensure grid areas assign content to the correct regions
-
-    **Accessibility testing:**
-    - Use screen readers to verify `aria-label` and `aria-labelledby` are properly announced
-    - Test keyboard navigation through grid items maintains logical tab order
-    - Verify that visual grid structure matches the reading order for assistive technologies
-    - Check that spanning elements don't disrupt screen reader navigation
-
-    **Cross-browser compatibility:**
-    - Test in modern browsers (Chrome, Firefox, Safari, Edge)
-    - Verify CSS Grid support in your target browsers
-    - Check responsive breakpoints work consistently across browsers
-    - Test auto-fit behavior with different content sizes
-
-    **Performance considerations:**
-    - Monitor layout performance with large numbers of grid items
-    - Test responsive property changes during browser resizing
-    - Verify that grid area templates don't cause layout thrashing
-    - Check memory usage with dynamic grid content updates
-
-    ### Accessibility guidelines
-
-    **Screen reader support:**
-    - Use `aria-label` on grid containers to describe the layout purpose
-    - Consider `aria-labelledby` when grid has a visible heading
-    - Test with multiple screen readers (NVDA, JAWS, VoiceOver)
-
-    **Keyboard navigation:**
-    - Ensure logical tab order follows visual layout
-    - Test that spanning elements don't break navigation flow
-    - Verify focus indicators are visible on interactive grid items
-
-    **Content structure:**
-    - Maintain semantic HTML within grid items
-    - Use appropriate heading hierarchy regardless of visual positioning
-    - Consider reading order when using grid areas or complex spanning
-
-    **Responsive considerations:**
-    - Test accessibility at all responsive breakpoints
-    - Ensure content remains accessible when layout changes
-    - Verify that responsive spanning doesn't affect screen reader navigation
   </div>
 </div>

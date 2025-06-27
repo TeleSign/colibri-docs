@@ -1,6 +1,10 @@
 import { html, nothing, css, TemplateResult } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { GRID_VALIDATION_ARRAYS, LAYOUT_VALIDATION_ARRAYS } from '@telesign/colibri';
+import {
+  GRID_VALIDATION_ARRAYS,
+  LAYOUT_VALIDATION_ARRAYS,
+  GRID_SPAN_ARRAYS,
+} from '@telesign/colibri';
 import { ColibriStory, ColibriStoryMeta } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
 import { createStoryCollection } from '@/utils/helpers';
@@ -35,6 +39,8 @@ type ColGridItemProps = {
   ariaLabel: string;
 };
 
+type GridSystemProps = ColGridProps & ColGridItemProps;
+
 const meta = {
   title: 'Atoms/Grid',
   component: 'col-grid',
@@ -56,10 +62,11 @@ const meta = {
     },
   },
   argTypes: {
+    // col-grid properties
     cols: {
       control: { type: 'select' },
       options: [...GRID_VALIDATION_ARRAYS.columns],
-      description: 'Number of columns in the grid',
+      description: 'Number of columns in the grid. Use `cols="3"` in HTML.',
       table: {
         category: 'Core',
         type: { summary: 'string' },
@@ -69,7 +76,7 @@ const meta = {
     rows: {
       control: { type: 'select' },
       options: [...GRID_VALIDATION_ARRAYS.rows],
-      description: 'Number of rows in the grid',
+      description: 'Number of rows in the grid. Use `rows="3"` in HTML.',
       table: {
         category: 'Core',
         type: { summary: 'string' },
@@ -79,7 +86,7 @@ const meta = {
     gap: {
       control: { type: 'select' },
       options: [...LAYOUT_VALIDATION_ARRAYS.gaps],
-      description: 'Gap between grid items (both column and row)',
+      description: 'Gap between grid items (both column and row). Use `gap="m"` in HTML.',
       table: {
         category: 'Core',
         type: { summary: 'string' },
@@ -87,9 +94,10 @@ const meta = {
       },
     },
     colGap: {
+      name: 'col-gap',
       control: { type: 'select' },
       options: [...LAYOUT_VALIDATION_ARRAYS.gaps],
-      description: 'Gap between columns only',
+      description: 'Gap between columns only. Use `col-gap="m"` in HTML.',
       table: {
         category: 'Core',
         type: { summary: 'string' },
@@ -97,9 +105,10 @@ const meta = {
       },
     },
     rowGap: {
+      name: 'row-gap',
       control: { type: 'select' },
       options: [...LAYOUT_VALIDATION_ARRAYS.gaps],
-      description: 'Gap between rows only',
+      description: 'Gap between rows only. Use `row-gap="m"` in HTML.',
       table: {
         category: 'Core',
         type: { summary: 'string' },
@@ -108,7 +117,7 @@ const meta = {
     },
     inline: {
       control: { type: 'boolean' },
-      description: 'Use inline-grid display instead of grid',
+      description: 'Use inline-grid display instead of grid. Use `inline` in HTML.',
       table: {
         category: 'Core',
         type: { summary: 'boolean' },
@@ -116,9 +125,10 @@ const meta = {
       },
     },
     autoFit: {
+      name: 'auto-fit',
       control: { type: 'select' },
       options: [...GRID_VALIDATION_ARRAYS.autofit],
-      description: 'Auto-fit grid with minimum column size',
+      description: 'Auto-fit grid with minimum column size. Use `auto-fit="m"` in HTML.',
       table: {
         category: 'Core',
         type: { summary: 'string' },
@@ -128,7 +138,7 @@ const meta = {
     areas: {
       control: { type: 'select' },
       options: [...GRID_VALIDATION_ARRAYS.areas],
-      description: 'Named grid areas template',
+      description: 'Named grid areas template. Use `areas="header-sidebar-main"` in HTML.',
       table: {
         category: 'Core',
         type: { summary: 'string' },
@@ -137,8 +147,9 @@ const meta = {
     },
     sm: {
       control: { type: 'select' },
-      options: [...GRID_VALIDATION_ARRAYS.columns],
-      description: 'Columns for small screens and up (320px+)',
+      options: [...GRID_VALIDATION_ARRAYS.columns, ...GRID_SPAN_ARRAYS.colSpan],
+      description:
+        '**col-grid**: Number of columns for small screens and up (320px+). **col-grid-item**: Column span for small screens and up. Use `sm="2"` in HTML.',
       table: {
         category: 'Responsive',
         type: { summary: 'string' },
@@ -147,8 +158,9 @@ const meta = {
     },
     md: {
       control: { type: 'select' },
-      options: [...GRID_VALIDATION_ARRAYS.columns],
-      description: 'Columns for medium screens and up (769px+)',
+      options: [...GRID_VALIDATION_ARRAYS.columns, ...GRID_SPAN_ARRAYS.colSpan],
+      description:
+        '**col-grid**: Number of columns for medium screens and up (769px+). **col-grid-item**: Column span for medium screens and up. Use `md="3"` in HTML.',
       table: {
         category: 'Responsive',
         type: { summary: 'string' },
@@ -157,8 +169,9 @@ const meta = {
     },
     lg: {
       control: { type: 'select' },
-      options: [...GRID_VALIDATION_ARRAYS.columns],
-      description: 'Columns for large screens and up (960px+)',
+      options: [...GRID_VALIDATION_ARRAYS.columns, ...GRID_SPAN_ARRAYS.colSpan],
+      description:
+        '**col-grid**: Number of columns for large screens and up (960px+). **col-grid-item**: Column span for large screens and up. Use `lg="4"` in HTML.',
       table: {
         category: 'Responsive',
         type: { summary: 'string' },
@@ -167,8 +180,9 @@ const meta = {
     },
     xl: {
       control: { type: 'select' },
-      options: [...GRID_VALIDATION_ARRAYS.columns],
-      description: 'Columns for extra large screens and up (1152px+)',
+      options: [...GRID_VALIDATION_ARRAYS.columns, ...GRID_SPAN_ARRAYS.colSpan],
+      description:
+        '**col-grid**: Number of columns for extra large screens and up (1152px+). **col-grid-item**: Column span for extra large screens and up. Use `xl="4"` in HTML.',
       table: {
         category: 'Responsive',
         type: { summary: 'string' },
@@ -177,8 +191,9 @@ const meta = {
     },
     xxl: {
       control: { type: 'select' },
-      options: [...GRID_VALIDATION_ARRAYS.columns],
-      description: 'Columns for extra extra large screens and up (1344px+)',
+      options: [...GRID_VALIDATION_ARRAYS.columns, ...GRID_SPAN_ARRAYS.colSpan],
+      description:
+        '**col-grid**: Number of columns for extra extra large screens and up (1344px+). **col-grid-item**: Column span for extra extra large screens and up. Use `xxl="6"` in HTML.',
       table: {
         category: 'Responsive',
         type: { summary: 'string' },
@@ -186,8 +201,10 @@ const meta = {
       },
     },
     ariaLabel: {
+      name: 'aria-label',
       control: { type: 'text' },
-      description: 'Accessible label for the grid',
+      description:
+        '**col-grid**: Accessible label for the grid. **col-grid-item**: Accessible label for the grid item. Use `aria-label="Product grid"` in HTML.',
       table: {
         category: 'Accessibility',
         type: { summary: 'string' },
@@ -195,20 +212,55 @@ const meta = {
       },
     },
     ariaLabelledby: {
+      name: 'aria-labelledby',
       control: { type: 'text' },
-      description: 'ID of element that labels the grid',
+      description:
+        '**col-grid**: ID of element that labels the grid. Use `aria-labelledby="grid-title"` in HTML.',
       table: {
         category: 'Accessibility',
         type: { summary: 'string' },
         defaultValue: { summary: 'undefined' },
       },
     },
+    // col-grid-item properties
+    colSpan: {
+      name: 'col-span',
+      control: { type: 'select' },
+      options: [...GRID_SPAN_ARRAYS.colSpan],
+      description: 'Number of columns the item should span. Use `col-span="2"` in HTML.',
+      table: {
+        category: 'Core',
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' },
+      },
+    },
+    rowSpan: {
+      name: 'row-span',
+      control: { type: 'select' },
+      options: [...GRID_SPAN_ARRAYS.rowSpan],
+      description: 'Number of rows the item should span. Use `row-span="2"` in HTML.',
+      table: {
+        category: 'Core',
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' },
+      },
+    },
+    area: {
+      control: { type: 'select' },
+      options: [...GRID_VALIDATION_ARRAYS.area],
+      description: 'Named grid area to assign the item to. Use `area="header"` in HTML.',
+      table: {
+        category: 'Core',
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' },
+      },
+    },
   },
-} satisfies ColibriStoryMeta<ColGridProps>;
+} satisfies ColibriStoryMeta<GridSystemProps>;
 
 export default meta;
 
-type Story = ColibriStory<ColGridProps>;
+type Story = ColibriStory<GridSystemProps>;
 
 /**
  * Styles for the grid stories using Lit's css template literal.
