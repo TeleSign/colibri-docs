@@ -4,6 +4,8 @@ import { Callout, Container } from '../components';
 import {
   GRID_COLUMNS,
   GRID_ROWS,
+  GRID_AREAS,
+  GRID_AREA_ASSIGNMENTS,
   BREAKPOINTS,
   BREAKPOINT_VALUES,
   GRID_ROW_SPANS,
@@ -529,6 +531,153 @@ import {
             <strong>Best Practice:</strong> Start with the most constrained layout (mobile) and progressively
             enhance with more complex spanning for larger screens. This ensures content remains accessible
             and readable across all devices.
+          </p>
+        </div>
+      </div>
+
+      <Subtitle>Advanced Grid Utilities</Subtitle>
+      <p>
+        Advanced grid utilities provide sophisticated layout patterns using modern CSS Grid features.
+        These utilities enable dynamic column sizing with auto-fit and auto-fill behaviors, flexible
+        sizing with minmax functions, and semantic layouts with named grid areas for complex interface designs.
+      </p>
+
+      <div className="grid-section">
+        <h3>Auto-Fit Columns</h3>
+        <p>
+          Auto-fit utilities create responsive column layouts that automatically adjust the number of columns
+          based on available space and minimum column width. These utilities use CSS Grid's auto-fit behavior
+          with minmax sizing to create fluid, responsive layouts without media queries.
+        </p>
+
+        <GridExample
+          title="Auto-Fit Medium (200px minimum)"
+          description="Columns automatically fit with 200px minimum width"
+          gridClasses="col-grid col-grid-cols-auto-fit-m col-grid-gap-m"
+          cellCount={6}
+          cellVariant="primary"
+        />
+
+        <GridExample
+          title="Auto-Fit Small (160px minimum)"
+          description="More columns with 160px minimum width"
+          gridClasses="col-grid col-grid-cols-auto-fit-s col-grid-gap-m"
+          cellCount={8}
+          cellVariant="secondary"
+        />
+
+        <GridExample
+          title="Auto-Fit Large (250px minimum)"
+          description="Fewer, wider columns with 250px minimum width"
+          gridClasses="col-grid col-grid-cols-auto-fit-l col-grid-gap-l"
+          cellCount={5}
+          cellVariant="accent"
+        />
+
+        <GridExample
+          title="Auto-Fit Extra Large (300px minimum)"
+          description="Wide columns with 300px minimum width"
+          gridClasses="col-grid col-grid-cols-auto-fit-xl col-grid-gap-l"
+          cellCount={4}
+          cellVariant="default"
+        />
+
+        <div className="grid-token-reference">
+          <h4>Available Auto-Fit Classes</h4>
+          <p>Auto-fit utilities follow the pattern <code>.col-grid-cols-auto-fit-[size]</code>:</p>
+          <div className="grid-token-list">
+            <div className="grid-token-item">.col-grid-cols-auto-fit-0</div>
+            <div className="grid-token-item">.col-grid-cols-auto-fit-xs</div>
+            <div className="grid-token-item">.col-grid-cols-auto-fit-s</div>
+            <div className="grid-token-item">.col-grid-cols-auto-fit-m</div>
+            <div className="grid-token-item">.col-grid-cols-auto-fit-l</div>
+            <div className="grid-token-item">.col-grid-cols-auto-fit-xl</div>
+            <div className="grid-token-item">.col-grid-cols-auto-fit-2xl</div>
+            <div className="grid-token-item">.col-grid-cols-auto-fit-3xl</div>
+          </div>
+          <p className="grid-token-note">
+            <strong>CSS Variables:</strong> Each class maps to <code>--col-grid-autofit-[size]</code> which resolves to
+            <code>repeat(auto-fit, minmax([size]px, 1fr))</code> for responsive column layouts.
+          </p>
+          <p className="grid-token-note">
+            <strong>Use Cases:</strong> Perfect for card grids, image galleries, product catalogs, or any layout
+            where you want items to automatically wrap and resize based on screen width without writing media queries.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid-section">
+        <h3>Named Grid Areas</h3>
+        <p>
+          Named grid area utilities enable semantic, template-based layouts using descriptive area names.
+          This approach allows you to define layout templates with meaningful names like "header", "sidebar",
+          and "content", making complex layouts more readable and maintainable.
+        </p>
+
+        <GridExample
+          title="Dashboard Simple Layout"
+          description="Two-column dashboard with navigation and main content"
+          gridClasses="col-grid col-grid-areas-dashboard-simple col-grid-gap-m"
+          cellCount={0}
+          showCode={false}
+        >
+          <GridCell variant="secondary" className="col-grid-area-nav" size="medium">Navigation</GridCell>
+          <GridCell variant="primary" className="col-grid-area-header" size="small">Header</GridCell>
+          <GridCell variant="accent" className="col-grid-area-main" size="large">Main Content</GridCell>
+        </GridExample>
+
+        <GridExample
+          title="Dashboard Complex Layout"
+          description="Three-column dashboard with navigation, main, aside, and footer"
+          gridClasses="col-grid col-grid-areas-dashboard-complex col-grid-gap-m"
+          cellCount={0}
+          showCode={false}
+        >
+          <GridCell variant="secondary" className="col-grid-area-nav" size="large">Navigation</GridCell>
+          <GridCell variant="primary" className="col-grid-area-header" size="small">Header</GridCell>
+          <GridCell variant="accent" className="col-grid-area-main" size="large">Main Content</GridCell>
+          <GridCell variant="default" className="col-grid-area-aside" size="medium">Aside</GridCell>
+          <GridCell variant="primary" className="col-grid-area-footer" size="small">Footer</GridCell>
+        </GridExample>
+
+        <GridExample
+          title="Article Layout"
+          description="Blog/article layout with header, content, sidebar, and footer"
+          gridClasses="col-grid col-grid-areas-article-layout col-grid-gap-m"
+          cellCount={0}
+          showCode={false}
+        >
+          <GridCell variant="primary" className="col-grid-area-header" size="medium">Article Header</GridCell>
+          <GridCell variant="accent" className="col-grid-area-content" size="large">Article Content</GridCell>
+          <GridCell variant="secondary" className="col-grid-area-sidebar" size="medium">Sidebar</GridCell>
+          <GridCell variant="default" className="col-grid-area-footer" size="small">Footer</GridCell>
+        </GridExample>
+
+        <div className="grid-token-reference">
+          <h4>Available Grid Area Templates</h4>
+          <p>Grid area templates define common layout patterns:</p>
+          <div className="grid-token-list">
+            {GRID_AREAS.map(area => (
+              <div key={area} className="grid-token-item">.col-grid-areas-{area}</div>
+            ))}
+          </div>
+
+          <h4>Available Grid Area Assignments</h4>
+          <p>Individual area assignments for template positioning:</p>
+          <div className="grid-token-list">
+            {GRID_AREA_ASSIGNMENTS.map(area => (
+              <div key={area} className="grid-token-item">.col-grid-area-{area}</div>
+            ))}
+          </div>
+
+          <p className="grid-token-note">
+            <strong>CSS Variables:</strong> Area templates map to <code>--col-grid-areas-[template]</code> which define
+            the grid structure, while area assignments map to <code>--col-grid-area-[name]</code> for positioning elements.
+          </p>
+          <p className="grid-token-note">
+            <strong>Semantic Layouts:</strong> Named grid areas make layouts self-documenting and easier to maintain.
+            They're particularly valuable for complex interfaces where the relationship between layout areas
+            needs to be clear and flexible.
           </p>
         </div>
       </div>
