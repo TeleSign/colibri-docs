@@ -1,0 +1,248 @@
+import React from 'react';
+import { Meta, Title, Subtitle, Source, Unstyled } from '@storybook/blocks';
+import { Callout, Container } from '../components';
+import {
+  GRID_COLUMNS,
+  GRID_ROWS,
+  GRID_COLUMN_SPANS,
+  GRID_TOKEN_VALUES,
+  getGridUtilityClass
+} from './utils';
+
+<Meta title="Foundation/Grid" />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Unstyled>
+      <Title>Grid</Title>
+      <div className="col-intro-text">
+        The grid system provides powerful layout utilities for creating responsive, flexible layouts using CSS Grid.
+        It consists of container utilities for establishing grid contexts, column and row templates for structure,
+        gap utilities for spacing, and item utilities for positioning and spanning. This comprehensive system enables
+        designers and developers to build complex layouts with utility-first CSS classes while maintaining consistency
+        across all platforms.
+      </div>
+
+      <Callout variant="info">
+        **Looking for the component approach?** Check out the [col-grid component documentation](/docs/atoms-grid--overview)
+        for a more declarative way to build grid layouts with the same underlying utilities.
+      </Callout>
+
+      <Subtitle>Grid Container Utilities</Subtitle>
+      <p>
+        Grid container utilities establish a grid formatting context for child elements. These foundational classes
+        convert any element into a grid container, enabling the use of all other grid utilities for layout control.
+      </p>
+
+      <div className="grid-section">
+        <h3>Display Classes</h3>
+        <p>
+          The display classes create the basic grid container. Use <code>.col-grid</code> for block-level grid containers
+          or <code>.col-inline-grid</code> for inline grid containers that flow with surrounding content.
+        </p>
+
+        <GridExample
+          title="Block Grid Container"
+          description="Creates a block-level grid container using .col-grid"
+          gridClasses="col-grid col-grid-cols-3 col-grid-gap-m"
+          cellCount={6}
+          cellVariant="primary"
+        />
+
+        <GridExample
+          title="Inline Grid Container"
+          description="Creates an inline grid container using .col-inline-grid"
+          gridClasses="col-inline-grid col-grid-cols-2 col-grid-gap-s"
+          cellCount={4}
+          cellVariant="secondary"
+          cellSize="small"
+        />
+
+        <div className="usage-note">
+          <h4>When to use</h4>
+          <ul>
+            <li><strong>.col-grid</strong> - Most common choice for layout containers, sections, and components</li>
+            <li><strong>.col-inline-grid</strong> - When you need the grid to flow inline with other content</li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="grid-section">
+        <h3>Grid Template Columns</h3>
+        <p>
+          Column template utilities define the number and sizing of grid columns. The system provides utilities for
+          1-12 columns using fractional units for equal distribution, plus a <code>none</code> value for resetting.
+        </p>
+
+        <GridExample
+          title="Single Column"
+          description="All items stack vertically in one column"
+          gridClasses="col-grid col-grid-cols-1 col-grid-gap-m"
+          cellCount={4}
+          cellVariant="primary"
+        />
+
+        <GridExample
+          title="Two Columns"
+          description="Items distribute across two equal columns"
+          gridClasses="col-grid col-grid-cols-2 col-grid-gap-m"
+          cellCount={6}
+          cellVariant="secondary"
+        />
+
+        <GridExample
+          title="Three Columns"
+          description="Items distribute across three equal columns"
+          gridClasses="col-grid col-grid-cols-3 col-grid-gap-m"
+          cellCount={9}
+          cellVariant="accent"
+        />
+
+        <GridExample
+          title="Four Columns"
+          description="Items distribute across four equal columns"
+          gridClasses="col-grid col-grid-cols-4 col-grid-gap-m"
+          cellCount={8}
+          cellVariant="default"
+        />
+
+        <GridExample
+          title="Six Columns"
+          description="Items distribute across six equal columns"
+          gridClasses="col-grid col-grid-cols-6 col-grid-gap-s"
+          cellCount={12}
+          cellVariant="primary"
+          cellSize="small"
+        />
+
+        <GridExample
+          title="Twelve Columns"
+          description="Traditional 12-column grid system"
+          gridClasses="col-grid col-grid-cols-12 col-grid-gap-xs"
+          cellCount={12}
+          cellVariant="secondary"
+          cellSize="small"
+        />
+
+        <div className="grid-token-reference">
+          <h4>Available Column Classes</h4>
+          <p>All column utilities follow the pattern <code>.col-grid-cols-[number]</code>:</p>
+          <div className="grid-token-list">
+            {GRID_COLUMNS.filter(col => col !== 'none').slice(0, 12).map(colCount => (
+              <div key={colCount} className="grid-token-item">
+                  .col-grid-cols-{colCount}
+                </div>
+              ))}
+            <div className="grid-token-item">.col-grid-cols-none</div>
+          </div>
+          <p className="grid-token-note">
+            <strong>CSS Variables:</strong> Each class maps to <code>--col-grid-columns-[number]</code> which resolves to
+            <code>repeat([number], minmax(0, 1fr))</code> for equal column distribution.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid-section">
+        <h3>Grid Template Rows</h3>
+        <p>
+          Row template utilities define the number and sizing of grid rows. Similar to columns, these utilities
+          provide explicit row control from 1-12 rows using fractional units for equal distribution.
+        </p>
+
+        <GridExample
+          title="Two Rows"
+          description="Items distribute across two equal rows"
+          gridClasses="col-grid col-grid-cols-3 col-grid-rows-2 col-grid-gap-m"
+          cellCount={6}
+          cellVariant="primary"
+        />
+
+        <GridExample
+          title="Three Rows"
+          description="Items distribute across three equal rows with explicit height"
+          gridClasses="col-grid col-grid-cols-2 col-grid-rows-3 col-grid-gap-m"
+          cellCount={6}
+          cellVariant="accent"
+          cellSize="large"
+        />
+
+        <GridExample
+          title="Row Reset"
+          description="Using .col-grid-rows-none to reset row template"
+          gridClasses="col-grid col-grid-cols-4 col-grid-rows-none col-grid-gap-m"
+          cellCount={8}
+          cellVariant="secondary"
+        />
+
+        <div className="grid-token-reference">
+          <h4>Available Row Classes</h4>
+          <p>All row utilities follow the pattern <code>.col-grid-rows-[number]</code>:</p>
+          <div className="grid-token-list">
+            {GRID_ROWS.filter(row => row !== 'none').map(rowCount => (
+              <div key={rowCount} className="grid-token-item">
+                .col-grid-rows-{rowCount}
+              </div>
+            ))}
+            <div className="grid-token-item">.col-grid-rows-none</div>
+          </div>
+          <p className="grid-token-note">
+            <strong>Note:</strong> Row templates are most useful when you need explicit control over row heights.
+            In many cases, letting rows auto-size based on content is preferred.
+          </p>
+        </div>
+      </div>
+    </Unstyled>
+  </div>
+</div>
+
+export const GridCell = ({ children, variant = 'default', size = 'medium', className = '' }) => {
+  const cellClass = `grid-cell grid-cell--${variant} grid-cell--${size} ${className}`.trim();
+
+  return (
+    <div className={cellClass}>
+      {children}
+    </div>
+  );
+};
+
+export const GridExample = ({
+  title,
+  description,
+  gridClasses,
+  children,
+  cellCount = 6,
+  cellVariant = 'default',
+  cellSize = 'medium',
+  showCode = true,
+  className = ''
+}) => {
+  const defaultCells = React.useMemo(() => {
+    return Array.from({ length: cellCount }, (_, index) => (
+      <GridCell key={index} variant={cellVariant} size={cellSize}>
+        {index + 1}
+      </GridCell>
+    ));
+  }, [cellCount, cellVariant, cellSize]);
+
+  const gridContent = children || defaultCells;
+
+  return (
+    <Container
+      title={title}
+      description={description}
+      variant="example"
+      className={className}
+    >
+      <div className={`grid-example-container ${gridClasses}`}>
+        {gridContent}
+      </div>
+      {showCode && (
+        <div className="grid-example-code">
+          <code>
+            {gridClasses.split(' ').map(cls => `.${cls}`).join(' ')}
+          </code>
+        </div>
+      )}
+    </Container>
+  );
+};
