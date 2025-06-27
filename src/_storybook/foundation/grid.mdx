@@ -34,14 +34,33 @@ import {
         for a more declarative way to build grid layouts with the same underlying utilities.
       </Callout>
 
-      <Subtitle>Grid Container Utilities</Subtitle>
+      <Subtitle>Table of Contents</Subtitle>
+      - [Grid Container Utilities](#grid-container-utilities)
+        - [Display Classes](#display-classes)
+        - [Grid Template Columns](#grid-template-columns)
+        - [Grid Template Rows](#grid-template-rows)
+      - [Gap Utilities](#gap-utilities)
+        - [Universal Gap](#universal-gap)
+        - [Column Gap](#column-gap)
+        - [Row Gap](#row-gap)
+      - [Grid Item Utilities](#grid-item-utilities)
+        - [Column Spanning](#column-spanning)
+        - [Row Spanning](#row-spanning)
+      - [Responsive Utilities](#responsive-utilities)
+        - [Responsive Columns](#responsive-columns)
+        - [Responsive Spanning](#responsive-spanning)
+      - [Advanced Grid Utilities](#advanced-grid-utilities)
+        - [Auto-Fit Columns](#auto-fit-columns)
+        - [Named Grid Areas](#named-grid-areas)
+
+      # Grid Container Utilities
       <p>
         Grid container utilities establish a grid formatting context for child elements. These foundational classes
         convert any element into a grid container, enabling the use of all other grid utilities for layout control.
       </p>
 
       <div className="grid-section">
-        <h3>Display Classes</h3>
+        ## Display Classes
         <p>
           The display classes create the basic grid container. Use <code>.col-grid</code> for block-level grid containers
           or <code>.col-inline-grid</code> for inline grid containers that flow with surrounding content.
@@ -74,7 +93,7 @@ import {
       </div>
 
       <div className="grid-section">
-        <h3>Grid Template Columns</h3>
+        ## Grid Template Columns
         <p>
           Column template utilities define the number and sizing of grid columns. The system provides utilities for
           1-12 columns using fractional units for equal distribution, plus a <code>none</code> value for resetting.
@@ -150,7 +169,7 @@ import {
       </div>
 
       <div className="grid-section">
-        <h3>Grid Template Rows</h3>
+        ## Grid Template Rows
         <p>
           Row template utilities define the number and sizing of grid rows. Similar to columns, these utilities
           provide explicit row control from 1-12 rows using fractional units for equal distribution.
@@ -199,7 +218,7 @@ import {
         </div>
       </div>
 
-      <Subtitle>Gap Utilities</Subtitle>
+      # Gap Utilities
       <p>
         Gap utilities control the spacing between grid items using the design system's layout tokens.
         These utilities provide consistent spacing that adapts to your theme while offering fine-grained
@@ -207,7 +226,7 @@ import {
       </p>
 
       <div className="grid-section">
-        <h3>Universal Gap</h3>
+        ## Universal Gap
         <p>
           Universal gap utilities apply spacing between all grid items, both horizontally and vertically.
           These classes use the layout token system to ensure consistent spacing across your application.
@@ -269,7 +288,7 @@ import {
       </div>
 
       <div className="grid-section">
-        <h3>Column Gap</h3>
+        ## Column Gap
         <p>
           Column gap utilities apply spacing only between columns (horizontally), leaving rows to touch vertically.
           This is useful for card grids, image galleries, or layouts where you want horizontal separation without vertical spacing.
@@ -315,7 +334,7 @@ import {
       </div>
 
       <div className="grid-section">
-        <h3>Row Gap</h3>
+        ## Row Gap
         <p>
           Row gap utilities apply spacing only between rows (vertically), leaving columns to touch horizontally.
           This is useful for stacked content, vertical lists, or layouts where you want vertical separation without horizontal spacing.
@@ -360,7 +379,7 @@ import {
         </div>
       </div>
 
-      <Subtitle>Grid Item Utilities</Subtitle>
+      # Grid Item Utilities
       <p>
         Grid item utilities control how individual grid items span across columns and rows. These utilities
         enable flexible layouts where some items take up more space than others, creating dynamic and
@@ -368,7 +387,7 @@ import {
       </p>
 
       <div className="grid-section">
-        <h3>Column Spanning</h3>
+        ## Column Spanning
         <p>
           Column spanning utilities allow grid items to stretch across multiple columns. Use these classes
           to create featured content, wide headers, or any layout where certain items need more horizontal space.
@@ -406,7 +425,7 @@ import {
       </div>
 
       <div className="grid-section">
-        <h3>Row Spanning</h3>
+        ## Row Spanning
         <p>
           Row spanning utilities allow grid items to stretch across multiple rows. These are particularly useful
           for creating sidebars, featured cards, or content that needs more vertical space while other items flow around it.
@@ -450,7 +469,7 @@ import {
         </div>
       </div>
 
-      <Subtitle>Responsive Utilities</Subtitle>
+      # Responsive Utilities
       <p>
         Responsive grid utilities enable mobile-first responsive design by applying different grid behaviors
         at specific breakpoints. These utilities follow the same patterns as other grid classes but include
@@ -458,7 +477,7 @@ import {
       </p>
 
       <div className="grid-section">
-        <h3>Responsive Columns</h3>
+        ## Responsive Columns
         <p>
           Responsive column utilities allow you to define different column layouts at different screen sizes.
           Start with a mobile-first approach and progressively enhance the layout for larger screens using
@@ -497,7 +516,7 @@ import {
       </div>
 
       <div className="grid-section">
-        <h3>Responsive Spanning</h3>
+        ## Responsive Spanning
         <p>
           Responsive spanning utilities allow grid items to span different amounts of columns or rows
           at different breakpoints. This enables sophisticated layouts where content reflows and resizes
@@ -535,7 +554,7 @@ import {
         </div>
       </div>
 
-      <Subtitle>Advanced Grid Utilities</Subtitle>
+      # Advanced Grid Utilities
       <p>
         Advanced grid utilities provide sophisticated layout patterns using modern CSS Grid features.
         These utilities enable dynamic column sizing with auto-fit and auto-fill behaviors, flexible
@@ -543,7 +562,7 @@ import {
       </p>
 
       <div className="grid-section">
-        <h3>Auto-Fit Columns</h3>
+        ## Auto-Fit Columns
         <p>
           Auto-fit utilities create responsive column layouts that automatically adjust the number of columns
           based on available space and minimum column width. These utilities use CSS Grid's auto-fit behavior
@@ -607,7 +626,7 @@ import {
       </div>
 
       <div className="grid-section">
-        <h3>Named Grid Areas</h3>
+        ## Named Grid Areas
         <p>
           Named grid area utilities enable semantic, template-based layouts using descriptive area names.
           This approach allows you to define layout templates with meaningful names like "header", "sidebar",
