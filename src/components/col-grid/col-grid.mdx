@@ -146,7 +146,11 @@ import { Callout } from '../../_storybook/components';
     </Callout>
     Basic grids use the `cols` property to define the number of columns and the `gap` property for consistent spacing between grid items.
 
-    <Canvas of={ColGridStories.BasicLayouts} />
+    **2-Column Layout (No Gap):**
+    <Canvas of={ColGridStories.TwoColumnNoGap} />
+
+    **2-Column Layout (Medium Gap):**
+    <Canvas of={ColGridStories.TwoColumnMediumGap} />
 
     ### Responsive grids
     <div>
@@ -164,7 +168,7 @@ import { Callout } from '../../_storybook/components';
     - **Medium (769px+)**: 3 columns
     - **Large (960px+)**: 4 columns
 
-    <Canvas of={ColGridStories.ResponsiveGrid} />
+    <Canvas of={ColGridStories.ResponsiveGridLayout} />
 
     ### Gap variations
     <div>
@@ -181,7 +185,17 @@ import { Callout } from '../../_storybook/components';
     - `col-gap` - Sets only horizontal spacing
     - `row-gap` - Sets only vertical spacing
 
-    <Canvas of={ColGridStories.GapVariations} />
+    **No Gap:**
+    <Canvas of={ColGridStories.NoGap} />
+
+    **Small Gap:**
+    <Canvas of={ColGridStories.SmallGap} />
+
+    **Separate Column and Row Gaps:**
+    <Canvas of={ColGridStories.SeparateColumnRowGaps} />
+
+    **Asymmetric Gaps:**
+    <Canvas of={ColGridStories.AsymmetricGaps} />
 
     ### Auto-fit grids
     <div>
@@ -199,9 +213,53 @@ import { Callout } from '../../_storybook/components';
     - `auto-fit="m"` - Minimum ~200px per column
     - `auto-fit="l"` - Minimum ~300px per column
 
-    <Canvas of={ColGridStories.AutoFitGrid} />
+    **Auto-Fit Medium (200px min):**
+    <Canvas of={ColGridStories.AutoFitMedium} />
 
     ### Grid areas
+
+    These are the most common templates and layouts provided for convenience, but they are not exhaustive and can be customized or overwritten with custom CSS properties to meet your specific design needs.
+
+    #### Customizing Grid Areas
+
+    You can override the default grid template areas by setting the `--col-grid-template-areas` CSS custom property:
+
+    ```css
+    .my-custom-grid {
+      --col-grid-template-areas:
+        "header header header"
+        "sidebar main aside"
+        "footer footer footer";
+    }
+    ```
+
+    For more complex layouts, you can also customize other grid properties:
+
+    ```css
+    .my-advanced-grid {
+      --col-grid-template-areas:
+        "nav nav nav nav"
+        "sidebar content content aside"
+        "sidebar content content aside"
+        "footer footer footer footer";
+      --col-grid-template-columns: 200px 1fr 1fr 150px;
+      --col-grid-template-rows: 60px 1fr 1fr 80px;
+      --col-grid-gap: 1rem;
+    }
+    ```
+
+    Then assign grid items to their respective areas using the `area` attribute:
+
+    ```html
+    <col-grid class="my-custom-grid">
+      <col-grid-item area="nav">Navigation</col-grid-item>
+      <col-grid-item area="sidebar">Sidebar</col-grid-item>
+      <col-grid-item area="content">Main Content</col-grid-item>
+      <col-grid-item area="aside">Aside</col-grid-item>
+      <col-grid-item area="footer">Footer</col-grid-item>
+    </col-grid>
+    ```
+
     <div>
       Use named grid areas to create semantic layouts with predefined regions. This approach provides consistent, maintainable layouts for common page structures.
     </div>
@@ -211,14 +269,50 @@ import { Callout } from '../../_storybook/components';
     </Callout>
     Grid areas use the `areas` property on the container and `area` property on items to assign content to specific regions.
 
-    **Available area templates:**
-    - `header-main` - Simple header and main content
-    - `header-sidebar-main` - Classic three-section layout
-    - `dashboard-simple` - Navigation with header and main
-    - `article-layout` - Article with sidebar and footer
-    - And more semantic layouts...
+    **Grid Areas Configuration:**
 
-    <Canvas of={ColGridStories.GridAreas} />
+    Grid areas work with two different attributes on two different components:
+
+    **1. Layout Templates (`areas` attribute on `col-grid`)**
+
+    Use the `areas` attribute on the grid container to define the overall layout structure:
+
+| Template Name | CSS Grid Areas Value | Description |
+|---------------|---------------------|-------------|
+| `header-main` | `"header" "main"` | Simple header and main content (stacked vertically) |
+| `main-sidebar` | `"main sidebar"` | Two-column layout (main content left, sidebar right) |
+| `header-content` | `"header header" "content content"` | Header with full-width content below |
+| `header-toolbar-content` | `"header header" "toolbar toolbar" "content content"` | Header, toolbar, and content sections |
+| `sidebar-main` | `"sidebar main"` | Sidebar left, main content right |
+| `header-sidebar-main` | `"header header" "sidebar main"` | Classic three-section layout (header full width, sidebar + main below) |
+| `toolbar-table` | `"toolbar toolbar" "table table"` | Toolbar above table/list content |
+| `dashboard-simple` | `"nav header" "nav main"` | Navigation sidebar with header and main content |
+| `dashboard-complex` | `"nav header header" "nav main aside" "nav footer footer"` | Full dashboard with nav, header, main, aside, and footer |
+| `article-layout` | `"header header" "content sidebar" "footer footer"` | Article with header, content + sidebar, and footer |
+| `form-layout` | `"title title" "form sidebar" "actions actions"` | Form with title, form + sidebar, and actions |
+| `app-layout` | `"header header header" "sidebar main aside" "footer footer footer"` | Complete application layout with all regions |
+
+    **2. Area Assignment (`area` attribute on `col-grid-item`)**
+
+    Use the `area` attribute on individual grid items to assign them to specific regions:
+
+| Area Name | CSS Grid Area Value | Description |
+|-----------|-------------------|-------------|
+| `header` | `header` | Page or section header content |
+| `main` | `main` | Primary content area |
+| `sidebar` | `sidebar` | Secondary navigation or complementary content |
+| `content` | `content` | Main article or content body |
+| `toolbar` | `toolbar` | Action buttons or tools |
+| `table` | `table` | Data tables or lists |
+| `footer` | `footer` | Page or section footer content |
+| `nav` | `nav` | Navigation menus |
+| `aside` | `aside` | Complementary content or widgets |
+| `title` | `title` | Section titles or headings |
+| `form` | `form` | Form fields and inputs |
+| `actions` | `actions` | Action buttons (save, cancel, etc.) |
+
+    **Classic Website Layout:**
+    <Canvas of={ColGridStories.classicWebsiteLayout} />
 
     ### Column spanning
     <div>
@@ -235,7 +329,8 @@ import { Callout } from '../../_storybook/components';
     - `col-span="full"` - Span entire grid width
     - Responsive spanning with `sm`, `md`, `lg`, `xl`, `xxl` properties
 
-    <Canvas of={ColGridStories.ColumnSpanning} />
+    **Basic Column Spanning:**
+    <Canvas of={ColGridStories.BasicColumnSpanning} />
 
     ### Row spanning
     <div>
@@ -252,7 +347,8 @@ import { Callout } from '../../_storybook/components';
     - Combine with column spanning for complex layouts
     - Works with grid areas for semantic structure
 
-    <Canvas of={ColGridStories.RowSpanning} />
+    **Basic Row Spanning:**
+    <Canvas of={ColGridStories.BasicRowSpanning} />
 
     ### Complex layouts
     <div>
