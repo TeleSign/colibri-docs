@@ -68,49 +68,55 @@ export interface StylesOptions {
 
 /**
  * Generates CSS styles string based on provided options.
+ * Only applies styles when explicitly provided via options.__sb to avoid conflicts with custom CSS.
+ *
  * This function can be extended to handle new style properties:
  *
  * 1. For simple properties:
- *    - Add them directly in the template literal
+ *    - Add a condition to check if the property exists
+ *    - Push the CSS declaration to the styles array
  *
  * 2. For conditional properties:
- *    - Add a new condition block similar to display === 'grid'
+ *    - Add nested conditions within display-specific blocks
  *
  * 3. For complex properties:
  *    - Add helper functions to handle the logic
  *
  * Example extension:
  * ```typescript
- * return `
- *   ${existingStyles}
- *   ${newProperty ? `new-property: ${newProperty};` : ''}
- * `
+ * if (newProperty) {
+ *   styles.push(`new-property: ${newProperty};`);
+ * }
  * ```
+ *
+ * @param options - StylesOptions containing __sb configuration
+ * @returns CSS styles string with space-separated declarations
  */
 const getStyles = (options?: StylesOptions): string => {
-  const {
-    display = 'flex',
-    gridTemplateColumns,
-    flexDirection,
-    justifyContent,
-    flexWrap,
-    gap,
-  } = options?.__sb || {};
+  const { display, gridTemplateColumns, flexDirection, justifyContent, flexWrap, gap } =
+    options?.__sb || {};
 
-  return `
-    display: ${display};
-    ${display === 'grid' ? `grid-template-columns: ${gridTemplateColumns};` : ''}
-    ${
-      display === 'flex'
-        ? `
-      flex-direction: ${flexDirection || 'column'};
-      justify-content: ${justifyContent || 'flex-start'};
-      flex-wrap: ${flexWrap || 'wrap'};
-    `
-        : ''
+  const styles: string[] = [];
+
+  if (display) {
+    styles.push(`display: ${display};`);
+
+    if (display === 'grid' && gridTemplateColumns) {
+      styles.push(`grid-template-columns: ${gridTemplateColumns};`);
     }
-    ${gap ? `gap: ${gap};` : ''}
-  `.trim();
+
+    if (display === 'flex') {
+      if (flexDirection) styles.push(`flex-direction: ${flexDirection};`);
+      if (justifyContent) styles.push(`justify-content: ${justifyContent};`);
+      if (flexWrap) styles.push(`flex-wrap: ${flexWrap};`);
+    }
+  }
+
+  if (gap) {
+    styles.push(`gap: ${gap};`);
+  }
+
+  return styles.join(' ');
 };
 
 /**
@@ -181,7 +187,7 @@ const preview: Preview = {
       default: 'Figma',
     },
   },
-  decorators: [withThemeProvider],
+  decorators: [withThemeProvider, withCustomStyling],
   globalTypes: {
     theme: {
       name: 'Theme',

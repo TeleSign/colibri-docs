@@ -1,0 +1,757 @@
+import React from 'react';
+import { Meta, Title, Subtitle, Source, Unstyled } from '@storybook/blocks';
+import { Callout, Container } from '../components';
+import {
+  GRID_COLUMNS,
+  GRID_ROWS,
+  GRID_AREAS,
+  GRID_AREA_ASSIGNMENTS,
+  BREAKPOINTS,
+  BREAKPOINT_VALUES,
+  GRID_ROW_SPANS,
+  GRID_COLUMN_SPANS,
+  GRID_TOKEN_VALUES,
+  LAYOUT_SIZES,
+  getGridUtilityClass,
+} from './utils';
+
+<Meta title="Foundation/Grid" />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Unstyled>
+      <Title>Grid</Title>
+      <div className="col-intro-text">
+        The grid system provides powerful layout utilities for creating responsive, flexible layouts using CSS Grid.
+        It consists of container utilities for establishing grid contexts, column and row templates for structure,
+        gap utilities for spacing, and item utilities for positioning and spanning. This comprehensive system enables
+        designers and developers to build complex layouts with utility-first CSS classes while maintaining consistency
+        across all platforms.
+      </div>
+
+      <Callout variant="info">
+        **Looking for the component approach?** Check out the [col-grid component documentation](/docs/atoms-grid--overview)
+        for a more declarative way to build grid layouts with the same underlying utilities.
+      </Callout>
+
+      <Subtitle>Table of Contents</Subtitle>
+      - [Grid Container Utilities](#grid-container-utilities)
+        - [Display Classes](#display-classes)
+        - [Grid Template Columns](#grid-template-columns)
+        - [Grid Template Rows](#grid-template-rows)
+      - [Gap Utilities](#gap-utilities)
+        - [Universal Gap](#universal-gap)
+        - [Column Gap](#column-gap)
+        - [Row Gap](#row-gap)
+      - [Grid Item Utilities](#grid-item-utilities)
+        - [Column Spanning](#column-spanning)
+        - [Row Spanning](#row-spanning)
+      - [Responsive Utilities](#responsive-utilities)
+        - [Responsive Columns](#responsive-columns)
+        - [Responsive Spanning](#responsive-spanning)
+      - [Advanced Grid Utilities](#advanced-grid-utilities)
+        - [Auto-Fit Columns](#auto-fit-columns)
+        - [Named Grid Areas](#named-grid-areas)
+
+      # Grid Container Utilities
+      <p>
+        Grid container utilities establish a grid formatting context for child elements. These foundational classes
+        convert any element into a grid container, enabling the use of all other grid utilities for layout control.
+      </p>
+
+      <div className="grid-section">
+        ## Display Classes
+        <p>
+          The display classes create the basic grid container. Use <code>.col-grid</code> for block-level grid containers
+          or <code>.col-inline-grid</code> for inline grid containers that flow with surrounding content.
+        </p>
+
+        <GridExample
+          title="Block Grid Container"
+          description="Creates a block-level grid container using .col-grid"
+          gridClasses="col-grid col-grid-cols-3 col-grid-gap-m"
+          cellCount={6}
+          cellVariant="primary"
+        />
+
+        <GridExample
+          title="Inline Grid Container"
+          description="Creates an inline grid container using .col-inline-grid"
+          gridClasses="col-inline-grid col-grid-cols-2 col-grid-gap-s"
+          cellCount={4}
+          cellVariant="secondary"
+          cellSize="small"
+        />
+
+        <div className="usage-note">
+          <h4>When to use</h4>
+          <ul>
+            <li><strong>.col-grid</strong> - Most common choice for layout containers, sections, and components</li>
+            <li><strong>.col-inline-grid</strong> - When you need the grid to flow inline with other content</li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="grid-section">
+        ## Grid Template Columns
+        <p>
+          Column template utilities define the number and sizing of grid columns. The system provides utilities for
+          1-12 columns using fractional units for equal distribution, plus a <code>none</code> value for resetting.
+        </p>
+
+        <GridExample
+          title="Single Column"
+          description="All items stack vertically in one column"
+          gridClasses="col-grid col-grid-cols-1 col-grid-gap-m"
+          cellCount={4}
+          cellVariant="primary"
+        />
+
+        <GridExample
+          title="Two Columns"
+          description="Items distribute across two equal columns"
+          gridClasses="col-grid col-grid-cols-2 col-grid-gap-m"
+          cellCount={6}
+          cellVariant="secondary"
+        />
+
+        <GridExample
+          title="Three Columns"
+          description="Items distribute across three equal columns"
+          gridClasses="col-grid col-grid-cols-3 col-grid-gap-m"
+          cellCount={9}
+          cellVariant="accent"
+        />
+
+        <GridExample
+          title="Four Columns"
+          description="Items distribute across four equal columns"
+          gridClasses="col-grid col-grid-cols-4 col-grid-gap-m"
+          cellCount={8}
+          cellVariant="default"
+        />
+
+        <GridExample
+          title="Six Columns"
+          description="Items distribute across six equal columns"
+          gridClasses="col-grid col-grid-cols-6 col-grid-gap-s"
+          cellCount={12}
+          cellVariant="primary"
+          cellSize="small"
+        />
+
+        <GridExample
+          title="Twelve Columns"
+          description="Traditional 12-column grid system"
+          gridClasses="col-grid col-grid-cols-12 col-grid-gap-xs"
+          cellCount={12}
+          cellVariant="secondary"
+          cellSize="small"
+        />
+
+        <div className="grid-token-reference">
+          <h4>Available Column Classes</h4>
+          <p>All column utilities follow the pattern <code>.col-grid-cols-[number]</code>:</p>
+          <div className="grid-token-list">
+            {GRID_COLUMNS.filter(col => col !== 'none').slice(0, 12).map(colCount => (
+                <div key={colCount} className="grid-token-item">
+                  .col-grid-cols-{colCount}
+                </div>
+              )
+            )}
+            <div className="grid-token-item">.col-grid-cols-none</div>
+          </div>
+          <p className="grid-token-note">
+            <strong>CSS Variables:</strong> Each class maps to <code>--col-grid-columns-[number]</code> which resolves to
+            <code>repeat([number], minmax(0, 1fr))</code> for equal column distribution.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid-section">
+        ## Grid Template Rows
+        <p>
+          Row template utilities define the number and sizing of grid rows. Similar to columns, these utilities
+          provide explicit row control from 1-12 rows using fractional units for equal distribution.
+        </p>
+
+        <GridExample
+          title="Two Rows"
+          description="Items distribute across two equal rows"
+          gridClasses="col-grid col-grid-cols-3 col-grid-rows-2 col-grid-gap-m"
+          cellCount={6}
+          cellVariant="primary"
+        />
+
+        <GridExample
+          title="Three Rows"
+          description="Items distribute across three equal rows with explicit height"
+          gridClasses="col-grid col-grid-cols-2 col-grid-rows-3 col-grid-gap-m"
+          cellCount={6}
+          cellVariant="accent"
+          cellSize="large"
+        />
+
+        <GridExample
+          title="Row Reset"
+          description="Using .col-grid-rows-none to reset row template"
+          gridClasses="col-grid col-grid-cols-4 col-grid-rows-none col-grid-gap-m"
+          cellCount={8}
+          cellVariant="secondary"
+        />
+
+        <div className="grid-token-reference">
+          <h4>Available Row Classes</h4>
+          <p>All row utilities follow the pattern <code>.col-grid-rows-[number]</code>:</p>
+          <div className="grid-token-list">
+            {GRID_ROWS.filter(row => row !== 'none').map(rowCount => (
+              <div key={rowCount} className="grid-token-item">
+                .col-grid-rows-{rowCount}
+              </div>
+            ))}
+            <div className="grid-token-item">.col-grid-rows-none</div>
+          </div>
+          <p className="grid-token-note">
+            <strong>Note:</strong> Row templates are most useful when you need explicit control over row heights.
+            In many cases, letting rows auto-size based on content is preferred.
+          </p>
+        </div>
+      </div>
+
+      # Gap Utilities
+      <p>
+        Gap utilities control the spacing between grid items using the design system's layout tokens.
+        These utilities provide consistent spacing that adapts to your theme while offering fine-grained
+        control over both universal gaps and directional spacing for columns and rows.
+      </p>
+
+      <div className="grid-section">
+        ## Universal Gap
+        <p>
+          Universal gap utilities apply spacing between all grid items, both horizontally and vertically.
+          These classes use the layout token system to ensure consistent spacing across your application.
+        </p>
+
+        <GridExample
+          title="Extra Small Gap"
+          description="Minimal spacing using .col-grid-gap-xs"
+          gridClasses="col-grid col-grid-cols-3 col-grid-gap-xs"
+          cellCount={6}
+          cellVariant="primary"
+        />
+
+        <GridExample
+          title="Small Gap"
+          description="Small spacing using .col-grid-gap-s"
+          gridClasses="col-grid col-grid-cols-3 col-grid-gap-s"
+          cellCount={6}
+          cellVariant="secondary"
+        />
+
+        <GridExample
+          title="Medium Gap"
+          description="Medium spacing using .col-grid-gap-m"
+          gridClasses="col-grid col-grid-cols-3 col-grid-gap-m"
+          cellCount={6}
+          cellVariant="accent"
+        />
+
+        <GridExample
+          title="Large Gap"
+          description="Large spacing using .col-grid-gap-l"
+          gridClasses="col-grid col-grid-cols-3 col-grid-gap-l"
+          cellCount={6}
+          cellVariant="default"
+        />
+
+        <GridExample
+          title="Extra Large Gap"
+          description="Extra large spacing using .col-grid-gap-xl"
+          gridClasses="col-grid col-grid-cols-2 col-grid-gap-xl"
+          cellCount={4}
+          cellVariant="primary"
+        />
+
+        <div className="grid-token-reference">
+          <h4>Available Gap Classes</h4>
+          <p>All gap utilities follow the pattern <code>.col-grid-gap-[size]</code>:</p>
+          <div className="grid-token-list">
+            {LAYOUT_SIZES.map(size => (
+              <div key={size} className="grid-token-item">.col-grid-gap-{size}</div>
+            ))}
+          </div>
+          <p className="grid-token-note">
+            <strong>CSS Variables:</strong> Each class maps to <code>--col-layout-spacing-[size]</code> tokens
+            which provide consistent spacing values across the design system.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid-section">
+        ## Column Gap
+        <p>
+          Column gap utilities apply spacing only between columns (horizontally), leaving rows to touch vertically.
+          This is useful for card grids, image galleries, or layouts where you want horizontal separation without vertical spacing.
+        </p>
+
+        <GridExample
+          title="Column Gap Only - Small"
+          description="Horizontal spacing only using .col-grid-gap-col-s"
+          gridClasses="col-grid col-grid-cols-3 col-grid-gap-col-s"
+          cellCount={9}
+          cellVariant="primary"
+        />
+
+        <GridExample
+          title="Column Gap Only - Medium"
+          description="Horizontal spacing only using .col-grid-gap-col-m"
+          gridClasses="col-grid col-grid-cols-4 col-grid-gap-col-m"
+          cellCount={8}
+          cellVariant="secondary"
+        />
+
+        <GridExample
+          title="Column Gap Only - Large"
+          description="Horizontal spacing only using .col-grid-gap-col-l"
+          gridClasses="col-grid col-grid-cols-2 col-grid-gap-col-l"
+          cellCount={6}
+          cellVariant="accent"
+        />
+
+        <div className="grid-token-reference">
+          <h4>Available Column Gap Classes</h4>
+          <p>All column gap utilities follow the pattern <code>.col-grid-gap-col-[size]</code>:</p>
+          <div className="grid-token-list">
+            {LAYOUT_SIZES.map(size => (
+              <div key={size} className="grid-token-item">.col-grid-gap-col-{size}</div>
+            ))}
+          </div>
+          <p className="grid-token-note">
+            <strong>Use Cases:</strong> Perfect for card grids, image galleries, or content where you want
+            items to stack closely vertically but have clear horizontal separation.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid-section">
+        ## Row Gap
+        <p>
+          Row gap utilities apply spacing only between rows (vertically), leaving columns to touch horizontally.
+          This is useful for stacked content, vertical lists, or layouts where you want vertical separation without horizontal spacing.
+        </p>
+
+        <GridExample
+          title="Row Gap Only - Small"
+          description="Vertical spacing only using .col-grid-gap-row-s"
+          gridClasses="col-grid col-grid-cols-4 col-grid-gap-row-s"
+          cellCount={8}
+          cellVariant="primary"
+        />
+
+        <GridExample
+          title="Row Gap Only - Medium"
+          description="Vertical spacing only using .col-grid-gap-row-m"
+          gridClasses="col-grid col-grid-cols-3 col-grid-gap-row-m"
+          cellCount={9}
+          cellVariant="secondary"
+        />
+
+        <GridExample
+          title="Row Gap Only - Large"
+          description="Vertical spacing only using .col-grid-gap-row-l"
+          gridClasses="col-grid col-grid-cols-2 col-grid-gap-row-l"
+          cellCount={6}
+          cellVariant="accent"
+        />
+
+        <div className="grid-token-reference">
+          <h4>Available Row Gap Classes</h4>
+          <p>All row gap utilities follow the pattern <code>.col-grid-gap-row-[size]</code>:</p>
+          <div className="grid-token-list">
+            {LAYOUT_SIZES.map(size => (
+              <div key={size} className="grid-token-item">.col-grid-gap-row-{size}</div>
+            ))}
+          </div>
+          <p className="grid-token-note">
+            <strong>Use Cases:</strong> Ideal for stacked content sections, vertical navigation lists,
+            or content where items should flow horizontally but have clear vertical separation.
+          </p>
+        </div>
+      </div>
+
+      # Grid Item Utilities
+      <p>
+        Grid item utilities control how individual grid items span across columns and rows. These utilities
+        enable flexible layouts where some items take up more space than others, creating dynamic and
+        visually interesting grid compositions while maintaining alignment and structure.
+      </p>
+
+      <div className="grid-section">
+        ## Column Spanning
+        <p>
+          Column spanning utilities allow grid items to stretch across multiple columns. Use these classes
+          to create featured content, wide headers, or any layout where certain items need more horizontal space.
+        </p>
+
+        <GridExample
+          title="Basic Column Spanning"
+          description="Items spanning 2 and 3 columns in a 4-column grid"
+          gridClasses="col-grid col-grid-cols-4 col-grid-gap-m"
+          cellCount={0}
+          showCode={false}
+        >
+          <GridCell variant="primary" className="col-span-2">Span 2</GridCell>
+          <GridCell variant="secondary">1</GridCell>
+          <GridCell variant="secondary">2</GridCell>
+          <GridCell variant="accent" className="col-span-3">Span 3</GridCell>
+          <GridCell variant="secondary">3</GridCell>
+        </GridExample>
+
+
+        <div className="grid-token-reference">
+          <h4>Available Column Span Classes</h4>
+          <p>All column span utilities follow the pattern <code>.col-span-[number]</code>:</p>
+          <div className="grid-token-list">
+            {GRID_COLUMN_SPANS.map(span => (
+              <div key={span} className="grid-token-item">.col-span-{span}</div>
+            ))}
+            <div className="grid-token-item">.col-span-full</div>
+          </div>
+          <p className="grid-token-note">
+            <strong>CSS Variables:</strong> Each class maps to <code>span [number]</code> which tells the item
+            to span across that many columns. <code>.col-span-full</code> spans across all available columns.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid-section">
+        ## Row Spanning
+        <p>
+          Row spanning utilities allow grid items to stretch across multiple rows. These are particularly useful
+          for creating sidebars, featured cards, or content that needs more vertical space while other items flow around it.
+        </p>
+
+        <GridExample
+          title="Basic Row Spanning"
+          description="Items spanning 2 and 3 rows with automatic content flow"
+          gridClasses="col-grid col-grid-cols-3 col-grid-gap-m"
+          cellCount={0}
+          showCode={false}
+        >
+          <GridCell variant="primary" className="row-span-2" size="large">Tall Item<br/>(2 rows)</GridCell>
+          <GridCell variant="secondary">Item 1</GridCell>
+          <GridCell variant="secondary">Item 2</GridCell>
+          <GridCell variant="secondary">Item 3</GridCell>
+          <GridCell variant="secondary">Item 4</GridCell>
+          <GridCell variant="accent" className="row-span-3" size="large">Very Tall<br/>(3 rows)</GridCell>
+          <GridCell variant="secondary">Item 5</GridCell>
+          <GridCell variant="secondary">Item 6</GridCell>
+          <GridCell variant="secondary">Item 7</GridCell>
+          <GridCell variant="secondary">Item 8</GridCell>
+          <GridCell variant="secondary">Item 9</GridCell>
+          <GridCell variant="secondary">Item 10</GridCell>
+        </GridExample>
+
+
+        <div className="grid-token-reference">
+          <h4>Available Row Span Classes</h4>
+          <p>All row span utilities follow the pattern <code>.row-span-[number]</code>:</p>
+          <div className="grid-token-list">
+            {GRID_ROW_SPANS.map(span => (
+              <div key={span} className="grid-token-item">.row-span-{span}</div>
+            ))}
+            <div className="grid-token-item">.row-span-full</div>
+          </div>
+          <p className="grid-token-note">
+            <strong>CSS Variables:</strong> Each class maps to <code>span [number]</code> which tells the item
+            to span across that many rows. <code>.row-span-full</code> spans across all available rows.
+          </p>
+        </div>
+      </div>
+
+      # Responsive Utilities
+      <p>
+        Responsive grid utilities enable mobile-first responsive design by applying different grid behaviors
+        at specific breakpoints. These utilities follow the same patterns as other grid classes but include
+        responsive prefixes to control when they take effect, allowing for adaptive layouts across devices.
+      </p>
+
+      <div className="grid-section">
+        ## Responsive Columns
+        <p>
+          Responsive column utilities allow you to define different column layouts at different screen sizes.
+          Start with a mobile-first approach and progressively enhance the layout for larger screens using
+          breakpoint prefixes.
+        </p>
+
+        <GridExample
+          title="Mobile-First Responsive Grid"
+          description="1 column on mobile, 2 on small screens, 3 on medium, 4 on large"
+          gridClasses="col-grid col-grid-cols-1 col-sm:grid-cols-2 col-md:grid-cols-3 col-lg:grid-cols-4 col-grid-gap-m"
+          cellCount={8}
+          cellVariant="primary"
+        />
+
+        <GridExample
+          title="Simple Responsive Layout"
+          description="Stack on mobile (1 col), side-by-side on tablet+ (2 cols)"
+          gridClasses="col-grid col-grid-cols-1 col-md:grid-cols-2 col-grid-gap-l"
+          cellCount={4}
+          cellVariant="secondary"
+        />
+
+        <div className="grid-token-reference">
+          <h4>Available Responsive Prefixes</h4>
+          <p>All grid utilities can be prefixed with breakpoint modifiers:</p>
+          <div className="grid-token-list">
+            {BREAKPOINTS.map(bp => (
+              <div key={bp} className="grid-token-item">col-{bp}: ({BREAKPOINT_VALUES[bp]}+)</div>
+            ))}
+          </div>
+          <p className="grid-token-note">
+            <strong>Mobile-First:</strong> Use base classes for mobile, then add responsive modifiers.
+            For example: <code>.col-grid-cols-1 .col-md:grid-cols-2 .col-lg:grid-cols-4</code>
+          </p>
+        </div>
+      </div>
+
+      <div className="grid-section">
+        ## Responsive Spanning
+        <p>
+          Responsive spanning utilities allow grid items to span different amounts of columns or rows
+          at different breakpoints. This enables sophisticated layouts where content reflows and resizes
+          based on available screen space.
+        </p>
+
+        <GridExample
+          title="Responsive Column Spanning"
+          description="Item 1 spans 2 columns on lg"
+          gridClasses="col-grid col-grid-cols-1 col-md:grid-cols-2 col-lg:grid-cols-3 col-grid-gap-m"
+          cellCount={0}
+          showCode={false}
+        >
+          <GridCell variant="primary" className="col-span-full col-md:col-span-1 col-lg:col-span-1">
+            Featured Content (full width)
+          </GridCell>
+          <GridCell variant="secondary" className='col-lg:span-2'>Item 1</GridCell>
+          <GridCell variant="secondary">Item 2</GridCell>
+        </GridExample>
+
+        <div className="grid-token-reference">
+          <h4>Responsive Spanning Patterns</h4>
+          <p>Combine base spanning with responsive modifiers for adaptive layouts:</p>
+          <div className="grid-token-list">
+            <div className="grid-token-item">.col-span-full .col-md:span-2</div>
+            <div className="grid-token-item">.col-span-1 .col-lg:span-3</div>
+            <div className="grid-token-item">.row-span-1 .col-md:row-span-2</div>
+            <div className="grid-token-item">.col-span-2 .col-xl:span-4</div>
+          </div>
+          <p className="grid-token-note">
+            <strong>Best Practice:</strong> Start with the most constrained layout (mobile) and progressively
+            enhance with more complex spanning for larger screens. This ensures content remains accessible
+            and readable across all devices.
+          </p>
+        </div>
+      </div>
+
+      # Advanced Grid Utilities
+      <p>
+        Advanced grid utilities provide sophisticated layout patterns using modern CSS Grid features.
+        These utilities enable dynamic column sizing with auto-fit and auto-fill behaviors, flexible
+        sizing with minmax functions, and semantic layouts with named grid areas for complex interface designs.
+      </p>
+
+      <div className="grid-section">
+        ## Auto-Fit Columns
+        <p>
+          Auto-fit utilities create responsive column layouts that automatically adjust the number of columns
+          based on available space and minimum column width. These utilities use CSS Grid's auto-fit behavior
+          with minmax sizing to create fluid, responsive layouts without media queries.
+        </p>
+
+        <GridExample
+          title="Auto-Fit Medium (200px minimum)"
+          description="Columns automatically fit with 200px minimum width"
+          gridClasses="col-grid col-grid-cols-auto-fit-m col-grid-gap-m"
+          cellCount={6}
+          cellVariant="primary"
+        />
+
+        <GridExample
+          title="Auto-Fit Small (160px minimum)"
+          description="More columns with 160px minimum width"
+          gridClasses="col-grid col-grid-cols-auto-fit-s col-grid-gap-m"
+          cellCount={8}
+          cellVariant="secondary"
+        />
+
+        <GridExample
+          title="Auto-Fit Large (250px minimum)"
+          description="Fewer, wider columns with 250px minimum width"
+          gridClasses="col-grid col-grid-cols-auto-fit-l col-grid-gap-l"
+          cellCount={5}
+          cellVariant="accent"
+        />
+
+        <GridExample
+          title="Auto-Fit Extra Large (300px minimum)"
+          description="Wide columns with 300px minimum width"
+          gridClasses="col-grid col-grid-cols-auto-fit-xl col-grid-gap-l"
+          cellCount={4}
+          cellVariant="default"
+        />
+
+        <div className="grid-token-reference">
+          <h4>Available Auto-Fit Classes</h4>
+          <p>Auto-fit utilities follow the pattern <code>.col-grid-cols-auto-fit-[size]</code>:</p>
+          <div className="grid-token-list">
+            <div className="grid-token-item">.col-grid-cols-auto-fit-0</div>
+            <div className="grid-token-item">.col-grid-cols-auto-fit-xs</div>
+            <div className="grid-token-item">.col-grid-cols-auto-fit-s</div>
+            <div className="grid-token-item">.col-grid-cols-auto-fit-m</div>
+            <div className="grid-token-item">.col-grid-cols-auto-fit-l</div>
+            <div className="grid-token-item">.col-grid-cols-auto-fit-xl</div>
+            <div className="grid-token-item">.col-grid-cols-auto-fit-2xl</div>
+            <div className="grid-token-item">.col-grid-cols-auto-fit-3xl</div>
+          </div>
+          <p className="grid-token-note">
+            <strong>CSS Variables:</strong> Each class maps to <code>--col-grid-autofit-[size]</code> which resolves to
+            <code>repeat(auto-fit, minmax([size]px, 1fr))</code> for responsive column layouts.
+          </p>
+          <p className="grid-token-note">
+            <strong>Use Cases:</strong> Perfect for card grids, image galleries, product catalogs, or any layout
+            where you want items to automatically wrap and resize based on screen width without writing media queries.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid-section">
+        ## Named Grid Areas
+        <p>
+          Named grid area utilities enable semantic, template-based layouts using descriptive area names.
+          This approach allows you to define layout templates with meaningful names like "header", "sidebar",
+          and "content", making complex layouts more readable and maintainable.
+        </p>
+
+        <GridExample
+          title="Dashboard Simple Layout"
+          description="Two-column dashboard with navigation and main content"
+          gridClasses="col-grid col-grid-areas-dashboard-simple col-grid-gap-m"
+          cellCount={0}
+          showCode={false}
+        >
+          <GridCell variant="secondary" className="col-grid-area-nav" size="medium">Navigation</GridCell>
+          <GridCell variant="primary" className="col-grid-area-header" size="small">Header</GridCell>
+          <GridCell variant="accent" className="col-grid-area-main" size="large">Main Content</GridCell>
+        </GridExample>
+
+        <GridExample
+          title="Dashboard Complex Layout"
+          description="Three-column dashboard with navigation, main, aside, and footer"
+          gridClasses="col-grid col-grid-areas-dashboard-complex col-grid-gap-m"
+          cellCount={0}
+          showCode={false}
+        >
+          <GridCell variant="secondary" className="col-grid-area-nav" size="large">Navigation</GridCell>
+          <GridCell variant="primary" className="col-grid-area-header" size="small">Header</GridCell>
+          <GridCell variant="accent" className="col-grid-area-main" size="large">Main Content</GridCell>
+          <GridCell variant="default" className="col-grid-area-aside" size="medium">Aside</GridCell>
+          <GridCell variant="primary" className="col-grid-area-footer" size="small">Footer</GridCell>
+        </GridExample>
+
+        <GridExample
+          title="Article Layout"
+          description="Blog/article layout with header, content, sidebar, and footer"
+          gridClasses="col-grid col-grid-areas-article-layout col-grid-gap-m"
+          cellCount={0}
+          showCode={false}
+        >
+          <GridCell variant="primary" className="col-grid-area-header" size="medium">Article Header</GridCell>
+          <GridCell variant="accent" className="col-grid-area-content" size="large">Article Content</GridCell>
+          <GridCell variant="secondary" className="col-grid-area-sidebar" size="medium">Sidebar</GridCell>
+          <GridCell variant="default" className="col-grid-area-footer" size="small">Footer</GridCell>
+        </GridExample>
+
+        <div className="grid-token-reference">
+          <h4>Available Grid Area Templates</h4>
+          <p>Grid area templates define common layout patterns:</p>
+          <div className="grid-token-list">
+            {GRID_AREAS.map(area => (
+              <div key={area} className="grid-token-item">.col-grid-areas-{area}</div>
+            ))}
+          </div>
+
+          <h4>Available Grid Area Assignments</h4>
+          <p>Individual area assignments for template positioning:</p>
+          <div className="grid-token-list">
+            {GRID_AREA_ASSIGNMENTS.map(area => (
+              <div key={area} className="grid-token-item">.col-grid-area-{area}</div>
+            ))}
+          </div>
+
+          <p className="grid-token-note">
+            <strong>CSS Variables:</strong> Area templates map to <code>--col-grid-areas-[template]</code> which define
+            the grid structure, while area assignments map to <code>--col-grid-area-[name]</code> for positioning elements.
+          </p>
+          <p className="grid-token-note">
+            <strong>Semantic Layouts:</strong> Named grid areas make layouts self-documenting and easier to maintain.
+            They're particularly valuable for complex interfaces where the relationship between layout areas
+            needs to be clear and flexible.
+          </p>
+        </div>
+      </div>
+    </Unstyled>
+  </div>
+</div>
+
+export const GridCell = ({ children, variant = 'default', size = 'medium', className = '' }) => {
+  const cellClass = `grid-cell grid-cell--${variant} grid-cell--${size} ${className}`.trim();
+
+  return (
+    <div className={cellClass}>
+      {children}
+    </div>
+  );
+};
+
+export const GridExample = ({
+  title,
+  description,
+  gridClasses,
+  children,
+  cellCount = 6,
+  cellVariant = 'default',
+  cellSize = 'medium',
+  showCode = true,
+  className = ''
+}) => {
+  const defaultCells = React.useMemo(() => {
+    return Array.from({ length: cellCount }, (_, index) => (
+      <GridCell key={index} variant={cellVariant} size={cellSize}>
+        {index + 1}
+      </GridCell>
+    ));
+  }, [cellCount, cellVariant, cellSize]);
+
+  const gridContent = children || defaultCells;
+
+  return (
+    <Container
+      title={title}
+      description={description}
+      variant="example"
+      className={className}
+    >
+      <div className={`grid-example-container ${gridClasses}`}>
+        {gridContent}
+      </div>
+      {showCode && (
+        <div className="grid-example-code">
+          <code>
+            {gridClasses.split(' ').map(cls => `.${cls}`).join(' ')}
+          </code>
+        </div>
+      )}
+    </Container>
+  );
+};

@@ -1,0 +1,87 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as ColPaginatorStories from './col-paginator.stories';
+import { Callout } from '../../_storybook/components';
+
+<Meta of={ColPaginatorStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Paginator</Title>
+    Pagination is used for splitting up content or data into several pages, with a control for navigating to the next or previous page.
+
+    <Subtitle>Table of contents</Subtitle>
+    - [How to use it](#how-to-use-it)
+      - [Installation](#installation)
+      - [Best Practices](#best-practices)
+    - [When to use it](#when-to-use-it)
+    - [Component preview](#component-preview)
+      - [Basic Paginator](#basic-paginator)
+      - [Disabled Paginator](#disabled-paginator)
+      - [Custom Alignment Paginator](#custom-alignment-paginator)
+      - [Custom Size Configs Paginator](#custom-size-configs-paginator)
+      - [Custom Responsive Configs Paginator](#custom-responsive-configs-paginator)
+    - [Properties](#properties)
+    - [Accessibility](#accessibility)
+    - [Interact with the component](#interact-with-the-component)
+
+    ## How to use it
+
+    ### Installation
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, ColPaginator } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web component:
+        ```typescript
+        registerColibriComponents([ColPaginator]);
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-paginator></col-paginator>
+        ```
+
+    ### Best Practices
+
+    * **Identify the current page**: Clearly identify which page the user is on by displaying the current page number. By providing context into how many pages there are in total (eg. 1 of 4 pages), you can help provide clarity around the data displayed.
+    * **Provide various options for navigating**: *Previous* and *next* chevrons or links are the most useful way for the user to move forward or backward through pages of data. Provide an inline select in which users can choose the page they wish to navigate to.
+    * **Items per page**: Use an inline select within the pagination bar so the user can change the amount of data displayed per page.
+
+    ## When to use it
+
+    * **Search Results**: Search engines and websites' internal search functions use pagers to break down search results into manageable pages.
+    * **Data Tables**: Data tables with large volumes of records can be paginated to improve readability and performance.
+    * **Dashboards and Reports**: In analysis and reporting applications, dashboards can use pagers to display different sections of data or graphs.
+
+    ## Component preview
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+
+    ### Basic Paginator
+    <Canvas of={ColPaginatorStories.Default} />
+
+    ### Disabled Paginator
+    <Canvas of={ColPaginatorStories.DisablePaginator} />
+
+    ### Custom Alignment Paginator
+    <Canvas of={ColPaginatorStories.CustomAlignPaginator} />
+
+    ### Custom Responsive Configs Paginator
+    <Canvas of={ColPaginatorStories.CustomResponsiveConfig} />
+
+    ### Custom Size Configs Paginator
+    <Canvas of={ColPaginatorStories.CustomSizeConfig} />
+
+    ### Properties
+    <ArgTypes of={ColPaginatorStories}/>
+
+    <Subtitle>Interact with the component</Subtitle>
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the **Default** section.
+
+  </div>
+</div>

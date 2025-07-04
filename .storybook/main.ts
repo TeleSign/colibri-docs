@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/web-components-vite';
+import remarkGfm from 'remark-gfm';
 import { mergeConfig } from 'vite';
 import { resolve } from 'path';
 
@@ -11,6 +12,16 @@ const config: StorybookConfig = {
     '@chromatic-com/storybook',
     '@storybook/addon-essentials',
     '@storybook/addon-links',
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        mdxPluginOptions: {
+          mdxCompileOptions: {
+            remarkPlugins: [remarkGfm],
+          },
+        },
+      },
+    },
   ],
   framework: {
     name: '@storybook/web-components-vite',
