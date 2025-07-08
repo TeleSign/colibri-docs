@@ -7,7 +7,7 @@ import { BUTTON_SIZES, BUTTON_VARIANTS, COLORS } from '@telesign/colibri';
 type StoryArgs = {
   ariaLabel: string;
   color: COLORS;
-  disabled: Boolean;
+  disabled: boolean;
   name: string;
   size: BUTTON_SIZES;
   type: 'button' | 'submit' | 'reset';
