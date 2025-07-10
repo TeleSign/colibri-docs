@@ -16,6 +16,8 @@ import { Callout } from '../../_storybook/components';
       - [Basic Dropdown with no Styling](#basic-dropdown-with-no-styling)
       - [Basic Dropdown with additional Components](#basic-dropdown-with-additional-components)
       - [Small List Items Dropdown](#small-list-items-dropdown)
+      - [Dropdown with only Colibri Components](#dropdown-with-only-colibri-components)
+      - [Medium List Items Dropdown](#medium-list-items-dropdown)
       - [Disabled Dropdown](#disabled-dropdown)
     - [Properties](#properties)
     - [Interact with the component](#interact-with-the-component)
@@ -25,26 +27,35 @@ import { Callout } from '../../_storybook/components';
     1. Install the packages:
         ```bash
         npm install @telesign/colibri
+        npm install @telesign/colibri-icons
         ```
     2. Import the dependencies:
         ```typescript
-        import { registerColibriComponents, ColDropdown, ColButton, ColIcon } from '@telesign/colibri';
+        import { registerColibriComponents, ColDropdown, ColButton, ColListMenu, ColListMenuItem } from '@telesign/colibri';
+        import { ColIcon } from '@telesign/colibri-icons';
         import '@telesign/colibri/styles/styles.css';
         ```
     3. Register the web component:
         ```typescript
-        registerColibriComponents([ColDropdown, ColButton, ColIcon]);
+        registerColibriComponents([ColDropdown, ColButton, ColIcon, ColListMenum, ColListMenuItem]);
         ```
     4. Use it in your HTML:
         ```html
         <col-dropdown>
-          <button slot="trigger">Toggle</button>
-          <div>Content</div>
+          <col-button slot="trigger">
+              Toggle
+              <col-icon name="chevron-down" size="16px"></col-icon>
+          </col-button>
+          <col-list-menu>
+            <col-list-item-menu>
+              <p>Content</p>
+            </col-list-item-menu>
+          </col-list-menu>
         </col-dropdown>
         ```
 
     <Callout variant="info" icon="ℹ️">
-      The Dropdown component could use other components like `col-button` and `col-icon` internally for triggering and styling. Make sure to register the ColButton and ColIcon components when wanted to use the dropdown with custom button and icons.
+      The Dropdown component could use other components like `col-button`, `col-list-menu`, `col-list-menu-item`  and `col-icon` internally for triggering and styling. Make sure to register the ColButton, ColListMenu, ColListMenuItem and ColIcon components when wanted to use the dropdown with custom button and icons.
     </Callout>
 
     ## When to use it
@@ -111,10 +122,14 @@ import { Callout } from '../../_storybook/components';
     Custom Button and List Items:
     - Make sure you register correctly ColButton component in order to use it.
     - Do not forget the `slot="trigger"` to define the trigger of the dropdown list.
-    - The list could be any sort of content such as `<p>`, `<ul>`, etc...
+    - The list could be any sort of content such as `<p>`, `<ul>`, etc... **However given our Design System, more likely it will usually be `ColListMenu`**.
+
+    ### Dropdown with only Colibri Components
+    As mentioned in the last Storie and according to the example shown in the [How to use it](#how-to-use-it) section, this storie is for a dropdown with only colibri components for both trigger and content.
+    <Canvas of={ColDropdownStories.ColibriComponents} />
 
     ### Medium List Items Dropdown
-    By default the dropdown will be `open` as the prop determines. In additional you will not be able to close it because of the `disabled` prop enabled.
+    By default the dropdown will be `open` as the prop determines. In addition you will not be able to close it because of the `disabled` prop enabled.
     <Canvas of={ColDropdownStories.MediumListItems} />
 
     For correcting visualization of the list menu (after clicking `Show code` button), there is a div wrapper with a specific height for the Canva.
@@ -123,10 +138,10 @@ import { Callout } from '../../_storybook/components';
     Cannot trigger any content because the `disabled` prop is enabled. You can hover, focus and click de trigger but no action will be executed.
     <Canvas of={ColDropdownStories.Disabled} />
 
-    ### Properties
+    ## Properties
     <ArgTypes of={ColDropdownStories}/>
 
-    <Subtitle>Interact with the component</Subtitle>
+    ## Interact with the component
     To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the **Default** section.
 
   </div>

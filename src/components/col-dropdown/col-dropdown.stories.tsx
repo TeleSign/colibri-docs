@@ -22,7 +22,7 @@ const meta = {
   argTypes: {
     open: {
       control: 'boolean',
-      description: 'State declaring if the dropdown is open by default',
+      description: 'Property declaring if the dropdown is open by default',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
@@ -31,7 +31,7 @@ const meta = {
     },
     disabled: {
       control: 'boolean',
-      description: 'State declaring if a dropdown is disabled or not',
+      description: 'Property declaring if a dropdown is disabled or not',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
@@ -103,6 +103,30 @@ export const SmallListItems: Story = {
           <col-icon name="chevron-down"></col-icon>
         </col-button>
         <p>Content 1</p>
+      </col-dropdown>
+    </div>
+  `,
+};
+
+export const ColibriComponents: Story = {
+  args: {
+    open: false,
+    disabled: false,
+    align: 'start',
+  },
+  render: args => html`
+    <div style="height: 100px;">
+      <col-dropdown ?open=${args.open} ?disabled=${args.disabled} align=${args.align}>
+        <col-button color="primary" slot="trigger">
+          Hello! Click me
+          <col-icon name="chevron-down"></col-icon>
+        </col-button>
+        <col-list-menu>
+          <col-list-item-menu>
+            <p>Content</p>
+            <p>Extra Content</p>
+          </col-list-item-menu>
+        </col-list-menu>
       </col-dropdown>
     </div>
   `,
