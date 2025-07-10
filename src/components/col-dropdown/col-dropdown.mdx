@@ -13,7 +13,10 @@ import { Callout } from '../../_storybook/components';
     - [How to use it](#how-to-use-it)
     - [When to use it](#when-to-use-it)
     - [Component preview](#component-preview)
-      - [Basic Dropdown](#basic-dropdown)
+      - [Basic Dropdown with no Styling](#basic-dropdown-with-no-styling)
+      - [Basic Dropdown with additional Components](#basic-dropdown-with-additional-components)
+      - [Small List Items Dropdown](#small-list-items-dropdown)
+      - [Disabled Dropdown](#disabled-dropdown)
     - [Properties](#properties)
     - [Interact with the component](#interact-with-the-component)
 
@@ -25,12 +28,12 @@ import { Callout } from '../../_storybook/components';
         ```
     2. Import the dependencies:
         ```typescript
-        import { registerColibriComponents, ColDropdown } from '@telesign/colibri';
+        import { registerColibriComponents, ColDropdown, ColButton, ColIcon } from '@telesign/colibri';
         import '@telesign/colibri/styles/styles.css';
         ```
     3. Register the web component:
         ```typescript
-        registerColibriComponents([ColDropdown]);
+        registerColibriComponents([ColDropdown, ColButton, ColIcon]);
         ```
     4. Use it in your HTML:
         ```html
@@ -40,30 +43,85 @@ import { Callout } from '../../_storybook/components';
         </col-dropdown>
         ```
 
+    <Callout variant="info" icon="ℹ️">
+      The Dropdown component could use other components like `col-button` and `col-icon` internally for triggering and styling. Make sure to register the ColButton and ColIcon components when wanted to use the dropdown with custom button and icons.
+    </Callout>
+
     ## When to use it
 
     A dropdown menu is a compact way of displaying multiple choices. It appears upon interaction with an element (such as an icon or button) or when users perform a specific action.
 
     The dropdown component is a versatile and commonly used UI element that allows users to select an option from a list. It is particularly useful for conserving space and providing a clean interface when presenting multiple choices. Here are various use cases demonstrating the application of the dropdown component in different scenarios:
 
-    * **Form Fieldss**: A dropdown used to provide selectable options for form fields. For example: A user fills out a registration form and selects their country from a dropdown list, ensuring consistency and reducing input errors.
-    * **Navigation Menus**: A dropdown used for navigating between different sections or pages within an application. For example: A user clicks on a navigation menu item and selects a sub-page or section from the dropdown list.
-    * **Settings and Preferences**: A dropdown for adjusting user settings and preferences. For example: A user opens the settings panel and selects their preferred language or theme from a dropdown.
-    * **Filter Options**: A dropdown used to filter data or content based on specific criteria. For example: A user selects a category from a dropdown to filter products displayed on an e-commerce site.
-    * **Profile and Account Management**: A dropdown for managing profile and account-related actions. For example: A user clicks on their profile icon and selects "Account Settings" or "Log Out" from the dropdown.
-    * **Project and Task Management**: A dropdown for selecting projects or tasks within a management tool. For example: A user managing multiple projects selects the current project they are working on from a dropdown.
-    * **Content Creation Tools**: A dropdown used to format text or insert media in content creation tools. For example: A user writing a blog post selects the font style from a dropdown menu.
-    * **Data Entry**: A dropdown to assist with data entry by providing predefined options. For example: An admin entering data into a system selects the department from a dropdown list to ensure consistency.
-    * **Calendar and Date Selection**: A dropdown for selecting dates or times. For example: A user schedules a meeting and selects the date and time zone from dropdown menus.
-    * **Multi-Select Options**: A dropdown allowing users to select multiple options. For example: A user fills out their profile and selects multiple interests or skills from a multi-select dropdown.
+    * **Form Fields**: A dropdown used to provide selectable options for form fields.
+
+        For example: A user fills out a registration form and selects their country from a dropdown list, ensuring consistency and reducing input errors.
+    * **Navigation Menus**: A dropdown used for navigating between different sections or pages within an application.
+
+        For example: A user clicks on a navigation menu item and selects a sub-page or section from the dropdown list.
+    * **Settings and Preferences**: A dropdown for adjusting user settings and preferences.
+
+        For example: A user opens the settings panel and selects their preferred language or theme from a dropdown.
+    * **Filter Options**: A dropdown used to filter data or content based on specific criteria.
+
+        For example: A user selects a category from a dropdown to filter products displayed on an e-commerce site.
+    * **Profile and Account Management**: A dropdown for managing profile and account-related actions.
+
+        For example: A user clicks on their profile icon and selects "Account Settings" or "Log Out" from the dropdown.
+    * **Project and Task Management**: A dropdown for selecting projects or tasks within a management tool.
+
+        For example: A user managing multiple projects selects the current project they are working on from a dropdown.
+    * **Content Creation Tools**: A dropdown used to format text or insert media in content creation tools.
+
+        For example: A user writing a blog post selects the font style from a dropdown menu.
+    * **Data Entry**: A dropdown to assist with data entry by providing predefined options.
+
+        For example: An admin entering data into a system selects the department from a dropdown list to ensure consistency.
+    * **Calendar and Date Selection**: A dropdown for selecting dates or times.
+
+        For example: A user schedules a meeting and selects the date and time zone from dropdown menus.
+    * **Multi-Select Options**: A dropdown allowing users to select multiple options.
+
+        For example: A user fills out their profile and selects multiple interests or skills from a multi-select dropdown.
 
     ## Component preview
     <Callout variant="tip" icon="💡">
       You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
     </Callout>
 
-    ### Basic Dropdown
+    ### Basic Dropdown with no Styling
     <Canvas of={ColDropdownStories.Default} />
+
+    The dropdown:
+    - Use default HTML components with no extra styling or labeling.
+    - Could apply custom styles to the component or use other Colibrí components.
+    - Handles responsive behavior when windows space is limited.
+
+    ### Basic Dropdown with additional Components
+    Only changes are the use of colibri components in order to handle a better styling for the dropdown including the trigger and the list menu.
+    <Canvas of={ColDropdownStories.DefaultWithComponents} />
+
+    The div wrapper:
+    - For correcting visualization of the list menu (after clicking `Show code` button), there is a div wrapper with a specific height for the Canva.
+
+    ### Small List Items Dropdown
+    By default the dropdown will be open as the prop determines. If you click anywhere on the Canva the dropdown menu will close.
+    <Canvas of={ColDropdownStories.SmallListItems} />
+
+    Custom Button and List Items:
+    - Make sure you register correctly ColButton component in order to use it.
+    - Do not forget the `slot="trigger"` to define the trigger of the dropdown list.
+    - The list could be any sort of content such as `<p>`, `<ul>`, etc...
+
+    ### Medium List Items Dropdown
+    By default the dropdown will be `open` as the prop determines. In additional you will not be able to close it because of the `disabled` prop enabled.
+    <Canvas of={ColDropdownStories.MediumListItems} />
+
+    For correcting visualization of the list menu (after clicking `Show code` button), there is a div wrapper with a specific height for the Canva.
+
+    ### Disabled Dropdown
+    Cannot trigger any content because the `disabled` prop is enabled. You can hover, focus and click de trigger but no action will be executed.
+    <Canvas of={ColDropdownStories.Disabled} />
 
     ### Properties
     <ArgTypes of={ColDropdownStories}/>
