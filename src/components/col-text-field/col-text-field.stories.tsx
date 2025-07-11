@@ -1,7 +1,7 @@
 import { html, nothing } from 'lit';
 import { action } from '@storybook/addon-actions';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
-import { disableControls, formatCodeString } from '@/utils';
+import { disableControls, formatCodeString, getDisabledControls } from '@/utils';
 import { icons } from '@telesign/colibri-icons/icons-list';
 
 type StoryArgs = {
@@ -33,6 +33,55 @@ type StoryArgs = {
   keyup: () => void;
   paste: () => void;
   invalid: () => void;
+};
+
+const storyControls: (keyof StoryArgs)[] = [
+  'value',
+  'label',
+  'subLabel',
+  'helper',
+  'inputType',
+  'required',
+  'placeholder',
+  'charCount',
+  'disabled',
+  'readOnly',
+  'error',
+  'pattern',
+  'minLength',
+  'inputMode',
+  'errorMessage',
+  'validationTiming',
+  'name',
+  'iconVisible',
+  'iconName',
+  'iconSize',
+  'inputMode',
+];
+
+const enabledControlsMap: Record<string, (keyof StoryArgs)[]> = {
+  WithLabel: ['label', 'value', 'placeholder'],
+  WithSubLabel: ['label', 'subLabel', 'value', 'placeholder'],
+  WithHelper: ['label', 'helper', 'value', 'placeholder'],
+  WithIcon: ['label', 'helper', 'value', 'placeholder', 'iconVisible', 'iconName', 'iconSize'],
+  WithCharacterCount: ['label', 'helper', 'value', 'placeholder', 'charCount'],
+  Password: ['label', 'helper', 'value', 'placeholder', 'inputType'],
+  Required: ['label', 'placeholder', 'value', 'required'],
+  Disabled: ['label', 'placeholder', 'value', 'disabled'],
+  ReadOnly: ['label', 'placeholder', 'readOnly'],
+  Error: ['label', 'placeholder', 'error'],
+  WithMinLength: ['label', 'helper', 'placeholder', 'value', 'minLength', 'validationTiming'],
+  WithPattern: ['label', 'helper', 'placeholder', 'value', 'pattern'],
+  WithCustomValidationMessage: ['label', 'helper', 'placeholder', 'required', 'errorMessage'],
+  WithCustomValidationTiming: [
+    'label',
+    'helper',
+    'placeholder',
+    'value',
+    'minLength',
+    'validationTiming',
+    'errorMessage',
+  ],
 };
 
 const meta: ColibriStoryMeta<StoryArgs> = {
@@ -258,6 +307,13 @@ const meta: ColibriStoryMeta<StoryArgs> = {
       description: 'Fired when the component fails validation.',
       table: { category: 'Events' },
     },
+    inputMode: {
+      name: 'input-mode',
+      control: 'select',
+      options: ['text', 'email', 'numeric', 'tel', 'url'],
+      description: 'The input mode for the input field.',
+      table: { category: 'Core' },
+    },
   },
   args: {
     label: 'Label',
@@ -270,6 +326,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
     readOnly: false,
     error: false,
     required: false,
+    inputMode: 'text',
     validationTiming: 'blur',
     name: 'col-text-field',
     iconVisible: false,
@@ -328,24 +385,10 @@ export const Default: Story = {
 };
 
 export const WithLabel: Story = {
-  argTypes: {
-    ...disableControls(
-      'subLabel',
-      'helper',
-      'required',
-      'name',
-      'charCount',
-      'iconVisible',
-      'disabled',
-      'readOnly',
-      'error',
-      'pattern',
-      'minLength',
-      'errorMessage',
-      'validationTiming',
-      'inputType'
-    ),
-  },
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.WithLabel)
+  ),
   args: {
     label: 'With Label',
   },
@@ -353,23 +396,10 @@ export const WithLabel: Story = {
 };
 
 export const WithSubLabel: Story = {
-  argTypes: {
-    ...disableControls(
-      'helper',
-      'required',
-      'name',
-      'charCount',
-      'iconVisible',
-      'disabled',
-      'readOnly',
-      'error',
-      'pattern',
-      'minLength',
-      'errorMessage',
-      'validationTiming',
-      'inputType'
-    ),
-  },
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.WithSubLabel)
+  ),
   args: {
     label: 'First Name',
     subLabel: 'ES',
@@ -379,23 +409,10 @@ export const WithSubLabel: Story = {
 };
 
 export const WithHelper: Story = {
-  argTypes: {
-    ...disableControls(
-      'subLabel',
-      'required',
-      'name',
-      'charCount',
-      'iconVisible',
-      'disabled',
-      'readOnly',
-      'error',
-      'pattern',
-      'minLength',
-      'errorMessage',
-      'validationTiming',
-      'inputType'
-    ),
-  },
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.WithHelper)
+  ),
   args: {
     label: 'Email',
     helper: 'We will never share your email.',
@@ -405,22 +422,10 @@ export const WithHelper: Story = {
 };
 
 export const WithIcon: Story = {
-  argTypes: {
-    ...disableControls(
-      'subLabel',
-      'required',
-      'name',
-      'charCount',
-      'disabled',
-      'readOnly',
-      'error',
-      'pattern',
-      'minLength',
-      'errorMessage',
-      'validationTiming',
-      'inputType'
-    ),
-  },
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.WithIcon)
+  ),
   args: {
     label: 'Search',
     helper: 'This field has an icon.',
@@ -431,22 +436,10 @@ export const WithIcon: Story = {
 };
 
 export const WithCharacterCount: Story = {
-  argTypes: {
-    ...disableControls(
-      'subLabel',
-      'required',
-      'name',
-      'iconVisible',
-      'disabled',
-      'readOnly',
-      'error',
-      'pattern',
-      'minLength',
-      'errorMessage',
-      'validationTiming',
-      'inputType'
-    ),
-  },
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.WithCharacterCount)
+  ),
   args: {
     label: 'Email',
     charCount: 20,
@@ -456,22 +449,10 @@ export const WithCharacterCount: Story = {
 };
 
 export const Password: Story = {
-  argTypes: {
-    ...disableControls(
-      'subLabel',
-      'required',
-      'name',
-      'charCount',
-      'iconVisible',
-      'disabled',
-      'readOnly',
-      'error',
-      'pattern',
-      'minLength',
-      'errorMessage',
-      'validationTiming'
-    ),
-  },
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.Password)
+  ),
   args: {
     label: 'Password',
     inputType: 'password',
@@ -482,23 +463,10 @@ export const Password: Story = {
 };
 
 export const Required: Story = {
-  argTypes: {
-    ...disableControls(
-      'subLabel',
-      'helper',
-      'name',
-      'charCount',
-      'iconVisible',
-      'disabled',
-      'readOnly',
-      'error',
-      'pattern',
-      'minLength',
-      'errorMessage',
-      'validationTiming',
-      'inputType'
-    ),
-  },
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.Required)
+  ),
   args: {
     label: 'Required Field',
     required: true,
@@ -507,23 +475,10 @@ export const Required: Story = {
 };
 
 export const Disabled: Story = {
-  argTypes: {
-    ...disableControls(
-      'subLabel',
-      'helper',
-      'required',
-      'name',
-      'charCount',
-      'iconVisible',
-      'readOnly',
-      'error',
-      'pattern',
-      'minLength',
-      'errorMessage',
-      'validationTiming',
-      'inputType'
-    ),
-  },
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.Disabled)
+  ),
   args: {
     label: 'Disabled',
     placeholder: 'This field is disabled',
@@ -533,24 +488,10 @@ export const Disabled: Story = {
 };
 
 export const ReadOnly: Story = {
-  argTypes: {
-    ...disableControls(
-      'subLabel',
-      'required',
-      'name',
-      'helper',
-      'value',
-      'charCount',
-      'iconVisible',
-      'disabled',
-      'error',
-      'pattern',
-      'minLength',
-      'errorMessage',
-      'validationTiming',
-      'inputType'
-    ),
-  },
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.ReadOnly)
+  ),
   args: {
     label: 'Read Only',
     placeholder: 'This field is read-only',
@@ -560,24 +501,10 @@ export const ReadOnly: Story = {
 };
 
 export const Error: Story = {
-  argTypes: {
-    ...disableControls(
-      'subLabel',
-      'required',
-      'name',
-      'helper',
-      'value',
-      'charCount',
-      'iconVisible',
-      'disabled',
-      'readOnly',
-      'pattern',
-      'minLength',
-      'errorMessage',
-      'validationTiming',
-      'inputType'
-    ),
-  },
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.Error)
+  ),
   args: {
     label: 'Error',
     placeholder: 'This field has an error',
@@ -587,21 +514,10 @@ export const Error: Story = {
 };
 
 export const WithMinLength: Story = {
-  argTypes: {
-    ...disableControls(
-      'subLabel',
-      'name',
-      'charCount',
-      'iconVisible',
-      'disabled',
-      'readOnly',
-      'error',
-      'pattern',
-      'required',
-      'errorMessage',
-      'inputType'
-    ),
-  },
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.WithMinLength)
+  ),
   args: {
     label: 'Min Length Validation',
     minLength: 5,
@@ -613,22 +529,10 @@ export const WithMinLength: Story = {
 };
 
 export const WithPattern: Story = {
-  argTypes: {
-    ...disableControls(
-      'subLabel',
-      'name',
-      'charCount',
-      'iconVisible',
-      'disabled',
-      'readOnly',
-      'error',
-      'minLength',
-      'required',
-      'errorMessage',
-      'validationTiming',
-      'inputType'
-    ),
-  },
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.WithPattern)
+  ),
   args: {
     label: 'Email Pattern Validation',
     pattern: '[^@]+@[^@]+\\.[a-zA-Z]{2,}',
@@ -640,22 +544,10 @@ export const WithPattern: Story = {
 };
 
 export const WithCustomValidationMessage: Story = {
-  argTypes: {
-    ...disableControls(
-      'subLabel',
-      'name',
-      'value',
-      'charCount',
-      'iconVisible',
-      'disabled',
-      'readOnly',
-      'error',
-      'minLength',
-      'pattern',
-      'validationTiming',
-      'inputType'
-    ),
-  },
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.WithCustomValidationMessage)
+  ),
   args: {
     label: 'Custom Validation Message',
     required: true,
@@ -666,21 +558,10 @@ export const WithCustomValidationMessage: Story = {
 };
 
 export const WithCustomValidationTiming: Story = {
-  argTypes: {
-    ...disableControls(
-      'subLabel',
-      'name',
-      'charCount',
-      'iconVisible',
-      'disabled',
-      'readOnly',
-      'error',
-      'pattern',
-      'required',
-      'errorMessage',
-      'inputType'
-    ),
-  },
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.WithCustomValidationTiming)
+  ),
   args: {
     label: 'Custom Validation Timing',
     minLength: 5,

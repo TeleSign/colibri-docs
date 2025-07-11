@@ -1,6 +1,6 @@
 import { html, nothing } from 'lit';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
-import { formatCodeString, disableControls, getDisabledControlsForVariant } from '@/utils';
+import { formatCodeString, disableControls, getDisabledControls } from '@/utils';
 import {
   TYPOGRAPHY_VARIANTS,
   TYPOGRAPHY_ELEMENTS,
@@ -233,6 +233,54 @@ export default meta;
 
 type Story = ColibriStory<StoryArgs>;
 
+const storyControls: (keyof StoryArgs)[] = [
+  'text',
+  'variant',
+  'element',
+  'size',
+  'state',
+  'align',
+  'required',
+  'disabled',
+  'ellipsis',
+  'maxLines',
+  'href',
+  'newTab',
+  'downloadable',
+  'downloadFilename',
+  'iconVisible',
+  'iconSize',
+  'iconName',
+];
+
+const enabledControlsMap: Record<string, (keyof StoryArgs)[]> = {
+  heading: ['text', 'variant', 'element', 'align'],
+  subheading: ['text', 'variant', 'align'],
+  display: ['text', 'variant', 'size', 'align', 'ellipsis', 'maxLines'],
+  label: ['text', 'variant', 'element', 'align', 'required', 'disabled'],
+  helper: ['text', 'variant', 'state', 'align'],
+  link: [
+    'text',
+    'variant',
+    'element',
+    'size',
+    'align',
+    'disabled',
+    'href',
+    'newTab',
+    'downloadable',
+    'downloadFilename',
+  ],
+  caption: ['text', 'variant', 'align'],
+  code: ['text', 'variant', 'align'],
+};
+
+const iconControls: (keyof StoryArgs)[] = ['iconVisible', 'iconName', 'iconSize'];
+
+enabledControlsMap['heading-with-icon'] = [...enabledControlsMap.heading, ...iconControls];
+enabledControlsMap['subheading-with-icon'] = [...enabledControlsMap.subheading, ...iconControls];
+enabledControlsMap['label-with-icon'] = [...enabledControlsMap.label, ...iconControls];
+
 /**
  * Reusable render function for typography component
  */
@@ -286,7 +334,10 @@ export const Heading: Story = {
     variant: TYPOGRAPHY_VARIANTS.HEADING,
     element: TYPOGRAPHY_ELEMENTS.H1,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('heading')),
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.heading)
+  ),
   render: renderTypography,
 };
 
@@ -302,7 +353,10 @@ export const HeadingWithIcon: Story = {
     iconName: 'info-circle',
     iconSize: '30px',
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('heading', true)),
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap['heading-with-icon'])
+  ),
   render: renderTypography,
 };
 
@@ -314,7 +368,10 @@ export const Subheading: Story = {
     text: SampleText,
     variant: TYPOGRAPHY_VARIANTS.SUBHEADING,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('subheading')),
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.subheading)
+  ),
   render: renderTypography,
 };
 
@@ -329,7 +386,10 @@ export const SubheadingWithIcon: Story = {
     iconName: 'info-circle',
     iconSize: '12px',
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('subheading', true)),
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap['subheading-with-icon'])
+  ),
   render: renderTypography,
 };
 
@@ -342,7 +402,10 @@ export const Display: Story = {
     variant: TYPOGRAPHY_VARIANTS.DISPLAY,
     size: TYPOGRAPHY_DISPLAY_SIZES.EXTRA_LARGE,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('display')),
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.display)
+  ),
   render: renderTypography,
 };
 
@@ -355,7 +418,10 @@ export const Label: Story = {
     variant: TYPOGRAPHY_VARIANTS.LABEL,
     element: TYPOGRAPHY_ELEMENTS.LABEL,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('label')),
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.label)
+  ),
   render: renderTypography,
 };
 
@@ -371,7 +437,10 @@ export const LabelWithIcon: Story = {
     iconName: 'info-circle',
     iconSize: '12px',
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('label', true)),
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap['label-with-icon'])
+  ),
   render: renderTypography,
 };
 
@@ -385,7 +454,10 @@ export const LabelWithRequiredIndicator: Story = {
     element: TYPOGRAPHY_ELEMENTS.LABEL,
     required: true,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('label')),
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.label)
+  ),
   render: renderTypography,
 };
 
@@ -399,7 +471,10 @@ export const LabelWithDisabledState: Story = {
     element: TYPOGRAPHY_ELEMENTS.LABEL,
     disabled: true,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('label')),
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.label)
+  ),
   render: renderTypography,
 };
 
@@ -412,7 +487,10 @@ export const Helper: Story = {
     variant: TYPOGRAPHY_VARIANTS.HELPER,
     state: STATES.DEFAULT,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('helper')),
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.helper)
+  ),
   render: renderTypography,
 };
 
@@ -425,7 +503,10 @@ export const HelperWithError: Story = {
     variant: TYPOGRAPHY_VARIANTS.HELPER,
     state: STATES.ERROR,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('helper')),
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.helper)
+  ),
   render: renderTypography,
 };
 
@@ -440,7 +521,10 @@ export const Link: Story = {
     href: 'https://example.com',
     newTab: true,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('link')),
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.link)
+  ),
   render: renderTypography,
 };
 
@@ -455,7 +539,10 @@ export const LinkWithDisabledState: Story = {
     href: 'https://example.com',
     disabled: true,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('link')),
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.link)
+  ),
   render: renderTypography,
 };
 
@@ -471,7 +558,10 @@ export const LinkWithDownloadFilename: Story = {
     downloadable: true,
     downloadFilename: 'example.pdf',
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('link')),
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.link)
+  ),
   render: renderTypography,
 };
 
@@ -483,7 +573,10 @@ export const Caption: Story = {
     text: SampleText,
     variant: TYPOGRAPHY_VARIANTS.CAPTION,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('caption')),
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.caption)
+  ),
   render: renderTypography,
 };
 
@@ -495,7 +588,10 @@ export const Code: Story = {
     text: SampleText,
     variant: TYPOGRAPHY_VARIANTS.CODE,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('code')),
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.code)
+  ),
   render: renderTypography,
 };
 
@@ -509,7 +605,10 @@ export const TextTruncation: Story = {
     ellipsis: true,
     maxLines: 2,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('display')),
+  argTypes: disableControls(
+    meta.argTypes || {},
+    ...getDisabledControls(storyControls, enabledControlsMap.display)
+  ),
   render: (args, context) => html`
     <div style="width: 400px">${renderTypography(args, context)}</div>
   `,
