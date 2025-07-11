@@ -1,6 +1,7 @@
 import { html, nothing } from 'lit';
 import { action } from '@storybook/addon-actions';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
+import { disableControls, formatCodeString } from '@/utils';
 import { icons } from '@telesign/colibri-icons/icons-list';
 
 type StoryArgs = {
@@ -20,6 +21,7 @@ type StoryArgs = {
   inputMode?: string;
   errorMessage?: string;
   validationTiming: 'blur' | 'change' | 'input' | 'submit';
+  name: string;
   iconVisible: boolean;
   iconName: string;
   iconSize: string;
@@ -36,6 +38,14 @@ type StoryArgs = {
 const meta: ColibriStoryMeta<StoryArgs> = {
   title: 'Molecules/Text Field',
   component: 'col-text-field',
+  parameters: {
+    docs: {
+      source: {
+        excludeDecorators: true,
+        transform: formatCodeString,
+      },
+    },
+  },
   argTypes: {
     label: {
       control: 'text',
@@ -181,6 +191,15 @@ const meta: ColibriStoryMeta<StoryArgs> = {
         defaultValue: { summary: 'blur' },
       },
     },
+    name: {
+      control: 'text',
+      description: 'The name of the form field, used for form submission.',
+      table: {
+        category: 'Form',
+        type: { summary: 'string' },
+        defaultValue: { summary: '' },
+      },
+    },
     iconVisible: {
       control: 'boolean',
       description: 'Toggles the visibility of the icon slot.',
@@ -244,7 +263,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
     label: 'Label',
     value: '',
     subLabel: '',
-    helper: 'This is a helper text.',
+    helper: '',
     inputType: 'text',
     placeholder: 'Enter text here...',
     disabled: false,
@@ -252,11 +271,11 @@ const meta: ColibriStoryMeta<StoryArgs> = {
     error: false,
     required: false,
     validationTiming: 'blur',
+    name: 'col-text-field',
     iconVisible: false,
     iconName: 'search',
     iconSize: '16px',
   },
-  parameters: {},
 };
 
 export default meta;
@@ -280,6 +299,7 @@ const renderTextField: Story['render'] = args => html`
     input-mode=${args.inputMode || nothing}
     error-message=${args.errorMessage || nothing}
     validation-timing=${args.validationTiming}
+    name=${args.name || nothing}
     @change=${action('change')}
     @input=${action('input')}
     @focus=${action('focus')}
@@ -298,11 +318,377 @@ const renderTextField: Story['render'] = args => html`
 export const Default: Story = {
   args: {
     label: 'Default Label Text',
-    subLabel: 'Label',
+    subLabel: '',
     iconVisible: true,
     iconName: 'emoji-circle',
     required: true,
     inputType: 'password',
+  },
+  render: renderTextField,
+};
+
+export const WithLabel: Story = {
+  argTypes: {
+    ...disableControls(
+      'subLabel',
+      'helper',
+      'required',
+      'name',
+      'charCount',
+      'iconVisible',
+      'disabled',
+      'readOnly',
+      'error',
+      'pattern',
+      'minLength',
+      'errorMessage',
+      'validationTiming',
+      'inputType'
+    ),
+  },
+  args: {
+    label: 'With Label',
+  },
+  render: renderTextField,
+};
+
+export const WithSubLabel: Story = {
+  argTypes: {
+    ...disableControls(
+      'helper',
+      'required',
+      'name',
+      'charCount',
+      'iconVisible',
+      'disabled',
+      'readOnly',
+      'error',
+      'pattern',
+      'minLength',
+      'errorMessage',
+      'validationTiming',
+      'inputType'
+    ),
+  },
+  args: {
+    label: 'First Name',
+    subLabel: 'ES',
+    placeholder: 'Enter your first name here',
+  },
+  render: renderTextField,
+};
+
+export const WithHelper: Story = {
+  argTypes: {
+    ...disableControls(
+      'subLabel',
+      'required',
+      'name',
+      'charCount',
+      'iconVisible',
+      'disabled',
+      'readOnly',
+      'error',
+      'pattern',
+      'minLength',
+      'errorMessage',
+      'validationTiming',
+      'inputType'
+    ),
+  },
+  args: {
+    label: 'Email',
+    helper: 'We will never share your email.',
+    placeholder: 'Enter your email here',
+  },
+  render: renderTextField,
+};
+
+export const WithIcon: Story = {
+  argTypes: {
+    ...disableControls(
+      'subLabel',
+      'required',
+      'name',
+      'charCount',
+      'disabled',
+      'readOnly',
+      'error',
+      'pattern',
+      'minLength',
+      'errorMessage',
+      'validationTiming',
+      'inputType'
+    ),
+  },
+  args: {
+    label: 'Search',
+    helper: 'This field has an icon.',
+    iconVisible: true,
+    iconName: 'search',
+  },
+  render: renderTextField,
+};
+
+export const WithCharacterCount: Story = {
+  argTypes: {
+    ...disableControls(
+      'subLabel',
+      'required',
+      'name',
+      'iconVisible',
+      'disabled',
+      'readOnly',
+      'error',
+      'pattern',
+      'minLength',
+      'errorMessage',
+      'validationTiming',
+      'inputType'
+    ),
+  },
+  args: {
+    label: 'Email',
+    charCount: 20,
+    placeholder: 'Enter your email here no longer than 20 characters',
+  },
+  render: renderTextField,
+};
+
+export const Password: Story = {
+  argTypes: {
+    ...disableControls(
+      'subLabel',
+      'required',
+      'name',
+      'charCount',
+      'iconVisible',
+      'disabled',
+      'readOnly',
+      'error',
+      'pattern',
+      'minLength',
+      'errorMessage',
+      'validationTiming'
+    ),
+  },
+  args: {
+    label: 'Password',
+    inputType: 'password',
+    value: 'secret-password',
+    helper: 'This is a password field.',
+  },
+  render: renderTextField,
+};
+
+export const Required: Story = {
+  argTypes: {
+    ...disableControls(
+      'subLabel',
+      'helper',
+      'name',
+      'charCount',
+      'iconVisible',
+      'disabled',
+      'readOnly',
+      'error',
+      'pattern',
+      'minLength',
+      'errorMessage',
+      'validationTiming',
+      'inputType'
+    ),
+  },
+  args: {
+    label: 'Required Field',
+    required: true,
+  },
+  render: renderTextField,
+};
+
+export const Disabled: Story = {
+  argTypes: {
+    ...disableControls(
+      'subLabel',
+      'helper',
+      'required',
+      'name',
+      'charCount',
+      'iconVisible',
+      'readOnly',
+      'error',
+      'pattern',
+      'minLength',
+      'errorMessage',
+      'validationTiming',
+      'inputType'
+    ),
+  },
+  args: {
+    label: 'Disabled',
+    placeholder: 'This field is disabled',
+    disabled: true,
+  },
+  render: renderTextField,
+};
+
+export const ReadOnly: Story = {
+  argTypes: {
+    ...disableControls(
+      'subLabel',
+      'required',
+      'name',
+      'helper',
+      'value',
+      'charCount',
+      'iconVisible',
+      'disabled',
+      'error',
+      'pattern',
+      'minLength',
+      'errorMessage',
+      'validationTiming',
+      'inputType'
+    ),
+  },
+  args: {
+    label: 'Read Only',
+    placeholder: 'This field is read-only',
+    readOnly: true,
+  },
+  render: renderTextField,
+};
+
+export const Error: Story = {
+  argTypes: {
+    ...disableControls(
+      'subLabel',
+      'required',
+      'name',
+      'helper',
+      'value',
+      'charCount',
+      'iconVisible',
+      'disabled',
+      'readOnly',
+      'pattern',
+      'minLength',
+      'errorMessage',
+      'validationTiming',
+      'inputType'
+    ),
+  },
+  args: {
+    label: 'Error',
+    placeholder: 'This field has an error',
+    error: true,
+  },
+  render: renderTextField,
+};
+
+export const WithMinLength: Story = {
+  argTypes: {
+    ...disableControls(
+      'subLabel',
+      'name',
+      'charCount',
+      'iconVisible',
+      'disabled',
+      'readOnly',
+      'error',
+      'pattern',
+      'required',
+      'errorMessage',
+      'inputType'
+    ),
+  },
+  args: {
+    label: 'Min Length Validation',
+    minLength: 5,
+    placeholder: 'Enter text here no shorter than 5 characters',
+    helper: 'The value must be at least 5 characters long.',
+    validationTiming: 'input',
+  },
+  render: renderTextField,
+};
+
+export const WithPattern: Story = {
+  argTypes: {
+    ...disableControls(
+      'subLabel',
+      'name',
+      'charCount',
+      'iconVisible',
+      'disabled',
+      'readOnly',
+      'error',
+      'minLength',
+      'required',
+      'errorMessage',
+      'validationTiming',
+      'inputType'
+    ),
+  },
+  args: {
+    label: 'Email Pattern Validation',
+    pattern: '[^@]+@[^@]+\\.[a-zA-Z]{2,}',
+    placeholder: 'Enter a valid email address',
+    helper: 'The value must be a valid email address.',
+    validationTiming: 'input',
+  },
+  render: renderTextField,
+};
+
+export const WithCustomValidationMessage: Story = {
+  argTypes: {
+    ...disableControls(
+      'subLabel',
+      'name',
+      'value',
+      'charCount',
+      'iconVisible',
+      'disabled',
+      'readOnly',
+      'error',
+      'minLength',
+      'pattern',
+      'validationTiming',
+      'inputType'
+    ),
+  },
+  args: {
+    label: 'Custom Validation Message',
+    required: true,
+    errorMessage: 'This is a custom error message for a required field.',
+    helper: 'This field is required. Click on the field and then blur it to see the validation.',
+  },
+  render: renderTextField,
+};
+
+export const WithCustomValidationTiming: Story = {
+  argTypes: {
+    ...disableControls(
+      'subLabel',
+      'name',
+      'charCount',
+      'iconVisible',
+      'disabled',
+      'readOnly',
+      'error',
+      'pattern',
+      'required',
+      'errorMessage',
+      'inputType'
+    ),
+  },
+  args: {
+    label: 'Custom Validation Timing',
+    minLength: 5,
+    validationTiming: 'input',
+    placeholder: 'Enter text here no shorter than 5 characters',
+    helper:
+      'Validation triggers on every input. Try changing the validation timing to `blur`  in the controls to see the difference.',
+    errorMessage: 'The value must be at least 5 characters long.',
   },
   render: renderTextField,
 };
