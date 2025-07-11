@@ -270,42 +270,66 @@ const meta: ColibriStoryMeta<StoryArgs> = {
     change: {
       action: 'change',
       description: 'Fired when the value is committed.',
-      table: { category: 'Events' },
+      table: {
+        category: 'Events',
+        type: { summary: 'CustomEvent<{ value: string }>' },
+      },
     },
     input: {
       action: 'input',
       description: 'Fired when the value changes.',
-      table: { category: 'Events' },
+      table: {
+        category: 'Events',
+        type: { summary: 'CustomEvent<{ value: string }>' },
+      },
     },
     focus: {
       action: 'focus',
       description: 'Fired when the component gains focus.',
-      table: { category: 'Events' },
+      table: {
+        category: 'Events',
+        type: { summary: 'FocusEvent' },
+      },
     },
     blur: {
       action: 'blur',
       description: 'Fired when the component loses focus.',
-      table: { category: 'Events' },
+      table: {
+        category: 'Events',
+        type: { summary: 'FocusEvent' },
+      },
     },
     keydown: {
       action: 'keydown',
       description: 'Fired on keydown.',
-      table: { category: 'Events' },
+      table: {
+        category: 'Events',
+        type: { summary: 'KeyboardEvent' },
+      },
     },
     keyup: {
       action: 'keyup',
       description: 'Fired on keyup.',
-      table: { category: 'Events' },
+      table: {
+        category: 'Events',
+        type: { summary: 'KeyboardEvent' },
+      },
     },
     paste: {
       action: 'paste',
       description: 'Fired on paste.',
-      table: { category: 'Events' },
+      table: {
+        category: 'Events',
+        type: { summary: 'ClipboardEvent' },
+      },
     },
     invalid: {
       action: 'invalid',
       description: 'Fired when the component fails validation.',
-      table: { category: 'Events' },
+      table: {
+        category: 'Events',
+        type: { summary: 'CustomEvent<ValidityState>' },
+      },
     },
     inputMode: {
       name: 'input-mode',
