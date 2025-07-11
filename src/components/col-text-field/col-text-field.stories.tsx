@@ -20,7 +20,7 @@ type StoryArgs = {
   minLength?: number;
   inputMode?: string;
   errorMessage?: string;
-  validationTiming: 'blur' | 'change' | 'input' | 'submit';
+  validationTiming?: 'blur' | 'change' | 'input' | 'submit';
   name: string;
   iconVisible: boolean;
   iconName: string;
@@ -351,7 +351,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
     error: false,
     required: false,
     inputMode: 'text',
-    validationTiming: 'blur',
+    validationTiming: undefined,
     name: 'col-text-field',
     iconVisible: false,
     iconName: 'search',
@@ -371,7 +371,7 @@ const renderTextField: Story['render'] = args => html`
     input-type=${args.inputType}
     ?required=${args.required}
     placeholder=${args.placeholder || nothing}
-    .charCount=${args.charCount || nothing}
+    char-count=${args.charCount || nothing}
     ?disabled=${args.disabled}
     ?read-only=${args.readOnly}
     ?error=${args.error}
@@ -379,7 +379,7 @@ const renderTextField: Story['render'] = args => html`
     min-length=${args.minLength || nothing}
     input-mode=${args.inputMode || nothing}
     error-message=${args.errorMessage || nothing}
-    validation-timing=${args.validationTiming}
+    validation-timing=${args.validationTiming || nothing}
     name=${args.name || nothing}
     @change=${action('change')}
     @input=${action('input')}
