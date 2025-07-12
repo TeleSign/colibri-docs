@@ -296,7 +296,7 @@ const meta = {
       description:
         'Toggles the visibility of the icon slot. **Storybook control only, not a component prop.**',
       table: {
-        category: 'slots',
+        category: 'Storybook',
         defaultValue: { summary: 'false' },
       },
       if: { arg: 'iconVisible', neq: false },
@@ -307,13 +307,13 @@ const meta = {
       description:
         'Name of the icon to display in the slot. **Storybook control only, not a component prop.**',
       if: { arg: 'iconVisible' },
-      table: { category: 'slots' },
+      table: { category: 'Storybook' },
     },
     iconSize: {
       control: 'text',
       description: 'Size of the icon. **Storybook control only, not a component prop.**',
       if: { arg: 'iconVisible' },
-      table: { category: 'slots' },
+      table: { category: 'Storybook' },
     },
   },
   args: {
