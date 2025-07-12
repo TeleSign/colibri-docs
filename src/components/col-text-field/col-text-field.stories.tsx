@@ -35,7 +35,7 @@ type StoryArgs = {
   invalid: () => void;
 };
 
-const meta: ColibriStoryMeta<StoryArgs> = {
+const meta = {
   title: 'Molecules/Text Field',
   component: 'col-text-field',
   parameters: {
@@ -346,7 +346,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
     iconName: 'search',
     iconSize: '16px',
   },
-};
+} satisfies ColibriStoryMeta<StoryArgs>;
 
 export default meta;
 type Story = ColibriStory<StoryArgs>;
