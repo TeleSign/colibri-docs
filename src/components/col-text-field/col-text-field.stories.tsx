@@ -56,7 +56,6 @@ const storyControls: (keyof StoryArgs)[] = [
   'iconVisible',
   'iconName',
   'iconSize',
-  'inputMode',
 ];
 
 const enabledControlsMap: Record<string, (keyof StoryArgs)[]> = {
@@ -92,6 +91,9 @@ const meta: ColibriStoryMeta<StoryArgs> = {
       source: {
         excludeDecorators: true,
         transform: formatCodeString,
+      },
+      controls: {
+        categories: ['Core', 'State', 'Validation', 'Form', 'Events', 'Storybook Controls'],
       },
     },
   },
@@ -163,6 +165,17 @@ const meta: ColibriStoryMeta<StoryArgs> = {
         defaultValue: { summary: 'undefined' },
       },
     },
+    inputMode: {
+      name: 'input-mode',
+      control: 'select',
+      options: ['text', 'email', 'numeric', 'tel', 'url'],
+      description: 'The input mode for the input field.',
+      table: {
+        category: 'Core',
+        type: { summary: "'text' | 'email' | 'numeric' | 'tel' | 'url'" },
+        defaultValue: { summary: 'text' },
+      },
+    },
     disabled: {
       control: 'boolean',
       description: 'Disables the text field.',
@@ -173,9 +186,9 @@ const meta: ColibriStoryMeta<StoryArgs> = {
       },
     },
     readOnly: {
-      name: 'read-only',
+      name: 'readonly',
       control: 'boolean',
-      description: 'Makes the text field read-only.',
+      description: 'Makes the text field readonly.',
       table: {
         category: 'State',
         type: { summary: 'boolean' },
@@ -249,24 +262,6 @@ const meta: ColibriStoryMeta<StoryArgs> = {
         defaultValue: { summary: '' },
       },
     },
-    iconVisible: {
-      control: 'boolean',
-      description: 'Toggles the visibility of the icon slot.',
-      table: { category: 'Slots' },
-    },
-    iconName: {
-      control: 'select',
-      options: icons,
-      description: 'Name of the icon to display in the slot.',
-      if: { arg: 'iconVisible' },
-      table: { category: 'Slots' },
-    },
-    iconSize: {
-      control: 'text',
-      description: 'Size of the icon.',
-      if: { arg: 'iconVisible' },
-      table: { category: 'Slots' },
-    },
     change: {
       action: 'change',
       description: 'Fired when the value is committed.',
@@ -331,12 +326,23 @@ const meta: ColibriStoryMeta<StoryArgs> = {
         type: { summary: 'CustomEvent<ValidityState>' },
       },
     },
-    inputMode: {
-      name: 'input-mode',
+    iconVisible: {
+      control: 'boolean',
+      description: 'Toggles the visibility of the icon slot.',
+      table: { category: 'Storybook Controls' },
+    },
+    iconName: {
       control: 'select',
-      options: ['text', 'email', 'numeric', 'tel', 'url'],
-      description: 'The input mode for the input field.',
-      table: { category: 'Core' },
+      options: icons,
+      description: 'Name of the icon to display in the slot.',
+      if: { arg: 'iconVisible' },
+      table: { category: 'Storybook Controls' },
+    },
+    iconSize: {
+      control: 'text',
+      description: 'Size of the icon.',
+      if: { arg: 'iconVisible' },
+      table: { category: 'Storybook Controls' },
     },
   },
   args: {
@@ -373,7 +379,7 @@ const renderTextField: Story['render'] = args => html`
     placeholder=${args.placeholder || nothing}
     char-count=${args.charCount || nothing}
     ?disabled=${args.disabled}
-    ?read-only=${args.readOnly}
+    ?readonly=${args.readOnly}
     ?error=${args.error}
     pattern=${args.pattern || nothing}
     min-length=${args.minLength || nothing}
@@ -606,23 +612,27 @@ export const InteractiveFormExample: Story = {
   render: () => {
     const formId = 'interactive-form-example';
     const outputId = 'form-output';
+    const isInDocs = window.location.search.includes('viewMode=docs');
 
     const script = `
       const form = document.getElementById('${formId}');
       const output = document.getElementById('${outputId}');
+      const isInDocs = ${isInDocs};
 
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
-        output.textContent = JSON.stringify(data, null, 2);
-        output.style.display = 'block';
-      });
+      if (!isInDocs) {
+        form.addEventListener('submit', (event) => {
+          event.preventDefault();
+          const formData = new FormData(form);
+          const data = Object.fromEntries(formData.entries());
+          output.textContent = JSON.stringify(data, null, 2);
+          output.style.display = 'block';
+        });
 
-      form.addEventListener('reset', () => {
-        output.textContent = '';
-        output.style.display = 'none';
-      });
+        form.addEventListener('reset', () => {
+          output.textContent = '';
+          output.style.display = 'none';
+        });
+      }
     `;
 
     return html`
@@ -668,14 +678,18 @@ export const InteractiveFormExample: Story = {
           helper="We will use this to contact you."
         ></col-text-field>
         <col-group>
-          <col-button type="submit">Submit</col-button>
-          <col-button type="reset" variant="secondary">Reset</col-button>
+          <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
+          <col-button type="reset" variant="secondary" ?disabled=${isInDocs}>Reset</col-button>
         </col-group>
       </form>
-      <pre id="${outputId}"></pre>
-      <script>
-        ${script};
-      </script>
+      ${isInDocs
+        ? nothing
+        : html`
+            <pre id="${outputId}"></pre>
+            <script>
+              ${script};
+            </script>
+          `}
     `;
   },
 };
