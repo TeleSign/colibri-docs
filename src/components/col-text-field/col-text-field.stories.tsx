@@ -1,7 +1,7 @@
 import { html, nothing } from 'lit';
 import { action } from '@storybook/addon-actions';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
-import { disableControls, formatCodeString, getDisabledControls } from '@/utils';
+import { formatCodeString } from '@/utils';
 import { icons } from '@telesign/colibri-icons/icons-list';
 
 type StoryArgs = {
@@ -35,54 +35,6 @@ type StoryArgs = {
   invalid: () => void;
 };
 
-const storyControls: (keyof StoryArgs)[] = [
-  'value',
-  'label',
-  'subLabel',
-  'helper',
-  'inputType',
-  'required',
-  'placeholder',
-  'charCount',
-  'disabled',
-  'readOnly',
-  'error',
-  'pattern',
-  'minLength',
-  'inputMode',
-  'errorMessage',
-  'validationTiming',
-  'name',
-  'iconVisible',
-  'iconName',
-  'iconSize',
-];
-
-const enabledControlsMap: Record<string, (keyof StoryArgs)[]> = {
-  WithLabel: ['label', 'value', 'placeholder'],
-  WithSubLabel: ['label', 'subLabel', 'value', 'placeholder'],
-  WithHelper: ['label', 'helper', 'value', 'placeholder'],
-  WithIcon: ['label', 'helper', 'value', 'placeholder', 'iconVisible', 'iconName', 'iconSize'],
-  WithCharacterCount: ['label', 'helper', 'value', 'placeholder', 'charCount'],
-  Password: ['label', 'helper', 'value', 'placeholder', 'inputType'],
-  Required: ['label', 'placeholder', 'value', 'required'],
-  Disabled: ['label', 'placeholder', 'value', 'disabled'],
-  ReadOnly: ['label', 'placeholder', 'readOnly'],
-  Error: ['label', 'placeholder', 'error'],
-  WithMinLength: ['label', 'helper', 'placeholder', 'value', 'minLength', 'validationTiming'],
-  WithPattern: ['label', 'helper', 'placeholder', 'value', 'pattern'],
-  WithCustomValidationMessage: ['label', 'helper', 'placeholder', 'required', 'errorMessage'],
-  WithCustomValidationTiming: [
-    'label',
-    'helper',
-    'placeholder',
-    'value',
-    'minLength',
-    'validationTiming',
-    'errorMessage',
-  ],
-};
-
 const meta: ColibriStoryMeta<StoryArgs> = {
   title: 'Molecules/Text Field',
   component: 'col-text-field',
@@ -91,9 +43,6 @@ const meta: ColibriStoryMeta<StoryArgs> = {
       source: {
         excludeDecorators: true,
         transform: formatCodeString,
-      },
-      controls: {
-        categories: ['Core', 'State', 'Validation', 'Form', 'Events', 'Storybook Controls'],
       },
     },
   },
@@ -106,6 +55,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
       },
+      if: { arg: 'label', neq: '' },
     },
     subLabel: {
       name: 'sub-label',
@@ -116,6 +66,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
       },
+      if: { arg: 'subLabel', neq: '' },
     },
     helper: {
       control: 'text',
@@ -125,6 +76,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
       },
+      if: { arg: 'helper', neq: '' },
     },
     value: {
       control: 'text',
@@ -145,6 +97,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
         type: { summary: "'text' | 'password'" },
         defaultValue: { summary: 'text' },
       },
+      if: { arg: 'inputType', neq: '' },
     },
     placeholder: {
       control: 'text',
@@ -154,6 +107,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
       },
+      if: { arg: 'placeholder', neq: '' },
     },
     charCount: {
       name: 'char-count',
@@ -164,6 +118,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
         type: { summary: 'number' },
         defaultValue: { summary: 'undefined' },
       },
+      if: { arg: 'charCount', neq: 0 },
     },
     inputMode: {
       name: 'input-mode',
@@ -175,6 +130,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
         type: { summary: "'text' | 'email' | 'numeric' | 'tel' | 'url'" },
         defaultValue: { summary: 'text' },
       },
+      if: { arg: 'inputMode', neq: '' },
     },
     disabled: {
       control: 'boolean',
@@ -184,6 +140,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
       },
+      if: { arg: 'disabled', neq: false },
     },
     readOnly: {
       name: 'readonly',
@@ -194,6 +151,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
       },
+      if: { arg: 'readOnly', neq: false },
     },
     error: {
       control: 'boolean',
@@ -203,6 +161,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
       },
+      if: { arg: 'error', neq: false },
     },
     required: {
       control: 'boolean',
@@ -212,6 +171,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
       },
+      if: { arg: 'required', neq: false },
     },
     pattern: {
       control: 'text',
@@ -221,6 +181,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
         type: { summary: 'string' },
         defaultValue: { summary: 'undefined' },
       },
+      if: { arg: 'pattern', neq: '' },
     },
     minLength: {
       name: 'min-length',
@@ -231,6 +192,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
         type: { summary: 'number' },
         defaultValue: { summary: 'undefined' },
       },
+      if: { arg: 'minLength', neq: 0 },
     },
     errorMessage: {
       name: 'error-message',
@@ -241,6 +203,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
         type: { summary: 'string' },
         defaultValue: { summary: 'undefined' },
       },
+      if: { arg: 'errorMessage', neq: '' },
     },
     validationTiming: {
       name: 'validation-timing',
@@ -252,6 +215,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
         type: { summary: "'blur' | 'change' | 'input' | 'submit'" },
         defaultValue: { summary: 'blur' },
       },
+      if: { arg: 'validationTiming', neq: '' },
     },
     name: {
       control: 'text',
@@ -261,6 +225,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
       },
+      if: { arg: 'name', neq: '' },
     },
     change: {
       action: 'change',
@@ -328,37 +293,55 @@ const meta: ColibriStoryMeta<StoryArgs> = {
     },
     iconVisible: {
       control: 'boolean',
-      description: 'Toggles the visibility of the icon slot.',
-      table: { category: 'Storybook Controls' },
+      description:
+        'Toggles the visibility of the icon slot. **Storybook control only, not a component prop.**',
+      table: {
+        category: 'slots',
+        defaultValue: { summary: 'false' },
+      },
+      if: { arg: 'iconVisible', neq: false },
     },
     iconName: {
       control: 'select',
       options: icons,
-      description: 'Name of the icon to display in the slot.',
+      description:
+        'Name of the icon to display in the slot. **Storybook control only, not a component prop.**',
       if: { arg: 'iconVisible' },
-      table: { category: 'Storybook Controls' },
+      table: { category: 'slots' },
     },
     iconSize: {
       control: 'text',
-      description: 'Size of the icon.',
+      description: 'Size of the icon. **Storybook control only, not a component prop.**',
       if: { arg: 'iconVisible' },
-      table: { category: 'Storybook Controls' },
+      table: { category: 'slots' },
     },
   },
   args: {
-    label: 'Label',
+    label: '',
     value: '',
     subLabel: '',
     helper: '',
     inputType: 'text',
     placeholder: 'Enter text here...',
+    name: '',
+    charCount: 0,
     disabled: false,
     readOnly: false,
     error: false,
     required: false,
-    inputMode: 'text',
-    validationTiming: undefined,
-    name: 'col-text-field',
+    errorMessage: '',
+    inputMode: '',
+    pattern: '',
+    minLength: 0,
+    validationTiming: 'blur',
+    change: action('change'),
+    input: action('input'),
+    focus: action('focus'),
+    blur: action('blur'),
+    keydown: action('keydown'),
+    keyup: action('keyup'),
+    paste: action('paste'),
+    invalid: action('invalid'),
     iconVisible: false,
     iconName: 'search',
     iconSize: '16px',
@@ -370,31 +353,31 @@ type Story = ColibriStory<StoryArgs>;
 
 const renderTextField: Story['render'] = args => html`
   <col-text-field
+    name=${args.name || nothing}
     .value=${args.value}
     label=${args.label || nothing}
     sub-label=${args.subLabel || nothing}
     helper=${args.helper || nothing}
     input-type=${args.inputType}
-    ?required=${args.required}
     placeholder=${args.placeholder || nothing}
     char-count=${args.charCount || nothing}
-    ?disabled=${args.disabled}
-    ?readonly=${args.readOnly}
-    ?error=${args.error}
     pattern=${args.pattern || nothing}
     min-length=${args.minLength || nothing}
     input-mode=${args.inputMode || nothing}
     error-message=${args.errorMessage || nothing}
     validation-timing=${args.validationTiming || nothing}
-    name=${args.name || nothing}
-    @change=${action('change')}
-    @input=${action('input')}
-    @focus=${action('focus')}
-    @blur=${action('blur')}
-    @keydown=${action('keydown')}
-    @keyup=${action('keyup')}
-    @paste=${action('paste')}
-    @invalid=${action('invalid')}
+    ?disabled=${args.disabled}
+    ?readonly=${args.readOnly}
+    ?error=${args.error}
+    ?required=${args.required}
+    @change=${args.change}
+    @input=${args.input}
+    @focus=${args.focus}
+    @blur=${args.blur}
+    @keydown=${args.keydown}
+    @keyup=${args.keyup}
+    @paste=${args.paste}
+    @invalid=${args.invalid}
   >
     ${args.iconVisible
       ? html`<col-icon slot="icon" name=${args.iconName} size=${args.iconSize}></col-icon>`
@@ -404,21 +387,23 @@ const renderTextField: Story['render'] = args => html`
 
 export const Default: Story = {
   args: {
-    label: 'Default Label Text',
-    subLabel: '',
+    name: 'text-field-name',
+    label: 'Label Text',
+    subLabel: 'Sub Label',
+    helper: 'Helper Text',
+    required: true,
+    charCount: 20,
+    inputType: 'text',
+    inputMode: 'text',
     iconVisible: true,
     iconName: 'emoji-circle',
-    required: true,
-    inputType: 'password',
+    iconSize: '16px',
+    validationTiming: 'input',
   },
   render: renderTextField,
 };
 
 export const WithLabel: Story = {
-  argTypes: disableControls(
-    meta.argTypes || {},
-    ...getDisabledControls(storyControls, enabledControlsMap.WithLabel)
-  ),
   args: {
     label: 'With Label',
   },
@@ -426,25 +411,15 @@ export const WithLabel: Story = {
 };
 
 export const WithSubLabel: Story = {
-  argTypes: disableControls(
-    meta.argTypes || {},
-    ...getDisabledControls(storyControls, enabledControlsMap.WithSubLabel)
-  ),
   args: {
-    label: 'First Name',
-    subLabel: 'ES',
+    subLabel: 'Sub Label',
     placeholder: 'Enter your first name here',
   },
   render: renderTextField,
 };
 
 export const WithHelper: Story = {
-  argTypes: disableControls(
-    meta.argTypes || {},
-    ...getDisabledControls(storyControls, enabledControlsMap.WithHelper)
-  ),
   args: {
-    label: 'Email',
     helper: 'We will never share your email.',
     placeholder: 'Enter your email here',
   },
@@ -452,26 +427,16 @@ export const WithHelper: Story = {
 };
 
 export const WithIcon: Story = {
-  argTypes: disableControls(
-    meta.argTypes || {},
-    ...getDisabledControls(storyControls, enabledControlsMap.WithIcon)
-  ),
   args: {
-    label: 'Search',
-    helper: 'This field has an icon.',
     iconVisible: true,
     iconName: 'search',
+    iconSize: '16px',
   },
   render: renderTextField,
 };
 
 export const WithCharacterCount: Story = {
-  argTypes: disableControls(
-    meta.argTypes || {},
-    ...getDisabledControls(storyControls, enabledControlsMap.WithCharacterCount)
-  ),
   args: {
-    label: 'Email',
     charCount: 20,
     placeholder: 'Enter your email here no longer than 20 characters',
   },
@@ -479,24 +444,15 @@ export const WithCharacterCount: Story = {
 };
 
 export const Password: Story = {
-  argTypes: disableControls(
-    meta.argTypes || {},
-    ...getDisabledControls(storyControls, enabledControlsMap.Password)
-  ),
   args: {
-    label: 'Password',
     inputType: 'password',
     value: 'secret-password',
-    helper: 'This is a password field.',
+    placeholder: '',
   },
   render: renderTextField,
 };
 
 export const Required: Story = {
-  argTypes: disableControls(
-    meta.argTypes || {},
-    ...getDisabledControls(storyControls, enabledControlsMap.Required)
-  ),
   args: {
     label: 'Required Field',
     required: true,
@@ -505,12 +461,7 @@ export const Required: Story = {
 };
 
 export const Disabled: Story = {
-  argTypes: disableControls(
-    meta.argTypes || {},
-    ...getDisabledControls(storyControls, enabledControlsMap.Disabled)
-  ),
   args: {
-    label: 'Disabled',
     placeholder: 'This field is disabled',
     disabled: true,
   },
@@ -518,12 +469,7 @@ export const Disabled: Story = {
 };
 
 export const ReadOnly: Story = {
-  argTypes: disableControls(
-    meta.argTypes || {},
-    ...getDisabledControls(storyControls, enabledControlsMap.ReadOnly)
-  ),
   args: {
-    label: 'Read Only',
     placeholder: 'This field is read-only',
     readOnly: true,
   },
@@ -531,12 +477,7 @@ export const ReadOnly: Story = {
 };
 
 export const Error: Story = {
-  argTypes: disableControls(
-    meta.argTypes || {},
-    ...getDisabledControls(storyControls, enabledControlsMap.Error)
-  ),
   args: {
-    label: 'Error',
     placeholder: 'This field has an error',
     error: true,
   },
@@ -544,10 +485,6 @@ export const Error: Story = {
 };
 
 export const WithMinLength: Story = {
-  argTypes: disableControls(
-    meta.argTypes || {},
-    ...getDisabledControls(storyControls, enabledControlsMap.WithMinLength)
-  ),
   args: {
     label: 'Min Length Validation',
     minLength: 5,
@@ -559,10 +496,6 @@ export const WithMinLength: Story = {
 };
 
 export const WithPattern: Story = {
-  argTypes: disableControls(
-    meta.argTypes || {},
-    ...getDisabledControls(storyControls, enabledControlsMap.WithPattern)
-  ),
   args: {
     label: 'Email Pattern Validation',
     pattern: '[^@]+@[^@]+\\.[a-zA-Z]{2,}',
@@ -574,10 +507,6 @@ export const WithPattern: Story = {
 };
 
 export const WithCustomValidationMessage: Story = {
-  argTypes: disableControls(
-    meta.argTypes || {},
-    ...getDisabledControls(storyControls, enabledControlsMap.WithCustomValidationMessage)
-  ),
   args: {
     label: 'Custom Validation Message',
     required: true,
@@ -588,10 +517,6 @@ export const WithCustomValidationMessage: Story = {
 };
 
 export const WithCustomValidationTiming: Story = {
-  argTypes: disableControls(
-    meta.argTypes || {},
-    ...getDisabledControls(storyControls, enabledControlsMap.WithCustomValidationTiming)
-  ),
   args: {
     label: 'Custom Validation Timing',
     minLength: 5,
