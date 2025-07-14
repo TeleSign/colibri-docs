@@ -547,6 +547,11 @@ export const InteractiveFormExample: Story = {
       if (!isInDocs) {
         form.addEventListener('submit', (event) => {
           event.preventDefault();
+          if (!form.checkValidity()) {
+            const firstInvalid = form.querySelector(':invalid');
+            if (firstInvalid) firstInvalid.focus();
+            return;
+          }
           const formData = new FormData(form);
           const data = Object.fromEntries(formData.entries());
           output.textContent = JSON.stringify(data, null, 2);
@@ -577,44 +582,53 @@ export const InteractiveFormExample: Story = {
           gap: 1.5rem;
         }
       </style>
-      <form id="${formId}" class="form-container">
-        <col-text-field
-          name="username"
-          label="Username"
-          helper="Your public display name."
-          required
-          min-length="3"
-        ></col-text-field>
-        <col-text-field
-          name="password"
-          label="Password"
-          input-type="password"
-          required
-          min-length="8"
-          helper="Must be at least 8 characters long."
-        ></col-text-field>
-        <col-text-field
-          name="email"
-          label="Email (Optional)"
-          input-type="text"
-          pattern="^\\S+@\\S+\\.\\S+$"
-          error-message="Please enter a valid email address."
-          validation-timing="input"
-          helper="We will use this to contact you."
-        ></col-text-field>
-        <col-group>
-          <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
-          <col-button type="reset" variant="secondary" ?disabled=${isInDocs}>Reset</col-button>
-        </col-group>
-      </form>
-      ${isInDocs
-        ? nothing
-        : html`
-            <pre id="${outputId}"></pre>
-            <script>
-              ${script};
-            </script>
-          `}
+      <div>
+        <h3>Login Form</h3>
+        <form id="${formId}" class="form-container">
+          <col-text-field
+            name="username"
+            label="Username"
+            value="John Doe"
+            helper="Your public display name."
+            required
+            min-length="3"
+          ></col-text-field>
+          <col-text-field
+            name="password"
+            label="Password"
+            input-type="password"
+            value="password123"
+            required
+            min-length="8"
+            helper="Must be at least 8 characters long."
+          ></col-text-field>
+          <col-text-field
+            name="email"
+            label="Email (Optional)"
+            input-type="text"
+            value="john.doe@example.com"
+            pattern="^\\S+@\\S+\\.\\S+$"
+            error-message="Please enter a valid email address."
+            validation-timing="input"
+            helper="We will use this to contact you."
+          ></col-text-field>
+          <col-group>
+            <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
+            <col-button type="reset" variant="secondary" ?disabled=${isInDocs}>Reset</col-button>
+          </col-group>
+        </form>
+        ${isInDocs
+          ? nothing
+          : html`
+              <div>
+                <h3>Form Output</h3>
+                <pre id="${outputId}"></pre>
+                <script>
+                  ${script};
+                </script>
+              </div>
+            `}
+      </div>
     `;
   },
 };
