@@ -555,79 +555,122 @@ export const InteractiveFormExample: Story = {
           const formData = new FormData(form);
           const data = Object.fromEntries(formData.entries());
           output.textContent = JSON.stringify(data, null, 2);
-          output.style.display = 'block';
         });
 
         form.addEventListener('reset', () => {
-          output.textContent = '';
-          output.style.display = 'none';
+          output.textContent = 'Submit the form to see the data here';
         });
       }
     `;
 
     return html`
       <style>
+        .storybook-card {
+          background: #f5f6fa;
+          border-radius: 12px;
+          box-shadow: 0 2px 8px rgba(16, 30, 54, 0.04);
+          padding: 2rem;
+          margin-bottom: 2rem;
+        }
+        .storybook-flex {
+          display: flex;
+          gap: 2rem;
+        }
+        .storybook-col {
+          flex: 1 1 0;
+        }
+        .storybook-code {
+          background: #23272f;
+          color: #fff;
+          border-radius: 8px;
+          padding: 1rem;
+          font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+          font-size: 0.95rem;
+          margin-bottom: 1rem;
+          white-space: pre-wrap;
+          overflow-x: auto;
+        }
         #${outputId} {
-          display: none;
           margin-top: 1rem;
           padding: 1rem;
           background-color: #f0f0f0;
           border: 1px solid #ccc;
           border-radius: 4px;
-          white-space: pre-wrap;
+          overflow-x: auto;
         }
         .form-container {
           display: flex;
           flex-direction: column;
           gap: 1.5rem;
         }
+        @media (max-width: 900px) {
+          .storybook-flex {
+            flex-direction: column;
+            gap: 1.5rem;
+          }
+          .storybook-card {
+            padding: 1rem;
+          }
+        }
       </style>
-      <div>
-        <h3>Login Form</h3>
-        <form id="${formId}" class="form-container">
-          <col-text-field
-            name="username"
-            label="Username"
-            value="John Doe"
-            helper="Your public display name."
-            required
-            min-length="3"
-          ></col-text-field>
-          <col-text-field
-            name="password"
-            label="Password"
-            input-type="password"
-            value="password123"
-            required
-            min-length="8"
-            helper="Must be at least 8 characters long."
-          ></col-text-field>
-          <col-text-field
-            name="email"
-            label="Email (Optional)"
-            input-type="text"
-            value="john.doe@example.com"
-            pattern="^\\S+@\\S+\\.\\S+$"
-            error-message="Please enter a valid email address."
-            validation-timing="input"
-            helper="We will use this to contact you."
-          ></col-text-field>
-          <col-group>
-            <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
-            <col-button type="reset" variant="secondary" ?disabled=${isInDocs}>Reset</col-button>
-          </col-group>
-        </form>
-        ${isInDocs
-          ? nothing
-          : html`
-              <div>
-                <h3>Form Output</h3>
-                <pre id="${outputId}"></pre>
-                <script>
-                  ${script};
-                </script>
-              </div>
-            `}
+      <div class="storybook-card">
+        <div class="storybook-flex">
+          <div class="storybook-col">
+            <h3>Login Form</h3>
+            <form id="${formId}" class="form-container">
+              <col-text-field
+                name="username"
+                label="Username"
+                value="John Doe"
+                helper="Your public display name."
+                required
+                min-length="3"
+              ></col-text-field>
+              <col-text-field
+                name="password"
+                label="Password"
+                input-type="password"
+                value="password123"
+                required
+                min-length="8"
+                helper="Must be at least 8 characters long."
+              ></col-text-field>
+              <col-text-field
+                name="email"
+                label="Email (Optional)"
+                input-type="text"
+                value="john.doe@example.com"
+                pattern="^\\S+@\\S+\\.\\S+$"
+                error-message="Please enter a valid email address."
+                validation-timing="input"
+                helper="We will use this to contact you."
+              ></col-text-field>
+              <col-group>
+                <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
+                <col-button type="reset" variant="secondary" ?disabled=${isInDocs}
+                  >Reset</col-button
+                >
+              </col-group>
+            </form>
+          </div>
+          <div class="storybook-col">
+            <h3>Form Data</h3>
+            <div class="storybook-code">
+              <pre>
+// Handle form submit
+const form = event.target as HTMLFormElement;
+const formData = new FormData(form);
+const formValues = Object.fromEntries(formData.entries());
+</pre
+              >
+            </div>
+            <h3>Form Output</h3>
+            <pre id="${outputId}">Submit the form to see the data here</pre>
+            <script>
+              ${script};
+            </script>
+          </div>
+        </div>
       </div>
     `;
   },
