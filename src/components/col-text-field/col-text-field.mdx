@@ -43,7 +43,12 @@ import { Callout } from '../../_storybook/components';
         ```
     4. Use it in your HTML:
         ```html
-        <col-text-field label="Your Name" placeholder="Enter your full name"></col-text-field>
+        <col-text-field
+          id="user-name"
+          name="user-name"
+          label="Your Name"
+          placeholder="Enter your full name"
+        ></col-text-field>
         ```
 
     ## When to use it
@@ -100,6 +105,13 @@ import { Callout } from '../../_storybook/components';
     </div>
     <Canvas of={stories.Password} />
 
+    ### With Custom ID
+
+    <div>
+      This example demonstrates how to provide a custom ID for better form integration and accessibility.
+    </div>
+    <Canvas of={stories.WithCustomId} />
+
   </div>
 </div>
 
@@ -132,6 +144,31 @@ import { Callout } from '../../_storybook/components';
 <div>
   The `col-text-field` is designed for seamless integration with native HTML forms, supporting standard validation attributes and custom validation logic.
 </div>
+
+<Callout variant="tip" icon="💡">
+  For best accessibility and form association, provide a unique `id` for each field. This ensures proper label-input association and makes targeting fields in tests or scripts easier.
+</Callout>
+
+### Form Association
+The component automatically associates with HTML forms using the `name` attribute. For enhanced form integration, consider using the `id` attribute:
+
+```html
+<form id="user-registration">
+  <col-text-field
+    id="username"
+    name="username"
+    label="Username"
+    required
+  ></col-text-field>
+  <col-text-field
+    id="email"
+    name="email"
+    label="Email"
+    type="email"
+    required
+  ></col-text-field>
+</form>
+```
 
 ### Validation
 
@@ -181,14 +218,21 @@ import { Callout } from '../../_storybook/components';
 </div>
 
 - **Labeling:** The `label` property is always associated with the input for screen readers, either via a visible label or `aria-label`.
+- **Unique Identification:** Each component instance has unique IDs for all interactive elements, ensuring proper screen reader navigation.
+- **ID Management:**
+  - By default, the component generates a unique ID for each instance (e.g., `col-text-field-abc123`).
+  - You can provide a custom `id` attribute for more predictable targeting, accessibility, and testing.
+  - When a custom `id` is provided, all internal elements (label, helper, error, etc.) use that base (e.g., `my-id-label`, `my-id-helper`).
 - **Keyboard Navigation:** Fully navigable using Tab/Shift+Tab. All interactive elements (input, buttons) are accessible via keyboard.
 - **ARIA Attributes:**
   - Error and validation states are communicated using `aria-invalid` and `aria-describedby`.
   - The `helper` and `error-message` properties are linked to the input for screen readers.
+  - Clear button includes `aria-controls` and `aria-describedby` for proper association.
 - **Screen Reader Support:** All states (disabled, readonly, error) are announced appropriately.
 - **Best Practices:**
   - Always provide a descriptive `label`.
   - Use `helper` for additional instructions.
+  - Consider providing custom `id` attributes for better form integration and accessibility.
   - Ensure custom validation messages are clear and concise.
 
 ## Properties
