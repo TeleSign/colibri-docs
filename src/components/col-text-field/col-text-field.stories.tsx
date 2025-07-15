@@ -5,6 +5,7 @@ import { formatCodeString } from '@/utils';
 import { icons } from '@telesign/colibri-icons/icons-list';
 
 type StoryArgs = {
+  id: string;
   value: string;
   label: string;
   subLabel: string;
@@ -47,6 +48,17 @@ const meta = {
     },
   },
   argTypes: {
+    id: {
+      control: 'text',
+      description:
+        'Unique identifier for the text field. Used for accessibility, form association, and testing. If not provided, a unique ID will be automatically generated.',
+      table: {
+        category: 'Accessibility',
+        type: { summary: 'string' },
+        defaultValue: { summary: 'auto-generated' },
+      },
+      if: { arg: 'id', neq: '' },
+    },
     label: {
       control: 'text',
       description: 'The main label for the text field.',
@@ -324,6 +336,7 @@ const meta = {
     inputType: 'text',
     placeholder: 'Enter text here...',
     name: '',
+    id: '',
     charCount: 0,
     disabled: false,
     readOnly: false,
@@ -353,6 +366,7 @@ type Story = ColibriStory<StoryArgs>;
 
 const renderTextField: Story['render'] = args => html`
   <col-text-field
+    id=${args.id || nothing}
     name=${args.name || nothing}
     .value=${args.value}
     label=${args.label || nothing}
@@ -506,6 +520,15 @@ export const WithPattern: Story = {
   render: renderTextField,
 };
 
+export const WithCustomId: Story = {
+  args: {
+    id: 'custom-text-field-id',
+    label: 'Field with Custom ID',
+    helper: 'This field has a custom ID for accessibility and testing.',
+  },
+  render: renderTextField,
+};
+
 export const WithCustomValidationMessage: Story = {
   args: {
     label: 'Custom Validation Message',
@@ -614,63 +637,110 @@ export const InteractiveFormExample: Story = {
         }
       </style>
       <div class="storybook-card">
-        <div class="storybook-flex">
-          <div class="storybook-col">
-            <h3>Login Form</h3>
-            <form id="${formId}" class="form-container">
-              <col-text-field
-                name="username"
-                label="Username"
-                value="John Doe"
-                helper="Your public display name."
-                required
-                min-length="3"
-              ></col-text-field>
-              <col-text-field
-                name="password"
-                label="Password"
-                input-type="password"
-                value="password123"
-                required
-                min-length="8"
-                helper="Must be at least 8 characters long."
-              ></col-text-field>
-              <col-text-field
-                name="email"
-                label="Email (Optional)"
-                input-type="text"
-                value="john.doe@example.com"
-                pattern="^\\S+@\\S+\\.\\S+$"
-                error-message="Please enter a valid email address."
-                validation-timing="input"
-                helper="We will use this to contact you."
-              ></col-text-field>
-              <col-group>
-                <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
-                <col-button type="reset" variant="secondary" ?disabled=${isInDocs}
-                  >Reset</col-button
-                >
-              </col-group>
-            </form>
-          </div>
-          <div class="storybook-col">
-            <h3>Form Data</h3>
-            <div class="storybook-code">
-              <pre>
+        ${!isInDocs
+          ? html`
+              <div class="storybook-flex">
+                <div class="storybook-col">
+                  <h3>Login Form</h3>
+                  <form id="${formId}" class="form-container">
+                    <col-text-field
+                      id="username"
+                      name="username"
+                      label="Username"
+                      value="John Doe"
+                      helper="Your public display name."
+                      required
+                      min-length="3"
+                    ></col-text-field>
+                    <col-text-field
+                      id="password"
+                      name="password"
+                      label="Password"
+                      input-type="password"
+                      value="password123"
+                      required
+                      min-length="8"
+                      helper="Must be at least 8 characters long."
+                    ></col-text-field>
+                    <col-text-field
+                      id="email"
+                      name="email"
+                      label="Email (Optional)"
+                      input-type="text"
+                      value="john.doe@example.com"
+                      pattern="^\\S+@\\S+\\.\\S+$"
+                      error-message="Please enter a valid email address."
+                      validation-timing="input"
+                      helper="We will use this to contact you."
+                    ></col-text-field>
+                    <col-group>
+                      <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
+                      <col-button type="reset" variant="secondary" ?disabled=${isInDocs}
+                        >Reset</col-button
+                      >
+                    </col-group>
+                  </form>
+                </div>
+                <div class="storybook-col">
+                  <h3>Form Data</h3>
+                  <div class="storybook-code">
+                    <pre>
 // Handle form submit
 const form = event.target as HTMLFormElement;
 const formData = new FormData(form);
 const formValues = Object.fromEntries(formData.entries());
-</pre
-              >
-            </div>
-            <h3>Form Output</h3>
-            <pre id="${outputId}">Submit the form to see the data here</pre>
-            <script>
-              ${script};
-            </script>
-          </div>
-        </div>
+                    </pre
+                    >
+                  </div>
+                  <h3>Form Output</h3>
+                  <pre id="${outputId}">Submit the form to see the data here</pre>
+                  <script>
+                    ${script};
+                  </script>
+                </div>
+              </div>
+            `
+          : html`
+              <h3>Login Form</h3>
+              <form id="${formId}" class="form-container">
+                <col-text-field
+                  id="username"
+                  name="username"
+                  label="Username"
+                  value="John Doe"
+                  helper="Your public display name."
+                  required
+                  min-length="3"
+                ></col-text-field>
+                <col-text-field
+                  id="password"
+                  name="password"
+                  label="Password"
+                  input-type="password"
+                  value="password123"
+                  required
+                  min-length="8"
+                  helper="Must be at least 8 characters long."
+                ></col-text-field>
+                <col-text-field
+                  id="email"
+                  name="email"
+                  label="Email (Optional)"
+                  input-type="text"
+                  value="john.doe@example.com"
+                  pattern="^\\S+@\\S+\\.\\S+$"
+                  error-message="Please enter a valid email address."
+                  validation-timing="input"
+                  helper="We will use this to contact you."
+                ></col-text-field>
+                <col-group>
+                  <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
+                  <col-button type="reset" variant="secondary" ?disabled=${isInDocs}
+                    >Reset</col-button
+                  >
+                </col-group>
+              </form>
+            `}
       </div>
     `;
   },
