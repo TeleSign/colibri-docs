@@ -1,6 +1,6 @@
 import { html, nothing } from 'lit';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
-import { formatCodeString, disableControls, getDisabledControlsForVariant } from '@/utils';
+import { formatCodeString } from '@/utils';
 import {
   TYPOGRAPHY_VARIANTS,
   TYPOGRAPHY_ELEMENTS,
@@ -49,8 +49,9 @@ const meta = {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: SampleText },
-        category: 'Core',
+        category: 'Slots',
       },
+      if: { arg: 'text', neq: '' },
     },
     variant: {
       control: 'select',
@@ -61,6 +62,7 @@ const meta = {
         defaultValue: { summary: TYPOGRAPHY_VARIANTS.DISPLAY },
         category: 'Core',
       },
+      if: { arg: 'variant', neq: '' },
     },
     element: {
       control: 'select',
@@ -72,6 +74,7 @@ const meta = {
         defaultValue: { summary: TYPOGRAPHY_ELEMENTS.P },
         category: 'Core',
       },
+      if: { arg: 'element', neq: '' },
     },
     size: {
       control: 'select',
@@ -83,6 +86,7 @@ const meta = {
         defaultValue: { summary: TYPOGRAPHY_DISPLAY_SIZES.MEDIUM },
         category: 'Core',
       },
+      if: { arg: 'size', neq: '' },
     },
     align: {
       control: 'select',
@@ -93,6 +97,7 @@ const meta = {
         defaultValue: { summary: ALIGNMENTS.START },
         category: 'Styling',
       },
+      if: { arg: 'align', neq: '' },
     },
     state: {
       control: 'select',
@@ -103,6 +108,7 @@ const meta = {
         defaultValue: { summary: STATES.DEFAULT },
         category: 'Styling',
       },
+      if: { arg: 'state', neq: '' },
     },
     required: {
       control: 'boolean',
@@ -112,6 +118,7 @@ const meta = {
         defaultValue: { summary: 'false' },
         category: 'Behavior',
       },
+      if: { arg: 'required', neq: false },
     },
     disabled: {
       control: 'boolean',
@@ -122,6 +129,7 @@ const meta = {
         defaultValue: { summary: 'false' },
         category: 'Behavior',
       },
+      if: { arg: 'disabled', neq: false },
     },
     ellipsis: {
       control: 'boolean',
@@ -131,6 +139,7 @@ const meta = {
         defaultValue: { summary: 'false' },
         category: 'Behavior',
       },
+      if: { arg: 'ellipsis', neq: false },
     },
     maxLines: {
       control: 'number',
@@ -140,6 +149,7 @@ const meta = {
         defaultValue: { summary: '1' },
         category: 'Behavior',
       },
+      if: { arg: 'maxLines', neq: '' },
     },
     href: {
       control: 'text',
@@ -149,6 +159,7 @@ const meta = {
         defaultValue: { summary: 'https://example.com' },
         category: 'Link',
       },
+      if: { arg: 'href', neq: '' },
     },
     newTab: {
       control: 'boolean',
@@ -158,6 +169,7 @@ const meta = {
         defaultValue: { summary: 'false' },
         category: 'Link',
       },
+      if: { arg: 'newTab', neq: false },
     },
     downloadable: {
       control: 'boolean',
@@ -167,6 +179,7 @@ const meta = {
         defaultValue: { summary: 'false' },
         category: 'Link',
       },
+      if: { arg: 'downloadable', neq: false },
     },
     downloadFilename: {
       control: 'text',
@@ -176,49 +189,53 @@ const meta = {
         defaultValue: { summary: 'example.pdf' },
         category: 'Link',
       },
+      if: { arg: 'downloadFilename', neq: '' },
     },
     iconVisible: {
       control: 'boolean',
       description:
-        'Controls visibility of the icon in the slot, solely for documentation preview purposes, **not a component prop.**',
+        'Controls visibility of the icon in the slot. **Storybook control only, not a component prop.**',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
-        category: 'Slots',
+        category: 'Storybook',
       },
+      if: { arg: 'iconVisible', neq: false },
     },
     iconSize: {
       control: 'text',
       description:
-        'Size of the slotted icon, mapping to the `size` prop of the `Icon` component. Only available for `heading`, `subheading`, and `label` variants. Refer to [Icon documentation](./?path=/docs/atoms-icons--overview) for more details.',
+        'Size of the slotted icon, mapping to the `size` prop of the `Icon` component. Only applicable for `heading`, `subheading`, and `label` variants. Refer to [Icon documentation](./?path=/docs/atoms-icons--overview) for more details. **Storybook control only, not a component prop.**',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '12px' },
-        category: 'Slots',
+        category: 'Storybook',
       },
+      if: { arg: 'iconVisible' },
     },
     iconName: {
       control: 'text',
       description:
-        'Name of the slotted icon mapping to the `name` prop of the `Icon` component. Only available for `heading`, `subheading`, and `label` variants. Refer to [Icon documentation](./?path=/docs/atoms-icons--overview) for more details.',
+        'Name of the slotted icon mapping to the `name` prop of the `Icon` component. Only applicable for `heading`, `subheading`, and `label` variants. Refer to [Icon documentation](./?path=/docs/atoms-icons--overview) for more details. **Storybook control only, not a component prop.**',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'info-circle' },
-        category: 'Slots',
+        category: 'Storybook',
       },
+      if: { arg: 'iconVisible' },
     },
   },
   args: {
-    text: '',
     variant: '',
     element: '',
     size: '',
+    text: '',
     state: '',
     align: '',
     required: false,
     disabled: false,
     ellipsis: false,
-    maxLines: undefined,
+    maxLines: 1,
     href: '',
     newTab: false,
     downloadable: false,
@@ -233,9 +250,6 @@ export default meta;
 
 type Story = ColibriStory<StoryArgs>;
 
-/**
- * Reusable render function for typography component
- */
 const renderTypography: Story['render'] = args => html`
   <col-typography
     variant=${args.variant}
@@ -286,7 +300,6 @@ export const Heading: Story = {
     variant: TYPOGRAPHY_VARIANTS.HEADING,
     element: TYPOGRAPHY_ELEMENTS.H1,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('heading')),
   render: renderTypography,
 };
 
@@ -302,7 +315,6 @@ export const HeadingWithIcon: Story = {
     iconName: 'info-circle',
     iconSize: '30px',
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('heading', true)),
   render: renderTypography,
 };
 
@@ -314,7 +326,6 @@ export const Subheading: Story = {
     text: SampleText,
     variant: TYPOGRAPHY_VARIANTS.SUBHEADING,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('subheading')),
   render: renderTypography,
 };
 
@@ -329,7 +340,6 @@ export const SubheadingWithIcon: Story = {
     iconName: 'info-circle',
     iconSize: '12px',
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('subheading', true)),
   render: renderTypography,
 };
 
@@ -342,7 +352,6 @@ export const Display: Story = {
     variant: TYPOGRAPHY_VARIANTS.DISPLAY,
     size: TYPOGRAPHY_DISPLAY_SIZES.EXTRA_LARGE,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('display')),
   render: renderTypography,
 };
 
@@ -355,7 +364,6 @@ export const Label: Story = {
     variant: TYPOGRAPHY_VARIANTS.LABEL,
     element: TYPOGRAPHY_ELEMENTS.LABEL,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('label')),
   render: renderTypography,
 };
 
@@ -371,7 +379,6 @@ export const LabelWithIcon: Story = {
     iconName: 'info-circle',
     iconSize: '12px',
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('label', true)),
   render: renderTypography,
 };
 
@@ -385,7 +392,6 @@ export const LabelWithRequiredIndicator: Story = {
     element: TYPOGRAPHY_ELEMENTS.LABEL,
     required: true,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('label')),
   render: renderTypography,
 };
 
@@ -399,7 +405,6 @@ export const LabelWithDisabledState: Story = {
     element: TYPOGRAPHY_ELEMENTS.LABEL,
     disabled: true,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('label')),
   render: renderTypography,
 };
 
@@ -412,7 +417,6 @@ export const Helper: Story = {
     variant: TYPOGRAPHY_VARIANTS.HELPER,
     state: STATES.DEFAULT,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('helper')),
   render: renderTypography,
 };
 
@@ -425,7 +429,6 @@ export const HelperWithError: Story = {
     variant: TYPOGRAPHY_VARIANTS.HELPER,
     state: STATES.ERROR,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('helper')),
   render: renderTypography,
 };
 
@@ -440,7 +443,6 @@ export const Link: Story = {
     href: 'https://example.com',
     newTab: true,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('link')),
   render: renderTypography,
 };
 
@@ -455,7 +457,6 @@ export const LinkWithDisabledState: Story = {
     href: 'https://example.com',
     disabled: true,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('link')),
   render: renderTypography,
 };
 
@@ -471,7 +472,6 @@ export const LinkWithDownloadFilename: Story = {
     downloadable: true,
     downloadFilename: 'example.pdf',
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('link')),
   render: renderTypography,
 };
 
@@ -483,7 +483,6 @@ export const Caption: Story = {
     text: SampleText,
     variant: TYPOGRAPHY_VARIANTS.CAPTION,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('caption')),
   render: renderTypography,
 };
 
@@ -495,7 +494,6 @@ export const Code: Story = {
     text: SampleText,
     variant: TYPOGRAPHY_VARIANTS.CODE,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('code')),
   render: renderTypography,
 };
 
@@ -509,7 +507,6 @@ export const TextTruncation: Story = {
     ellipsis: true,
     maxLines: 2,
   },
-  argTypes: disableControls(...getDisabledControlsForVariant('display')),
   render: (args, context) => html`
     <div style="width: 400px">${renderTypography(args, context)}</div>
   `,
