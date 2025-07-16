@@ -7,7 +7,7 @@ import { BUTTON_SIZES, BUTTON_VARIANTS, COLORS } from '@telesign/colibri';
 type StoryArgs = {
   ariaLabel: string;
   color: COLORS;
-  disabled: Boolean;
+  disabled: boolean;
   name: string;
   size: BUTTON_SIZES;
   type: 'button' | 'submit' | 'reset';
@@ -28,6 +28,7 @@ const meta = {
   },
   argTypes: {
     ariaLabel: {
+      name: 'aria-label',
       control: 'text',
       description: 'The text set as aria-label in the button',
       table: {
@@ -37,11 +38,11 @@ const meta = {
     },
     color: {
       control: 'select',
-      options: Object.keys(COLORS),
+      options: Object.values(COLORS),
       description: 'The color for the button',
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: 'DEFAULT' },
+        defaultValue: { summary: 'default' },
       },
     },
     disabled: {
@@ -62,11 +63,11 @@ const meta = {
     },
     size: {
       control: 'select',
-      options: Object.keys(BUTTON_SIZES),
+      options: Object.values(BUTTON_SIZES),
       description: 'The size for the button',
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: 'MEDIUM' },
+        defaultValue: { summary: 'md' },
       },
     },
     type: {
@@ -80,11 +81,11 @@ const meta = {
     },
     variant: {
       control: 'select',
-      options: Object.keys(BUTTON_VARIANTS),
+      options: Object.values(BUTTON_VARIANTS),
       description: 'The variant for the button',
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: 'DEFAULT' },
+        defaultValue: { summary: 'default' },
       },
     },
     onClick: {
@@ -122,7 +123,7 @@ const renderButton: Story['render'] = ({
   onClick,
 }) => html`
   <col-button
-    ariaLabel=${ariaLabel}
+    aria-label=${ariaLabel}
     color=${color}
     ?disabled=${disabled}
     name=${name}
@@ -141,7 +142,7 @@ const renderButton: Story['render'] = ({
 export const Default: Story = {
   render: ({ ariaLabel, color, disabled, name, size, type, variant, onClick }) => html`
     <col-button
-      ariaLabel=${ariaLabel}
+      aria-label=${ariaLabel}
       color=${color}
       ?disabled=${disabled}
       name=${name}
@@ -159,28 +160,18 @@ export const Default: Story = {
  * This story showcases a primary button
  */
 export const PrimaryButton: Story = {
-  render: renderButton,
   args: {
     ariaLabel: 'Primary call-to-action button',
     color: COLORS.PRIMARY,
     name: 'cta',
   },
-  parameters: {
-    docs: {
-      source: {
-        code: formatCodeString(
-          `<col-button ariaLabel="Primary call-to-action button" color="primary" name="cta">Your text</col-button>`
-        ),
-      },
-    },
-  },
+  render: renderButton,
 };
 
 /**
  * This story showcases a large danger outlined button
  */
 export const LargeDangerOutlineButton: Story = {
-  render: renderButton,
   args: {
     ariaLabel: 'Cancel action',
     color: COLORS.DANGER,
@@ -188,22 +179,13 @@ export const LargeDangerOutlineButton: Story = {
     size: BUTTON_SIZES.LARGE,
     variant: BUTTON_VARIANTS.OUTLINED,
   },
-  parameters: {
-    docs: {
-      source: {
-        code: formatCodeString(
-          `<col-button ariaLabel="Cancel action" color="danger" name="cancel" size="large" variant="outlined">Your text</col-button>`
-        ),
-      },
-    },
-  },
+  render: renderButton,
 };
 
 /**
  * This story showcases a large danger outlined button
  */
 export const SmallSuccessPlainButton: Story = {
-  render: renderButton,
   args: {
     ariaLabel: 'Secondary action',
     color: COLORS.SUCCESS,
@@ -211,24 +193,21 @@ export const SmallSuccessPlainButton: Story = {
     size: BUTTON_SIZES.SMALL,
     variant: BUTTON_VARIANTS.PLAIN,
   },
-  parameters: {
-    docs: {
-      source: {
-        code: formatCodeString(
-          `<col-button ariaLabel="Secondary action" color="success" name="success" size="small" variant="plain">Your text</col-button>`
-        ),
-      },
-    },
-  },
+  render: renderButton,
 };
 
 /**
  * This story showcases an icon button
  */
 export const IconButton: Story = {
+  args: {
+    ariaLabel: 'Delete action',
+    color: COLORS.DANGER,
+    name: 'delete',
+  },
   render: ({ ariaLabel, color, disabled, name, size, type, variant }) => html`
     <col-button
-      ariaLabel=${ariaLabel}
+      aria-label=${ariaLabel}
       color=${color}
       ?disabled=${disabled}
       name=${name}
@@ -239,29 +218,20 @@ export const IconButton: Story = {
       <col-icon name="trash" size="16px"></col-icon>
     </col-button>
   `,
-  args: {
-    ariaLabel: 'Delete action',
-    color: COLORS.DANGER,
-    name: 'delete',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: formatCodeString(
-          `<col-button ariaLabel="Delete action" color="danger" name="delete" ><col-icon name="trash" size="16px"></col-icon></col-button>`
-        ),
-      },
-    },
-  },
 };
 
 /**
  * This story showcases a button with disclosure
  */
 export const ButtonWithDisclosure: Story = {
+  args: {
+    ariaLabel: 'Dropdown',
+    color: COLORS.PRIMARY,
+    name: 'dropdown',
+  },
   render: ({ ariaLabel, color, disabled, name, size, type, variant }) => html`
     <col-button
-      ariaLabel=${ariaLabel}
+      aria-label=${ariaLabel}
       color=${color}
       ?disabled=${disabled}
       name=${name}
@@ -273,29 +243,21 @@ export const ButtonWithDisclosure: Story = {
       <col-icon name="chevron-down" size="16px"></col-icon>
     </col-button>
   `,
-  args: {
-    ariaLabel: 'Dropdown',
-    color: COLORS.PRIMARY,
-    name: 'dropdown',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: formatCodeString(
-          `<col-button ariaLabel="Dropdown" color="primary" name="dropdown">Your text<col-icon name="chevron-down" size="16px"></col-icon></col-button>`
-        ),
-      },
-    },
-  },
 };
 
 /**
  * This story showcases a button with badge and disclosure
  */
 export const ButtonWithBadge: Story = {
+  args: {
+    ariaLabel: 'Button with badge',
+    color: COLORS.SUCCESS,
+    name: 'badge',
+    variant: BUTTON_VARIANTS.PLAIN,
+  },
   render: ({ ariaLabel, color, disabled, name, size, type, variant }) => html`
     <col-button
-      ariaLabel=${ariaLabel}
+      aria-label=${ariaLabel}
       color=${color}
       ?disabled=${disabled}
       name=${name}
@@ -307,30 +269,20 @@ export const ButtonWithBadge: Story = {
       <col-badge variant="success">0</col-badge>
     </col-button>
   `,
-  args: {
-    ariaLabel: 'Button with badge',
-    color: COLORS.SUCCESS,
-    name: 'badge',
-    variant: BUTTON_VARIANTS.PLAIN,
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: formatCodeString(
-          `<col-button ariaLabel="Button with badge" color="success" name="badge" variant="plain">Your text<col-badge variant="success">0</col-badge></col-button>`
-        ),
-      },
-    },
-  },
 };
 
 /**
  * This story showcases a button with everything
  */
 export const ButtonWithEverything: Story = {
+  args: {
+    ariaLabel: 'Button with all components',
+    color: COLORS.PRIMARY,
+    name: 'everything',
+  },
   render: ({ ariaLabel, color, disabled, name, size, type, variant }) => html`
     <col-button
-      ariaLabel=${ariaLabel}
+      aria-label=${ariaLabel}
       color=${color}
       ?disabled=${disabled}
       name=${name}
@@ -344,18 +296,4 @@ export const ButtonWithEverything: Story = {
       <col-icon name="chevron-down" size="16px"></col-icon>
     </col-button>
   `,
-  args: {
-    ariaLabel: 'Button with all components',
-    color: COLORS.PRIMARY,
-    name: 'everything',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: formatCodeString(
-          `<col-button ariaLabel="Button with all components" color="primary" name="everything"><col-icon name="2way" size="16px"></col-icon>Button<col-badge>0</col-badge><col-icon name="chevron-down" size="16px"></col-icon></col-button>`
-        ),
-      },
-    },
-  },
 };
