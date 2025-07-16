@@ -26,7 +26,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Atoms/Paginator',
+  title: 'Molecules/Paginator',
   component: 'col-paginator',
   parameters: {
     docs: {

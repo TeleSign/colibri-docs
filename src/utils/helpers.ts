@@ -1,79 +1,39 @@
-import { html, TemplateResult } from 'lit';
+import { html, type TemplateResult } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import type { ArgTypes } from '@storybook/web-components';
 
 /**
  * Creates an argTypes configuration with disabled controls
- * @param keys - List of control keys to disable
- * @returns An argTypes configuration object with disabled controls
+ * @param baseArgTypes - The base argTypes object from the story meta.
+ * @param keys - List of control keys to disable.
+ * @returns An argTypes configuration object with specified controls disabled.
  */
-export function disableControls<T extends string>(
+export function disableControls<TArgs, T extends keyof TArgs & string = keyof TArgs & string>(
+  baseArgTypes: Partial<ArgTypes<TArgs>>,
   ...keys: T[]
-): Record<T, { control: { disable: boolean } }> {
-  return keys.reduce(
-    (acc, key) => ({
-      ...acc,
-      [key]: { control: { disable: true } },
-    }),
-    {} as Record<T, { control: { disable: boolean } }>
+): Partial<ArgTypes<TArgs>> {
+  const newArgTypes = keys.reduce(
+    (acc, key) => {
+      acc[key] = {
+        ...baseArgTypes[key],
+        control: { disable: true },
+      };
+      return acc;
+    },
+    {} as Partial<ArgTypes<TArgs>>
   );
+
+  return { ...baseArgTypes, ...newArgTypes };
 }
 
 /**
- * Returns a list of controls to disable based on typography variant and icon presence
- * @param variant - The typography variant
- * @param hasIcon - Whether the component has an icon
- * @returns Array of control names to disable
+ * Returns a list of disabled controls by subtracting the enabled ones from the full list.
+ * @param allControls - The full list of controls.
+ * @param enabledControls - The list of controls that should remain enabled.
+ * @returns An array of control names to disable.
  */
-export function getDisabledControlsForVariant(variant: string, hasIcon = false): string[] {
-  // Controls related to links
-  const linkControls = ['href', 'newTab', 'downloadable', 'downloadFilename'];
-
-  // Controls for text truncation
-  const truncationControls = ['ellipsis', 'maxLines'];
-
-  // Icon-related controls
-  const iconControls = hasIcon ? [] : ['iconVisible', 'iconName', 'iconSize'];
-
-  switch (variant) {
-    case 'heading':
-    case 'subheading':
-      return [
-        'size',
-        'state',
-        'required',
-        'disabled',
-        ...truncationControls,
-        ...linkControls,
-        ...iconControls,
-      ];
-
-    case 'display':
-      return ['state', 'required', 'disabled', ...linkControls, ...iconControls];
-
-    case 'label':
-      return ['size', ...truncationControls, ...linkControls, ...iconControls];
-
-    case 'helper':
-      return ['size', ...truncationControls, ...linkControls, ...iconControls];
-
-    case 'link':
-      return ['state', 'required', ...truncationControls, ...iconControls];
-
-    case 'caption':
-    case 'code':
-      return [
-        'size',
-        'state',
-        'required',
-        'disabled',
-        ...truncationControls,
-        ...linkControls,
-        ...iconControls,
-      ];
-
-    default:
-      return [...linkControls, ...iconControls];
-  }
+export function getDisabledControls<T extends string>(allControls: T[], enabledControls: T[]): T[] {
+  return allControls.filter(control => !enabledControls.includes(control));
 }
 
 export interface StoryWrapperConfig {
