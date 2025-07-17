@@ -1,4 +1,4 @@
-import { html, render as LitRenderer } from 'lit';
+import { html, render as LitRenderer, nothing } from 'lit';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { SPINNER_SIZES } from '@telesign/colibri';
 import { formatCodeString } from '@/utils/formatters';
@@ -109,7 +109,7 @@ export const ButtonWithSpinner: Story = {
             @click=${load}
           >
             ${isLoading ? 'Loading...' : 'Get more results'}
-            ${isLoading ? html`<col-spinner></col-spinner>` : ''}
+            ${isLoading ? html`<col-spinner></col-spinner>` : nothing}
           </col-button>
         `,
         container
