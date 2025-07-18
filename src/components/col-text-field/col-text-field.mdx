@@ -112,6 +112,23 @@ import { Callout } from '../../_storybook/components';
     </div>
     <Canvas of={stories.WithCustomId} />
 
+    ### Variants
+    <div>
+      The `col-text-field` component supports two visual variants to accommodate different design contexts and user preferences.
+    </div>
+
+
+    #### Outline Variant
+    <div>
+      The outline variant displays a full border around the input field, providing clear visual boundaries. This is the default variant and is ideal for most form contexts where clear field separation is important.
+    </div>
+    <Canvas of={stories.Variants} />
+
+    #### Plain Variant
+    <div>
+      The plain variant removes the border entirely, creating a minimal appearance. The field only shows a border when focused or in error states, providing a cleaner, more modern look.
+    </div>
+    <Canvas of={stories.PlainVariant} />
   </div>
 </div>
 

@@ -23,6 +23,7 @@ type StoryArgs = {
   errorMessage?: string;
   validationTiming?: 'blur' | 'change' | 'input' | 'submit';
   name: string;
+  variant: 'outline' | 'plain';
   iconVisible: boolean;
   iconName: string;
   iconSize: string;
@@ -110,6 +111,17 @@ const meta = {
         defaultValue: { summary: 'text' },
       },
       if: { arg: 'inputType', neq: '' },
+    },
+    variant: {
+      control: 'select',
+      options: ['outline', 'plain'],
+      description: 'The visual variant of the text field.',
+      table: {
+        category: 'Core',
+        type: { summary: "'outline' | 'plain'" },
+        defaultValue: { summary: 'outline' },
+      },
+      if: { arg: 'variant', neq: '' },
     },
     placeholder: {
       control: 'text',
@@ -334,6 +346,7 @@ const meta = {
     subLabel: '',
     helper: '',
     inputType: 'text',
+    variant: 'outline',
     placeholder: 'Enter text here...',
     name: '',
     id: '',
@@ -373,6 +386,7 @@ const renderTextField: Story['render'] = args => html`
     sub-label=${args.subLabel || nothing}
     helper=${args.helper || nothing}
     input-type=${args.inputType}
+    variant=${args.variant}
     placeholder=${args.placeholder || nothing}
     char-count=${args.charCount || nothing}
     pattern=${args.pattern || nothing}
@@ -408,6 +422,7 @@ export const Default: Story = {
     required: true,
     charCount: 20,
     inputType: 'text',
+    variant: 'outline',
     inputMode: 'text',
     iconVisible: true,
     iconName: 'emoji-circle',
@@ -415,6 +430,22 @@ export const Default: Story = {
     validationTiming: 'input',
   },
   render: renderTextField,
+};
+
+export const Variants: Story = {
+  args: {
+    variant: 'outline',
+  },
+  render: renderTextField,
+  tags: ['!dev'],
+};
+
+export const PlainVariant: Story = {
+  args: {
+    variant: 'plain',
+  },
+  render: renderTextField,
+  tags: ['!dev'],
 };
 
 export const WithLabel: Story = {
