@@ -119,4 +119,33 @@ export const ButtonWithSpinner: Story = {
     update();
     return container;
   },
+  parameters: {
+    docs: {
+      source: {
+        code: `// in the JS file we add out state and event handler
+    let isLoading = false;
+    const load = () => {
+      isLoading = true;
+      update();
+
+      setTimeout(() => {
+        isLoading = false;
+        update();
+      }, 2000);
+    };
+
+    // html
+    <col-button
+        name="load-button"
+        color="primary"
+        variant="outlined"
+        ?disabled=\${isLoading}
+        @click=\${load}
+    >
+        \${isLoading ? 'Loading...' : 'Get more results'}
+        \${isLoading ? html\`<col-spinner></col-spinner>\` : nothing}
+    </col-button>`,
+      },
+    },
+  },
 };
