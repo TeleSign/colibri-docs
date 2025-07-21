@@ -41,6 +41,7 @@ const meta = {
   },
   args: {
     size: SPINNER_SIZES.SMALL,
+    accessibilityText: 'Loading',
   },
 } satisfies ColibriStoryMeta<StoryArgs>;
 
