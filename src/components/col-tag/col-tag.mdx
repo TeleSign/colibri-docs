@@ -1,0 +1,134 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as stories from './col-tag.stories';
+import { Callout } from '../../_storybook/components';
+
+<Meta of={stories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Tag</Title>
+    The `col-tag` component is a small visual entity used to represent and classify information in a tagged manner.
+
+    <Subtitle>Table of contents</Subtitle>
+    - [How to use it](#how-to-use-it)
+    - [When to use it](#when-to-use-it)
+    - [Component preview](#component-preview)
+    - [Accessibility](#accessibility)
+    - [Properties](#properties)
+    - [Interact with the component](#interact-with-the-component)
+
+    ## How to use it
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        npm install @telesign/colibri-icons
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, registerAllComponents, ColTag } from '@telesign/colibri';
+        import { ColIcon } from '@telesign/colibri-icons';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web components:
+        ```typescript
+        // Option 1: Register specific components
+        registerColibriComponents([ColTag, ColIcon]);
+
+        // Option 2: Register all Colibri components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-tag variant="orange" text="Custom Option">
+          <col-icon slot="icon" name="emoji-circle" size="16px"></col-icon>
+        </col-tag>
+        ```
+
+    ## When to use it
+    The `col-tag` component is a design element used to display short, descriptive information, usually associated with an object or category. Some use cases are described below:
+
+    **Content Categorization**:
+    - **Filter tags**: On search pages to help users filter results.
+
+    **Status Indicators**:
+    - **Task Status**: In project management applications to indicate the status of a task (e.g. 'Pending', 'In Progress', 'Completed').
+    - **Message notifications**: To indicate the status of a message or notification (e.g. 'Read', 'Unread').
+    - **User Profile**: To display a user's roles on the platform.
+
+
+    Tag groups are sets of `col-tag` elements grouped together to provide greater organisation and context. They are used in the following scenarios:
+
+    <Callout  variant="info" icon="ℹ️">
+      There is no such element as `col-tag-group` or similar. To represent tag groups it's meant to use the `col-group` as the parent component
+    </Callout>
+
+    **Complex category management**:
+    - **Admin Panels**: To manage complex categories in a CMS (e.g. product categories and subcategories).
+    - **Project management applications**: To group tasks by different statuses or products.
+
+    **Navigation and advanced filtering**:
+    - **Search systems**: Group filters by characteristics.
+    - **Data analysis applications**: To view multiple dimensions or categories of data (e.g. grouping by years, regions, products).
+
+
+    ## Component preview
+
+    The following examples showcase the core features and visual options of the `col-tag` component.
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+
+    ### Basic Usage
+    The most fundamental tag does not required any label or attribute to display.
+    <Canvas of={stories.Default} />
+
+    ### With Custom Text label
+    Use the `text` property to display a custom text label inside the tag component. If not specified the default will be 'Option'.
+
+    ### Tag Group by `col-group`
+    In order to display two or more tags you should use `col-group` for expected spacing and layout.
+
+    ### Variants
+    The `col-text-field` component supports eight visual variants to accommodate different design contexts and user preferences.
+
+    ## States
+    The `col-tag` component supports states to reflect user interaction. Each state is shwon with all variants
+
+    ### Disabled
+    Use the `disabled` property to render the tag non-interactive.
+
+    ### With Multi Select
+    The `multi-select` property provides styling to the component in order see clearly which tags are selected from the ones that don't.
+
+    ### Readonly
+    The `readonly` property allows to display a tag that cannot be removed by the user, it just can be selected
+
+
+    ## Accessibility
+    <div>
+      The `col-text-field` component is designed with accessibility in mind, ensuring that all users
+      including those using assistive technologies can interact with forms effectively.
+    </div>
+
+    - **ID Management:**
+      - By default, the component generates a unique ID for the tag container and close button (e.g., `tag-container-abc123`, `tag-close-button-abc123`).
+    - **Keyboard Navigation:** Fully navigable using Tab. All interactive elements (input, buttons) are accessible via keyboard.
+    - **ARIA Attributes:**
+      - Disabled, Read Only and Multi Select states are communicated using `aria-disabled`, `aria-readonly` and `aria-selected`.
+      - The tag container includes an `aria-label` dynamic which changes according to the variant of the component.
+    - **Screen Reader Support:** All states (`disabled`, `read-only`, `multi-select`) are announced appropriately.
+    - **Actions Supported:** The componente handles `@keydown`, `@click`, `@dragstart` and `@dragend`.
+    - **Best Practices:**
+      - The role of the tag component is `option` so the parent component should be `listbox` or `group`.
+      - Make sure you include the `slot='icon'` in order to display correctly the icon to the tag.
+
+    ## Properties
+
+    <ArgTypes of={stories} />
+
+    ## Interact with the component
+
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/molecules-text-field--default) section.
+
+  </div>
+</div>
