@@ -1,18 +1,19 @@
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import { action } from '@storybook/addon-actions';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils';
-import { icons } from '@telesign/colibri-icons/icons-list';
 import { getEnumValues, TAG_VARIANTS } from '@telesign/colibri';
 
 type StoryArgs = {
   variant: string;
   text: string;
-  disabled: boolean;
-  readonly?: boolean;
+  disabled: Boolean;
+  readonly?: Boolean;
   category?: string;
-  draggable?: boolean;
-  multiSelect: boolean;
+  draggable?: Boolean;
+  multiSelect: Boolean;
+  click: () => void;
+  keydown: () => void;
   onRemove: () => void;
 };
 
@@ -44,9 +45,9 @@ const meta = {
       table: {
         category: 'Core',
         type: { summary: 'string' },
-        defaultValue: { summary: 'Option' },
+        defaultValue: { summary: '' },
       },
-      if: { arg: 'text', neq: '' },
+      if: { arg: 'category', neq: '' },
     },
     variant: {
       control: 'select',
@@ -69,7 +70,6 @@ const meta = {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
       },
-      if: { arg: 'disabled', neq: false },
     },
     readonly: {
       name: 'readonly',
@@ -80,7 +80,6 @@ const meta = {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
       },
-      if: { arg: 'readonly', neq: false },
     },
     multiSelect: {
       name: 'multi-select',
@@ -91,7 +90,6 @@ const meta = {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
       },
-      if: { arg: 'multi-select', neq: false },
     },
     draggable: {
       name: 'draggable',
@@ -105,38 +103,271 @@ const meta = {
       if: { arg: 'draggable', neq: false },
     },
     onRemove: {
-      action: 'remove',
+      action: 'removed',
+      description: 'Fired when the component loses focus.',
+      table: {
+        category: 'State',
+        type: { summary: 'CustomEvent<{ value: string }>' },
+      },
+    },
+    click: {
+      action: 'clicked',
       description: 'Fired when the component loses focus.',
       table: {
         category: 'Events',
         type: { summary: 'CustomEvent<{ value: string }>' },
       },
-      if: { arg: 'remove', neq: false },
+    },
+    keydown: {
+      action: 'keydown',
+      description: 'Fired when the component loses focus.',
+      table: {
+        category: 'Events',
+        type: { summary: 'KeyboardEvent' },
+      },
     },
   },
   args: {
     variant: 'gray',
+    text: 'Option',
     disabled: false,
     multiSelect: false,
     readonly: false,
     draggable: false,
     category: 'Default',
-    onRemove: action('tag-selected'),
+    click: action('clicked'),
+    keydown: action('keydown'),
   },
 } satisfies ColibriStoryMeta<StoryArgs>;
 
 export default meta;
 type Story = ColibriStory<StoryArgs>;
 
+const renderTagWithoutIcon: Story['render'] = args =>
+  html`<col-tag
+    text=${args.text}
+    category=${args.category}
+    variant=${args.variant}
+    ?disabled=${args.disabled}
+    ?multi-select=${args.multiSelect}
+    ?readonly=${args.readonly}
+    ?draggable=${args.draggable}
+    @click=${args.click}
+    @keydown=${args.keydown}
+  ></col-tag>`;
+
+const renderTagWithIcon: Story['render'] = args =>
+  html`<col-tag
+    text=${args.text}
+    category=${args.category}
+    variant=${args.variant}
+    ?disabled=${args.disabled}
+    ?multi-select=${args.multiSelect}
+    ?readonly=${args.readonly}
+    ?draggable=${args.draggable}
+    @click=${args.multiSelect ? args.onRemove : args.click}
+    @keydown=${args.keydown}
+  >
+    <col-icon slot="icon" name="emoji-circle" size="16px"></col-icon>
+  </col-tag>`;
+
 export const Default: Story = {
-  render: ({ disabled, variant, multiSelect, readonly, category, draggable, onRemove }) =>
+  render: ({
+    disabled,
+    variant,
+    text,
+    multiSelect,
+    readonly,
+    category,
+    draggable,
+    click,
+    keydown,
+    onRemove,
+  }) =>
     html` <col-tag
+      text=${text}
       category=${category}
       variant=${variant}
       ?disabled=${disabled}
       ?multi-select=${multiSelect}
       ?readonly=${readonly}
       ?draggable=${draggable}
-      .onRemove=${onRemove}
+      @click=${multiSelect ? onRemove : click}
+      @keydown=${keydown}
     ></col-tag>`,
+};
+
+export const WithCustomText: Story = {
+  args: {
+    text: 'Custom Option',
+    variant: TAG_VARIANTS.COBALT,
+    category: 'Custom Category',
+  },
+  render: renderTagWithoutIcon,
+};
+
+export const WithIcon: Story = {
+  args: {
+    text: 'New Custom Text',
+    variant: TAG_VARIANTS.ROSE,
+    category: 'Custom Category',
+  },
+  render: renderTagWithIcon,
+};
+
+export const TagGroup: Story = {
+  args: {
+    text: 'Custom Option',
+    variant: TAG_VARIANTS.LIME,
+    category: 'Custom Category',
+  },
+  render: args => html`
+    <col-group role="listbox">
+      <col-tag
+        text=${args.text}
+        category=${args.category}
+        ?disabled=${args.disabled}
+        variant=${args.variant}
+        ?readonly=${args.readonly}
+        ?multi-select=${args.multiSelect}
+      >
+      </col-tag>
+      <col-tag
+        text="Custom Option 2"
+        category=${args.category}
+        variant="cobalt"
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?multi-select=${args.multiSelect}
+      >
+      </col-tag>
+    </col-group>
+  `,
+};
+
+export const Variants: Story = {
+  args: {
+    text: 'Tag with variant ',
+    category: 'Custom Category',
+  },
+  render: args => html`
+    <col-group role="listbox">
+      <col-tag
+        text=${args.text + 'cobalt'}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?multi-select=${args.multiSelect}
+        category=${args.category}
+        variant="cobalt"
+      >
+        <col-icon slot="icon" name="emoji-circle" size="16px"></col-icon
+      ></col-tag>
+      <col-tag
+        text=${args.text + 'orange'}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?multi-select=${args.multiSelect}
+        category=${args.category}
+        variant="orange"
+      >
+      </col-tag>
+      <col-tag
+        text=${args.text + 'teal'}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?multi-select=${args.multiSelect}
+        category=${args.category}
+        variant="teal"
+      >
+        <col-icon slot="icon" name="emoji-circle" size="16px"></col-icon
+      ></col-tag>
+      <col-tag
+        text=${args.text + 'rose'}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?multi-select=${args.multiSelect}
+        category=${args.category}
+        variant="rose"
+      >
+      </col-tag>
+    </col-group>
+    <col-group role="group">
+      <col-tag
+        text=${args.text + 'cyan'}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?multi-select=${args.multiSelect}
+        category=${args.category}
+        variant="cyan"
+      >
+      </col-tag>
+      <col-tag
+        text=${args.text + 'gray'}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?multi-select=${args.multiSelect}
+        category=${args.category}
+        variant="gray"
+        ><col-icon slot="icon" name="emoji-circle" size="16px"></col-icon>
+      </col-tag>
+      <col-tag
+        text=${args.text + 'lime'}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?multi-select=${args.multiSelect}
+        category=${args.category}
+        variant="lime"
+      >
+      </col-tag>
+      <col-tag
+        text=${args.text + 'purple'}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?multi-select=${args.multiSelect}
+        category=${args.category}
+        variant="purple"
+        ><col-icon slot="icon" name="emoji-circle" size="16px"></col-icon>
+      </col-tag>
+    </col-group>
+  `,
+};
+
+export const Disabled: Story = {
+  args: {
+    text: 'Tag disabled with variant ',
+    category: 'Custom Category',
+    variant: TAG_VARIANTS.PURPLE,
+    disabled: true,
+  },
+  render: renderTagWithIcon,
+};
+
+export const MultiSelect: Story = {
+  args: {
+    text: 'Tag disabled with variant ',
+    category: 'Custom Category',
+    variant: TAG_VARIANTS.TEAL,
+    multiSelect: true,
+  },
+  render: renderTagWithIcon,
+};
+
+export const ReadOnly: Story = {
+  args: {
+    text: 'Tag disabled with variant ',
+    category: 'Custom Category',
+    variant: TAG_VARIANTS.COBALT,
+    readonly: true,
+  },
+  render: renderTagWithIcon,
+};
+
+export const Removal: Story = {
+  args: {
+    text: 'Tag disabled with variant ',
+    category: 'Custom Category',
+    variant: TAG_VARIANTS.ORANGE,
+    onRemove: action('removed'),
+  },
+  render: renderTagWithIcon,
 };

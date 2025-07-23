@@ -13,6 +13,14 @@ import { Callout } from '../../_storybook/components';
     - [How to use it](#how-to-use-it)
     - [When to use it](#when-to-use-it)
     - [Component preview](#component-preview)
+      - [Basic Tag](#basic-tag)
+      - [With Custom Text label](#with-custom-text-label)
+      - [Tag Group by `col-group`](#tag-group-by-col-group)
+      - [Variants](#variants)
+    - [States](#states)
+      - [Disabled](#disabled)
+      - [Multi Select](#multi-select)
+      - [Read Only](#read-only)
     - [Accessibility](#accessibility)
     - [Properties](#properties)
     - [Interact with the component](#interact-with-the-component)
@@ -78,36 +86,44 @@ import { Callout } from '../../_storybook/components';
       You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
     </Callout>
 
-    ### Basic Usage
+    ### Basic Tag
     The most fundamental tag does not required any label or attribute to display.
     <Canvas of={stories.Default} />
 
     ### With Custom Text label
     Use the `text` property to display a custom text label inside the tag component. If not specified the default will be 'Option'.
+    <Canvas of={stories.WithCustomText} />
+
+    ### With Icon
+    The component supports an icon slot and in order to add it place the attribute `slot='icon'` on the `col-icon` element.
+    <Canvas of={stories.WithIcon} />
 
     ### Tag Group by `col-group`
     In order to display two or more tags you should use `col-group` for expected spacing and layout.
+    <Canvas of={stories.TagGroup} />
 
     ### Variants
-    The `col-text-field` component supports eight visual variants to accommodate different design contexts and user preferences.
+    The `col-tag` component supports eight visual variants to accommodate different design contexts and user preferences.
+    <Canvas of={stories.Variants} />
 
     ## States
-    The `col-tag` component supports states to reflect user interaction. Each state is shwon with all variants
+    The `col-tag` component supports states to reflect user interaction. Each state is shwon with all variants.
 
     ### Disabled
     Use the `disabled` property to render the tag non-interactive.
+    <Canvas of={stories.Disabled} />
 
-    ### With Multi Select
+    ### Multi Select
     The `multi-select` property provides styling to the component in order see clearly which tags are selected from the ones that don't.
+    <Canvas of={stories.MultiSelect} />
 
-    ### Readonly
-    The `readonly` property allows to display a tag that cannot be removed by the user, it just can be selected
-
+    ### Read Only
+    The `readonly` property allows to display a tag that cannot be removed by the user, it just can be selected.
+    <Canvas of={stories.ReadOnly} />
 
     ## Accessibility
     <div>
-      The `col-text-field` component is designed with accessibility in mind, ensuring that all users
-      including those using assistive technologies can interact with forms effectively.
+      The `col-tag` can be searched up or placed under an element that needs to be classified categorically.  They can help group similar elements by color and group names.
     </div>
 
     - **ID Management:**
@@ -128,7 +144,7 @@ import { Callout } from '../../_storybook/components';
 
     ## Interact with the component
 
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/molecules-text-field--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-tag--default) section.
 
   </div>
 </div>
