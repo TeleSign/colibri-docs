@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { action } from '@storybook/addon-actions';
+import { fn } from '@storybook/test';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils';
 import { getEnumValues, TAG_VARIANTS } from '@telesign/colibri';
@@ -7,14 +7,14 @@ import { getEnumValues, TAG_VARIANTS } from '@telesign/colibri';
 type StoryArgs = {
   variant: string;
   text: string;
-  disabled: Boolean;
-  readonly?: Boolean;
+  disabled: boolean;
+  readonly?: boolean;
   category?: string;
-  draggable?: Boolean;
-  multiSelect: Boolean;
-  click: () => void;
-  keydown: () => void;
-  onRemove: () => void;
+  draggable?: boolean;
+  multiSelect: boolean;
+  onRemove?: () => void;
+  onTagSelected?: () => void;
+  onTagRemoved?: () => void;
 };
 
 const meta = {
@@ -103,27 +103,24 @@ const meta = {
       if: { arg: 'draggable', neq: false },
     },
     onRemove: {
-      action: 'removed',
-      description: 'Fired when the component loses focus.',
+      action: 'tag-removed-callback',
+      description: 'Callback function called when tag is removed via onRemove property',
       table: {
-        category: 'State',
-        type: { summary: 'CustomEvent<{ value: string }>' },
+        category: 'Callback',
       },
     },
-    click: {
-      action: 'clicked',
-      description: 'Fired when the component loses focus.',
+    onTagSelected: {
+      action: 'tag-selected',
+      description: 'Event fired when tag is selected',
       table: {
         category: 'Events',
-        type: { summary: 'CustomEvent<{ value: string }>' },
       },
     },
-    keydown: {
-      action: 'keydown',
-      description: 'Fired when the component loses focus.',
+    onTagRemoved: {
+      action: 'tag-removed',
+      description: 'Event fired when tag is removed',
       table: {
         category: 'Events',
-        type: { summary: 'KeyboardEvent' },
       },
     },
   },
@@ -135,8 +132,9 @@ const meta = {
     readonly: false,
     draggable: false,
     category: 'Default',
-    click: action('clicked'),
-    keydown: action('keydown'),
+    onRemove: fn(),
+    onTagSelected: fn(),
+    onTagRemoved: fn(),
   },
 } satisfies ColibriStoryMeta<StoryArgs>;
 
@@ -152,8 +150,9 @@ const renderTagWithoutIcon: Story['render'] = args =>
     ?multi-select=${args.multiSelect}
     ?readonly=${args.readonly}
     ?draggable=${args.draggable}
-    @click=${args.click}
-    @keydown=${args.keydown}
+    .onRemove=${args.onRemove}
+    @tag-selected=${args.onTagSelected}
+    @tag-removed=${args.onTagRemoved}
   ></col-tag>`;
 
 const renderTagWithIcon: Story['render'] = args =>
@@ -165,8 +164,9 @@ const renderTagWithIcon: Story['render'] = args =>
     ?multi-select=${args.multiSelect}
     ?readonly=${args.readonly}
     ?draggable=${args.draggable}
-    @click=${args.multiSelect ? args.onRemove : args.click}
-    @keydown=${args.keydown}
+    .onRemove=${args.onRemove}
+    @tag-selected=${args.onTagSelected}
+    @tag-removed=${args.onTagRemoved}
   >
     <col-icon slot="icon" name="emoji-circle" size="16px"></col-icon>
   </col-tag>`;
@@ -180,9 +180,9 @@ export const Default: Story = {
     readonly,
     category,
     draggable,
-    click,
-    keydown,
     onRemove,
+    onTagSelected,
+    onTagRemoved,
   }) =>
     html` <col-tag
       text=${text}
@@ -192,8 +192,9 @@ export const Default: Story = {
       ?multi-select=${multiSelect}
       ?readonly=${readonly}
       ?draggable=${draggable}
-      @click=${multiSelect ? onRemove : click}
-      @keydown=${keydown}
+      .onRemove=${onRemove}
+      @tag-selected=${onTagSelected}
+      @tag-removed=${onTagRemoved}
     ></col-tag>`,
 };
 
@@ -230,6 +231,9 @@ export const TagGroup: Story = {
         variant=${args.variant}
         ?readonly=${args.readonly}
         ?multi-select=${args.multiSelect}
+        .onRemove=${args.onRemove}
+        @tag-selected=${args.onTagSelected}
+        @tag-removed=${args.onTagRemoved}
       >
       </col-tag>
       <col-tag
@@ -239,6 +243,9 @@ export const TagGroup: Story = {
         ?disabled=${args.disabled}
         ?readonly=${args.readonly}
         ?multi-select=${args.multiSelect}
+        .onRemove=${args.onRemove}
+        @tag-selected=${args.onTagSelected}
+        @tag-removed=${args.onTagRemoved}
       >
       </col-tag>
     </col-group>
@@ -259,6 +266,9 @@ export const Variants: Story = {
         ?multi-select=${args.multiSelect}
         category=${args.category}
         variant="cobalt"
+        .onRemove=${args.onRemove}
+        @tag-selected=${args.onTagSelected}
+        @tag-removed=${args.onTagRemoved}
       >
         <col-icon slot="icon" name="emoji-circle" size="16px"></col-icon
       ></col-tag>
@@ -269,6 +279,9 @@ export const Variants: Story = {
         ?multi-select=${args.multiSelect}
         category=${args.category}
         variant="orange"
+        .onRemove=${args.onRemove}
+        @tag-selected=${args.onTagSelected}
+        @tag-removed=${args.onTagRemoved}
       >
       </col-tag>
       <col-tag
@@ -278,6 +291,9 @@ export const Variants: Story = {
         ?multi-select=${args.multiSelect}
         category=${args.category}
         variant="teal"
+        .onRemove=${args.onRemove}
+        @tag-selected=${args.onTagSelected}
+        @tag-removed=${args.onTagRemoved}
       >
         <col-icon slot="icon" name="emoji-circle" size="16px"></col-icon
       ></col-tag>
@@ -288,6 +304,9 @@ export const Variants: Story = {
         ?multi-select=${args.multiSelect}
         category=${args.category}
         variant="rose"
+        .onRemove=${args.onRemove}
+        @tag-selected=${args.onTagSelected}
+        @tag-removed=${args.onTagRemoved}
       >
       </col-tag>
     </col-group>
@@ -299,6 +318,9 @@ export const Variants: Story = {
         ?multi-select=${args.multiSelect}
         category=${args.category}
         variant="cyan"
+        .onRemove=${args.onRemove}
+        @tag-selected=${args.onTagSelected}
+        @tag-removed=${args.onTagRemoved}
       >
       </col-tag>
       <col-tag
@@ -308,6 +330,9 @@ export const Variants: Story = {
         ?multi-select=${args.multiSelect}
         category=${args.category}
         variant="gray"
+        .onRemove=${args.onRemove}
+        @tag-selected=${args.onTagSelected}
+        @tag-removed=${args.onTagRemoved}
         ><col-icon slot="icon" name="emoji-circle" size="16px"></col-icon>
       </col-tag>
       <col-tag
@@ -317,6 +342,9 @@ export const Variants: Story = {
         ?multi-select=${args.multiSelect}
         category=${args.category}
         variant="lime"
+        .onRemove=${args.onRemove}
+        @tag-selected=${args.onTagSelected}
+        @tag-removed=${args.onTagRemoved}
       >
       </col-tag>
       <col-tag
@@ -326,6 +354,9 @@ export const Variants: Story = {
         ?multi-select=${args.multiSelect}
         category=${args.category}
         variant="purple"
+        .onRemove=${args.onRemove}
+        @tag-selected=${args.onTagSelected}
+        @tag-removed=${args.onTagRemoved}
         ><col-icon slot="icon" name="emoji-circle" size="16px"></col-icon>
       </col-tag>
     </col-group>
@@ -367,7 +398,10 @@ export const Removal: Story = {
     text: 'Tag disabled with variant ',
     category: 'Custom Category',
     variant: TAG_VARIANTS.ORANGE,
-    onRemove: action('removed'),
+    onRemove: () => {
+      // eslint-disable-next-line no-undef
+      console.log('Tag removed');
+    },
   },
   render: renderTagWithIcon,
 };
