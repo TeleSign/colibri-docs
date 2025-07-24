@@ -1,9 +1,10 @@
 import { html } from 'lit';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
+import { AVATAR_VARIANTS } from '@telesign/colibri';
 
 type StoryArgs = {
-  variant: 'icon' | 'name' | 'full';
+  variant: AVATAR_VARIANTS;
   name: string;
 };
 
@@ -21,7 +22,7 @@ const meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['icon', 'name', 'full'],
+      options: Object.values(AVATAR_VARIANTS),
       description: 'The display variant: icon only, name only, or both',
       table: {
         category: 'Core',
@@ -41,7 +42,7 @@ const meta = {
     },
   },
   args: {
-    variant: 'full',
+    variant: AVATAR_VARIANTS.FULL,
     name: 'John Doe',
   },
 } satisfies ColibriStoryMeta<StoryArgs>;
@@ -60,7 +61,7 @@ const renderAvatar: Story['render'] = ({ variant, name }) => html`
 export const Default: Story = {
   args: {
     name: 'John Doe',
-    variant: 'full',
+    variant: AVATAR_VARIANTS.FULL,
   },
   render: renderAvatar,
 };
@@ -70,7 +71,7 @@ export const Default: Story = {
  */
 export const IconOnly: Story = {
   args: {
-    variant: 'icon',
+    variant: AVATAR_VARIANTS.ICON,
     name: 'Jane Doe',
   },
   render: renderAvatar,
@@ -81,7 +82,7 @@ export const IconOnly: Story = {
  */
 export const NameOnly: Story = {
   args: {
-    variant: 'name',
+    variant: AVATAR_VARIANTS.NAME,
     name: 'John Doe',
   },
   render: renderAvatar,
