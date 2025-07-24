@@ -21,6 +21,8 @@ import { Callout } from '../../_storybook/components';
       - [Disabled](#disabled)
       - [Multi Select](#multi-select)
       - [Read Only](#read-only)
+    - [Events](#events)
+      - [Removal](#removal)
     - [Accessibility](#accessibility)
     - [Properties](#properties)
     - [Interact with the component](#interact-with-the-component)
@@ -120,6 +122,16 @@ import { Callout } from '../../_storybook/components';
     ### Read Only
     The `readonly` property allows to display a tag that cannot be removed by the user, it just can be selected.
     <Canvas of={stories.ReadOnly} />
+
+    ## Events
+
+    ### Removal
+    <Callout variant="tip" icon="💡">
+      In case you see the Canva empty reload the page (or click **F5**) and the component will appear.
+    </Callout>
+    The `onRemove` property allows to fire a custom callback to let the parent component handle the corresponding removal of the tag.
+    <Canvas of={stories.Removal} />
+    - For this example when you click the close button, it will render other Colibri components and the possibility to re-render the tag component again.
 
     ## Accessibility
     <div>

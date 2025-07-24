@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { html, render } from 'lit';
 import { fn } from '@storybook/test';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils';
@@ -394,14 +394,47 @@ export const ReadOnly: Story = {
 };
 
 export const Removal: Story = {
-  args: {
-    text: 'Tag disabled with variant ',
-    category: 'Custom Category',
-    variant: TAG_VARIANTS.ORANGE,
-    onRemove: () => {
-      // eslint-disable-next-line no-undef
-      console.log('Tag removed');
-    },
+  render: () => {
+    let isRemoved = false;
+    let container;
+    const isInDocs = window.location.search.includes('viewMode=docs');
+
+    const onRemove = () => {
+      isRemoved = true;
+      updateContent();
+    };
+
+    const updateContent = () => {
+      if (container) {
+        const newContent = isRemoved
+          ? html`<col-group orientation="vertical">
+              <col-typography variant="label" element="label">
+                <col-icon slot="icon" name="check" size="12px"></col-icon>Tag removed successfully
+              </col-typography>
+              <col-button variant="primary" @click=${resetTag}>Restore Tag</col-button>
+            </col-group>`
+          : html`<col-tag
+              variant="orange"
+              text="Click my close button"
+              .onRemove=${onRemove}
+            ></col-tag>`;
+
+        render(newContent, container);
+      }
+    };
+
+    const resetTag = () => {
+      isRemoved = false;
+      updateContent();
+    };
+
+    const initialTemplate = html`<div class="story-container"></div>`;
+
+    setTimeout(() => {
+      container = document.querySelector('.story-container');
+      updateContent();
+    }, 0);
+
+    return initialTemplate;
   },
-  render: renderTagWithIcon,
 };
