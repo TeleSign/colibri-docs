@@ -17,6 +17,10 @@ type StoryArgs = {
   onTagRemoved?: () => void;
 };
 
+const variantSummary = Object.values(TAG_VARIANTS)
+  .map(variant => `'${variant}'`)
+  .join(' | ');
+
 const meta = {
   title: 'Atoms/Tag',
   component: 'col-tag',
@@ -56,7 +60,7 @@ const meta = {
       table: {
         category: 'Core',
         type: {
-          summary: "'gray' | 'purple' | 'lime' | 'rose' | 'cobalt' | 'teal' | 'cyan' | 'orange' ",
+          summary: variantSummary,
         },
         defaultValue: { summary: 'gray' },
       },

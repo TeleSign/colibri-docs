@@ -69,7 +69,7 @@ import { Callout } from '../../_storybook/components';
     Tag groups are sets of `col-tag` elements grouped together to provide greater organisation and context. They are used in the following scenarios:
 
     <Callout  variant="info" icon="ℹ️">
-      There is no such element as `col-tag-group` or similar. To represent tag groups it's meant to use the `col-group` as the parent component
+      There is no such element as `col-tag-group` or similar. To represent tag groups it's meant to use the `col-group` as the parent component. Check out the [Tag Group](#tag-group-by-col-group) example.
     </Callout>
 
     **Complex category management**:
@@ -109,7 +109,7 @@ import { Callout } from '../../_storybook/components';
     <Canvas of={stories.Variants} />
 
     ## States
-    The `col-tag` component supports states to reflect user interaction. Each state is shwon with all variants.
+    The `col-tag` component supports states to reflect user interaction. Each state is shown with all variants.
 
     ### Disabled
     Use the `disabled` property to render the tag non-interactive.
@@ -127,7 +127,7 @@ import { Callout } from '../../_storybook/components';
 
     ### Removal
     <Callout variant="tip" icon="💡">
-      In case you see the Canva empty reload the page (or click **F5**) and the component will appear.
+      In case you see the Canva empty reload the page (or press **F5**) and the component will appear.
     </Callout>
     The `onRemove` property allows to fire a custom callback to let the parent component handle the corresponding removal of the tag.
     <Canvas of={stories.Removal} />
@@ -145,7 +145,7 @@ import { Callout } from '../../_storybook/components';
       - Disabled, Read Only and Multi Select states are communicated using `aria-disabled`, `aria-readonly` and `aria-selected`.
       - The tag container includes an `aria-label` dynamic which changes according to the variant of the component.
     - **Screen Reader Support:** All states (`disabled`, `read-only`, `multi-select`) are announced appropriately.
-    - **Actions Supported:** The componente handles `@keydown`, `@click`, `@dragstart` and `@dragend`.
+    - **Actions Supported:** The component handles `@keydown`, `@click`, `@dragstart` and `@dragend`.
     - **Best Practices:**
       - The role of the tag component is `option` so the parent component should be `listbox` or `group`.
       - Make sure you include the `slot='icon'` in order to display correctly the icon to the tag.
