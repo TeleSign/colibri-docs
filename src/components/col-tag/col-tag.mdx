@@ -130,8 +130,10 @@ import { Callout } from '../../_storybook/components';
       In case you see the Canva empty reload the page (or press **F5**) and the component will appear.
     </Callout>
     The `onRemove` property allows to fire a custom callback to let the parent component handle the corresponding removal of the tag.
+    For this example when you click the close button, it will render other Colibri components and the possibility to re-render the tag component again.
     <Canvas of={stories.Removal} />
-    - For this example when you click the close button, it will render other Colibri components and the possibility to re-render the tag component again.
+    - The `onRemove` callback changes the value of `isRemoved` and updates the content of the Canva wih a re-render.
+    - The `click` event of the button restores the value of `isRemoved` to false and updates the content of the Canva to display the Tag.
 
     ## Accessibility
     <div>

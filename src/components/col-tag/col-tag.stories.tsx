@@ -441,4 +441,20 @@ export const Removal: Story = {
 
     return initialTemplate;
   },
+  parameters: {
+    docs: {
+      source: {
+        code: formatCodeString(`<div class="story-container">
+          isRemoved
+          ? <col-group orientation="vertical">
+              <col-typography variant="label" element="label">
+                <col-icon slot="icon" name="check" size="12px"></col-icon>Tag removed successfully
+              </col-typography>
+              <col-button variant="primary" @click={resetTag}>Restore Tag</col-button>
+            </col-group>
+          : <col-tag variant="orange" text="Click my close button" .onRemove={onRemove} ></col-tag>
+          </div>`),
+      },
+    },
+  },
 };
