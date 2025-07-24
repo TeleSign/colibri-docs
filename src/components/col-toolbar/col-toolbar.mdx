@@ -1,0 +1,318 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as ColToolbarStories from './col-toolbar.stories';
+import { Callout } from '../../_storybook/components';
+
+<Meta of={ColToolbarStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Toolbar</Title>
+    The Colibri Toolbar component provides a flexible container for organizing actions, controls, and navigation elements. It offers various alignment options, positioning behaviors, and responsive features for building consistent interface headers, footers, and action bars.
+
+    <Callout variant="info" icon="ℹ️">
+      The toolbar component is designed to work seamlessly with other Colibri components like buttons, inputs, and navigation elements.
+    </Callout>
+
+    <Subtitle>Component Overview</Subtitle>
+    The Toolbar component serves as a horizontal container that automatically handles:
+
+    - **Flexible alignment** - Left, center, right, space-between, and space-around options
+    - **Visual styling** - Border options and elevation effects
+    - **Positioning behavior** - Static, sticky, and fixed positioning
+    - **Responsive design** - Wrapping behavior and mobile-optimized spacing
+    - **Accessibility** - Proper ARIA roles and keyboard navigation support
+
+    <Subtitle>Table of contents</Subtitle>
+    - [How to use it](#how-to-use-it)
+    - [When to use it](#when-to-use-it)
+    - [Component preview](#component-preview)
+      - [Alignment options](#alignment-options)
+      - [Border variations](#border-variations)
+      - [Positioning behavior](#positioning-behavior)
+      - [Gap and wrapping](#gap-and-wrapping)
+      - [Complex toolbars](#complex-toolbars)
+    - [Properties](#properties)
+    - [Interact with the component](#interact-with-the-component)
+
+    ## How to use it
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, registerAllComponents, ColToolbar } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web components:
+        ```typescript
+        // Option 1: Register specific components
+        registerColibriComponents([ColToolbar]);
+
+        // Option 2: Register all Colibri components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <!-- Basic toolbar with actions -->
+        <col-toolbar>
+          <button>New</button>
+          <button>Edit</button>
+          <button>Delete</button>
+        </col-toolbar>
+
+        <!-- Application header toolbar -->
+        <col-toolbar align="space-between" border="bottom" elevation sticky="top">
+          <div>
+            <h1>MyApp</h1>
+            <nav>Dashboard › Analytics</nav>
+          </div>
+          <div>
+            <input type="search" placeholder="Search..." />
+            <button>Profile</button>
+          </div>
+        </col-toolbar>
+
+        <!-- Form actions toolbar -->
+        <col-toolbar align="right" border="top" gap="large">
+          <button>Cancel</button>
+          <button>Save Draft</button>
+          <button>Publish</button>
+        </col-toolbar>
+
+        <!-- Responsive toolbar with wrapping -->
+        <col-toolbar wrap gap="medium" border="bottom">
+          <button>Action 1</button>
+          <button>Action 2</button>
+          <button>Action 3</button>
+          <input type="search" placeholder="Search..." />
+          <button>Settings</button>
+        </col-toolbar>
+        ```
+
+    ## When to use it
+    The Toolbar component provides structured layouts for various interface patterns and use cases:
+
+    ### Primary Use Cases
+
+    **Application Headers**
+    - Top navigation bars with branding, menu items, and user controls
+    - Breadcrumb navigation with search and global actions
+    - Multi-level headers with different sections and alignments
+
+    **Data Management Interfaces**
+    - Table action bars with CRUD operations (Create, Read, Update, Delete)
+    - Filtering and search controls above data lists
+    - Bulk action toolbars for selected items
+
+    **Form and Content Toolbars**
+    - Form action buttons (Save, Cancel, Submit)
+    - Rich text editor formatting tools
+    - Content creation and editing controls
+
+    **Dashboard and Analytics**
+    - Dashboard headers with time range selectors and export options
+    - Report generation controls and filters
+    - Status indicators and real-time information displays
+
+    **Mobile and Responsive Interfaces**
+    - Collapsible navigation bars for small screens
+    - Bottom action bars for mobile apps
+    - Adaptive toolbars that wrap content on narrow viewports
+
+    ### Alignment Patterns
+
+    **Left Alignment (`align="left"`)**
+    - Primary actions and navigation elements
+    - Sequential workflow buttons
+    - Default toolbar behavior
+
+    **Right Alignment (`align="right"`)**
+    - Secondary actions and settings
+    - User profile and account controls
+    - Form submission buttons
+
+    **Center Alignment (`align="center"`)**
+    - Modal dialog actions
+    - Simple confirmation buttons
+    - Symmetrical button groups
+
+    **Space Between (`align="space-between"`)**
+    - Application headers with logo and user menu
+    - Content with primary and secondary action groups
+    - Navigation with breadcrumbs and controls
+
+    **Space Around (`align="space-around"`)**
+    - Tab-like navigation elements
+    - Evenly distributed menu items
+    - Balanced action groups
+
+    ### Positioning Strategies
+
+    **Static Positioning (default)**
+    - Content-embedded toolbars
+    - Form sections and panels
+    - Inline action bars
+
+    **Sticky Positioning**
+    - Table headers that stick during scroll
+    - Section toolbars within containers
+    - Context-sensitive action bars
+
+    **Fixed Positioning**
+    - Global application headers
+    - Persistent bottom action bars
+    - Always-visible controls
+
+    ### Best Practices
+
+    **Content Organization**
+    - Group related actions together using visual dividers
+    - Place primary actions prominently (left side or right side depending on context)
+    - Use consistent spacing and alignment patterns across the application
+
+    **Responsive Design**
+    - Enable wrapping for toolbars with many items
+    - Use appropriate gap sizes for different screen sizes
+    - Consider mobile-first design with essential actions prioritized
+
+    **Accessibility**
+    - Ensure proper tab order for keyboard navigation
+    - Use semantic HTML elements within toolbar slots
+    - Provide adequate touch targets for mobile interfaces (minimum 44px)
+
+    **Performance**
+    - Avoid excessive nesting of complex components within toolbars
+    - Use appropriate positioning (sticky vs fixed) based on actual needs
+    - Consider lazy loading for non-critical toolbar content
+
+    ## Component preview
+
+    ### Alignment options
+    <div>
+      Control how toolbar content is horizontally distributed using the `align` property. Each alignment option serves different layout needs and content patterns.
+    </div>
+    <h4>Overview</h4>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+    The `align` property uses CSS flexbox justify-content values to control content distribution.
+
+    **Alignment behaviors:**
+    - `left` (default) - Items start from the left edge
+    - `center` - Items are centered in the available space
+    - `right` - Items align to the right edge
+    - `space-between` - Items spread out with space between them
+    - `space-around` - Items spread out with space around them
+
+    **Left Aligned (Default):**
+    <Canvas of={ColToolbarStories.AlignLeft} />
+
+    **Center Aligned:**
+    <Canvas of={ColToolbarStories.AlignCenter} />
+
+    **Space Between:**
+    <Canvas of={ColToolbarStories.AlignSpaceBetween} />
+
+    ### Border variations
+    <div>
+      Add visual separation and definition to toolbars using border and elevation properties. These styling options help establish hierarchy and context.
+    </div>
+    <h4>Overview</h4>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+    Border and elevation properties work together to create visual depth and separation.
+
+    **Border options:**
+    - `none` (default) - No border styling
+    - `top` - Border on top edge (useful for bottom toolbars)
+    - `bottom` - Border on bottom edge (common for header toolbars)
+    - `all` - Border on all edges (standalone containers)
+
+    **No Border (Default):**
+    <Canvas of={ColToolbarStories.NoBorder} />
+
+    **Bottom Border:**
+    <Canvas of={ColToolbarStories.BottomBorder} />
+
+    **Elevated Toolbar:**
+    <Canvas of={ColToolbarStories.ElevatedToolbar} />
+
+    ### Positioning behavior
+    <div>
+      Control toolbar positioning with sticky and fixed options for different scrolling behaviors and layout needs.
+    </div>
+    <h4>Overview</h4>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+    Positioning properties determine how the toolbar behaves during page or container scrolling.
+
+    **Positioning options:**
+    - `sticky="top"` - Sticks to top of scrolling container
+    - `sticky="bottom"` - Sticks to bottom of scrolling container
+    - `fixed="top"` - Fixed to viewport top
+    - `fixed="bottom"` - Fixed to viewport bottom
+
+    **Sticky Top:**
+    <Canvas of={ColToolbarStories.StickyTop} />
+
+    **Fixed Top:**
+    <Canvas of={ColToolbarStories.FixedTop} />
+
+    ### Gap and wrapping
+    <div>
+      Control spacing between toolbar items and wrapping behavior for responsive layouts using gap and wrap properties.
+    </div>
+    <h4>Overview</h4>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+    Gap and wrapping properties help create responsive and well-spaced toolbar layouts.
+
+    **Gap sizes:**
+    - `small` - Compact spacing for dense toolbars
+    - `medium` (default) - Standard spacing for most use cases
+    - `large` - Generous spacing for prominent toolbars
+
+    **Wrapping behavior:**
+    - `wrap={false}` (default) - Items stay on one line, may overflow
+    - `wrap={true}` - Items wrap to new lines when space is limited
+
+    **Small Gap:**
+    <Canvas of={ColToolbarStories.SmallGap} />
+
+    **Medium Gap (Default):**
+    <Canvas of={ColToolbarStories.MediumGap} />
+
+    **Wrapping Toolbar:**
+    <Canvas of={ColToolbarStories.WrappingToolbar} />
+
+    ### Complex toolbars
+    <div>
+      Real-world examples demonstrating sophisticated toolbar layouts combining multiple properties and content types.
+    </div>
+
+    <Callout variant="info" icon="📋">
+      **Explore comprehensive examples** including application headers, data table toolbars, form actions, and mobile interfaces in the [Complex Toolbars story](/story/atoms-toolbar--complex-toolbars). These examples demonstrate practical applications with full responsive behavior and detailed implementation patterns.
+    </Callout>
+
+    **Application Header:**
+    <Canvas of={ColToolbarStories.ApplicationHeader} />
+
+    **Data Table Toolbar:**
+    <Canvas of={ColToolbarStories.DataTableToolbar} />
+
+    **Rich Content Toolbar:**
+    <Canvas of={ColToolbarStories.RichContentToolbar} />
+
+    ## Properties
+
+    <ArgTypes of={ColToolbarStories} />
+
+    ## Interact with the component
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-toolbar--default) section.
+
+  </div>
+</div>
