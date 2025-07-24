@@ -23,7 +23,7 @@ type StoryArgs = {
   href: string;
   newTab: boolean;
   downloadable: boolean;
-  downloadFilename: string;
+  filename: string;
   iconVisible: boolean;
   iconSize: string;
   iconName?: string;
@@ -142,6 +142,7 @@ const meta = {
       if: { arg: 'ellipsis', neq: false },
     },
     maxLines: {
+      name: 'max-lines',
       control: 'number',
       description: 'Maximum number of lines to show before truncating with ellipsis.',
       table: {
@@ -162,6 +163,7 @@ const meta = {
       if: { arg: 'href', neq: '' },
     },
     newTab: {
+      name: 'newtab',
       control: 'boolean',
       description: 'Opens the `link` in a new tab.',
       table: {
@@ -181,7 +183,7 @@ const meta = {
       },
       if: { arg: 'downloadable', neq: false },
     },
-    downloadFilename: {
+    filename: {
       control: 'text',
       description: 'Suggested filename when downloading a file from the `link` variant.',
       table: {
@@ -189,7 +191,7 @@ const meta = {
         defaultValue: { summary: 'example.pdf' },
         category: 'Link',
       },
-      if: { arg: 'downloadFilename', neq: '' },
+      if: { arg: 'filename', neq: '' },
     },
     iconVisible: {
       control: 'boolean',
@@ -239,7 +241,7 @@ const meta = {
     href: '',
     newTab: false,
     downloadable: false,
-    downloadFilename: '',
+    filename: '',
     iconVisible: false,
     iconSize: '',
     iconName: '',
@@ -257,9 +259,9 @@ const renderTypography: Story['render'] = args => html`
     size=${args.size || nothing}
     state=${args.state || nothing}
     align=${args.align || nothing}
-    maxLines=${args.maxLines || nothing}
+    max-lines=${args.maxLines || nothing}
     href=${args.href || nothing}
-    downloadFilename=${args.downloadFilename || nothing}
+    filename=${args.filename || nothing}
     ?newTab=${args.newTab}
     ?downloadable=${args.downloadable}
     ?required=${args.required}
@@ -470,7 +472,7 @@ export const LinkWithDownloadFilename: Story = {
     element: TYPOGRAPHY_ELEMENTS.A,
     href: '/assets/example.pdf',
     downloadable: true,
-    downloadFilename: 'example.pdf',
+    filename: 'example.pdf',
   },
   render: renderTypography,
 };
@@ -507,7 +509,13 @@ export const TextTruncation: Story = {
     ellipsis: true,
     maxLines: 2,
   },
-  render: (args, context) => html`
-    <div style="width: 400px">${renderTypography(args, context)}</div>
-  `,
+  parameters: {
+    __sb: {
+      display: 'flex',
+      justifyContent: 'center',
+      width: '400px',
+      margin: '0 auto',
+    },
+  },
+  render: renderTypography,
 };

@@ -51,6 +51,7 @@ export type Styles = {
   flexWrap?: FlexWrap;
   height?: string;
   width?: string;
+  margin?: string;
 };
 
 export interface StylesOptions {
@@ -96,13 +97,14 @@ const getStyles = (options?: StylesOptions): string => {
 
   const cssProperties: Record<string, string> = {
     display: 'display',
+    flexDirection: 'flex-direction',
+    justifyContent: 'justify-content',
+    gridTemplateColumns: 'grid-template-columns',
+    flexWrap: 'flex-wrap',
     gap: 'gap',
     height: 'height',
     width: 'width',
-    flexDirection: 'flex-direction',
-    justifyContent: 'justify-content',
-    flexWrap: 'flex-wrap',
-    gridTemplateColumns: 'grid-template-columns',
+    margin: 'margin',
   };
 
   const styleArray: string[] = [];
