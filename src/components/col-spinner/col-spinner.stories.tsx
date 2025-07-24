@@ -25,6 +25,7 @@ const meta = {
       control: 'text',
       description: 'The text that is read on screen-readers to indicate loading/busy state',
       table: {
+        category: 'Core',
         type: { summary: 'string' },
         defaultValue: { summary: 'Loading' },
       },
@@ -34,6 +35,7 @@ const meta = {
       options: Object.values(SPINNER_SIZES),
       description: 'The size the spinner should be: 16, 24 or 48',
       table: {
+        category: 'Core',
         type: { summary: 'string' },
         defaultValue: { summary: '16' },
       },
@@ -58,7 +60,7 @@ const renderSpinner: Story['render'] = ({ accessibilityText, size }) => html`
  */
 export const Default: Story = {
   render: ({ accessibilityText, size }) => html`
-    <col-spinner accessibility-text=${accessibilityText} size=${size}></col-spinner>
+    <col-spinner size=${size} accessibility-text=${accessibilityText}></col-spinner>
   `,
 };
 
