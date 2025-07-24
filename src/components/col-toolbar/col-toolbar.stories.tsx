@@ -102,6 +102,13 @@ const meta = {
       },
     },
   },
+  args: {
+    align: 'left',
+    border: 'none',
+    elevation: false,
+    sticky: 'none',
+    fixed: 'none',
+  },
 } satisfies ColibriStoryMeta<ColToolbarProps>;
 
 export default meta;
@@ -198,11 +205,11 @@ const renderToolbar = (args: ColToolbarProps, content: string[]) => html`
   </style>
   <col-toolbar
     align=${args.align || nothing}
-    border=${args.border !== 'none' ? args.border : nothing}
-    ?elevation=${args.elevation}
-    sticky=${args.sticky !== 'none' ? args.sticky : nothing}
-    fixed=${args.fixed !== 'none' ? args.fixed : nothing}
-    ?wrap=${args.wrap}
+    border=${args.border || nothing}
+    ?elevation=${args.elevation || nothing}
+    sticky=${args.sticky || nothing}
+    fixed=${args.fixed || nothing}
+    ?wrap=${args.wrap || nothing}
     gap=${args.gap || nothing}
   >
     ${content.map(item => unsafeHTML(item))}
@@ -500,7 +507,7 @@ export const PositioningTemplates = {
 /**
  * Positioning Examples
  */
-export const Positioning: Story = {
+export const PositioningSticky: Story = {
   parameters: {
     controls: { disable: true },
   },
@@ -522,31 +529,25 @@ export const Positioning: Story = {
           content: PositioningTemplates.stickyBottom,
           description: 'sticky: "bottom" - Sticks to bottom when scrolling within container',
         },
-        {
-          title: 'Fixed Top',
-          content: PositioningTemplates.fixedTop,
-          description: 'fixed: "top" - Fixed to viewport top, stays during page scroll',
-        },
-        {
-          title: 'Fixed Bottom',
-          content: PositioningTemplates.fixedBottom,
-          description: 'fixed: "bottom" - Fixed to viewport bottom, persistent actions',
-        },
       ],
       { descriptionClass: 'toolbar-info' },
     ),
+};
+
+export const FixedTop: Story = {
+  parameters: { controls: { disable: true } },
+  render: PositioningTemplates.fixedTop,
+};
+
+export const FixedBottom: Story = {
+  parameters: { controls: { disable: true } },
+  render: PositioningTemplates.fixedBottom,
 };
 
 // Hidden individual stories for MDX Canvas usage
 export const StickyTop: Story = {
   parameters: { controls: { disable: true } },
   render: PositioningTemplates.stickyTop,
-  tags: ['!dev'],
-};
-
-export const FixedTop: Story = {
-  parameters: { controls: { disable: true } },
-  render: PositioningTemplates.fixedTop,
   tags: ['!dev'],
 };
 
@@ -708,11 +709,17 @@ export const ComplexToolbarTemplates = {
         ${createStatusIndicator('success', 'System Healthy')}
       </div>`,
       `<div style="display: flex; align-items: center; gap: 12px;">
-        <select style="padding: 6px 12px; border: 1px solid var(--col-colors-stroke-default-light); border-radius: 4px;">
-          <option>Last 7 days</option>
-          <option>Last 30 days</option>
-          <option>Last 90 days</option>
-        </select>
+        <col-dropdown>
+          <col-button slot="trigger">
+            Toggle
+            <col-icon name="chevron-down" size="16px"></col-icon>
+          </col-button>
+          <col-list-menu>
+            <col-list-item-menu>Item 1</col-list-item-menu>
+            <col-list-item-menu>Item 2</col-list-item-menu>
+            <col-list-item-menu>Item 3</col-list-item-menu>
+          </col-list-menu>
+        </col-dropdown>
         ${createButton('Export Report', 'primary', 'database')}
         ${createButton('Refresh', 'primary', 'arrow-refresh-clockwise')}
       </div>`,
