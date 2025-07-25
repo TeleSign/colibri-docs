@@ -166,7 +166,7 @@ const styles = css`
   }
 `;
 
-export const RenderCard: Story['render'] = ({
+const RenderCard: Story['render'] = ({
   checked,
   disabled,
   title,
