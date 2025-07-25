@@ -11,7 +11,7 @@ type StoryArgs = {
   readonly?: boolean;
   category?: string;
   draggable?: boolean;
-  multiSelect: boolean;
+  multiselect: boolean;
   onRemove?: () => void;
   onTagSelected?: () => void;
   onTagRemoved?: () => void;
@@ -76,7 +76,6 @@ const meta = {
       },
     },
     readonly: {
-      name: 'readonly',
       control: 'boolean',
       description: 'Makes the tag read only.',
       table: {
@@ -85,8 +84,7 @@ const meta = {
         defaultValue: { summary: 'false' },
       },
     },
-    multiSelect: {
-      name: 'multi-select',
+    multiselect: {
       control: 'boolean',
       description: 'Fires the styles to display a selected tag.',
       table: {
@@ -96,7 +94,6 @@ const meta = {
       },
     },
     draggable: {
-      name: 'draggable',
       control: 'boolean',
       description: 'Enables to star and end the drag of the tag.',
       table: {
@@ -132,7 +129,7 @@ const meta = {
     variant: 'gray',
     text: 'Option',
     disabled: false,
-    multiSelect: false,
+    multiselect: false,
     readonly: false,
     draggable: false,
     category: 'Default',
@@ -151,7 +148,7 @@ const renderTagWithoutIcon: Story['render'] = args =>
     category=${args.category}
     variant=${args.variant}
     ?disabled=${args.disabled}
-    ?multi-select=${args.multiSelect}
+    ?multiselect=${args.multiselect}
     ?readonly=${args.readonly}
     ?draggable=${args.draggable}
     .onRemove=${args.onRemove}
@@ -165,7 +162,7 @@ const renderTagWithIcon: Story['render'] = args =>
     category=${args.category}
     variant=${args.variant}
     ?disabled=${args.disabled}
-    ?multi-select=${args.multiSelect}
+    ?multiselect=${args.multiselect}
     ?readonly=${args.readonly}
     ?draggable=${args.draggable}
     .onRemove=${args.onRemove}
@@ -180,7 +177,7 @@ export const Default: Story = {
     disabled,
     variant,
     text,
-    multiSelect,
+    multiselect,
     readonly,
     category,
     draggable,
@@ -193,7 +190,7 @@ export const Default: Story = {
       category=${category}
       variant=${variant}
       ?disabled=${disabled}
-      ?multi-select=${multiSelect}
+      ?multiselect=${multiselect}
       ?readonly=${readonly}
       ?draggable=${draggable}
       .onRemove=${onRemove}
@@ -234,7 +231,7 @@ export const TagGroup: Story = {
         ?disabled=${args.disabled}
         variant=${args.variant}
         ?readonly=${args.readonly}
-        ?multi-select=${args.multiSelect}
+        ?multiselect=${args.multiselect}
         .onRemove=${args.onRemove}
         @tag-selected=${args.onTagSelected}
         @tag-removed=${args.onTagRemoved}
@@ -246,7 +243,7 @@ export const TagGroup: Story = {
         variant="cobalt"
         ?disabled=${args.disabled}
         ?readonly=${args.readonly}
-        ?multi-select=${args.multiSelect}
+        ?multiselect=${args.multiselect}
         .onRemove=${args.onRemove}
         @tag-selected=${args.onTagSelected}
         @tag-removed=${args.onTagRemoved}
@@ -267,7 +264,7 @@ export const Variants: Story = {
         text=${args.text + 'cobalt'}
         ?disabled=${args.disabled}
         ?readonly=${args.readonly}
-        ?multi-select=${args.multiSelect}
+        ?multiselect=${args.multiselect}
         category=${args.category}
         variant="cobalt"
         .onRemove=${args.onRemove}
@@ -280,7 +277,7 @@ export const Variants: Story = {
         text=${args.text + 'orange'}
         ?disabled=${args.disabled}
         ?readonly=${args.readonly}
-        ?multi-select=${args.multiSelect}
+        ?multiselect=${args.multiselect}
         category=${args.category}
         variant="orange"
         .onRemove=${args.onRemove}
@@ -292,7 +289,7 @@ export const Variants: Story = {
         text=${args.text + 'teal'}
         ?disabled=${args.disabled}
         ?readonly=${args.readonly}
-        ?multi-select=${args.multiSelect}
+        ?multiselect=${args.multiselect}
         category=${args.category}
         variant="teal"
         .onRemove=${args.onRemove}
@@ -305,7 +302,7 @@ export const Variants: Story = {
         text=${args.text + 'rose'}
         ?disabled=${args.disabled}
         ?readonly=${args.readonly}
-        ?multi-select=${args.multiSelect}
+        ?multiselect=${args.multiselect}
         category=${args.category}
         variant="rose"
         .onRemove=${args.onRemove}
@@ -319,7 +316,7 @@ export const Variants: Story = {
         text=${args.text + 'cyan'}
         ?disabled=${args.disabled}
         ?readonly=${args.readonly}
-        ?multi-select=${args.multiSelect}
+        ?multiselect=${args.multiselect}
         category=${args.category}
         variant="cyan"
         .onRemove=${args.onRemove}
@@ -331,7 +328,7 @@ export const Variants: Story = {
         text=${args.text + 'gray'}
         ?disabled=${args.disabled}
         ?readonly=${args.readonly}
-        ?multi-select=${args.multiSelect}
+        ?multiselect=${args.multiselect}
         category=${args.category}
         variant="gray"
         .onRemove=${args.onRemove}
@@ -343,7 +340,7 @@ export const Variants: Story = {
         text=${args.text + 'lime'}
         ?disabled=${args.disabled}
         ?readonly=${args.readonly}
-        ?multi-select=${args.multiSelect}
+        ?multiselect=${args.multiselect}
         category=${args.category}
         variant="lime"
         .onRemove=${args.onRemove}
@@ -355,7 +352,7 @@ export const Variants: Story = {
         text=${args.text + 'purple'}
         ?disabled=${args.disabled}
         ?readonly=${args.readonly}
-        ?multi-select=${args.multiSelect}
+        ?multiselect=${args.multiselect}
         category=${args.category}
         variant="purple"
         .onRemove=${args.onRemove}
@@ -377,12 +374,12 @@ export const Disabled: Story = {
   render: renderTagWithIcon,
 };
 
-export const MultiSelect: Story = {
+export const multiselect: Story = {
   args: {
     text: 'Tag disabled with variant ',
     category: 'Custom Category',
     variant: TAG_VARIANTS.TEAL,
-    multiSelect: true,
+    multiselect: true,
   },
   render: renderTagWithIcon,
 };
