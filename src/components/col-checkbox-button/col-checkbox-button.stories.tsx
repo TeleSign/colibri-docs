@@ -5,6 +5,7 @@ import { fn } from '@storybook/test';
 import { icons } from '@telesign/colibri-icons/icons-list';
 
 type StoryArgs = {
+  name: string;
   checked: boolean;
   disabled: boolean;
   label: string;
@@ -26,6 +27,15 @@ const meta = {
     },
   },
   argTypes: {
+    name: {
+      control: 'text',
+      description: 'Name of the checkbox button',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: '""' },
+        category: 'core',
+      },
+    },
     checked: {
       control: 'boolean',
       description: 'Controls the checked state of the checkbox button',
@@ -96,6 +106,7 @@ const meta = {
     },
   },
   args: {
+    name: 'checkbox button',
     checked: false,
     disabled: false,
     label: '',
@@ -149,6 +160,7 @@ const styles = css`
 
 const renderCheckboxButton: Story['render'] = args => html`
   <col-checkbox-button
+    name=${args.name}
     ?checked=${args.checked}
     ?disabled=${args.disabled}
     ?customlabel=${args.customLabel}
@@ -233,7 +245,11 @@ export const GroupCheckbox: Story = {
   },
   render: args => html`
     <col-group label="Checkbox group button horizontal" role="group" withoutGap>
-      <col-checkbox-button ?checked=${args.checked} ?disabled=${args.disabled}>
+      <col-checkbox-button
+        name="checkbox group button"
+        ?checked=${args.checked}
+        ?disabled=${args.disabled}
+      >
         <col-icon name=${args.icon} slot="icon"></col-icon>
         ${args.customLabel ? html`<span slot="label">${args.label}</span>` : args.default}
       </col-checkbox-button>
