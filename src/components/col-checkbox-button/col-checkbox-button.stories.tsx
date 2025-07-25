@@ -1,7 +1,8 @@
-import { html } from 'lit';
+import { html, css } from 'lit';
 import { ColibriStory, ColibriStoryMeta } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
 import { fn } from '@storybook/test';
+import { icons } from '@telesign/colibri-icons/icons-list';
 
 type StoryArgs = {
   checked: boolean;
@@ -33,6 +34,7 @@ const meta = {
         category: 'core',
         defaultValue: { summary: 'false' },
       },
+      if: { arg: 'checked', neq: false },
     },
     disabled: {
       control: 'boolean',
@@ -42,8 +44,10 @@ const meta = {
         category: 'core',
         defaultValue: { summary: 'false' },
       },
+      if: { arg: 'disabled', neq: false },
     },
     customLabel: {
+      name: 'customlabel',
       control: 'boolean',
       description: 'Enables custom label slot',
       table: {
@@ -51,27 +55,35 @@ const meta = {
         category: 'core',
         defaultValue: { summary: 'false' },
       },
+      if: { arg: 'customlabel', neq: false },
     },
     default: {
       control: 'text',
       description: 'The default content of the button (typically used for the label)',
       table: {
         category: 'slots',
+        defaultValue: { summary: '""' },
       },
+      if: { arg: 'default', neq: '' },
     },
     icon: {
-      control: 'text',
+      control: 'select',
+      options: Object.values(icons),
       description: 'Icon content that appears before the label',
       table: {
         category: 'slots',
+        defaultValue: { summary: '""' },
       },
+      if: { arg: 'icon', neq: '' },
     },
     label: {
       control: 'text',
       description: 'Custom label content (when customLabel is true)',
       table: {
         category: 'slots',
+        defaultValue: { summary: '""' },
       },
+      if: { arg: 'label', neq: '' },
     },
     change: {
       action: 'clicked',
@@ -80,6 +92,7 @@ const meta = {
         category: 'Events',
         type: { summary: '{ checked: boolean }' },
       },
+      if: { arg: 'change', neq: fn() },
     },
   },
   args: {
@@ -97,8 +110,49 @@ export default meta;
 
 type Story = ColibriStory<StoryArgs>;
 
+const styles = css`
+  .checkbox-button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-family: var(--col-typography-font-family-primary);
+  }
+
+  .checkbox-button-group-header {
+    margin-bottom: 12px;
+  }
+
+  .checkbox-button-group-content {
+    display: flex;
+    gap: 16px;
+  }
+
+  .toggle-button {
+    padding: 8px 16px;
+    background-color: var(--col-colors-ui-primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--col-typography-font-family-primary);
+    font-size: 14px;
+  }
+
+  .toggle-button:hover {
+    background-color: var(--col-colors-ui-primary-dark);
+  }
+
+  .toggle-button:active {
+    background-color: var(--col-colors-ui-primary-dark);
+  }
+`;
+
 const renderCheckboxButton: Story['render'] = args => html`
-  <col-checkbox-button ?checked=${args.checked} ?disabled=${args.disabled}>
+  <col-checkbox-button
+    ?checked=${args.checked}
+    ?disabled=${args.disabled}
+    ?customlabel=${args.customLabel}
+  >
     <col-icon name=${args.icon} slot="icon"></col-icon>
     ${args.customLabel ? html`<span slot="label">${args.label}</span>` : args.default}
   </col-checkbox-button>
@@ -142,13 +196,6 @@ export const DisabledChecked: Story = {
   render: renderCheckboxButton,
 };
 
-export const WithStringLabel: Story = {
-  args: {
-    label: 'String label property',
-  },
-  render: renderCheckboxButton,
-};
-
 export const WithDefaultSlot: Story = {
   args: {
     default: 'Default slot label',
@@ -185,11 +232,7 @@ export const GroupCheckbox: Story = {
     default: 'With icon',
   },
   render: args => html`
-    <col-group
-      label="Checkbox group button horizontal"
-      role="group"
-      withoutGap
-    >
+    <col-group label="Checkbox group button horizontal" role="group" withoutGap>
       <col-checkbox-button ?checked=${args.checked} ?disabled=${args.disabled}>
         <col-icon name=${args.icon} slot="icon"></col-icon>
         ${args.customLabel ? html`<span slot="label">${args.label}</span>` : args.default}
@@ -199,7 +242,7 @@ export const GroupCheckbox: Story = {
       <col-checkbox-button>Year</col-checkbox-button>
     </col-group>
   `,
-}
+};
 
 export const InteractiveExample: Story = {
   render: () => {
@@ -214,16 +257,21 @@ export const InteractiveExample: Story = {
     };
 
     return html`
-      <div>
-        <div style="margin-bottom: 12px;">
+      <style>
+        ${styles}
+      </style>
+      <div class="checkbox-button-group">
+        <div class="checkbox-button-group-header">
           <strong>Current state: </strong><span id="state-display">Unchecked</span>
         </div>
-        <col-checkbox-button id="controlled-checkbox-button" @change=${toggleState}>
-          <col-icon name="check-circle" slot="icon"></col-icon>
-          Click to toggle state
-        </col-checkbox-button>
-        <div style="margin-top: 12px;">
-          <button @click=${toggleState}>Toggle state externally</button>
+        <div class="checkbox-button-group-content">
+          <col-checkbox-button id="controlled-checkbox-button" @change=${toggleState}>
+            <col-icon name="check-circle" slot="icon"></col-icon>
+            Click to toggle state
+          </col-checkbox-button>
+        </div>
+        <div>
+          <button class="toggle-button" @click=${toggleState}>Toggle state externally</button>
         </div>
       </div>
     `;
