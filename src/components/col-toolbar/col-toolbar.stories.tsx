@@ -61,6 +61,7 @@ const meta = {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
       },
+      if: { arg: 'elevation', neq: false },
     },
     sticky: {
       control: { type: 'select' },
@@ -90,6 +91,7 @@ const meta = {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
       },
+      if: { arg: 'wrap', neq: false },
     },
     gap: {
       control: { type: 'select' },
@@ -178,15 +180,16 @@ const createDivider = () => `<col-spacer></col-spacer>`;
 const createSearchInput = (placeholder = 'Search...') =>
   `<input type="text" class="search-input" placeholder="${placeholder}" />`;
 
-const createUserAvatar = (initials: string) =>
-  `<col-avatar avatarName="${initials}"></div>`;
+const createUserAvatar = (initials: string) => `<col-avatar name="${initials}"></div>`;
 
 const createBreadcrumb = (items: string[]) => {
   return `<col-breadcrumb>
-    ${items.map((item, index) => {
-    const isLast = index === items.length - 1;
-    return `<col-breadcrumb-item ${isLast ? 'current' : ''}>${item}</col-breadcrumb-item>`;
-  }).join('')}
+    ${items
+      .map((item, index) => {
+        const isLast = index === items.length - 1;
+        return `<col-breadcrumb-item ${isLast ? 'current' : ''}>${item}</col-breadcrumb-item>`;
+      })
+      .join('')}
   </col-breadcrumb>`;
 };
 
@@ -403,7 +406,7 @@ export const BorderVariations: Story = {
           description: 'Combination of border and elevation effects',
         },
       ],
-      { descriptionClass: 'toolbar-info' },
+      { descriptionClass: 'toolbar-info' }
     ),
 };
 
@@ -483,7 +486,7 @@ export const PositioningTemplates = {
         createButton('Global Action'),
         createSearchInput('Global search...'),
       ])}
-      <div style="padding-top: 60px; padding: 60px 16px 16px;">
+      <div class="demo-content" style="padding-top: 60px; padding: 60px 16px 16px;">
         <p>This toolbar is fixed to the top of the viewport.</p>
         <p>It will stay in place even when scrolling the page.</p>
       </div>
@@ -492,7 +495,7 @@ export const PositioningTemplates = {
 
   fixedBottom: () => html`
     <div style="position: relative; min-height: 200px;">
-      <div style="padding: 16px 16px 60px;">
+      <div class="demo-content" style="padding: 16px 16px 60px;">
         <p>This toolbar is fixed to the bottom of the viewport.</p>
         <p>It provides persistent access to actions.</p>
       </div>
@@ -530,7 +533,7 @@ export const PositioningSticky: Story = {
           description: 'sticky: "bottom" - Sticks to bottom when scrolling within container',
         },
       ],
-      { descriptionClass: 'toolbar-info' },
+      { descriptionClass: 'toolbar-info' }
     ),
 };
 
@@ -640,7 +643,7 @@ export const GapAndWrapping: Story = {
           description: 'wrap: false - Items stay on one line, may overflow container',
         },
       ],
-      { descriptionClass: 'toolbar-info' },
+      { descriptionClass: 'toolbar-info' }
     ),
 };
 
@@ -668,22 +671,25 @@ export const WrappingToolbar: Story = {
  */
 export const ComplexToolbarTemplates = {
   applicationHeader: () =>
-    renderToolbar({
-      align: 'space-between',
-      border: 'bottom',
-      elevation: true,
-      sticky: 'top',
-    } as ColToolbarProps, [
-      `<div style="display: flex; align-items: center; gap: 16px;">
+    renderToolbar(
+      {
+        align: 'space-between',
+        border: 'bottom',
+        elevation: true,
+        sticky: 'top',
+      } as ColToolbarProps,
+      [
+        `<div style="display: flex; align-items: center; gap: 16px;">
         <strong style="font-size: 1.125rem;">MyApp</strong>
         ${createBreadcrumb(['Dashboard', 'Analytics'])}
       </div>`,
-      `<div style="display: flex; align-items: center; gap: 12px;">
+        `<div style="display: flex; align-items: center; gap: 12px;">
         ${createSearchInput('Search...')}
         ${createButton('', 'danger', 'alert-warning-high')}
         ${createUserAvatar('John Doe')}
       </div>`,
-    ]),
+      ]
+    ),
 
   dataTableToolbar: () =>
     renderToolbar({ align: 'space-between', border: 'bottom', gap: 'medium' } as ColToolbarProps, [
@@ -699,16 +705,18 @@ export const ComplexToolbarTemplates = {
     ]),
 
   dashboardToolbar: () =>
-    renderToolbar({
-      align: 'space-between',
-      border: 'bottom',
-      elevation: true,
-    } as ColToolbarProps, [
-      `<div style="display: flex; align-items: center; gap: 16px;">
+    renderToolbar(
+      {
+        align: 'space-between',
+        border: 'bottom',
+        elevation: true,
+      } as ColToolbarProps,
+      [
+        `<div style="display: flex; align-items: center; gap: 16px;">
         <h2 style="margin: 0; font-size: 1.25rem;">Dashboard</h2>
         ${createStatusIndicator('success', 'System Healthy')}
       </div>`,
-      `<div style="display: flex; align-items: center; gap: 12px;">
+        `<div style="display: flex; align-items: center; gap: 12px;">
         <col-dropdown>
           <col-button slot="trigger">
             Toggle
@@ -723,24 +731,28 @@ export const ComplexToolbarTemplates = {
         ${createButton('Export Report', 'primary', 'database')}
         ${createButton('Refresh', 'primary', 'arrow-refresh-clockwise')}
       </div>`,
-    ]),
+      ]
+    ),
 
   mobileResponsiveToolbar: () =>
-    renderToolbar({
-      align: 'space-between',
-      wrap: true,
-      gap: 'small',
-      border: 'bottom',
-    } as ColToolbarProps, [
-      `<div style="display: flex; align-items: center; gap: 8px;">
+    renderToolbar(
+      {
+        align: 'space-between',
+        wrap: true,
+        gap: 'small',
+        border: 'bottom',
+      } as ColToolbarProps,
+      [
+        `<div style="display: flex; align-items: center; gap: 8px;">
         ${createButton('☰', 'outline')}
         <strong>Mobile App</strong>
       </div>`,
-      `<div style="display: flex; align-items: center; gap: 8px;">
+        `<div style="display: flex; align-items: center; gap: 8px;">
         ${createButton('', 'primary', 'search')}
         ${createButton('', 'primary', 'three-dots-vertical')}
       </div>`,
-    ]),
+      ]
+    ),
 
   richContentToolbar: () =>
     renderToolbar({ align: 'left', wrap: true, gap: 'small', border: 'all' } as ColToolbarProps, [
@@ -817,7 +829,7 @@ export const ComplexToolbars: Story = {
           description: 'Bottom status bar with connection status and editor info',
         },
       ],
-      { descriptionClass: 'toolbar-info' },
+      { descriptionClass: 'toolbar-info' }
     ),
 };
 
