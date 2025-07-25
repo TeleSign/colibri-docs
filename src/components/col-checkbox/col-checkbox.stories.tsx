@@ -33,6 +33,7 @@ const meta = {
         defaultValue: { summary: 'false' },
         category: 'core',
       },
+      if: { arg: 'checked', neq: false },
     },
     disabled: {
       control: 'boolean',
@@ -42,6 +43,7 @@ const meta = {
         defaultValue: { summary: 'false' },
         category: 'core',
       },
+      if: { arg: 'disabled', neq: false },
     },
     indeterminate: {
       control: 'boolean',
@@ -51,8 +53,10 @@ const meta = {
         defaultValue: { summary: 'false' },
         category: 'core',
       },
+      if: { arg: 'indeterminate', neq: false },
     },
     customLabel: {
+      name: 'customlabel',
       control: 'boolean',
       description: 'Enables custom label slot',
       table: {
@@ -60,6 +64,7 @@ const meta = {
         category: 'core',
         defaultValue: { summary: 'false' },
       },
+      if: { arg: 'customLabel', neq: false },
     },
     default: {
       control: 'text',

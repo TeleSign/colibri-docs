@@ -28,4 +28,5 @@ export const HTML_BOOLEAN_ATTRIBUTES = [
   'selected',
   'error',
   'dot',
+  'indeterminate',
 ];

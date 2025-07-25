@@ -15,6 +15,7 @@ export default [
         window: true,
         document: true,
         HTMLStyleElement: true,
+        HTMLInputElement: true,
         MediaQueryList: true,
         MediaQueryListEvent: true,
         CSSStyleSheet: true,
