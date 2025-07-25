@@ -31,4 +31,5 @@ export const HTML_BOOLEAN_ATTRIBUTES = [
   'indeterminate',
   'customlabel',
   'withoutgap',
+  'customcontent',
 ];
