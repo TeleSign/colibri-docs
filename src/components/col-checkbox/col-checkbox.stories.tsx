@@ -1,9 +1,10 @@
-import { html, nothing } from 'lit';
+import { html, css, nothing } from 'lit';
 import { fn } from '@storybook/test';
 import { ColibriStory, ColibriStoryMeta } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
 
 type StoryArgs = {
+  name: string;
   checked: boolean;
   disabled: boolean;
   indeterminate: boolean;
@@ -25,6 +26,15 @@ const meta = {
     },
   },
   argTypes: {
+    name: {
+      control: 'text',
+      description: 'Name of the checkbox',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: '""' },
+        category: 'core',
+      },
+    },
     checked: {
       control: 'boolean',
       description: 'Controls the checked state of the checkbox',
@@ -90,6 +100,7 @@ const meta = {
     },
   },
   args: {
+    name: 'checkbox',
     checked: false,
     disabled: false,
     indeterminate: false,
@@ -104,8 +115,37 @@ export default meta;
 
 type Story = ColibriStory<StoryArgs>;
 
+const styles = css`
+  .checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-family: var(--col-typography-font-family-primary);
+  }
+  .checkbox-group-header {
+    margin-bottom: 12px;
+  }
+  .toggle-button {
+    padding: 8px 16px;
+    background-color: var(--col-colors-ui-primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--col-typography-font-family-primary);
+    font-size: 14px;
+  }
+  .toggle-button:hover {
+    background-color: var(--col-colors-ui-primary-dark);
+  }
+  .toggle-button:active {
+    background-color: var(--col-colors-ui-primary-dark);
+  }
+`;
+
 const renderCheckbox: Story['render'] = args => html`
   <col-checkbox
+    name=${args.name}
     ?disabled=${args.disabled}
     ?checked=${args.checked}
     ?indeterminate=${args.indeterminate}
@@ -184,6 +224,7 @@ export const WithIcon: Story = {
   },
   render: ({ customLabel, disabled, checked, indeterminate }) => html`
     <col-checkbox
+      name="checkbox with icon"
       ?disabled=${disabled}
       ?checked=${checked}
       ?indeterminate=${indeterminate}
@@ -203,6 +244,7 @@ export const WithMultipleIcons: Story = {
   },
   render: ({ customLabel, disabled, checked, indeterminate }) => html`
     <col-checkbox
+      name="checkbox with multiple icons"
       ?disabled=${disabled}
       ?checked=${checked}
       ?indeterminate=${indeterminate}
@@ -217,7 +259,7 @@ export const WithMultipleIcons: Story = {
   `,
 };
 
-export const InteractiveControlledExample: Story = {
+export const InteractiveExample: Story = {
   render: () => {
     let checked = false;
     let indeterminate = true;
@@ -241,15 +283,20 @@ export const InteractiveControlledExample: Story = {
     };
 
     return html`
-      <div>
-        <div style="margin-bottom: 12px;">
+      <style>
+        ${styles}
+      </style>
+      <div class="checkbox-group">
+        <div class="checkbox-group-header">
           <strong>Current state: </strong><span id="state-display">Indeterminate</span>
         </div>
-        <col-checkbox id="controlled-checkbox" indeterminate @change=${toggleState}>
-          Click to toggle state
-        </col-checkbox>
-        <div style="margin-top: 12px;">
-          <button @click=${toggleState}>Toggle state externally</button>
+        <div>
+          <col-checkbox id="controlled-checkbox" indeterminate @change=${toggleState}>
+            Click to toggle state
+          </col-checkbox>
+        </div>
+        <div>
+          <button class="toggle-button" @click=${toggleState}>Toggle state externally</button>
         </div>
       </div>
     `;
