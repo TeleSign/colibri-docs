@@ -14,6 +14,8 @@ export default [
       globals: {
         window: true,
         document: true,
+        Event: true,
+        HTMLElement: true,
         HTMLStyleElement: true,
         HTMLInputElement: true,
         MediaQueryList: true,

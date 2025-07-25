@@ -29,4 +29,5 @@ export const HTML_BOOLEAN_ATTRIBUTES = [
   'error',
   'dot',
   'indeterminate',
+  'customlabel',
 ];
