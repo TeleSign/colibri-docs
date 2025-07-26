@@ -29,6 +29,7 @@ const meta = {
         defaultValue: { summary: 'false' },
         category: 'Core',
       },
+      if: { arg: 'multiline', neq: false },
     },
     width: {
       control: 'number',
@@ -41,16 +42,11 @@ const meta = {
     },
     position: {
       control: 'select',
-      options: [
-        TOOLTIP_POSITIONS.Left,
-        TOOLTIP_POSITIONS.Bottom,
-        TOOLTIP_POSITIONS.Right,
-        TOOLTIP_POSITIONS.Top,
-      ],
+      options: Object.values(TOOLTIP_POSITIONS),
       description: 'Determines the position where the tooltip would be displayed',
       table: {
         type: {
-          summary: `'top' | 'bottom' | 'right' | 'left'`,
+          summary: Object.values(TOOLTIP_POSITIONS).join(' | '),
         },
         defaultValue: { summary: 'top' },
         category: 'Core',
@@ -72,16 +68,19 @@ type Story = ColibriStory<StoryArgs>;
  * Default story showing a default tooltip. Use the controls panel to experiment with different values.
  */
 export const Default: Story = {
+  parameters: {
+    __sb: {
+      margin: '50px 0 0 400px',
+    },
+  },
   render: ({ multiline, position, width }) => html`
-    <div style="margin: 50px 0 0 400px;">
-      <col-tooltip ?multiline=${multiline} width=${width} position=${position}>
-        <col-button variant="outlined">
-          <col-icon name="trash"></col-icon>
-          Delete Item
-        </col-button>
-        <div slot="tooltip-content">Tooltip message very very large in order to see multiline</div>
-      </col-tooltip>
-    </div>
+    <col-tooltip width=${width} position=${position} ?multiline=${multiline}>
+      <col-button variant="outlined">
+        <col-icon name="trash"></col-icon>
+        Delete Item
+      </col-button>
+      <div slot="tooltip-content">Tooltip message very very large in order to see multiline</div>
+    </col-tooltip>
   `,
 };
 
@@ -90,13 +89,16 @@ export const SinglelineTooltipHover: Story = {
     position: TOOLTIP_POSITIONS.Bottom,
     multiline: false,
   },
+  parameters: {
+    __sb: {
+      margin: '0 0 0 45%',
+    },
+  },
   render: args => html`
-    <div style="margin-left: 45%;">
-      <col-tooltip ?multiline=${args.multiline} width=${args.width} position=${args.position}>
-        Hover me
-        <div slot="tooltip-content">Tooltip message</div>
-      </col-tooltip>
-    </div>
+    <col-tooltip width=${args.width} position=${args.position} ?multiline=${args.multiline}>
+      Hover me
+      <div slot="tooltip-content">Tooltip message</div>
+    </col-tooltip>
   `,
 };
 
@@ -106,16 +108,19 @@ export const MultilineTooltipClick: Story = {
     multiline: true,
     width: 200,
   },
+  parameters: {
+    __sb: {
+      margin: '0 0 0 45%',
+    },
+  },
   render: args => html`
-    <div style="margin-left: 45%;">
-      <col-tooltip ?multiline=${args.multiline} width=${args.width} position=${args.position}>
-        <col-button variant="outlined"> Click Me </col-button>
-        <div slot="tooltip-content">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua.
-        </div>
-      </col-tooltip>
-    </div>
+    <col-tooltip width=${args.width} position=${args.position} ?multiline=${args.multiline}>
+      <col-button variant="outlined"> Click Me </col-button>
+      <div slot="tooltip-content">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+        labore et dolore magna aliqua.
+      </div>
+    </col-tooltip>
   `,
 };
 
@@ -125,15 +130,18 @@ export const SinglelineTooltipKeyboard: Story = {
     multiline: true,
     width: 200,
   },
+  parameters: {
+    __sb: {
+      margin: '0 0 0 45%',
+    },
+  },
   render: args => html`
-    <div style="margin-left: 45%;">
-      <col-tooltip ?multiline=${args.multiline} width=${args.width} position=${args.position}>
-        <col-button variant="outlined">
-          <col-icon name="info-circle"></col-icon>
-        </col-button>
-        <div slot="tooltip-content">Tooltip message very very large in order to see multiline</div>
-      </col-tooltip>
-    </div>
+    <col-tooltip width=${args.width} position=${args.position} ?multiline=${args.multiline}>
+      <col-button variant="outlined">
+        <col-icon name="info-circle"></col-icon>
+      </col-button>
+      <div slot="tooltip-content">Tooltip message very very large in order to see multiline</div>
+    </col-tooltip>
   `,
 };
 
@@ -143,15 +151,18 @@ export const MultilineTooltipLargeText: Story = {
     multiline: true,
     width: 500,
   },
+  parameters: {
+    __sb: {
+      margin: '30px 0 0 40%',
+    },
+  },
   render: args => html`
-    <div style="margin: 30px 0 0 40%;">
-      <col-tooltip ?multiline=${args.multiline} width=${args.width} position=${args.position}>
-        <col-button variant="outlined"> Click or Hover Me </col-button>
-        <div slot="tooltip-content">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua.
-        </div>
-      </col-tooltip>
-    </div>
+    <col-tooltip width=${args.width} position=${args.position} ?multiline=${args.multiline}>
+      <col-button variant="outlined"> Click or Hover Me </col-button>
+      <div slot="tooltip-content">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+        labore et dolore magna aliqua.
+      </div>
+    </col-tooltip>
   `,
 };

@@ -32,4 +32,5 @@ export const HTML_BOOLEAN_ATTRIBUTES = [
   'customlabel',
   'withoutgap',
   'customcontent',
+  'multiline',
 ];
