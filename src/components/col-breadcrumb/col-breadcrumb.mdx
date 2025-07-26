@@ -7,8 +7,7 @@ import { Callout } from '../../_storybook/components';
 <div className="col-doc__wrapper">
   <div className="col-doc__container">
     <Title>Breadcrumb</Title>
-    The Colibri Breadcrumb component provides a navigation container that displays a trail of links to help users understand their current location within a website or application hierarchy. It works in conjunction with `col-breadcrumb-item` components to create a complete navigation trail.
-    The Breadcrumb component is a container that manages the overall navigation trail. For individual navigation items, see the [Breadcrumb Item](/docs/atoms-breadcrumb-item--overview) documentation.
+    The Colibri Breadcrumb system provides navigation components for displaying hierarchical navigation trails. It includes both container (`col-breadcrumb`) and item (`col-breadcrumb-item`) components for building complete navigation structures.
 
     <Subtitle>Table of contents</Subtitle>
     - [How to use it](#how-to-use-it)
@@ -16,8 +15,10 @@ import { Callout } from '../../_storybook/components';
     - [Component preview](#component-preview)
       - [Basic breadcrumb](#basic-breadcrumb)
       - [Custom separator](#custom-separator)
-      - [Custom aria label](#custom-aria-label)
     - [Properties](#properties)
+      - [col-breadcrumb properties](#col-breadcrumb-properties)
+      - [col-breadcrumb-item properties](#col-breadcrumb-item-properties)
+    - [Events](#events)
     - [Accessibility](#accessibility)
     - [Interact with the component](#interact-with-the-component)
 
@@ -42,23 +43,32 @@ import { Callout } from '../../_storybook/components';
     4. Use it in your HTML:
         ```html
         <col-breadcrumb>
-          <col-breadcrumb-item>Home</col-breadcrumb-item>
-          <col-breadcrumb-item>Products</col-breadcrumb-item>
+          <col-breadcrumb-item href="/">Home</col-breadcrumb-item>
+          <col-breadcrumb-item href="/products">Products</col-breadcrumb-item>
           <col-breadcrumb-item current>Details</col-breadcrumb-item>
         </col-breadcrumb>
         ```
 
-    The breadcrumb container:
-    - Provides semantic navigation structure
-    - Manages separator consistency across all items
-    - Ensures proper accessibility attributes
-    - Maintains visual consistency
+    ## When to use it
+    Use the Breadcrumb system to:
+
+    ### `col-breadcrumb` (Container)
+    - **Provide navigation structure** - Creates the overall breadcrumb navigation container
+    - **Manage separators** - Controls the separator character between all breadcrumb items
+    - **Ensure accessibility** - Provides proper ARIA labels and navigation semantics
+    - **Maintain consistency** - Ensures visual and behavioral consistency across all items
+
+    ### `col-breadcrumb-item` (Items)
+    - **Create navigation links** - Each item can link to a parent page in the hierarchy
+    - **Show current location** - Mark the current page with the `current` attribute
+    - **Handle SPA navigation** - Use router mode for client-side routing
+    - **Provide contextual navigation** - Help users move up the site hierarchy
 
     ## Component preview
 
     ### Basic breadcrumb
     <div>
-      The basic breadcrumb container wraps breadcrumb items and provides the navigation structure. By default, it uses a forward slash (/) as the separator between items.
+      The basic breadcrumb demonstrates both container and item functionality. The container manages the overall navigation structure while items provide individual navigation links.
     </div>
     <h4>Overview</h4>
 
@@ -68,10 +78,11 @@ import { Callout } from '../../_storybook/components';
 
     <Canvas of={ColBreadcrumbStories.Default} />
 
-    The breadcrumb container automatically:
+    The breadcrumb system automatically:
     - Applies the separator to all child breadcrumb items
     - Provides proper navigation semantics
     - Handles responsive layout with wrapping when needed
+    - Manages accessibility attributes
 
     ### Custom separator
     <div>
@@ -89,31 +100,132 @@ import { Callout } from '../../_storybook/components';
     - `»` - Double angle quote
     - `-` - Dash
 
-    The separator is automatically applied to all breadcrumb items within the container.
-
-    ### Custom aria label
+    ### Text item
     <div>
-      For better accessibility, you can customize the aria-label of the navigation element to provide more context about the specific breadcrumb trail.
+      A basic breadcrumb item without any navigation functionality. This is typically used for items that shouldn't be clickable, though usually only the current page should be non-interactive.
     </div>
 
-    <Canvas of={ColBreadcrumbStories.CustomAriaLabel} />
+    <Canvas of={ColBreadcrumbStories.TextItem} />
 
-    This is particularly useful when you have multiple breadcrumb trails on the same page, such as:
-    - Main site navigation
-    - Category navigation
-    - User account navigation
+    ### Link item
+    <div>
+      A breadcrumb item with an `href` attribute becomes a clickable link. This is the most common configuration for breadcrumb navigation.
+    </div>
+
+    <Canvas of={ColBreadcrumbStories.LinkItem} />
+
+    The link item includes:
+    - Hover effects for better interactivity feedback
+    - Focus indicators for keyboard navigation
+    - Standard link behavior with browser navigation
+
+    ### Current page
+    <div>
+      The current page in a breadcrumb trail should be marked with the `current` attribute. This item is not clickable and has distinct styling to indicate it's the active page.
+    </div>
+
+    <Canvas of={ColBreadcrumbStories.CurrentPage} />
+
+    Current page items:
+    - Are not clickable (even if href is provided)
+    - Have different text styling (bolder, different color)
+    - Don't show hover effects
+    - Include `aria-current="page"` for accessibility
+
+    ### External link
+    <div>
+      Breadcrumb items can open in a new tab by setting the `newTab` property. This is useful for external links or when you want to preserve the user's current context.
+    </div>
+
+    <Canvas of={ColBreadcrumbStories.ExternalLink} />
+
+    External links automatically include:
+    - `target="_blank"` attribute
+    - `rel="noopener noreferrer"` for security
+    - Visual indicator (optional, through CSS)
+
+    ### Router navigation
+    <div>
+      For single-page applications, use the `router` property to handle navigation without page refreshes. This prevents default link behavior and emits an event instead.
+    </div>
+
+    <Canvas of={ColBreadcrumbStories.RouterNavigation} />
+
+    Router mode features:
+    - Prevents default link navigation
+    - Emits `breadcrumb-click` event with navigation details
+    - Maintains link appearance and accessibility
+    - Works with or without `href` attribute
+
+    Example event handler:
+    ```javascript
+    document.addEventListener('breadcrumb-click', (event) => {
+      const { value, label, index, href } = event.detail;
+      // Handle navigation with your router
+      myRouter.navigate(value || href);
+    });
+    ```
+
+    ### Download link
+    <div>
+      While less common in breadcrumbs, items can be configured as download links using standard link attributes through the internal LinkHandler by setting the `downloadable` property to `true`, and the `filename` property to the desired filename.
+    </div>
+    <Callout variant="info" icon="ℹ️">
+      This preview shows the download functionality of the current page in csv format. For the **full interactive experience** with working download of a file, visit the [Canvas tab](/story/atoms-breadcrumb--download-link).
+    </Callout>
+
+    <Canvas of={ColBreadcrumbStories.DownloadLink} />
 
     ## Properties
 
-    <ArgTypes of={ColBreadcrumbStories} include={['ariaLabel', 'separator']} />
+    ### `col-breadcrumb` properties
+    <div>
+      Properties for the breadcrumb container component that defines the overall navigation structure and appearance.
+    </div>
+
+    <ArgTypes of={ColBreadcrumbStories} include="^(aria-label|separator)$" />
+
+    ### `col-breadcrumb-item` properties
+    <div>
+      Properties for individual breadcrumb items that control navigation behavior, styling, and interactivity.
+    </div>
+
+    <ArgTypes of={ColBreadcrumbStories} include="^(text|href|current|newtab|value|router|downloadable|filename)$" />
+
+    ## Events
+
+    ### breadcrumb-click
+
+    The `breadcrumb-click` event is emitted when a breadcrumb item is clicked. This event bubbles and is composed, so it can be handled at any parent level.
+
+    **Event detail structure:**
+    ```typescript
+    interface BreadcrumbClickDetail {
+      value: string;     // The value prop of the clicked item
+      label: string;     // The text content of the clicked item
+      index: number;     // The index position within the breadcrumb
+      href?: string;     // The href if provided
+    }
+    ```
+
+    **Example usage:**
+    ```javascript
+    // Handle at container level
+    breadcrumb.addEventListener('breadcrumb-click', (e) => {
+      if (e.detail.value === 'home') {
+        router.navigate('/');
+      }
+    });
+    ```
 
     ## Accessibility
 
-    The Breadcrumb container component includes several built-in accessibility features:
+    The Breadcrumb system includes several built-in accessibility features:
 
     - **Semantic HTML** - Uses `<nav>` element to identify the breadcrumb as a navigation landmark
     - **ARIA label** - Customizable `aria-label` attribute for the navigation element (defaults to "Breadcrumb navigation")
     - **Screen reader support** - Includes hidden "You are here:" text for screen reader users
+    - **Current page indication** - Uses `aria-current="page"` for the current item
     - **Keyboard navigation** - Ensures all interactive breadcrumb items are keyboard accessible
 
     Best practices:
@@ -121,9 +233,9 @@ import { Callout } from '../../_storybook/components';
     - Ensure breadcrumb items have sufficient color contrast
     - Keep the breadcrumb trail concise and logical
     - Always mark the current page item with the `current` attribute
+    - Use descriptive, concise text for each breadcrumb item
 
-    <Callout variant="info" icon="ℹ️">
-      For more information about individual breadcrumb items and their interactive features, see the [Breadcrumb Item](/docs/atoms-breadcrumb-item--overview) documentation.
-    </Callout>
+    ## Interact with the component
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Defaut](/story/atoms-breadcrumb--default) section.
   </div>
 </div>

@@ -33,4 +33,8 @@ export const HTML_BOOLEAN_ATTRIBUTES = [
   'withoutgap',
   'customcontent',
   'multiline',
+  'current',
+  'newtab',
+  'router',
+  'downloadable',
 ];
