@@ -14,6 +14,7 @@ export default [
       globals: {
         window: true,
         document: true,
+        setTimeout: true,
         Event: true,
         CustomEvent: true,
         Blob: true,
