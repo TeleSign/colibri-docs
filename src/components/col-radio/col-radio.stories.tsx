@@ -1,8 +1,9 @@
-import { html } from 'lit';
+import { html, css } from 'lit';
 import { ColibriStory, ColibriStoryMeta } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
 
 type StoryArgs = {
+  name: string;
   checked: boolean;
   disabled: boolean;
   value: string;
@@ -22,6 +23,15 @@ const meta = {
     },
   },
   argTypes: {
+    name: {
+      control: 'text',
+      description: 'Name of the radio button',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: '""' },
+        category: 'core',
+      },
+    },
     checked: {
       control: 'boolean',
       description: 'Controls the checked state of the radio button',
@@ -30,6 +40,7 @@ const meta = {
         defaultValue: { summary: 'false' },
         category: 'core',
       },
+      if: { arg: 'checked', neq: false },
     },
     disabled: {
       control: 'boolean',
@@ -39,6 +50,7 @@ const meta = {
         defaultValue: { summary: 'false' },
         category: 'core',
       },
+      if: { arg: 'disabled', neq: false },
     },
     value: {
       control: 'text',
@@ -50,6 +62,7 @@ const meta = {
       },
     },
     customLabel: {
+      name: 'customlabel',
       control: 'boolean',
       description: 'Enables custom label slot',
       table: {
@@ -57,6 +70,7 @@ const meta = {
         defaultValue: { summary: 'false' },
         category: 'core',
       },
+      if: { arg: 'customLabel', neq: false },
     },
     group: {
       control: 'text',
@@ -66,9 +80,11 @@ const meta = {
         defaultValue: { summary: '""' },
         category: 'core',
       },
+      if: { arg: 'group', neq: '' },
     },
   },
   args: {
+    name: '',
     checked: false,
     disabled: false,
     value: '',
@@ -81,42 +97,70 @@ export default meta;
 
 type Story = ColibriStory<StoryArgs>;
 
+const styles = css`
+  .radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-family: var(--col-typography-font-family-primary);
+  }
+
+  .radio-group-header {
+    margin-bottom: 12px;
+  }
+
+  .radio-group-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+`;
+
 export const Default: Story = {
+  args: {
+    value: 'default',
+  },
   render: ({ checked, disabled, value }) => html`
-    <col-radio ?checked=${checked} ?disabled=${disabled} value=${value}></col-radio>
+    <col-radio value=${value} ?checked=${checked} ?disabled=${disabled}></col-radio>
   `,
 };
 
 export const Checked: Story = {
   args: {
     checked: true,
+    value: 'checked',
   },
   render: ({ checked, disabled, value }) => html`
-    <col-radio ?checked=${checked} ?disabled=${disabled} value=${value}>Checked radio</col-radio>
+    <col-radio value=${value} ?checked=${checked} ?disabled=${disabled}>Checked radio</col-radio>
   `,
 };
 
 export const Disabled: Story = {
   args: {
     disabled: true,
+    value: 'disabled',
   },
   render: ({ checked, disabled, value }) => html`
-    <col-radio ?checked=${checked} ?disabled=${disabled} value=${value}>Disabled radio</col-radio>
+    <col-radio value=${value} ?checked=${checked} ?disabled=${disabled}>Disabled radio</col-radio>
   `,
 };
 
 export const WithLabel: Story = {
+  args: {
+    value: 'with-label',
+  },
   render: ({ checked, disabled, value }) => html`
-    <col-radio ?checked=${checked} ?disabled=${disabled} value=${value}>Standard label</col-radio>
+    <col-radio value=${value} ?checked=${checked} ?disabled=${disabled}>Standard label</col-radio>
   `,
 };
 
 export const WithCustomLabel: Story = {
   args: {
     customLabel: true,
+    value: 'custom-label',
   },
   render: ({ checked, disabled, value, customLabel }) => html`
-    <col-radio ?checked=${checked} ?disabled=${disabled} value=${value} ?customLabel=${customLabel}>
+    <col-radio value=${value} ?checked=${checked} ?disabled=${disabled} ?customLabel=${customLabel}>
       <div slot="label" style="display: flex; align-items: center; gap: 4px;">
         <col-icon name="info-circle"></col-icon>
         Custom formatted label
@@ -126,12 +170,17 @@ export const WithCustomLabel: Story = {
 };
 
 export const RadioGroup: Story = {
+  parameters: {
+    __sb: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '16px',
+    },
+  },
   render: () => html`
-    <div style="display: flex; flex-direction: column; gap: 16px;">
-      <col-radio group="fruits" value="apple" checked>Apple</col-radio>
-      <col-radio group="fruits" value="banana">Banana</col-radio>
-      <col-radio group="fruits" value="cherry">Cherry</col-radio>
-    </div>
+    <col-radio group="fruits" value="apple" checked>Apple</col-radio>
+    <col-radio group="fruits" value="banana">Banana</col-radio>
+    <col-radio group="fruits" value="cherry">Cherry</col-radio>
   `,
 };
 
@@ -147,11 +196,14 @@ export const InteractiveExample: Story = {
     };
 
     return html`
-      <div>
-        <div style="margin-bottom: 12px;">
+      <style>
+        ${styles}
+      </style>
+      <div class="radio-group">
+        <div class="radio-group-header">
           <strong>Selected value: </strong><span id="selected-value">option1</span>
         </div>
-        <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div class="radio-group-content">
           <col-radio group="demo" value="option1" checked @change=${updateSelection}
             >Option 1</col-radio
           >

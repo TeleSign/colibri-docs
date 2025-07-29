@@ -1,81 +1,131 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
 import * as ColRadioButtonStories from './col-radio-button.stories';
+import { Callout } from '../../_storybook/components';
 
 <Meta of={ColRadioButtonStories} />
 
 <div className="col-doc__wrapper">
   <div className="col-doc__container">
     <Title>Radio Button</Title>
+    The Colibri Radio Button component provides a more visually prominent and touch-friendly alternative to standard radio inputs. It's ideal for interfaces where selection options should be emphasized and have greater visual weight, such as in filter controls, preference settings, or configurable dashboards.
 
-    <h2>Usage</h2>
-    <p>
-      Radio Buttons provide a more visually prominent and touch-friendly alternative to standard
-      radio inputs. They're ideal for interfaces where selection options should be emphasized and
-      have greater visual weight, such as in filter controls, preference settings, or configurable
-      dashboards.
-    </p>
+    <Subtitle>How to use it</Subtitle>
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, registerAllComponents, ColRadioButton } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web components:
+        ```typescript
+        // Option 1: Register specific components
+        registerColibriComponents([ColRadioButton]);
 
-    <h2>Examples</h2>
+        // Option 2: Register all Colibri components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <!-- Basic radio button -->
+        <col-radio-button value="option1">
+          <col-icon name="emoji-circle" slot="icon"></col-icon>
+          Option 1
+        </col-radio-button>
 
-    <h3>Default</h3>
+        <!-- Radio button with string label -->
+        <col-radio-button value="option2" label="Option 2">
+          <col-icon name="emoji-circle" slot="icon"></col-icon>
+        </col-radio-button>
+
+        <!-- Radio button with custom label -->
+        <col-radio-button value="option3" customlabel>
+          <col-icon name="emoji-circle" slot="icon"></col-icon>
+          <span slot="label">Custom <strong>formatted</strong> label</span>
+        </col-radio-button>
+
+        <!-- Radio button group -->
+        <col-radio-button group="options" value="option1" checked>
+          <col-icon name="emoji-circle" slot="icon"></col-icon>
+          Option 1
+        </col-radio-button>
+        <col-radio-button group="options" value="option2">
+          <col-icon name="emoji-circle" slot="icon"></col-icon>
+          Option 2
+        </col-radio-button>
+        ```
+
+    <Subtitle>When to use it</Subtitle>
+    Radio Buttons are used when users need to select one option from a mutually exclusive set of choices, with enhanced visual prominence. Here are some common use cases:
+
+    - **Filter Controls** - When users need to choose one filter option with visual emphasis
+    - **Preference Settings** - For configuration options where visual weight is important
+    - **Dashboard Configuration** - For selecting display options or layout preferences
+    - **Touch Interfaces** - When larger, more prominent selection controls are needed
+    - **Visual Selection** - When options need to be visually distinct and easily scannable
+
+    <Subtitle>Component preview</Subtitle>
+    <Callout variant="tip" icon="💡">
+      You can click on the **Show code** button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+
+    <h4>Default</h4>
     <p>Standard radio button with icon and text.</p>
     <Canvas of={ColRadioButtonStories.Default} />
 
-    <h3>Checked State</h3>
+    <h4>Checked State</h4>
     <p>Radio button in selected state.</p>
     <Canvas of={ColRadioButtonStories.Checked} />
 
-    <h3>Disabled State</h3>
+    <h4>Disabled State</h4>
     <p>Radio button that cannot be interacted with.</p>
     <Canvas of={ColRadioButtonStories.Disabled} />
 
-    <h3>Disabled and Checked</h3>
+    <h4>Disabled and Checked</h4>
     <p>Radio button that is both selected and disabled.</p>
     <Canvas of={ColRadioButtonStories.DisabledChecked} />
 
-    <h3>With String Label</h3>
+    <h4>With String Label</h4>
     <p>Using the label property instead of slot content.</p>
     <Canvas of={ColRadioButtonStories.WithStringLabel} />
 
-    <h3>With Default Slot</h3>
+    <h4>With Default Slot</h4>
     <p>Using the default slot for label content.</p>
     <Canvas of={ColRadioButtonStories.WithDefaultSlot} />
 
-    <h3>With Custom Label</h3>
+    <h4>With Custom Label</h4>
     <p>Using the custom label slot for rich formatting.</p>
     <Canvas of={ColRadioButtonStories.WithCustomLabel} />
 
-    <h3>Icon Only</h3>
+    <h4>Icon Only</h4>
     <p>Radio button with only an icon and no text.</p>
     <Canvas of={ColRadioButtonStories.OnlyIcon} />
 
-    <h3>Radio Button Group</h3>
+    <h4>Radio Button Group</h4>
     <p>Multiple radio buttons working together as a group. Only one can be selected at a time.</p>
+    <Callout variant="info" icon="ℹ️">
+      <p>
+        Radio buttons that belong together should share the same <code>group</code> attribute.
+        This ensures that only one radio button in the group can be selected at a time.
+      </p>
+    </Callout>
     <Canvas of={ColRadioButtonStories.RadioButtonGroup} />
 
-    <h3>Radio Button Group with ColGroup</h3>
-    <p>Multiple radio buttons working together as a group. Only one can be selected at a time.</p>
-    <p>See the [Col Group](/docs/atoms-col-group--overview) documentation.</p>
+    <h4>Radio Button Group with ColGroup</h4>
+    <p>Multiple radio buttons working together as a group using the ColGroup component for better organization.</p>
+    <p>See the [Col Group](/docs/atoms-group--overview) documentation.</p>
     <Canvas of={ColRadioButtonStories.GroupRadioWithColGroup} />
 
-    <h3>Interactive Example</h3>
-    <p>A working example that displays the currently selected value.</p>
-    <Canvas of={ColRadioButtonStories.InteractiveExample} />
-
-    <h2>Grouping Radio Buttons</h2>
-    <p>
-      Radio buttons that belong together should share the same <code>group</code> attribute.
-      This ensures that only one radio button in the group can be selected at a time.
-    </p>
-
-    <h2>Icons</h2>
+    <Subtitle>Icons</Subtitle>
     <p>
       Radio buttons typically include an icon through the <code>icon</code> slot to provide visual
       feedback of their state. Common icons include circles, check-circles, or other indicators
       that help communicate the purpose of the option.
     </p>
 
-    <h2>Accessibility</h2>
+    <Subtitle>Accessibility</Subtitle>
     <p>
       Radio Button components follow WAI-ARIA best practices for accessibility:
     </p>
@@ -86,7 +136,11 @@ import * as ColRadioButtonStories from './col-radio-button.stories';
       <li>Maintains appropriate contrast ratios for all states</li>
     </ul>
 
-    <h2>Properties</h2>
+    <Subtitle>Properties</Subtitle>
     <ArgTypes of={ColRadioButtonStories} />
+
+    <Subtitle>Interact with the component</Subtitle>
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-radio-button--default) section.
+
   </div>
 </div>

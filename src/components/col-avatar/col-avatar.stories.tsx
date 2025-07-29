@@ -1,11 +1,11 @@
 import { html } from 'lit';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
+import { AVATAR_VARIANTS } from '@telesign/colibri';
 
 type StoryArgs = {
-  hideAvatarIcon: boolean;
-  hideAvatarName: boolean;
-  avatarName: string;
+  variant: AVATAR_VARIANTS;
+  name: string;
 };
 
 const meta = {
@@ -20,36 +20,30 @@ const meta = {
     },
   },
   argTypes: {
-    hideAvatarIcon: {
-      control: 'boolean',
-      description: 'Hides the avatar initials icon if true',
+    variant: {
+      control: 'select',
+      options: Object.values(AVATAR_VARIANTS),
+      description: 'The display variant: icon only, name only, or both',
       table: {
-        type: { summary: 'boolean' },
-        defaultValue: { summary: 'false' },
+        category: 'Core',
+        type: { summary: 'string' },
+        defaultValue: { summary: 'full' },
       },
     },
-    hideAvatarName: {
-      control: 'boolean',
-      description: 'Hides the avatar name label if true',
-      table: {
-        type: { summary: 'boolean' },
-        defaultValue: { summary: 'false' },
-      },
-    },
-    avatarName: {
+    name: {
       control: 'text',
       description:
         'The name for the avatar, this is also used to get the initials for the avatar icon',
       table: {
+        category: 'Core',
         type: { summary: 'string' },
         defaultValue: { summary: 'John Doe' },
       },
     },
   },
   args: {
-    hideAvatarIcon: false,
-    hideAvatarName: false,
-    avatarName: 'John Doe',
+    variant: AVATAR_VARIANTS.FULL,
+    name: 'John Doe',
   },
 } satisfies ColibriStoryMeta<StoryArgs>;
 
@@ -57,73 +51,39 @@ export default meta;
 
 type Story = ColibriStory<StoryArgs>;
 
+const renderAvatar: Story['render'] = ({ variant, name }) => html`
+  <col-avatar name=${name} variant=${variant}></col-avatar>
+`;
+
 /**
- * Default story showing an avatar initials icon and the avatar name
+ * Default story showing an avatar with both initials icon and name
  */
 export const Default: Story = {
   args: {
-    avatarName: 'John Doe',
+    name: 'John Doe',
+    variant: AVATAR_VARIANTS.FULL,
   },
-  render: args => html`
-    <col-avatar
-      .hideAvatarIcon=${args.hideAvatarIcon}
-      .hideAvatarName=${args.hideAvatarName}
-      .avatarName=${args.avatarName}
-    ></col-avatar>
-  `,
-  parameters: {
-    docs: {
-      source: {
-        code: `<col-avatar avatarName="John Doe"></col-avatar>`,
-      },
-    },
-  },
+  render: renderAvatar,
 };
 
 /**
- * Story showing an avatar with initials icon, hiding the avatar name
+ * Story showing an avatar with initials icon only
  */
-export const HideAvatarName: Story = {
+export const IconOnly: Story = {
   args: {
-    hideAvatarName: true,
-    avatarName: 'Jane Doe',
+    variant: AVATAR_VARIANTS.ICON,
+    name: 'Jane Doe',
   },
-  render: args => html`
-    <col-avatar
-      .hideAvatarIcon=${args.hideAvatarIcon}
-      .hideAvatarName=${args.hideAvatarName}
-      .avatarName=${args.avatarName}
-    ></col-avatar>
-  `,
-  parameters: {
-    docs: {
-      source: {
-        code: `<col-avatar hideAvatarName avatarName="Jane Doe"></col-avatar>`,
-      },
-    },
-  },
+  render: renderAvatar,
 };
 
 /**
- * Story showing an avatar name, hiding the avatar initials icon
+ * Story showing an avatar with name only
  */
-export const HideAvatarIcon: Story = {
+export const NameOnly: Story = {
   args: {
-    hideAvatarIcon: true,
-    avatarName: 'John Doe',
+    variant: AVATAR_VARIANTS.NAME,
+    name: 'John Doe',
   },
-  render: args => html`
-    <col-avatar
-      .hideAvatarIcon=${args.hideAvatarIcon}
-      .hideAvatarName=${args.hideAvatarName}
-      .avatarName=${args.avatarName}
-    ></col-avatar>
-  `,
-  parameters: {
-    docs: {
-      source: {
-        code: `<col-avatar hideAvatarIcon avatarName="John Doe"></col-avatar>`,
-      },
-    },
-  },
+  render: renderAvatar,
 };

@@ -88,6 +88,7 @@ const meta = {
       },
     },
     sizeConfig: {
+      name: 'size-config',
       control: 'object',
       description: 'Defines the size of the paginator to calculate available width',
       table: {
@@ -145,25 +146,15 @@ const renderPaginator: Story['render'] = ({
   html`<col-paginator
     length=${length}
     value=${value}
-    ?disabled=${disabled}
     align=${align}
+    ?disabled=${disabled}
     .responsive=${responsive}
     .sizeConfig=${sizeConfig}
-    @click=${onPageChange}
+    @page-change=${onPageChange}
   ></col-paginator>`;
 
 export const Default: Story = {
-  render: ({ length, value, disabled, align, responsive, sizeConfig, onPageChange }) => html`
-    <col-paginator
-      length=${length}
-      value=${value}
-      ?disabled=${disabled}
-      align=${align}
-      .responsive=${responsive}
-      .sizeConfig=${sizeConfig}
-      @click=${onPageChange}
-    ></col-paginator>
-  `,
+  render: renderPaginator,
 };
 
 export const DisablePaginator: Story = {
@@ -198,7 +189,7 @@ export const CustomResponsiveConfig: Story = {
     docs: {
       source: {
         code: formatCodeString(
-          `<col-paginator length="50" value="20" .responsive={{ sm: 5, md: 7, lg: 11 }}>`
+          `<col-paginator length="50" value="20" responsive='{"sm": 5, "md": 7, "lg": 11}'>`
         ),
       },
     },
@@ -220,7 +211,7 @@ export const CustomSizeConfig: Story = {
     docs: {
       source: {
         code: formatCodeString(
-          `<col-paginator length="50" value="20" .sizeConfig={{ pageItemWidth: 60, navButtonWidth: 50, gap: 10 }}>`
+          `<col-paginator length="50" value="20" size-config='{"pageItemWidth": 60, "navButtonWidth": 50, "gap": 10}'>`
         ),
       },
     },

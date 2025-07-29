@@ -1,8 +1,10 @@
-import { html } from 'lit';
+import { html, css, nothing } from 'lit';
 import { ColibriStory, ColibriStoryMeta } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
+import { icons } from '@telesign/colibri-icons/icons-list';
 
 type StoryArgs = {
+  name: string;
   checked: boolean;
   disabled: boolean;
   title: string;
@@ -10,6 +12,8 @@ type StoryArgs = {
   customContent: boolean;
   value: string;
   group: string;
+  withIcon: boolean;
+  iconName: string;
 };
 
 const meta = {
@@ -24,6 +28,15 @@ const meta = {
     },
   },
   argTypes: {
+    name: {
+      control: 'text',
+      description: 'Name of the radio card',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: '""' },
+        category: 'core',
+      },
+    },
     checked: {
       control: 'boolean',
       description: 'Controls the checked state of the radio card',
@@ -32,6 +45,7 @@ const meta = {
         defaultValue: { summary: 'false' },
         category: 'core',
       },
+      if: { arg: 'checked', neq: false },
     },
     disabled: {
       control: 'boolean',
@@ -41,13 +55,14 @@ const meta = {
         defaultValue: { summary: 'false' },
         category: 'core',
       },
+      if: { arg: 'disabled', neq: false },
     },
     title: {
       control: 'text',
       description: 'Title text for the radio card',
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: '""' },
+        defaultValue: { summary: '"Card Title"' },
         category: 'core',
       },
     },
@@ -56,11 +71,12 @@ const meta = {
       description: 'Description text for the radio card',
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: '""' },
+        defaultValue: { summary: '"Card description text"' },
         category: 'core',
       },
     },
     customContent: {
+      name: 'customcontent',
       control: 'boolean',
       description: 'Enables custom content slot',
       table: {
@@ -68,6 +84,7 @@ const meta = {
         defaultValue: { summary: 'false' },
         category: 'core',
       },
+      if: { arg: 'customContent', neq: false },
     },
     value: {
       control: 'text',
@@ -86,9 +103,34 @@ const meta = {
         defaultValue: { summary: '""' },
         category: 'core',
       },
+      if: { arg: 'group', neq: '' },
+    },
+    withIcon: {
+      control: 'boolean',
+      description:
+        'Whether to show an icon when the radio card is checked. **Storybook control only, not a component prop.**',
+      table: {
+        category: 'Storybook',
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
+      if: { arg: 'withIcon', neq: false },
+    },
+    iconName: {
+      control: 'select',
+      options: icons,
+      description:
+        'Name of the icon to show when the radio card is checked. **Storybook control only, not a component prop.**',
+      table: {
+        category: 'Storybook',
+        type: { summary: 'string' },
+        defaultValue: { summary: '""' },
+      },
+      if: { arg: 'withIcon', neq: false },
     },
   },
   args: {
+    name: '',
     checked: false,
     disabled: false,
     title: 'Card Title',
@@ -96,6 +138,8 @@ const meta = {
     customContent: false,
     value: '',
     group: '',
+    withIcon: false,
+    iconName: '',
   },
 } satisfies ColibriStoryMeta<StoryArgs>;
 
@@ -103,88 +147,97 @@ export default meta;
 
 type Story = ColibriStory<StoryArgs>;
 
+const styles = css`
+  .radio-card-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    max-width: 800px;
+    font-family: var(--col-typography-font-family-primary);
+  }
+  .radio-card-group-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-family: var(--col-typography-font-family-primary);
+  }
+  .radio-card-group-header {
+    margin-bottom: 12px;
+  }
+`;
+
+const RenderCard: Story['render'] = ({
+  checked,
+  disabled,
+  title,
+  description,
+  value,
+  withIcon,
+  iconName,
+}) => html`
+  <col-radio-card
+    value=${value}
+    title=${title}
+    description=${description}
+    ?checked=${checked}
+    ?disabled=${disabled}
+  >
+    ${withIcon ? html`<col-icon name=${iconName} slot="checked-icon"></col-icon>` : nothing}
+  </col-radio-card>
+`;
+
 export const Default: Story = {
-  render: ({ checked, disabled, title, description, value }) => html`
-    <col-radio-card
-      ?checked=${checked}
-      ?disabled=${disabled}
-      title=${title}
-      description=${description}
-      value=${value}
-    ></col-radio-card>
-  `,
+  args: {
+    value: 'default',
+  },
+  render: RenderCard,
 };
 
 export const Checked: Story = {
   args: {
     checked: true,
+    value: 'checked',
   },
-  render: ({ checked, disabled, title, description, value }) => html`
-    <col-radio-card
-      ?checked=${checked}
-      ?disabled=${disabled}
-      title=${title}
-      description=${description}
-      value=${value}
-    ></col-radio-card>
-  `,
+  render: RenderCard,
 };
 
 export const Disabled: Story = {
   args: {
     disabled: true,
+    value: 'disabled',
   },
-  render: ({ checked, disabled, title, description, value }) => html`
-    <col-radio-card
-      ?checked=${checked}
-      ?disabled=${disabled}
-      title=${title}
-      description=${description}
-      value=${value}
-    ></col-radio-card>
-  `,
+  render: RenderCard,
 };
 
 export const DisabledChecked: Story = {
   args: {
     disabled: true,
     checked: true,
+    value: 'disabled-checked',
   },
-  render: ({ checked, disabled, title, description, value }) => html`
-    <col-radio-card
-      ?checked=${checked}
-      ?disabled=${disabled}
-      title=${title}
-      description=${description}
-      value=${value}
-    ></col-radio-card>
-  `,
+  render: RenderCard,
 };
 
 export const WithCustomIcon: Story = {
-  render: ({ checked, disabled, title, description, value }) => html`
-    <col-radio-card
-      ?checked=${checked}
-      ?disabled=${disabled}
-      title=${title}
-      description=${description}
-      value=${value}
-    >
-      <col-icon name="emoji-circle" slot="checked-icon"></col-icon>
-    </col-radio-card>
-  `,
+  args: {
+    value: 'with-custom-icon',
+    withIcon: true,
+    iconName: 'emoji-circle',
+  },
+  render: RenderCard,
 };
 
 export const CustomContent: Story = {
   args: {
     customContent: true,
+    value: 'custom-content',
   },
   render: ({ checked, disabled, customContent, value }) => html`
     <col-radio-card
+      value=${value}
       ?checked=${checked}
       ?disabled=${disabled}
-      ?customContent=${customContent}
-      value=${value}
+      ?customcontent=${customContent}
     >
       <div style="padding: 8px 0;">
         <h3 style="margin: 0 0 8px 0;">Custom Content</h3>
@@ -199,49 +252,58 @@ export const CustomContent: Story = {
 };
 
 export const CardGroup: Story = {
+  parameters: {
+    __sb: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(3, 1fr)',
+      gap: '16px',
+    },
+  },
   render: () => html`
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 800px;">
-      <col-radio-card
-        group="plans"
-        value="basic"
-        checked
-        title="Basic Plan"
-        description="Essential features for individuals"
-      ></col-radio-card>
-      <col-radio-card
-        group="plans"
-        value="pro"
-        title="Professional Plan"
-        description="Advanced features for small teams"
-      ></col-radio-card>
-      <col-radio-card
-        group="plans"
-        value="enterprise"
-        title="Enterprise Plan"
-        description="Complete solution for large organizations"
-      ></col-radio-card>
-    </div>
+    <col-radio-card
+      group="plans"
+      value="basic"
+      checked
+      title="Basic Plan"
+      description="Essential features for individuals"
+    ></col-radio-card>
+    <col-radio-card
+      group="plans"
+      value="pro"
+      title="Professional Plan"
+      description="Advanced features for small teams"
+    ></col-radio-card>
+    <col-radio-card
+      group="plans"
+      value="enterprise"
+      title="Enterprise Plan"
+      description="Complete solution for large organizations"
+    ></col-radio-card>
   `,
 };
 
 export const CustomContentGroup: Story = {
+  parameters: {
+    __sb: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(2, 1fr)',
+    },
+  },
   render: () => html`
-    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 800px;">
-      <col-radio-card group="themes" value="light" checked customContent>
-        <div style="padding: 16px 0; text-align: center;">
-          <div style="font-size: 24px; margin-bottom: 8px;">☀️</div>
-          <h3 style="margin: 0 0 8px 0;">Light Theme</h3>
-          <p style="margin: 0;">Bright and clean interface</p>
-        </div>
-      </col-radio-card>
-      <col-radio-card group="themes" value="dark" customContent>
-        <div style="padding: 16px 0; text-align: center;">
-          <div style="font-size: 24px; margin-bottom: 8px;">🌙</div>
-          <h3 style="margin: 0 0 8px 0;">Dark Theme</h3>
-          <p style="margin: 0;">Easy on the eyes at night</p>
-        </div>
-      </col-radio-card>
-    </div>
+    <col-radio-card group="themes" value="light" checked customcontent>
+      <div style="padding: 16px 0; text-align: center;">
+        <div style="font-size: 24px; margin-bottom: 8px;">☀️</div>
+        <h3 style="margin: 0 0 8px 0;">Light Theme</h3>
+        <p style="margin: 0;">Bright and clean interface</p>
+      </div>
+    </col-radio-card>
+    <col-radio-card group="themes" value="dark" customcontent>
+      <div style="padding: 16px 0; text-align: center;">
+        <div style="font-size: 24px; margin-bottom: 8px;">🌙</div>
+        <h3 style="margin: 0 0 8px 0;">Dark Theme</h3>
+        <p style="margin: 0;">Easy on the eyes at night</p>
+      </div>
+    </col-radio-card>
   `,
 };
 
@@ -257,13 +319,14 @@ export const InteractiveExample: Story = {
     };
 
     return html`
-      <div>
-        <div style="margin-bottom: 16px;">
+      <style>
+        ${styles}
+      </style>
+      <div class="radio-card-group-vertical">
+        <div class="radio-card-group-header">
           <strong>Selected option: </strong><span id="selected-card-value">option1</span>
         </div>
-        <div
-          style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 800px;"
-        >
+        <div class="radio-card-group">
           <col-radio-card
             group="options"
             value="option1"

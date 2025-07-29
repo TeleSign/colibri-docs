@@ -74,6 +74,7 @@ const meta = {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
       },
+      if: { arg: 'disabled', neq: false },
     },
     readonly: {
       control: 'boolean',
@@ -83,6 +84,7 @@ const meta = {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
       },
+      if: { arg: 'readonly', neq: false },
     },
     multiselect: {
       control: 'boolean',
@@ -92,6 +94,7 @@ const meta = {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
       },
+      if: { arg: 'multiselect', neq: false },
     },
     draggable: {
       control: 'boolean',
@@ -374,7 +377,7 @@ export const Disabled: Story = {
   render: renderTagWithIcon,
 };
 
-export const multiselect: Story = {
+export const MultiSelect: Story = {
   args: {
     text: 'Tag disabled with variant ',
     category: 'Custom Category',
@@ -397,9 +400,7 @@ export const ReadOnly: Story = {
 export const Removal: Story = {
   render: () => {
     let isRemoved = false;
-    let container;
-    const isInDocs = window.location.search.includes('viewMode=docs');
-
+    let container: HTMLElement | null;
     const onRemove = () => {
       isRemoved = true;
       updateContent();
