@@ -23,6 +23,7 @@ type JustifyContent =
   | 'space-between'
   | 'space-around'
   | 'space-evenly';
+type AlignItems = 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'stretch';
 type FlexWrap = 'nowrap' | 'wrap' | 'wrap-reverse';
 
 /**
@@ -48,6 +49,7 @@ export type Styles = {
   gap?: string;
   flexDirection?: FlexDirection;
   justifyContent?: JustifyContent;
+  alignItems?: AlignItems;
   flexWrap?: FlexWrap;
   height?: string;
   width?: string;
@@ -99,6 +101,7 @@ const getStyles = (options?: StylesOptions): string => {
     display: 'display',
     flexDirection: 'flex-direction',
     justifyContent: 'justify-content',
+    alignItems: 'align-items',
     gridTemplateColumns: 'grid-template-columns',
     flexWrap: 'flex-wrap',
     gap: 'gap',
