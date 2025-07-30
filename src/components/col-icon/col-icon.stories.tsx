@@ -129,7 +129,7 @@ const styles = css`
  * Use the controls panel to experiment with different values.
  */
 export const Default: Story = {
-  argTypes: disableControls('search'),
+  argTypes: disableControls(meta.argTypes, 'search'),
   render: args => html`
     <style>
       ${styles}
@@ -151,7 +151,7 @@ export const AllIcons: Story = {
       },
     },
   },
-  argTypes: disableControls('name'),
+  argTypes: disableControls(meta.argTypes, 'name'),
   render: args => {
     const searchTerm = args.search?.toLowerCase() || '';
     const filteredIcons = icons.filter(icon => icon.toLowerCase().includes(searchTerm));
