@@ -1,0 +1,94 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as ColSpinnerStories from './col-spinner.stories';
+
+<Meta of={ColSpinnerStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Spinner</Title>
+    A spinner is an animated spinning icon that lets users know content is being loaded. Spinners indicate that a system process is going on that will end with content being displayed to the user. They animate as soon as user action is initiated and disappear once the content appears.
+
+    <Subtitle>Table of contents</Subtitle>
+    - [How to use it](#how-to-use-it)
+    - [When to use it](#when-to-use-it)
+    - [Component preview](#component-preview)
+    - [Accessibility](#accessibility)
+    - [Properties](#properties)
+    - [Interact with the component](#interact-with-the-component)
+
+    ## How to use it
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, registerAllComponents, ColSpinner } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web components:
+        ```typescript
+        // Option 1: Register specific components
+        registerColibriComponents([ColSpinner]);
+
+        // Option 2: Register all Colibri components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-spinner></col-spinner>
+        ```
+
+    ## When to use it
+    The `col-spinner` component should be used for short, indeterminate activities (between 2-5 seconds). Each spinner variant has a particular function and its design signals that function to the user. It is therefore very important that the different variants are implemented consistently across products, so that they message the correct actions.
+
+    - **16**: Use within elements such as buttons or form fields, or when there are other space constraints.
+    - **24**: The default size which is used for most use cases
+    - **48**: The default size that is used for page loading
+
+    **Alignment**
+
+    - **Positioning**: The Spinner can be positioned in different places in the interface, depending on its purpose. It can be centered on the screen, attached to a specific element such as a load button, or even embedded in a content area while processing a task.
+    - **Visual feedback**: The Spinner displays an animation or icon that indicates ongoing activity.
+
+    ## Component preview
+    You can click on the **Show code** button in the bottom-right section of the following code snippets to see how to use the component:
+
+    <h4>Default Use Case</h4>
+    <Canvas of={ColSpinnerStories.Default}/>
+
+    <h4>Size: Medium</h4>
+    <Canvas of={ColSpinnerStories.MediumSpinner} />
+
+    <h4>Size: Large</h4>
+    <Canvas of={ColSpinnerStories.LargeSpinner} />
+
+    <h4>Spinner indicator in a ColButton</h4>
+    <div>
+      In this example, we're using a `col-button` to show how the `col-spinner` can be used to show the user content is loading when the button is clicked. There is a 2s timer simulating loading time to show what the interaction could look like.
+    </div>
+    <Canvas of={ColSpinnerStories.ButtonWithSpinner} />
+
+    ## Accessibility
+    The `col-spinner` component is designed with accessibility in mind, ensuring that all users including those using assistive technologies are politely alerted that content is loading.
+
+    - **ARIA Attributes:**
+      - The `accessibility-text` property allows developers to update the text that is read to users when a screen reader is being used.
+        - The default value is `Loading`
+        - Under the hood this maps to two things:
+            - `aria-live` which is set to `polite` which tells screen readers to announce updates to the content **only** when the user is idle, so it doesn't interrupt their current task.
+            - `span.visually-hidden` tag which screen-readers look for to get the text they read, this is where the `accessibility-text` content goes.
+    - **Screen Reader Support**
+      - The `accessibility-text` property is what tells the reader what to say; the default value is `Loading`.
+    - **Best Practices**
+      - In the event of using the spinner while submitting a form, saving information, etc; it would be ideal to use `accessibility-text` to convey that message accurately by setting it to `Submitting` or `Saving`.
+
+    ## Properties
+
+    <ArgTypes of={ColSpinnerStories} />
+
+    ## Interact with the component
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-spinner--default) section.
+
+  </div>
+</div>

@@ -30,13 +30,18 @@ import { Callout } from '../../_storybook/components';
         ```
     2. Import the dependencies:
         ```typescript
-        import { registerColibriComponents, registerAllComponents, ColTypography } from '@telesign/colibri';
+        import { registerColibriComponents, registerAllComponents, ColTextField, ColTypography } from '@telesign/colibri';
         import '@telesign/colibri/styles/styles.css';
         ```
+
+        <Callout variant="info" icon="ℹ️">
+          **Dependency Note:** The `col-text-field` component depends on the `col-typography` component for rendering labels, helper text, and error messages. Make sure to import and register `ColTypography` along with `ColTextField`.
+        </Callout>
+
     3. Register the web components:
         ```typescript
         // Option 1: Register specific components
-        registerColibriComponents([ColTypography]);
+        registerColibriComponents([ColTextField, ColTypography]);
 
         // Option 2: Register all Colibri components
         registerAllComponents();
@@ -112,6 +117,23 @@ import { Callout } from '../../_storybook/components';
     </div>
     <Canvas of={stories.WithCustomId} />
 
+    ### Variants
+    <div>
+      The `col-text-field` component supports two visual variants to accommodate different design contexts and user preferences.
+    </div>
+
+
+    #### Outline Variant
+    <div>
+      The outline variant displays a full border around the input field, providing clear visual boundaries. This is the default variant and is ideal for most form contexts where clear field separation is important.
+    </div>
+    <Canvas of={stories.Variants} />
+
+    #### Plain Variant
+    <div>
+      The plain variant removes the border entirely, creating a minimal appearance. The field only shows a border when focused or in error states, providing a cleaner, more modern look.
+    </div>
+    <Canvas of={stories.PlainVariant} />
   </div>
 </div>
 

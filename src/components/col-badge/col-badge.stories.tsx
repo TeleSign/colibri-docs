@@ -2,11 +2,12 @@ import { html } from 'lit';
 import { icons } from '@telesign/colibri-icons/icons-list';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
+import { BADGE_VARIANTS } from '@telesign/colibri';
 
 type StoryArgs = {
-  badgeText: string;
+  text: string;
   variant: string;
-  badgeIconName: string;
+  icon: string;
   disabled: boolean;
 };
 
@@ -22,46 +23,55 @@ const meta = {
     },
   },
   argTypes: {
-    badgeText: {
-      control: 'text',
-      description: 'The text of the badge',
-      table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: 'Text' },
-      },
-    },
     variant: {
       control: 'select',
-      options: ['info', 'warning', 'danger', 'success', 'default'],
-      description: 'The variant of the badge',
+      options: Object.values(BADGE_VARIANTS),
+      description: "The semantic variant that determines the badge's appearance and color",
       table: {
+        category: 'Core',
         type: { summary: 'string' },
         defaultValue: { summary: 'default' },
       },
     },
-    badgeIconName: {
-      control: 'select',
-      options: icons,
-      description: 'If there is an icon, the name of the icon to display',
-      table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: 'emoji-circle' },
-      },
-    },
     disabled: {
       control: 'boolean',
-      description: 'If the badge is disabled or not',
+      description: 'Whether the badge is in a disabled state',
       table: {
+        category: 'Core',
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
       },
+      if: { arg: 'disabled', neq: false },
+    },
+    text: {
+      control: 'text',
+      description:
+        'The text content of the badge. **Storybook control only, not a component prop.**',
+      table: {
+        category: 'Storybook',
+        type: { summary: 'string' },
+        defaultValue: { summary: 'Text' },
+      },
+      if: { arg: 'text', neq: '' },
+    },
+    icon: {
+      control: 'select',
+      options: icons,
+      description:
+        'Name of the icon to display in the icon slot. **Storybook control only, not a component prop.**',
+      table: {
+        category: 'Storybook',
+        type: { summary: 'string' },
+        defaultValue: { summary: 'emoji-circle' },
+      },
+      if: { arg: 'icon', neq: '' },
     },
   },
   args: {
-    badgeText: 'Text',
-    variant: 'default',
-    badgeIconName: 'emoji-circle',
+    variant: BADGE_VARIANTS.DEFAULT,
     disabled: false,
+    text: '',
+    icon: '',
   },
 } satisfies ColibriStoryMeta<StoryArgs>;
 
@@ -70,10 +80,9 @@ export default meta;
 type Story = ColibriStory<StoryArgs>;
 
 const renderBadge: Story['render'] = args => html`
-  <col-badge .variant=${args.variant} ?disabled=${args.disabled}>
-    ${args.badgeIconName &&
-    html`<col-icon slot="icon" name=${args.badgeIconName} size="12px"></col-icon>`}
-    ${args.badgeText}
+  <col-badge variant=${args.variant} ?disabled=${args.disabled}>
+    ${args.icon && html`<col-icon slot="icon" name=${args.icon} size="12px"></col-icon>`}
+    ${args.text}
   </col-badge>
 `;
 
@@ -82,79 +91,56 @@ const renderBadge: Story['render'] = args => html`
  * and disabled. Use the controls panel to experiment with different values.
  */
 export const Default: Story = {
-  render: args => html`
-    <col-badge .variant=${args.variant} ?disabled=${args.disabled}>
-      <col-icon slot="icon" name=${args.badgeIconName} size="12px"></col-icon>
-      ${args.badgeText}
-    </col-badge>
-  `,
+  args: {
+    text: 'Text',
+    icon: 'emoji-circle',
+  },
+  render: renderBadge,
 };
 
 /**
  * This story showcases a badge with success variant and no icon
  */
-export const SuccessVariantAndNoIcon: Story = {
-  render: renderBadge,
+export const SuccessVariantNoIcon: Story = {
   args: {
-    variant: 'success',
-    badgeText: 'Success Text',
-    badgeIconName: '',
-    disabled: false,
+    variant: BADGE_VARIANTS.SUCCESS,
+    text: 'Success Text',
   },
-  parameters: {
-    docs: {
-      source: {
-        code: formatCodeString(`<col-badge variant="success">Success Text</col-badge>`),
-      },
-    },
-  },
+  render: renderBadge,
 };
 
 /**
  * This story showcases a badge with warning variant and only an icon, no text
  */
-export const WarningVariantAndNoText: Story = {
-  render: renderBadge,
+export const WarningVariantNoText: Story = {
   args: {
-    variant: 'warning',
-    badgeText: '',
-    badgeIconName: 'trash',
-    disabled: false,
+    variant: BADGE_VARIANTS.WARNING,
+    icon: 'trash',
   },
-  parameters: {
-    docs: {
-      source: {
-        code: formatCodeString(
-          `<col-badge variant="warning">
-            <col-icon slot="icon" name="trash" size="12px"></col-icon>
-          </col-badge>`
-        ),
-      },
-    },
+  render: renderBadge,
+};
+
+/**
+ * This story showcases a badge with danger variant and icon and text
+ */
+export const DangerVariantIconText: Story = {
+  args: {
+    variant: BADGE_VARIANTS.DANGER,
+    icon: 'trash',
+    text: 'Danger Text',
   },
+  render: renderBadge,
 };
 
 /**
  * This story showcases a badge with info variant and disabled
  */
-export const InfoVariantAndDisabled: Story = {
-  render: renderBadge,
+export const InfoVariantDisabled: Story = {
   args: {
-    variant: 'info',
-    badgeText: 'Info Disabled',
-    badgeIconName: 'info-circle',
+    variant: BADGE_VARIANTS.INFO,
+    icon: 'info-circle',
+    text: 'Info Disabled',
     disabled: true,
   },
-  parameters: {
-    docs: {
-      source: {
-        code: formatCodeString(
-          `<col-badge variant="info" disabled>
-            <col-icon slot="icon" name="info-circle" size="12px"></col-icon>
-              Info Disabled
-          </col-badge>`
-        ),
-      },
-    },
-  },
+  render: renderBadge,
 };

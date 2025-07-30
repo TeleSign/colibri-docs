@@ -37,6 +37,7 @@ const meta = {
         defaultValue: { summary: 'false' },
         category: 'Core',
       },
+      if: { arg: 'disabled', neq: false },
     },
     align: {
       control: 'select',
@@ -52,9 +53,9 @@ const meta = {
     },
   },
   args: {
+    align: 'start',
     disabled: false,
     open: false,
-    align: 'start',
   },
 } satisfies ColibriStoryMeta<StoryArgs>;
 
@@ -64,28 +65,31 @@ type Story = ColibriStory<StoryArgs>;
 
 export const Default: Story = {
   render: ({ disabled, open, align }) => html`
-    <col-dropdown ?open=${open} ?disabled=${disabled} align=${align}>
-      <button slot="trigger">Toggle</button>
+    <col-dropdown align=${align} ?open=${open} ?disabled=${disabled}>
+      <col-button color="primary" slot="trigger">Toggle</col-button>
       <div>Content</div>
     </col-dropdown>
   `,
 };
 
 export const DefaultWithComponents: Story = {
+  parameters: {
+    __sb: {
+      height: '150px',
+    },
+  },
   render: ({ disabled, open, align }) => html`
-    <div style="height: 150px;">
-      <col-dropdown ?open=${open} ?disabled=${disabled} align=${align}>
-        <col-button color="primary" slot="trigger">
-          Dropdown
-          <col-icon name="chevron-down"></col-icon>
-        </col-button>
-        <ul>
-          <p>Content 1</p>
-          <p>Content 2</p>
-          <p>Content 3</p>
-        </ul>
-      </col-dropdown>
-    </div>
+    <col-dropdown align=${align} ?open=${open} ?disabled=${disabled}>
+      <col-button color="primary" slot="trigger">
+        Dropdown
+        <col-icon name="chevron-down"></col-icon>
+      </col-button>
+      <ul>
+        <p>Content 1</p>
+        <p>Content 2</p>
+        <p>Content 3</p>
+      </ul>
+    </col-dropdown>
   `,
 };
 
@@ -95,16 +99,20 @@ export const SmallListItems: Story = {
     disabled: false,
     align: 'end',
   },
+  parameters: {
+    __sb: {
+      height: '100px',
+      margin: '0 0 0 45%',
+    },
+  },
   render: args => html`
-    <div style="height: 100px; margin-left: 45%;">
-      <col-dropdown ?open=${args.open} ?disabled=${args.disabled} align=${args.align}>
-        <col-button color="primary" slot="trigger">
-          Click me
-          <col-icon name="chevron-down"></col-icon>
-        </col-button>
-        <p>Content 1</p>
-      </col-dropdown>
-    </div>
+    <col-dropdown align=${args.align} ?open=${args.open} ?disabled=${args.disabled}>
+      <col-button color="primary" slot="trigger">
+        Click me
+        <col-icon name="chevron-down"></col-icon>
+      </col-button>
+      <p>Content 1</p>
+    </col-dropdown>
   `,
 };
 
@@ -114,21 +122,24 @@ export const ColibriComponents: Story = {
     disabled: false,
     align: 'start',
   },
+  parameters: {
+    __sb: {
+      height: '100px',
+    },
+  },
   render: args => html`
-    <div style="height: 100px;">
-      <col-dropdown ?open=${args.open} ?disabled=${args.disabled} align=${args.align}>
-        <col-button color="primary" slot="trigger">
-          Hello! Click me
-          <col-icon name="chevron-down"></col-icon>
-        </col-button>
-        <col-list-menu>
-          <col-list-item-menu>
-            <p>Content</p>
-            <p>Extra Content</p>
-          </col-list-item-menu>
-        </col-list-menu>
-      </col-dropdown>
-    </div>
+    <col-dropdown align=${args.align} ?open=${args.open} ?disabled=${args.disabled}>
+      <col-button color="primary" slot="trigger">
+        Hello! Click me
+        <col-icon name="chevron-down"></col-icon>
+      </col-button>
+      <col-list-menu>
+        <col-list-item-menu>
+          <p>Content</p>
+          <p>Extra Content</p>
+        </col-list-item-menu>
+      </col-list-menu>
+    </col-dropdown>
   `,
 };
 
@@ -138,20 +149,23 @@ export const MediumListItems: Story = {
     disabled: true,
     align: 'start',
   },
+  parameters: {
+    __sb: {
+      height: '270px',
+    },
+  },
   render: args => html`
-    <div style="height: 270px;">
-      <col-dropdown ?open=${args.open} ?disabled=${args.disabled} align=${args.align}>
-        <col-button color="default" slot="trigger"> Button with large text and no Icon </col-button>
-        <ul>
-          <p>Lorem ipsum dolor sit amet</p>
-          <p>Content 1</p>
-          <p>consectetur adipiscing elit</p>
-          <p>Content 2</p>
-          <p>sed do eiusmod tempor incididunt ut labore</p>
-          <p>Content 3</p>
-        </ul>
-      </col-dropdown>
-    </div>
+    <col-dropdown align=${args.align} ?open=${args.open} ?disabled=${args.disabled}>
+      <col-button color="primary" slot="trigger"> Button with large text and no Icon </col-button>
+      <ul>
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Content 1</p>
+        <p>consectetur adipiscing elit</p>
+        <p>Content 2</p>
+        <p>sed do eiusmod tempor incididunt ut labore</p>
+        <p>Content 3</p>
+      </ul>
+    </col-dropdown>
   `,
 };
 
@@ -162,7 +176,7 @@ export const Disabled: Story = {
     align: 'end',
   },
   render: args => html`
-    <col-dropdown ?open=${args.open} ?disabled=${args.disabled} align=${args.align}>
+    <col-dropdown align=${args.align} ?open=${args.open} ?disabled=${args.disabled}>
       <col-button color="success" slot="trigger"> Toogle </col-button>
     </col-dropdown>
   `,

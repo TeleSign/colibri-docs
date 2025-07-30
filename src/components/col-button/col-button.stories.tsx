@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import { fn } from '@storybook/test';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
@@ -32,6 +32,7 @@ const meta = {
       control: 'text',
       description: 'The text set as aria-label in the button',
       table: {
+        category: 'Accessibility',
         type: { summary: 'string' },
         defaultValue: { summary: 'Text' },
       },
@@ -41,6 +42,7 @@ const meta = {
       options: Object.values(COLORS),
       description: 'The color for the button',
       table: {
+        category: 'Core',
         type: { summary: 'string' },
         defaultValue: { summary: 'default' },
       },
@@ -49,6 +51,7 @@ const meta = {
       control: 'boolean',
       description: 'State declaring if a button is disabled or not',
       table: {
+        category: 'Core',
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
       },
@@ -57,6 +60,7 @@ const meta = {
       control: 'text',
       description: 'Normal name attribute for button html elements',
       table: {
+        category: 'Core',
         type: { summary: 'string' },
         defaultValue: { summary: '' },
       },
@@ -66,6 +70,7 @@ const meta = {
       options: Object.values(BUTTON_SIZES),
       description: 'The size for the button',
       table: {
+        category: 'Core',
         type: { summary: 'string' },
         defaultValue: { summary: 'md' },
       },
@@ -75,6 +80,7 @@ const meta = {
       options: ['button', 'submit', 'reset'],
       description: 'The type of button',
       table: {
+        category: 'Core',
         type: { summary: 'string' },
         defaultValue: { summary: 'button' },
       },
@@ -84,6 +90,7 @@ const meta = {
       options: Object.values(BUTTON_VARIANTS),
       description: 'The variant for the button',
       table: {
+        category: 'Core',
         type: { summary: 'string' },
         defaultValue: { summary: 'default' },
       },
@@ -97,13 +104,13 @@ const meta = {
     },
   },
   args: {
-    ariaLabel: 'Default button for storybook',
     color: COLORS.DEFAULT,
     disabled: false,
     name: 'default',
     size: BUTTON_SIZES.MEDIUM,
     type: 'button',
     variant: BUTTON_VARIANTS.DEFAULT,
+    ariaLabel: '',
     onClick: fn(),
   },
 } satisfies ColibriStoryMeta<StoryArgs>;
@@ -123,13 +130,13 @@ const renderButton: Story['render'] = ({
   onClick,
 }) => html`
   <col-button
-    aria-label=${ariaLabel}
     color=${color}
     ?disabled=${disabled}
     name=${name}
     size=${size}
     type=${type}
     variant=${variant}
+    aria-label=${ariaLabel || nothing}
     @click=${onClick}
   >
     Your text
@@ -142,13 +149,13 @@ const renderButton: Story['render'] = ({
 export const Default: Story = {
   render: ({ ariaLabel, color, disabled, name, size, type, variant, onClick }) => html`
     <col-button
-      aria-label=${ariaLabel}
       color=${color}
       ?disabled=${disabled}
       name=${name}
       size=${size}
       type=${type}
       variant=${variant}
+      aria-label=${ariaLabel || nothing}
       @click=${onClick}
     >
       Your text
@@ -207,13 +214,13 @@ export const IconButton: Story = {
   },
   render: ({ ariaLabel, color, disabled, name, size, type, variant }) => html`
     <col-button
-      aria-label=${ariaLabel}
       color=${color}
       ?disabled=${disabled}
       name=${name}
       size=${size}
       type=${type}
       variant=${variant}
+      aria-label=${ariaLabel || nothing}
     >
       <col-icon name="trash" size="16px"></col-icon>
     </col-button>
@@ -231,13 +238,13 @@ export const ButtonWithDisclosure: Story = {
   },
   render: ({ ariaLabel, color, disabled, name, size, type, variant }) => html`
     <col-button
-      aria-label=${ariaLabel}
       color=${color}
       ?disabled=${disabled}
       name=${name}
       size=${size}
       type=${type}
       variant=${variant}
+      aria-label=${ariaLabel || nothing}
     >
       Your text
       <col-icon name="chevron-down" size="16px"></col-icon>
@@ -257,13 +264,13 @@ export const ButtonWithBadge: Story = {
   },
   render: ({ ariaLabel, color, disabled, name, size, type, variant }) => html`
     <col-button
-      aria-label=${ariaLabel}
       color=${color}
       ?disabled=${disabled}
       name=${name}
       size=${size}
       type=${type}
       variant=${variant}
+      aria-label=${ariaLabel || nothing}
     >
       Your text
       <col-badge variant="success">0</col-badge>
@@ -282,13 +289,13 @@ export const ButtonWithEverything: Story = {
   },
   render: ({ ariaLabel, color, disabled, name, size, type, variant }) => html`
     <col-button
-      aria-label=${ariaLabel}
       color=${color}
       ?disabled=${disabled}
       name=${name}
       size=${size}
       type=${type}
       variant=${variant}
+      aria-label=${ariaLabel || nothing}
     >
       <col-icon name="2way" size="16px"></col-icon>
       Button

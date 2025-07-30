@@ -1,49 +1,92 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
 import * as ColRadioStories from './col-radio.stories';
+import { Callout } from '../../_storybook/components';
 
 <Meta of={ColRadioStories} />
 
 <div className="col-doc__wrapper">
   <div className="col-doc__container">
     <Title>Radio</Title>
+    The Colibri Radio component is used for single selection within a group of options, allowing users to choose one option from a mutually exclusive set.
 
-    <h2>Examples</h2>
+    <Subtitle>How to use it</Subtitle>
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, registerAllComponents, ColRadio } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web components:
+        ```typescript
+        // Option 1: Register specific components
+        registerColibriComponents([ColRadio]);
 
-    <h3>Default</h3>
+        // Option 2: Register all Colibri components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <!-- Basic radio button -->
+        <col-radio value="option1">Option 1</col-radio>
+
+        <!-- Radio button with custom label -->
+        <col-radio value="option2" customlabel>
+          <span slot="label">Custom <strong>formatted</strong> label</span>
+        </col-radio>
+
+        <!-- Radio group -->
+        <col-radio name="group1" value="option1" group="group1">Option 1</col-radio>
+        <col-radio name="group1" value="option2" group="group1">Option 2</col-radio>
+        ```
+
+    <Subtitle>When to use it</Subtitle>
+    Radio buttons are used when users need to select one option from a mutually exclusive set of choices. Here are some common use cases:
+
+    - **Form Selection** - When users need to choose one option from a predefined list
+    - **Settings and Preferences** - For configuration options where only one choice is allowed
+    - **Survey Questions** - For single-choice questions in forms or surveys
+    - **Navigation Options** - When users need to select one navigation path
+    - **Filtering and Sorting** - For selecting one filter or sort option at a time
+
+    <Subtitle>Component preview</Subtitle>
+    <Callout variant="tip" icon="💡">
+      You can click on the **Show code** button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+
+    <h4>Default</h4>
     <p>Basic radio button without any label.</p>
     <Canvas of={ColRadioStories.Default} />
 
-    <h3>Checked State</h3>
+    <h4>Checked State</h4>
     <p>Radio button in the selected state.</p>
     <Canvas of={ColRadioStories.Checked} />
 
-    <h3>Disabled State</h3>
+    <h4>Disabled State</h4>
     <p>Radio button that cannot be interacted with.</p>
     <Canvas of={ColRadioStories.Disabled} />
 
-    <h3>With Label</h3>
+    <h4>With Label</h4>
     <p>Radio button with a text label.</p>
     <Canvas of={ColRadioStories.WithLabel} />
 
-    <h3>With Custom Label</h3>
+    <h4>With Custom Label</h4>
     <p>Radio button with custom formatted label content.</p>
     <Canvas of={ColRadioStories.WithCustomLabel} />
 
-    <h3>Radio Group</h3>
+    <h4>Radio Group</h4>
     <p>Multiple radio buttons working together in a group. Only one can be selected at a time.</p>
+    <Callout variant="info" icon="ℹ️">
+      <p>
+        Radio buttons that belong together should share the same <code>group</code> attribute.
+        This ensures that only one radio button in the group can be selected at a time.
+      </p>
+    </Callout>
     <Canvas of={ColRadioStories.RadioGroup} />
 
-    <h3>Interactive Example</h3>
-    <p>A working example that displays the currently selected value.</p>
-    <Canvas of={ColRadioStories.InteractiveExample} />
-
-    <h2>Grouping Radio Buttons</h2>
-    <p>
-      Radio buttons that belong together should share the same <code>group</code> attribute.
-      This ensures that only one radio button in the group can be selected at a time.
-    </p>
-
-    <h2>Accessibility</h2>
+    <Subtitle>Accessibility</Subtitle>
     <p>
       Radio buttons follow WAI-ARIA best practices for accessibility:
     </p>
@@ -53,7 +96,12 @@ import * as ColRadioStories from './col-radio.stories';
       <li>Labels are properly associated with inputs</li>
     </ul>
 
-    <h2>Properties</h2>
+    <Subtitle>Properties</Subtitle>
+
     <ArgTypes of={ColRadioStories} />
+
+    <Subtitle>Interact with the component</Subtitle>
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-radio--default) section.
+
   </div>
 </div>

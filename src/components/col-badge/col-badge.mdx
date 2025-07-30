@@ -28,7 +28,7 @@ import * as ColBadgeStories from './col-badge.stories';
         ```
     4. Use it in your HTML:
         ```html
-        <col-badge>
+        <col-badge variant="default">
           <col-icon slot="icon" size="12px" name="emoji-circle"></col-icon>
           Text
         </col-badge>
@@ -50,20 +50,23 @@ import * as ColBadgeStories from './col-badge.stories';
     <Canvas of={ColBadgeStories.Default}/>
 
     <h4>Variant: Success with no icon</h4>
-    <Canvas of={ColBadgeStories.SuccessVariantAndNoIcon} />
+    <Canvas of={ColBadgeStories.SuccessVariantNoIcon} />
 
     <h4>Variant: Warning with icon and no text</h4>
-    <Canvas of={ColBadgeStories.WarningVariantAndNoText} />
+    <Canvas of={ColBadgeStories.WarningVariantNoText} />
 
     <h4>Variant: Info and disabled</h4>
-    <Canvas of={ColBadgeStories.InfoVariantAndDisabled} />
+    <Canvas of={ColBadgeStories.InfoVariantDisabled} />
+
+    <h4>Variant: Danger with icon and text</h4>
+    <Canvas of={ColBadgeStories.DangerVariantIconText} />
 
     <Subtitle>Properties</Subtitle>
 
     <ArgTypes of={ColBadgeStories} />
 
     <Subtitle>Interact with the component</Subtitle>
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the **Default** section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-badge--default) section.
 
   </div>
 </div>

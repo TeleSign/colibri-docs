@@ -1,0 +1,173 @@
+import { Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as ColSpacerStories from './col-spacer.stories';
+import { Callout } from '../../_storybook/components';
+
+<Meta of={ColSpacerStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Spacer</Title>
+    The Colibri Spacer component provides flexible spacing between elements in flex layouts. It automatically expands to fill available space, pushing adjacent elements apart or creating balanced distributions.
+
+    <Callout variant="info" icon="ℹ️">
+      The spacer component uses `flex: 1` to grow and fill available space in flex containers, making it perfect for creating responsive layouts without fixed dimensions.
+    </Callout>
+
+    <Subtitle>Component Overview</Subtitle>
+    The Spacer component is a simple but powerful layout utility that:
+
+    - **Fills available space** - Automatically expands to use remaining flex space
+    - **Pushes elements apart** - Creates separation between flex items
+    - **Enables balanced layouts** - Multiple spacers distribute space evenly
+    - **Non-interactive** - Has no pointer events or user selection
+    - **Accessible** - Properly hidden from screen readers with `aria-hidden="true"`
+
+    <Subtitle>Table of contents</Subtitle>
+    - [How to use it](#how-to-use-it)
+    - [When to use it](#when-to-use-it)
+    - [Component preview](#component-preview)
+      - [Basic usage](#basic-usage)
+      - [Toolbar layouts](#toolbar-layouts)
+      - [Multiple spacers](#multiple-spacers)
+    - [Interact with the component](#interact-with-the-component)
+
+    ## How to use it
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, registerAllComponents, ColSpacer } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web components:
+        ```typescript
+        // Option 1: Register specific components
+        registerColibriComponents([ColSpacer]);
+
+        // Option 2: Register all Colibri components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <!-- Basic toolbar layout -->
+        <div style="display: flex; align-items: center;">
+          <button>Menu</button>
+          <col-spacer></col-spacer>
+          <button>Profile</button>
+        </div>
+
+        <!-- Multiple spacers for even distribution -->
+        <div style="display: flex; align-items: center;">
+          <span>Left</span>
+          <col-spacer></col-spacer>
+          <span>Center</span>
+          <col-spacer></col-spacer>
+          <span>Right</span>
+        </div>
+
+        <!-- Form actions with spacer -->
+        <div style="display: flex; gap: 8px;">
+          <button>Help</button>
+          <col-spacer></col-spacer>
+          <button>Cancel</button>
+          <button>Save</button>
+        </div>
+        ```
+
+    ## When to use it
+    The Spacer component is ideal for creating flexible layouts in various interface patterns:
+
+    ### Primary Use Cases
+
+    **Toolbar and Navigation Layouts**
+    - Push user actions to the right side of toolbars
+    - Separate logo/branding from navigation items
+    - Create space between primary and secondary actions
+
+    **Form and Dialog Layouts**
+    - Separate help text from action buttons
+    - Push confirmation buttons to the right
+    - Create balanced button distributions
+
+    **Card and Content Headers**
+    - Separate titles from action menus
+    - Push timestamps or metadata to the right
+    - Balance content across card headers
+
+    **Status and Information Bars**
+    - Distribute status indicators evenly
+    - Separate different types of information
+    - Create responsive information layouts
+
+    ### Layout Patterns
+
+    **Single Spacer Pattern**
+    ```html
+    [Item A] [Item B] [----SPACER----] [Item C]
+    ```
+    - Pushes Item C to the far right
+    - Items A and B stay grouped on the left
+
+    **Multiple Spacer Pattern**
+    ```html
+    [Item A] [--SPACER--] [Item B] [--SPACER--] [Item C]
+    ```
+    - Distributes items evenly across available space
+    - Creates balanced, centered layouts
+
+    **Mixed Content Pattern**
+    ```html
+    [Logo] [Nav Items] [----SPACER----] [User Menu] [Settings]
+    ```
+    - Separates primary navigation from user actions
+    - Maintains grouping while maximizing space usage
+
+    ### Best Practices
+
+    **Container Requirements**
+    - Always use within `display: flex` containers
+    - Ensure parent has defined width or fills available space
+    - Consider `align-items` for vertical alignment
+
+    **Accessibility**
+    - Spacer is automatically hidden from screen readers
+    - Focus order skips spacer elements naturally
+    - No additional ARIA attributes needed
+
+    **Performance**
+    - Lightweight component with minimal DOM impact
+    - No JavaScript logic or event handlers
+    - Pure CSS-based flexible spacing
+
+    **Responsive Design**
+    - Works automatically with responsive flex containers
+    - Adapts to changing container sizes
+    - No media queries or breakpoint logic needed
+
+    ## Component preview
+
+    ### Basic usage
+    <div>
+      Simple spacer usage showing how it fills available space between flex items.
+    </div>
+    <Canvas of={ColSpacerStories.BasicUsage} />
+
+    ### Toolbar layouts
+    <div>
+      Common toolbar patterns using spacers to separate and position elements.
+    </div>
+    <Canvas of={ColSpacerStories.ToolbarLayout} />
+
+    ### Multiple spacers
+    <div>
+      Using multiple spacers to create evenly distributed layouts.
+    </div>
+    <Canvas of={ColSpacerStories.MultipleSpacers} />
+
+    ## Interact with the component
+    To see all spacer examples and use cases, navigate to the [Default](/story/atoms-spacer--default) section.
+
+  </div>
+</div>
