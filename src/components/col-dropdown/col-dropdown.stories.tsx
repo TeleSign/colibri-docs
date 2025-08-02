@@ -133,10 +133,10 @@ export const SmallListItems: Story = {
         <col-icon name="chevron-down"></col-icon>
       </col-button>
       <col-list-menu role="menuitem">
-        <col-list-item-menu>
-          <p>Content</p>
-          <p>Extra Content</p>
-        </col-list-item-menu>
+        <col-list-menu-item variant="button" value="content">Content</col-list-menu-item>
+        <col-list-menu-item variant="button" value="extra-content"
+          >Extra Content</col-list-menu-item
+        >
       </col-list-menu>
     </col-dropdown>
   `,
@@ -160,10 +160,10 @@ export const ColibriComponents: Story = {
         <col-icon name="chevron-down"></col-icon>
       </col-button>
       <col-list-menu role="menuitem">
-        <col-list-item-menu>
-          <p>Content</p>
-          <p>Extra Content</p>
-        </col-list-item-menu>
+        <col-list-menu-item variant="button" value="content">Content</col-list-menu-item>
+        <col-list-menu-item variant="button" value="extra-content"
+          >Extra Content</col-list-menu-item
+        >
       </col-list-menu>
     </col-dropdown>
   `,
