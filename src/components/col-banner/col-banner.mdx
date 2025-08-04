@@ -87,13 +87,16 @@ import { Callout } from '../../_storybook/components';
 
     ### Only Content
     With the **Success** variant the Banner automatically will change the `ColIcon` icon to `check-circle-fill` and the content will fit even if there is no Title or Actions slots.
+    <Canvas of={BannerStories.OnlyContent} />
 
     ### With Content and Actions
     On the snippet you will find the Actions slot using the `div` and `button` HTML tags with the correct styling and alignment even if you decide not to use `col-button` and `col-group`.
+    <Canvas of={BannerStories.WithContentActions} />
     - With **Warning** variant the icon will change to `info-major-triangle-up-fill`.
 
     ### With Title, Content and Actions
     Even if the parent component has smaller dimensions, the banner will fit and align its content accordinally.
+    <Canvas of={BannerStories.WithTitleContentActions} />
     - With **Danger** variant the icon remains the same as Information one.
 
     ## Events
@@ -107,7 +110,7 @@ import { Callout } from '../../_storybook/components';
     ### Component Closes Automatically
     When `duration` property is specified the Banner will close and dispatch the `banner-closed` event.
 
-    **Note:** If you can see any content on the Canva, reload the page (or press F5) and navigat to this section again. Maybe the banner had closed before you could see it.
+    **Note: ** If you can see any content on the Canva, reload the page (or press F5) and navigat to this section again. Maybe the banner had closed before you could see it.
 
     ## Accessibility
     The `col-banner` can be searched up or placed under an element that needs to be classified categorically.  They can help group similar elements by color and group names.
