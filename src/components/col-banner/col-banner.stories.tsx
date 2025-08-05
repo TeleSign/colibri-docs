@@ -47,7 +47,6 @@ const meta = {
       table: {
         category: 'Core',
         type: { summary: 'number' },
-        defaultValue: { summary: '60' },
       },
       if: { arg: 'duration', neq: '' },
     },
