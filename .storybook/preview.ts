@@ -3,12 +3,10 @@ import { createElement } from 'react';
 import type { DecoratorFunction, StoryContext } from '@storybook/types';
 import { DocsContainer } from '@storybook/blocks';
 import type { Preview, WebComponentsRenderer } from '@storybook/web-components';
-import { registerColibriComponents, registerAllComponents } from '@telesign/colibri';
-import { ColIcon } from '@telesign/colibri-icons';
+import { registerAllComponents } from '@telesign/colibri';
 import '@telesign/colibri/styles/styles.css';
 
 registerAllComponents();
-registerColibriComponents([ColIcon]);
 
 /**
  * Type definitions for style properties.
