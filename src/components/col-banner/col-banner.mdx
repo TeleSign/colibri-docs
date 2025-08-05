@@ -18,10 +18,8 @@ import { Callout } from '../../_storybook/components';
       - [With Content and Actions](#with-content-and-actions)
       - [With Title, Content and Actions](#with-title-content-and-actions)
     - [Events](#events)
-      - [Close Button Click](#close-button-click)
-      - [Close Button Focus](#close-button-focus)
-      - [Component Focus](#component-focus)
       - [Component Closes Automatically](#component-closes-automatically)
+      - [Interactive Example](#interactive-example)
     - [Accessibility](#accessibility)
     - [Properties](#properties)
     - [Interact with the component](#interact-with-the-component)
@@ -101,16 +99,26 @@ import { Callout } from '../../_storybook/components';
 
     ## Events
     There are three ways to dismiss the `col-banner` component such as clicking or focusing (with keyborad) the close button and focusing the component.
-    ### Close Button Click
-    The `click` action on the close button dispatch the `banner-closed` event.
-    ### Close Button Focus
-    After the close button is focused, the `keydown` action on the close button with the `Enter` and `Space` keys dispatch the `banner-closed` event.
-    ### Component Focus
-    After the component is focused, The `keydown` action on the close button with the `Escape` key dispatch the `banner-closed` event.
     ### Component Closes Automatically
-    When `duration` property is specified the Banner will close and dispatch the `banner-closed` event.
+    When `duration` property is specified the Banner will close and dispatch the `banner-closed` event. For this example the duration time is <ins>10 seconds</ins>.
 
-    **Note: ** If you can see any content on the Canva, reload the page (or press F5) and navigat to this section again. Maybe the banner had closed before you could see it.
+    **Note:** If you can see any content on the Canva, reload the page (or press F5) and navigate to this section again. Maybe the banner had closed before you could see it.
+    <Canvas of={BannerStories.WithDuration} />
+
+    ### Interactive Example
+    <Callout  variant="info" icon="ℹ️">
+      All variants are working on different scenarios in this example.
+    </Callout>
+    To close the banner there are 3 ways to do it:
+    - The `click` action on the close button dispatch the `banner-closed` event.
+    - After the close button is focused, the `keydown` action with the `Enter` and `Space` keys dispatch the `banner-closed` event.
+    - After the component is focused, The `keydown` action with the `Escape` key dispatch the `banner-closed` event.
+
+    **Scenarios**
+    - By clicking Send button a Info Banner will be displayed.
+      - If you click the Resend button it'd displayed a Success Banner.
+    - By clicking Send button but with input errors you will see a Danger Banner displayed.
+    <Canvas of={BannerStories.InteractiveExample} />
 
     ## Accessibility
     The `col-banner` can be searched up or placed under an element that needs to be classified categorically.  They can help group similar elements by color and group names.
