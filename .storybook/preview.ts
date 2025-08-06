@@ -3,12 +3,10 @@ import { createElement } from 'react';
 import type { DecoratorFunction, StoryContext } from '@storybook/types';
 import { DocsContainer } from '@storybook/blocks';
 import type { Preview, WebComponentsRenderer } from '@storybook/web-components';
-import { registerColibriComponents, registerAllComponents } from '@telesign/colibri';
-import { ColIcon } from '@telesign/colibri-icons';
+import { registerAllComponents } from '@telesign/colibri';
 import '@telesign/colibri/styles/styles.css';
 
 registerAllComponents();
-registerColibriComponents([ColIcon]);
 
 /**
  * Type definitions for style properties.
@@ -23,6 +21,7 @@ type JustifyContent =
   | 'space-between'
   | 'space-around'
   | 'space-evenly';
+type AlignItems = 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'stretch';
 type FlexWrap = 'nowrap' | 'wrap' | 'wrap-reverse';
 
 /**
@@ -48,6 +47,7 @@ export type Styles = {
   gap?: string;
   flexDirection?: FlexDirection;
   justifyContent?: JustifyContent;
+  alignItems?: AlignItems;
   flexWrap?: FlexWrap;
   height?: string;
   width?: string;
@@ -99,6 +99,7 @@ const getStyles = (options?: StylesOptions): string => {
     display: 'display',
     flexDirection: 'flex-direction',
     justifyContent: 'justify-content',
+    alignItems: 'align-items',
     gridTemplateColumns: 'grid-template-columns',
     flexWrap: 'flex-wrap',
     gap: 'gap',
