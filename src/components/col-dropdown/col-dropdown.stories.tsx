@@ -64,10 +64,19 @@ export default meta;
 type Story = ColibriStory<StoryArgs>;
 
 export const Default: Story = {
+  parameters: {
+    __sb: {
+      height: '150px',
+    },
+  },
   render: ({ disabled, open, align }) => html`
     <col-dropdown align=${align} ?open=${open} ?disabled=${disabled}>
       <col-button color="primary" slot="trigger">Toggle</col-button>
-      <div>Content</div>
+      <div>
+        <div>Option 1</div>
+        <div>Option 2</div>
+        <div>Option 3</div>
+      </div>
     </col-dropdown>
   `,
 };
@@ -78,19 +87,29 @@ export const DefaultWithComponents: Story = {
       height: '150px',
     },
   },
-  render: ({ disabled, open, align }) => html`
-    <col-dropdown align=${align} ?open=${open} ?disabled=${disabled}>
-      <col-button color="primary" slot="trigger">
-        Dropdown
-        <col-icon name="chevron-down"></col-icon>
-      </col-button>
-      <ul>
-        <p>Content 1</p>
-        <p>Content 2</p>
-        <p>Content 3</p>
-      </ul>
-    </col-dropdown>
-  `,
+  render: args => {
+    const isInDocs = window.location.search.includes('viewMode=docs');
+
+    return html`
+      <col-dropdown align=${args.align} ?open=${args.open} ?disabled=${args.disabled}>
+        <col-button color="primary" slot="trigger">
+          Dropdown
+          <col-icon name="chevron-down"></col-icon>
+        </col-button>
+        ${isInDocs
+          ? html`<ul role="menuitem">
+              <li>Content 1</li>
+              <li>Content 2</li>
+              <li>Content 3</li>
+            </ul>`
+          : html`<ul role="menuitem" style="padding-left: 30px;">
+              <li>Content 1</li>
+              <li>Content 2</li>
+              <li>Content 3</li>
+            </ul>`}
+      </col-dropdown>
+    `;
+  },
 };
 
 export const SmallListItems: Story = {
@@ -101,8 +120,10 @@ export const SmallListItems: Story = {
   },
   parameters: {
     __sb: {
-      height: '100px',
-      margin: '0 0 0 45%',
+      height: '150px',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'start',
     },
   },
   render: args => html`
@@ -111,7 +132,12 @@ export const SmallListItems: Story = {
         Click me
         <col-icon name="chevron-down"></col-icon>
       </col-button>
-      <p>Content 1</p>
+      <col-list-menu role="menuitem">
+        <col-list-menu-item variant="button" value="content">Content</col-list-menu-item>
+        <col-list-menu-item variant="button" value="extra-content"
+          >Extra Content</col-list-menu-item
+        >
+      </col-list-menu>
     </col-dropdown>
   `,
 };
@@ -124,7 +150,7 @@ export const ColibriComponents: Story = {
   },
   parameters: {
     __sb: {
-      height: '100px',
+      height: '150px',
     },
   },
   render: args => html`
@@ -133,11 +159,11 @@ export const ColibriComponents: Story = {
         Hello! Click me
         <col-icon name="chevron-down"></col-icon>
       </col-button>
-      <col-list-menu>
-        <col-list-item-menu>
-          <p>Content</p>
-          <p>Extra Content</p>
-        </col-list-item-menu>
+      <col-list-menu role="menuitem">
+        <col-list-menu-item variant="button" value="content">Content</col-list-menu-item>
+        <col-list-menu-item variant="button" value="extra-content"
+          >Extra Content</col-list-menu-item
+        >
       </col-list-menu>
     </col-dropdown>
   `,
@@ -151,13 +177,13 @@ export const MediumListItems: Story = {
   },
   parameters: {
     __sb: {
-      height: '270px',
+      height: '300px',
     },
   },
   render: args => html`
     <col-dropdown align=${args.align} ?open=${args.open} ?disabled=${args.disabled}>
       <col-button color="primary" slot="trigger"> Button with large text and no Icon </col-button>
-      <ul>
+      <ul role="menuitem">
         <p>Lorem ipsum dolor sit amet</p>
         <p>Content 1</p>
         <p>consectetur adipiscing elit</p>

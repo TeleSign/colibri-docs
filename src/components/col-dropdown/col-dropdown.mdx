@@ -113,7 +113,7 @@ import { Callout } from '../../_storybook/components';
     <Canvas of={ColDropdownStories.DefaultWithComponents} />
 
     The div wrapper:
-    - For correcting visualization of the list menu (after clicking `Show code` button), there is a div wrapper with a specific height for the Canva.
+    - For basic styling, the dropdown list uses `role='menuitem'`.
 
     ### Small List Items Dropdown
     By default the dropdown will be open as the prop determines. If you click anywhere on the Canva the dropdown menu will close.
@@ -122,7 +122,7 @@ import { Callout } from '../../_storybook/components';
     Custom Button and List Items:
     - Make sure you register correctly ColButton component in order to use it.
     - Do not forget the `slot="trigger"` to define the trigger of the dropdown list.
-    - The list could be any sort of content such as `<p>`, `<ul>`, etc... **However given our Design System, more likely it will usually be `ColListMenu`**.
+    - The list could be any sort of content such as `<p>`, `<ul>`, etc... However given our Design System, more likely it will usually be `col-list-item` and `col-list-item-menu`.
 
     ### Dropdown with only Colibri Components
     As mentioned in the last Storie and according to the example shown in the [How to use it](#how-to-use-it) section, this storie is for a dropdown with only colibri components for both trigger and content.
