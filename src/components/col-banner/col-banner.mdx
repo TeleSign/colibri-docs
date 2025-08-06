@@ -102,7 +102,7 @@ import { Callout } from '../../_storybook/components';
     ### Component Closes Automatically
     When `duration` property is specified the Banner will close and dispatch the `banner-closed` event. For this example the duration time is <ins>10 seconds</ins>.
 
-    **Note:** If you can see any content on the Canva, reload the page (or press F5) and navigate to this section again. Maybe the banner had closed before you could see it.
+    **Note:** If you can see any content on the Canvas, reload the page (or press F5) and navigate to this section again. Maybe the banner had closed before you could see it.
     <Canvas of={BannerStories.WithDuration} />
 
     ### Interactive Example
@@ -111,8 +111,8 @@ import { Callout } from '../../_storybook/components';
     </Callout>
     To close the banner there are 3 ways to do it:
     - The `click` action on the close button dispatch the `banner-closed` event.
-    - After the close button is focused, the `keydown` action with the `Enter` and `Space` keys dispatch the `banner-closed` event.
-    - After the component is focused, The `keydown` action with the `Escape` key dispatch the `banner-closed` event.
+    - If the close button 'x' is focused, pressing the `Enter` or `Space` keys will dispatch the `banner-closed` event.
+    - If the component is focused, pressing `Escape` key will dispatch the `banner-closed` event.
 
     **Scenarios**
     - By clicking Send button a Info Banner will be displayed.

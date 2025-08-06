@@ -43,7 +43,7 @@ const meta = {
     duration: {
       control: 'number',
       description:
-        'The banner visibility time before it automatically closes. **If not specified the banner never closes**',
+        'If set, this indicates the number of seconds the banner will appear on screen before automatically closing. By default this is not set, meaning the banner only closes if/when the user presses the ´x´ close button.',
       table: {
         category: 'Core',
         type: { summary: 'number' },
@@ -75,9 +75,10 @@ export const Default: Story = {
       @banner-closed=${onBannerClosed}
     >
       <span slot="title">Title</span>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+      The content of the Banner can be added directly within the component, it will all be added to
+      the default Slot.
       <col-group slot="actions">
-        <col-button color="primary" variant="plain"> Button </col-button>
+        <col-button color="primary" variant="outlined"> Button </col-button>
         <col-button color="primary" variant="outlined"> Button </col-button>
       </col-group>
     </col-banner>`,
@@ -93,7 +94,8 @@ export const OnlyContent: Story = {
       duration=${ifDefined(args.duration)}
       @banner-closed=${args.onBannerClosed}
     >
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+      The content of the Banner can be added directly within the component, it will all be added to
+      the default Slot.
     </col-banner>`,
 };
 
@@ -107,10 +109,11 @@ export const WithContentActions: Story = {
       duration=${ifDefined(args.duration)}
       @banner-closed=${args.onBannerClosed}
     >
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+      The content of the Banner can be added directly within the component, it will all be added to
+      the default Slot.
       <div slot="actions">
         <col-button variant="plain"> Accept </col-button>
-        <col-button color="danger"> Decline </col-button>
+        <col-button variant="plain"> Decline </col-button>
       </div>
     </col-banner>`,
 };
@@ -131,10 +134,10 @@ export const WithTitleContentActions: Story = {
       @banner-closed=${args.onBannerClosed}
     >
       <span slot="title">Longer Title</span>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-      labore et dolore magna aliqua.
+      The content of the Banner can be added directly within the component, it will all be added to
+      the default Slot.
       <col-group slot="actions">
-        <col-button variant="plain"> Accept </col-button>
+        <col-button variant="outlined" color="danger"> Accept </col-button>
         <col-button color="danger"> Delete </col-button>
       </col-group>
     </col-banner>`,
@@ -145,14 +148,44 @@ export const WithDuration: Story = {
     variant: 'info',
     duration: 10,
   },
-  render: args =>
-    html`<col-banner
-      variant=${args.variant}
-      duration=${ifDefined(args.duration)}
-      @banner-closed=${args.onBannerClosed}
-    >
-      <span slot="title">Longer Title to see a very long banner displayed</span>
-    </col-banner>`,
+  render: args => {
+    let container: HTMLElement | null;
+    let isClicked = false;
+
+    const onClick = (e: Event) => {
+      e.preventDefault();
+      isClicked = true;
+      updateContent();
+    };
+
+    const updateContent = () => {
+      if (container) {
+        const content = isClicked
+          ? html`<div>
+              <col-banner
+                variant=${args.variant}
+                duration=${ifDefined(args.duration)}
+                @banner-closed=${args.onBannerClosed}
+              >
+                <span slot="title">Longer Title to see a longer banner displayed</span>
+              </col-banner>
+            </div>`
+          : html`<div>
+              <col-button color="primary" @click=${onClick}
+                >Show Banner with 10 seconds duration</col-button
+              >
+            </div>`;
+        render(content, container);
+      }
+    };
+    const initialTemplate = html`<div class="duration-story-container"></div>`;
+
+    setTimeout(() => {
+      container = document.querySelector('.duration-story-container');
+      updateContent();
+    }, 0);
+    return initialTemplate;
+  },
 };
 
 export const InteractiveExample: Story = {
@@ -198,9 +231,9 @@ export const InteractiveExample: Story = {
             ? html`<col-banner variant="success">
                 <span slot="title">Success</span>
                 <span>Email resent to your mail successfully</span>
-                <col-group slot="actions">
-                  <col-button variant="plain"> Accept </col-button>
-                </col-group>
+                <div slot="actions">
+                  <col-button variant="outlined"> Accept </col-button>
+                </div>
               </col-banner>`
             : nothing}
           ${showInfoBanner
@@ -208,7 +241,7 @@ export const InteractiveExample: Story = {
                 <span slot="title">Information</span>
                 <span>Please check your email inbox for a restore your password mail.</span>
                 <div slot="actions">
-                  <col-button variant="plain"> Accept </col-button>
+                  <col-button variant="outlined"> Accept </col-button>
                   <col-button color="primary" variant="outlined" @click=${submitResend}>
                     Resend
                   </col-button>
