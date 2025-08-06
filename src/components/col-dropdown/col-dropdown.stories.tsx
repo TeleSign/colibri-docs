@@ -160,10 +160,8 @@ export const ColibriComponents: Story = {
         <col-icon name="chevron-down"></col-icon>
       </col-button>
       <col-list-menu role="menuitem">
-        <col-list-menu-item variant="button" value="content">Content</col-list-menu-item>
-        <col-list-menu-item variant="button" value="extra-content"
-          >Extra Content</col-list-menu-item
-        >
+        <col-list-menu-item value="content">Content</col-list-menu-item>
+        <col-list-menu-item value="extra-content">Extra Content</col-list-menu-item>
       </col-list-menu>
     </col-dropdown>
   `,
