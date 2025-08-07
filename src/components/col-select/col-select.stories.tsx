@@ -349,7 +349,6 @@ const meta = {
     placeholder: 'Enter text here...',
     name: '',
     id: '',
-
     align: 'start',
     loading: false,
     disabled: false,
@@ -385,25 +384,21 @@ const renderColSelect: Story['render'] = args => {
     if (args.optionType === 'col-list-menu') {
       return html`
         <col-list-menu role="menuitem">
-          <col-list-menu-item value="option1" variant="button">Option 1</col-list-menu-item>
-          <col-list-menu-item value="option2" variant="button">Option 2</col-list-menu-item>
-          <col-list-menu-item value="option3" variant="button">Option 3</col-list-menu-item>
-          <col-list-menu-item value="option4" variant="button">Option 4</col-list-menu-item>
-          <col-list-menu-item value="option5" variant="button" disabled
-            >Option 5 (Disabled)</col-list-menu-item
-          >
+          <col-list-menu-item value="option1">Option 1</col-list-menu-item>
+          <col-list-menu-item value="option2">Option 2</col-list-menu-item>
+          <col-list-menu-item value="option3">Option 3</col-list-menu-item>
+          <col-list-menu-item value="option4">Option 4</col-list-menu-item>
+          <col-list-menu-item value="option5" disabled>Option 5 (Disabled)</col-list-menu-item>
         </col-list-menu>
       `;
     }
 
     return html`
       <div class="custom-options" role="menuitem">
-        <div data-value="custom1" data-text="Custom Option 1">Custom Option 1</div>
-        <div data-value="custom2" data-text="Custom Option 2">Custom Option 2</div>
-        <div data-value="custom3" data-text="Custom Option 3">Custom Option 3</div>
-        <div data-value="custom4" data-text="Custom Option 4" data-disabled="true">
-          Custom Option 4 (Disabled)
-        </div>
+        <div data-value="custom1">Custom Option 1</div>
+        <div data-value="custom2">Custom Option 2</div>
+        <div data-value="custom3">Custom Option 3</div>
+        <div data-value="custom4" data-disabled="true">Custom Option 4 (Disabled)</div>
       </div>
     `;
   };
@@ -412,7 +407,7 @@ const renderColSelect: Story['render'] = args => {
     <col-select
       id=${args.id || nothing}
       name=${args.name || nothing}
-      .value=${args.value}
+      value=${args.value || nothing}
       label=${args.label || nothing}
       sub-label=${args.subLabel || nothing}
       helper=${args.helper || nothing}
@@ -768,15 +763,11 @@ export const InteractiveFormExample: Story = {
                       error-message="Please select a country"
                     >
                       <col-list-menu role="menuitem">
-                        <col-list-menu-item value="us" variant="button"
-                          >United States</col-list-menu-item
-                        >
-                        <col-list-menu-item value="ca" variant="button">Canada</col-list-menu-item>
-                        <col-list-menu-item value="uk" variant="button"
-                          >United Kingdom</col-list-menu-item
-                        >
-                        <col-list-menu-item value="de" variant="button">Germany</col-list-menu-item>
-                        <col-list-menu-item value="fr" variant="button">France</col-list-menu-item>
+                        <col-list-menu-item value="us">United States</col-list-menu-item>
+                        <col-list-menu-item value="ca">Canada</col-list-menu-item>
+                        <col-list-menu-item value="uk">United Kingdom</col-list-menu-item>
+                        <col-list-menu-item value="de">Germany</col-list-menu-item>
+                        <col-list-menu-item value="fr">France</col-list-menu-item>
                       </col-list-menu>
                     </col-select>
                     <col-select
@@ -791,15 +782,9 @@ export const InteractiveFormExample: Story = {
                       error-message="Please select a role"
                     >
                       <col-list-menu role="menuitem">
-                        <col-list-menu-item value="admin" variant="button"
-                          >Administrator</col-list-menu-item
-                        >
-                        <col-list-menu-item value="user" variant="button"
-                          >Standard User</col-list-menu-item
-                        >
-                        <col-list-menu-item value="guest" variant="button"
-                          >Guest</col-list-menu-item
-                        >
+                        <col-list-menu-item value="admin">Administrator</col-list-menu-item>
+                        <col-list-menu-item value="user">Standard User</col-list-menu-item>
+                        <col-list-menu-item value="guest">Guest</col-list-menu-item>
                       </col-list-menu>
                     </col-select>
                     <col-select
@@ -810,15 +795,9 @@ export const InteractiveFormExample: Story = {
                       helper="Choose your preferred theme."
                     >
                       <col-list-menu role="menuitem">
-                        <col-list-menu-item value="light" variant="button"
-                          >Light Theme</col-list-menu-item
-                        >
-                        <col-list-menu-item value="dark" variant="button"
-                          >Dark Theme</col-list-menu-item
-                        >
-                        <col-list-menu-item value="auto" variant="button"
-                          >Auto (System)</col-list-menu-item
-                        >
+                        <col-list-menu-item value="light">Light Theme</col-list-menu-item>
+                        <col-list-menu-item value="dark">Dark Theme</col-list-menu-item>
+                        <col-list-menu-item value="auto">Auto (System)</col-list-menu-item>
                       </col-list-menu>
                     </col-select>
                     <col-group>
@@ -871,15 +850,11 @@ const formValues = Object.fromEntries(formData.entries());
                   helper="This will be used for shipping."
                 >
                   <col-list-menu role="menuitem">
-                    <col-list-menu-item value="us" variant="button"
-                      >United States</col-list-menu-item
-                    >
-                    <col-list-menu-item value="ca" variant="button">Canada</col-list-menu-item>
-                    <col-list-menu-item value="uk" variant="button"
-                      >United Kingdom</col-list-menu-item
-                    >
-                    <col-list-menu-item value="de" variant="button">Germany</col-list-menu-item>
-                    <col-list-menu-item value="fr" variant="button">France</col-list-menu-item>
+                    <col-list-menu-item value="us">United States</col-list-menu-item>
+                    <col-list-menu-item value="ca">Canada</col-list-menu-item>
+                    <col-list-menu-item value="uk">United Kingdom</col-list-menu-item>
+                    <col-list-menu-item value="de">Germany</col-list-menu-item>
+                    <col-list-menu-item value="fr">France</col-list-menu-item>
                   </col-list-menu>
                 </col-select>
                 <col-select
@@ -893,13 +868,9 @@ const formValues = Object.fromEntries(formData.entries());
                   helper="This determines your access level."
                 >
                   <col-list-menu role="menuitem">
-                    <col-list-menu-item value="admin" variant="button"
-                      >Administrator</col-list-menu-item
-                    >
-                    <col-list-menu-item value="user" variant="button"
-                      >Standard User</col-list-menu-item
-                    >
-                    <col-list-menu-item value="guest" variant="button">Guest</col-list-menu-item>
+                    <col-list-menu-item value="admin">Administrator</col-list-menu-item>
+                    <col-list-menu-item value="user">Standard User</col-list-menu-item>
+                    <col-list-menu-item value="guest">Guest</col-list-menu-item>
                   </col-list-menu>
                 </col-select>
                 <col-select
