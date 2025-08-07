@@ -38,4 +38,7 @@ export const HTML_BOOLEAN_ATTRIBUTES = [
   'router',
   'downloadable',
   'labelfirst',
+  'loading',
+  'badge',
+  'counter',
 ];
