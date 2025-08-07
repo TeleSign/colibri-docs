@@ -598,3 +598,308 @@ export const WithIcon: Story = {
   },
   render: renderColSelect,
 };
+
+export const WithCustomValidationMessage: Story = {
+  args: {
+    label: 'Project Status',
+    name: 'project-status',
+    placeholder: 'Select project status',
+    required: true,
+    errorMessage: 'Project status is required for proper task management.',
+    helper: 'This field is required. Select an option and then clear it to see validation.',
+    showOptions: true,
+  },
+  render: renderColSelect,
+};
+
+export const InteractiveFormExample: Story = {
+  name: 'Interactive Form Example',
+  parameters: {
+    controls: { disable: true },
+  },
+  render: () => {
+    const formId = 'select-form-example';
+    const outputId = 'select-form-output';
+    const isInDocs = window.location.search.includes('viewMode=docs');
+
+    const script = `
+      const form = document.getElementById('${formId}');
+      const output = document.getElementById('${outputId}');
+      const isInDocs = ${isInDocs};
+
+      if (!isInDocs) {
+        form.addEventListener('submit', (event) => {
+          event.preventDefault();
+
+          // Validate col-select components manually since they use readonly inputs
+          const selects = form.querySelectorAll('col-select');
+          let isFormValid = true;
+          let firstInvalidSelect = null;
+
+          selects.forEach(select => {
+            const isValid = select.validate(select.value);
+            if (!isValid && !firstInvalidSelect) {
+              firstInvalidSelect = select;
+            }
+            isFormValid = isFormValid && isValid;
+          });
+
+          // Also check other form elements
+          if (isFormValid && !form.checkValidity()) {
+            const firstInvalid = form.querySelector(':invalid');
+            if (firstInvalid) firstInvalid.focus();
+            return;
+          }
+
+          if (!isFormValid && firstInvalidSelect) {
+            firstInvalidSelect.focus();
+            return;
+          }
+
+          const formData = new FormData(form);
+          const data = Object.fromEntries(formData.entries());
+          output.textContent = JSON.stringify(data, null, 2);
+        });
+
+        form.addEventListener('reset', () => {
+          output.textContent = 'Submit the form to see the data here';
+        });
+      }
+    `;
+
+    return html`
+      <style>
+        .storybook-card {
+          background: #f5f6fa;
+          border-radius: 12px;
+          box-shadow: 0 2px 8px rgba(16, 30, 54, 0.04);
+          padding: 2rem;
+          margin-bottom: 2rem;
+        }
+        .storybook-flex {
+          display: flex;
+          gap: 2rem;
+        }
+        .storybook-col {
+          flex: 1 1 0;
+          width: 50%;
+        }
+        .storybook-code {
+          background: #23272f;
+          color: #fff;
+          border-radius: 8px;
+          padding: 1rem;
+          font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+          font-size: 0.95rem;
+          margin-bottom: 1rem;
+          white-space: pre;
+          overflow-x: auto;
+          box-sizing: border-box;
+        }
+        .storybook-code pre {
+          margin: 0;
+          white-space: pre;
+          overflow-x: auto;
+        }
+        #${outputId} {
+          margin-top: 1rem;
+          padding: 1rem;
+          background-color: #f0f0f0;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          overflow-x: auto;
+        }
+        .form-container {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+        @media (max-width: 900px) {
+          .storybook-flex {
+            flex-direction: column;
+            gap: 1.5rem;
+          }
+          .storybook-card {
+            padding: 1rem;
+          }
+          .storybook-col {
+            width: 100%;
+          }
+        }
+      </style>
+      <div class="storybook-card">
+        ${!isInDocs
+          ? html`
+              <div class="storybook-flex">
+                <div class="storybook-col">
+                  <h3>User Preferences Form</h3>
+                  <form id="${formId}" class="form-container">
+                    <col-select
+                      id="country"
+                      name="country"
+                      label="Country"
+                      placeholder="Select your country"
+                      required
+                      helper="This will be used for shipping."
+                      error-message="Please select a country"
+                    >
+                      <col-list-menu role="menuitem">
+                        <col-list-menu-item value="us" variant="button"
+                          >United States</col-list-menu-item
+                        >
+                        <col-list-menu-item value="ca" variant="button">Canada</col-list-menu-item>
+                        <col-list-menu-item value="uk" variant="button"
+                          >United Kingdom</col-list-menu-item
+                        >
+                        <col-list-menu-item value="de" variant="button">Germany</col-list-menu-item>
+                        <col-list-menu-item value="fr" variant="button">France</col-list-menu-item>
+                      </col-list-menu>
+                    </col-select>
+                    <col-select
+                      id="role"
+                      name="role"
+                      label="User Role"
+                      placeholder="Select your role"
+                      required
+                      badge
+                      counter
+                      helper="This determines your access level."
+                      error-message="Please select a role"
+                    >
+                      <col-list-menu role="menuitem">
+                        <col-list-menu-item value="admin" variant="button"
+                          >Administrator</col-list-menu-item
+                        >
+                        <col-list-menu-item value="user" variant="button"
+                          >Standard User</col-list-menu-item
+                        >
+                        <col-list-menu-item value="guest" variant="button"
+                          >Guest</col-list-menu-item
+                        >
+                      </col-list-menu>
+                    </col-select>
+                    <col-select
+                      id="theme"
+                      name="theme"
+                      label="Theme Preference"
+                      value="light"
+                      helper="Choose your preferred theme."
+                    >
+                      <col-list-menu role="menuitem">
+                        <col-list-menu-item value="light" variant="button"
+                          >Light Theme</col-list-menu-item
+                        >
+                        <col-list-menu-item value="dark" variant="button"
+                          >Dark Theme</col-list-menu-item
+                        >
+                        <col-list-menu-item value="auto" variant="button"
+                          >Auto (System)</col-list-menu-item
+                        >
+                      </col-list-menu>
+                    </col-select>
+                    <col-group>
+                      <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
+                      <col-button type="reset" variant="secondary" ?disabled=${isInDocs}
+                        >Reset</col-button
+                      >
+                    </col-group>
+                  </form>
+                </div>
+                <div class="storybook-col">
+                  <h3>Form Data</h3>
+                  <div class="storybook-code">
+                    <pre>
+// Handle form submit with col-select validation
+const form = event.target as HTMLFormElement;
+event.preventDefault();
+
+// Col-select uses readonly inputs, so validate manually
+const selects = form.querySelectorAll('col-select');
+const selectsValid = Array.from(selects).every(select => select.validate(select.value));
+
+if (!selectsValid || !form.checkValidity()) {
+  // Focus first invalid element and prevent submission
+  return;
+}
+
+const formData = new FormData(form);
+const formValues = Object.fromEntries(formData.entries());
+                    </pre
+                    >
+                  </div>
+                  <h3>Form Output</h3>
+                  <pre id="${outputId}">Submit the form to see the data here</pre>
+                  <script>
+                    ${script};
+                  </script>
+                </div>
+              </div>
+            `
+          : html`
+              <h3>User Preferences Form</h3>
+              <form id="${formId}" class="form-container">
+                <col-select
+                  id="country"
+                  name="country"
+                  label="Country"
+                  placeholder="Select your country"
+                  required
+                  helper="This will be used for shipping."
+                >
+                  <col-list-menu role="menuitem">
+                    <col-list-menu-item value="us" variant="button"
+                      >United States</col-list-menu-item
+                    >
+                    <col-list-menu-item value="ca" variant="button">Canada</col-list-menu-item>
+                    <col-list-menu-item value="uk" variant="button"
+                      >United Kingdom</col-list-menu-item
+                    >
+                    <col-list-menu-item value="de" variant="button">Germany</col-list-menu-item>
+                    <col-list-menu-item value="fr" variant="button">France</col-list-menu-item>
+                  </col-list-menu>
+                </col-select>
+                <col-select
+                  id="role"
+                  name="role"
+                  label="User Role"
+                  placeholder="Select your role"
+                  required
+                  badge
+                  counter
+                  helper="This determines your access level."
+                >
+                  <col-list-menu role="menuitem">
+                    <col-list-menu-item value="admin" variant="button"
+                      >Administrator</col-list-menu-item
+                    >
+                    <col-list-menu-item value="user" variant="button"
+                      >Standard User</col-list-menu-item
+                    >
+                    <col-list-menu-item value="guest" variant="button">Guest</col-list-menu-item>
+                  </col-list-menu>
+                </col-select>
+                <col-select
+                  id="theme"
+                  name="theme"
+                  label="Theme Preference"
+                  value="light"
+                  helper="Choose your preferred theme."
+                >
+                  <div class="custom-options" role="menuitem">
+                    <div data-value="light" data-text="Light Theme">Light Theme</div>
+                    <div data-value="dark" data-text="Dark Theme">Dark Theme</div>
+                    <div data-value="auto" data-text="Auto (System)">Auto (System)</div>
+                  </div>
+                </col-select>
+                <col-group>
+                  <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
+                  <col-button type="reset" variant="secondary" ?disabled=${isInDocs}
+                    >Reset</col-button
+                  >
+                </col-group>
+              </form>
+            `}
+      </div>
+    `;
+  },
+};
