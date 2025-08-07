@@ -599,6 +599,30 @@ export const WithIcon: Story = {
   render: renderColSelect,
 };
 
+export const ColListMenuOptions: Story = {
+  args: {
+    label: 'Standard Options',
+    placeholder: 'Select using col-list-menu-item',
+    helper: 'Uses standard col-list-menu and col-list-menu-item components.',
+    optionType: 'col-list-menu',
+    showOptions: true,
+  },
+  render: renderColSelect,
+  tags: ['!dev'],
+};
+
+export const CustomDataOptions: Story = {
+  args: {
+    label: 'Custom Options',
+    placeholder: 'Select using custom data attributes',
+    helper: 'Uses custom div elements with data-value attributes.',
+    optionType: 'custom-data',
+    showOptions: true,
+  },
+  render: renderColSelect,
+  tags: ['!dev'],
+};
+
 export const WithCustomValidationMessage: Story = {
   args: {
     label: 'Project Status',
