@@ -42,4 +42,7 @@ export const HTML_BOOLEAN_ATTRIBUTES = [
   'badge',
   'counter',
   'labelfirst',
+  'loading',
+  'badge',
+  'counter',
 ];
