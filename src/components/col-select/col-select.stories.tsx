@@ -51,6 +51,7 @@ const meta = {
         transform: formatCodeString,
       },
     },
+    __sb: { height: '200px' },
   },
   argTypes: {
     id: {
@@ -635,6 +636,7 @@ export const InteractiveFormExample: Story = {
   name: 'Interactive Form Example',
   parameters: {
     controls: { disable: true },
+    __sb: { height: '100%' },
   },
   render: () => {
     const formId = 'select-form-example';
