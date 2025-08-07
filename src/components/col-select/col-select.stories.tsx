@@ -7,7 +7,7 @@ import { icons } from '@telesign/colibri-icons/icons-list';
 type StoryArgs = {
   id: string;
   value: string;
-  selectedText: string;
+
   placeholder: string;
   name: string;
   variant: 'outline' | 'plain';
@@ -118,23 +118,15 @@ const meta = {
     },
     value: {
       control: 'text',
-      description: 'The current selected value.',
+      description:
+        'The current selected value. Can be used to reset the field to a previous value.',
       table: {
         category: 'Core',
         type: { summary: 'string' },
         defaultValue: { summary: '' },
       },
     },
-    selectedText: {
-      name: 'selected-text',
-      control: 'text',
-      description: 'The text to display for the selected option.',
-      table: {
-        category: 'Core',
-        type: { summary: 'string' },
-        defaultValue: { summary: '' },
-      },
-    },
+
     variant: {
       control: 'select',
       options: ['outline', 'plain'],
@@ -362,7 +354,7 @@ const meta = {
     placeholder: 'Enter text here...',
     name: '',
     id: '',
-    selectedText: '',
+
     align: 'start',
     loading: false,
     disabled: false,
@@ -426,7 +418,6 @@ const renderColSelect: Story['render'] = args => {
       id=${args.id || nothing}
       name=${args.name || nothing}
       .value=${args.value}
-      selected-text=${args.selectedText || nothing}
       label=${args.label || nothing}
       sub-label=${args.subLabel || nothing}
       helper=${args.helper || nothing}
@@ -456,4 +447,36 @@ const renderColSelect: Story['render'] = args => {
       ${renderOptions()}
     </col-select>
   `;
+};
+
+export const Default: Story = {
+  args: {
+    label: 'Select an option',
+    placeholder: 'Choose from the list...',
+    name: 'select-demo',
+    helper: 'Select one option from the dropdown',
+    showOptions: true,
+    optionType: 'col-list-menu',
+  },
+  render: renderColSelect,
+};
+
+export const Variants: Story = {
+  args: {
+    variant: 'outline',
+    placeholder: 'Outline variant',
+    showOptions: true,
+  },
+  render: renderColSelect,
+  tags: ['!dev'],
+};
+
+export const PlainVariant: Story = {
+  args: {
+    variant: 'plain',
+    placeholder: 'Plain variant',
+    showOptions: true,
+  },
+  render: renderColSelect,
+  tags: ['!dev'],
 };
