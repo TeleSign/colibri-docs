@@ -7,7 +7,6 @@ import { icons } from '@telesign/colibri-icons/icons-list';
 type StoryArgs = {
   id: string;
   value: string;
-
   placeholder: string;
   name: string;
   variant: 'outline' | 'plain';
@@ -301,7 +300,6 @@ const meta = {
       table: {
         category: 'Storybook',
         defaultValue: { summary: 'false' },
-        disable: true,
       },
       if: { arg: 'iconVisible', neq: false },
     },
@@ -313,7 +311,6 @@ const meta = {
       if: { arg: 'iconVisible' },
       table: {
         category: 'Storybook',
-        disable: true,
       },
     },
     iconSize: {
@@ -322,7 +319,6 @@ const meta = {
       if: { arg: 'iconVisible' },
       table: {
         category: 'Storybook',
-        disable: true,
       },
     },
     optionType: {
@@ -332,8 +328,8 @@ const meta = {
         'Type of options to display in the select. **Storybook control only, not a component prop.**',
       table: {
         category: 'Storybook',
-        disable: true,
       },
+      if: { arg: 'showOptions', neq: false },
     },
     showOptions: {
       control: 'boolean',
@@ -341,7 +337,6 @@ const meta = {
         'Whether to show options in the select. **Storybook control only, not a component prop.**',
       table: {
         category: 'Storybook',
-        disable: true,
       },
     },
   },
@@ -363,6 +358,11 @@ const meta = {
     badge: false,
     counter: false,
     errorMessage: '',
+    iconVisible: false,
+    iconName: 'search',
+    iconSize: '16px',
+    showOptions: true,
+    optionType: 'col-list-menu',
     input: action('input'),
     change: action('change'),
     focus: action('focus'),
@@ -372,11 +372,6 @@ const meta = {
     selectOpened: action('select-opened'),
     selectClosed: action('select-closed'),
     invalid: action('invalid'),
-    iconVisible: false,
-    iconName: 'search',
-    iconSize: '16px',
-    optionType: 'col-list-menu',
-    showOptions: true,
   },
 } satisfies ColibriStoryMeta<StoryArgs>;
 
@@ -558,6 +553,47 @@ export const WithInitialValue: Story = {
     label: 'Select with Initial Value',
     value: 'option2',
     helper: 'This select has a pre-selected value',
+    showOptions: true,
+  },
+  render: renderColSelect,
+};
+
+export const WithLabel: Story = {
+  args: {
+    label: 'Priority Level',
+    placeholder: 'Select priority',
+    showOptions: true,
+  },
+  render: renderColSelect,
+};
+
+export const WithSubLabel: Story = {
+  args: {
+    label: 'Task Category',
+    subLabel: 'Choose the most appropriate category',
+    placeholder: 'Select category',
+    showOptions: true,
+  },
+  render: renderColSelect,
+};
+
+export const WithHelper: Story = {
+  args: {
+    label: 'Project Status',
+    placeholder: 'Select status',
+    helper: 'This will determine the project visibility and permissions',
+    showOptions: true,
+  },
+  render: renderColSelect,
+};
+
+export const WithIcon: Story = {
+  args: {
+    label: 'Select with Icon',
+    placeholder: 'Choose option',
+    iconVisible: true,
+    iconName: 'emoji-circle',
+    iconSize: '16px',
     showOptions: true,
   },
   render: renderColSelect,
