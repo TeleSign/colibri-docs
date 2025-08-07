@@ -480,3 +480,85 @@ export const PlainVariant: Story = {
   render: renderColSelect,
   tags: ['!dev'],
 };
+
+export const Loading: Story = {
+  args: {
+    label: 'Loading Select',
+    placeholder: 'Loading options...',
+    loading: true,
+    showOptions: true,
+  },
+  render: renderColSelect,
+};
+
+export const WithBadge: Story = {
+  args: {
+    label: 'Select with Badge',
+    value: 'option1',
+    badge: true,
+    showOptions: true,
+  },
+  render: renderColSelect,
+};
+
+export const WithSelectionCounter: Story = {
+  args: {
+    label: 'Select with Counter',
+    value: 'option2',
+    counter: true,
+    showOptions: true,
+  },
+  render: renderColSelect,
+};
+
+export const WithBadgeAndCounter: Story = {
+  args: {
+    label: 'Select with Badge and Counter',
+    value: 'option1',
+    badge: true,
+    counter: true,
+    showOptions: true,
+  },
+  render: renderColSelect,
+};
+
+export const Disabled: Story = {
+  args: {
+    label: 'Disabled Select',
+    placeholder: 'This select is disabled',
+    disabled: true,
+    showOptions: true,
+  },
+  render: renderColSelect,
+};
+
+export const Error: Story = {
+  args: {
+    label: 'Select with Error',
+    placeholder: 'Select an option',
+    error: true,
+    errorMessage: 'Please select a valid option',
+    showOptions: true,
+  },
+  render: renderColSelect,
+};
+
+export const Required: Story = {
+  args: {
+    label: 'Required Select',
+    placeholder: 'This field is required',
+    required: true,
+    showOptions: true,
+  },
+  render: renderColSelect,
+};
+
+export const WithInitialValue: Story = {
+  args: {
+    label: 'Select with Initial Value',
+    value: 'option2',
+    helper: 'This select has a pre-selected value',
+    showOptions: true,
+  },
+  render: renderColSelect,
+};
