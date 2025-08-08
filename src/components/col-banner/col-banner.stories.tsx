@@ -138,7 +138,7 @@ export const WithTitleContentActions: Story = {
       the default Slot.
       <col-group slot="actions">
         <col-button variant="outlined" color="danger"> Accept </col-button>
-        <col-button color="danger"> Delete </col-button>
+        <col-button variant="outlined" color="danger"> Delete </col-button>
       </col-group>
     </col-banner>`,
 };
@@ -232,7 +232,7 @@ export const InteractiveExample: Story = {
                 <span slot="title">Success</span>
                 <span>Email resent to your mail successfully</span>
                 <div slot="actions">
-                  <col-button variant="outlined"> Accept </col-button>
+                  <col-button color="success" variant="outlined"> Accept </col-button>
                 </div>
               </col-banner>`
             : nothing}
@@ -241,7 +241,7 @@ export const InteractiveExample: Story = {
                 <span slot="title">Information</span>
                 <span>Please check your email inbox for a restore your password mail.</span>
                 <div slot="actions">
-                  <col-button variant="outlined"> Accept </col-button>
+                  <col-button color="primary" variant="outlined"> Accept </col-button>
                   <col-button color="primary" variant="outlined" @click=${submitResend}>
                     Resend
                   </col-button>
