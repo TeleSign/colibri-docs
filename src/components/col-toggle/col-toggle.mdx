@@ -21,7 +21,7 @@ import { Callout } from '../../_storybook/components';
       - [Checked](#checked)
       - [Disabled](#disabled)
       - [Checked and Disabled](#checked-and-disabled)
-    - [Form Integration](#form-integration)
+    - [Implementation within a Form](#implementation-within-a-form)
     - [Accessibility](#accessibility)
     - [Properties](#properties)
     - [Interact with the component](#interact-with-the-component)
@@ -71,28 +71,36 @@ import { Callout } from '../../_storybook/components';
     <Canvas of={ToggleStories.Default} />
 
     ### With Label
+    There is no `label` or `customlabel` property, to define a label only is needed to write it inside the component.
     <Canvas of={ToggleStories.WithLabel} />
 
     ### With Left Label
+    Set the `labelLeft` property to display the label on the left side of the toogle.
     <Canvas of={ToggleStories.WithLeftLabel} />
 
     ### With Helper Text
-    <Canvas of={ToggleStories.WithLeftLabel} />
+    The `helper` property provides instructional text that appears below the input, guiding the user on the expected data format or purpose.
+    <Canvas of={ToggleStories.WithHelpText} />
 
     ## States
 
     ### Checked
+    Changing the state of the toggle will update the value of the `checked` property between true and false.
     <Canvas of={ToggleStories.Checked} />
 
     ### Disabled
+    Use the `disabled` property to render the non-interactive toggle. This is useful for preventing user input when a field is not applicable.
     <Canvas of={ToggleStories.Disabled} />
 
     ### Checked and Disabled
     <Canvas of={ToggleStories.DisabledChecked} />
 
-    ## Form Integration
-
-
+    ## Implementation within a Form
+    The following example demonstrates how multiple `col-toggle` components work together in a native HTML form. It shows real-time form submission, and reset behavior, with the submitted data displayed below the form.
+    <Callout variant="info" icon="ℹ️">
+      For the **full interactive experience** with working form submission, reset, and validation, visit the [Canvas tab](/story/atoms-toggle--interactive-form-example).
+    </Callout>
+    <Canvas of={ToggleStories.InteractiveFormExample} />
 
     ## Properties
     <ArgTypes of={ToggleStories} />
