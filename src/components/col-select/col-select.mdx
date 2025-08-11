@@ -62,9 +62,9 @@ import { Callout } from '@/_storybook/components/Callout/Callout';
           placeholder="Choose an option"
         >
           <col-list-menu role="menuitem">
-            <col-list-menu-item value="option1" variant="button">Option 1</col-list-menu-item>
-            <col-list-menu-item value="option2" variant="button">Option 2</col-list-menu-item>
-            <col-list-menu-item value="option3" variant="button">Option 3</col-list-menu-item>
+            <col-list-menu-item value="option1">Option 1</col-list-menu-item>
+            <col-list-menu-item value="option2">Option 2</col-list-menu-item>
+            <col-list-menu-item value="option3">Option 3</col-list-menu-item>
           </col-list-menu>
         </col-select>
         ```
@@ -236,7 +236,7 @@ import { Callout } from '@/_storybook/components/Callout/Callout';
     <Callout variant="tip" icon="💡">
       <p>
         <strong>Recommended Approach</strong><br/>
-        Use `col-list-menu` and `col-list-menu-item` components for most cases to ensure consistent styling and behavior. Reserve custom data attributes for scenarios requiring specific visual customization.
+        Use `col-list-menu` and `col-list-menu-item` components for built-in features like keyboard navigation, selection states, link handling, and consistent theming. Custom data attributes should only be used for unique styling requirements.
       </p>
     </Callout>
 
