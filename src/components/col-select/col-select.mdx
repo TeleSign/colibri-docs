@@ -1,0 +1,308 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as SelectStories from './col-select.stories';
+import { Callout } from '@/_storybook/components/Callout/Callout';
+
+<Meta of={SelectStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Select</Title>
+
+    The Select component provides dropdown selection functionality with support for various states, validation, and two option rendering patterns: standard list menu items and custom data attributes.
+
+    <Callout variant="info" icon="ℹ️">
+      <p>
+        <strong>Single Selection Only</strong><br/>
+        This component currently supports single-selection behavior only. Multi-select functionality will be available in a future version of the component library.
+      </p>
+    </Callout>
+
+    ## Table of contents
+    - [How to use it](#how-to-use-it)
+    - [When to use it](#when-to-use-it)
+    - [Component preview](#component-preview)
+    - [Variants](#variants)
+    - [States and Features](#states-and-features)
+    - [Content and Layout](#content-and-layout)
+    - [Option Types](#option-types)
+    - [Form Integration](#form-integration)
+    - [Accessibility](#accessibility)
+    - [Properties](#properties)
+    - [Interact with the component](#interact-with-the-component)
+
+    ## How to use it
+    1. Install the packages:
+        ```bash
+        npm install @colibri/colibri-components
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, registerAllComponents, ColSelect } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+
+        <Callout variant="info" icon="ℹ️">
+          **Dependency Note:** The `col-select` component depends on `col-typography`, `col-dropdown`, and `col-icon` components. These components are registered automatically as a dependency of the `col-select`component, so there's no need to import them.
+        </Callout>
+
+    3. Register the web components:
+        ```typescript
+        // Option 1: Register specific component
+        registerColibriComponents([ColSelect]);
+
+        // Option 2: Register all Colibri components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-select
+          id="user-preference"
+          name="user-preference"
+          label="Your Preference"
+          placeholder="Choose an option"
+        >
+          <col-list-menu role="menuitem">
+            <col-list-menu-item value="option1">Option 1</col-list-menu-item>
+            <col-list-menu-item value="option2">Option 2</col-list-menu-item>
+            <col-list-menu-item value="option3">Option 3</col-list-menu-item>
+          </col-list-menu>
+        </col-select>
+        ```
+
+    ## When to use it
+
+    The `col-select` component is the standard choice for single-option dropdown selection. Use it when you need to:
+
+    - **Collect Single Choices**: Gather selection data like categories, priorities, or preferences from a predefined list.
+    - **Implement Form Dropdowns**: Integrate seamlessly into HTML forms for data submission and validation.
+    - **Provide Loading States**: Display loading indicators while options are being fetched dynamically.
+    - **Show Selection Feedback**: Use badges or counters to indicate selected items and selection count.
+    - **Build Accessible Interfaces**: Ensure keyboard navigation and screen reader compatibility for dropdown interactions.
+
+    ## Component preview
+
+    <div>
+      The following examples showcase the core features and visual options of the `col-select` component.
+    </div>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+
+    ### Basic Usage
+    <div>
+      The most fundamental select requires only a `label` to identify its purpose and options to choose from.
+    </div>
+    <Canvas of={SelectStories.Default} />
+
+    ## Variants
+
+    <div>
+      The `col-select` component supports two visual variants to accommodate different design contexts and user preferences.
+    </div>
+
+    ### Outline Variant
+    <div>
+      The outline variant displays a full border around the select field, providing clear visual boundaries. This is the default variant and is ideal for most form contexts where clear field separation is important.
+    </div>
+    <Canvas of={SelectStories.Variants} />
+
+    ### Plain Variant
+    <div>
+      The plain variant removes the border entirely, creating a minimal appearance. The field only shows a border when focused or in error states, providing a cleaner, more modern look.
+    </div>
+    <Canvas className="col-doc__canvas--with-background" of={SelectStories.PlainVariant} />
+
+    ## States and Features
+
+    <div>
+      The `col-select` component supports several states and features to reflect user interaction, loading states, and selection feedback.
+    </div>
+
+    ### Loading State
+    <div>
+      Use the `loading` property to display a spinner while options are being fetched or processed. This provides clear feedback to users during dynamic content loading.
+    </div>
+    <Canvas of={SelectStories.Loading} />
+
+    ### With Badge
+    <div>
+      The `badge` property displays a small indicator showing the count of selected items. This is useful for providing visual feedback about the current selection state.
+    </div>
+    <Canvas of={SelectStories.WithBadge} />
+
+    ### With Selection Counter
+    <div>
+      The `counter` property displays a selection counter in the format "X/Y" where X is the current selection and Y is the total available options.
+    </div>
+    <Canvas of={SelectStories.WithSelectionCounter} />
+
+    ### With Badge and Counter
+    <div>
+      You can combine both `badge` and `counter` properties to provide comprehensive selection feedback with both visual indicators and numerical counts.
+    </div>
+    <Canvas of={SelectStories.WithBadgeAndCounter} />
+
+    ### Disabled State
+    <div>
+      Use the `disabled` property to render the select non-interactive. This is useful for preventing user input when a field is not applicable or when the form is in a read-only state.
+    </div>
+    <Canvas of={SelectStories.Disabled} />
+
+    ### Error State
+    <div>
+      The `error` property visually marks the select as invalid and displays an error message. This is typically set in response to failed validation or when a required field is empty.
+    </div>
+    <Canvas of={SelectStories.Error} />
+
+    ### Required Field
+    <div>
+      Add the `required` property to ensure the field must have a selection before form submission. This triggers validation and prevents form submission when no option is selected.
+    </div>
+    <Canvas of={SelectStories.Required} />
+
+    ### With Initial Value
+    <div>
+      You can provide an initial selected value using the `value` property. This is useful for displaying pre-selected options or restoring previous user selections.
+    </div>
+    <Callout variant="info" icon="ℹ️">
+      <p>
+        <strong>Initial Value Behavior</strong><br/>
+        The component automatically synchronizes the initial value with available options. If the provided value doesn't match any option, the selection will be cleared. If the matching option is disabled, the value will also be cleared to prevent invalid selections.
+      </p>
+    </Callout>
+
+        <Canvas of={SelectStories.WithInitialValue} />
+
+    ## Content and Layout
+
+    <div>
+      The `col-select` component provides flexible content and layout options to accommodate various design requirements and user interface patterns.
+    </div>
+
+    ### With Label
+    <div>
+      Use the `label` property to provide a clear, accessible label for the select field. The label is automatically associated with the input for screen readers and form integration.
+    </div>
+    <Canvas of={SelectStories.WithLabel} />
+
+    ### With Sub Label
+    <div>
+      The `sub-label` property allows you to provide additional context or instructions below the main label. This is useful for complex forms where extra guidance is needed.
+    </div>
+    <Canvas of={SelectStories.WithSubLabel} />
+
+    ### With Helper Text
+    <div>
+      Use the `helper` property to display helpful information below the select field. Helper text provides additional context without being part of the label structure.
+    </div>
+    <Canvas of={SelectStories.WithHelper} />
+
+    ### With Icon
+    <div>
+      Add an icon to the select field using the `icon` slot. Icons can provide visual context and improve the overall user experience by making the field's purpose more apparent.
+    </div>
+    <Canvas of={SelectStories.WithIcon} />
+
+    ## Option Types
+
+    <div>
+      The `col-select` component supports two different patterns for rendering options, each designed for specific use cases and styling requirements.
+    </div>
+
+    ### Standard List Menu Items
+    <div>
+      The first option uses `col-list-menu` and `col-list-menu-item` components to ensure styling aligns with the design system. This pattern provides consistent visual appearance and behavior across all select components.
+    </div>
+    <Callout variant="info" icon="ℹ️">
+      <p>
+        <strong>Disabling Options</strong><br/>
+        You can disable any option by setting the `disabled` boolean attribute to the `col-list-menu-item` component. It will automatically handle the disabled state and the visual appearance. See `Option 5` in the code snippet by clicking on the "Show code" button below.
+      </p>
+    </Callout>
+    <Canvas of={SelectStories.ColListMenuOptions} />
+
+    ### Custom Data Attributes
+    <div>
+      The second option uses any HTML elements with `data-value` attributes. This approach allows complete control over the visual appearance while maintaining the component's functionality.
+    </div>
+    <Callout variant="info" icon="ℹ️">
+      <p>
+        <strong>Disabling Options</strong><br/>
+        You can disable any option by either setting the `disabled` boolean attribute or by adding `data-disabled="true"`. Disabled options cannot be selected and can be styled as needed. See `Custom Option 4` in the code snippet by clicking on the "Show code" button below.
+      </p>
+    </Callout>
+    <Canvas of={SelectStories.CustomDataOptions} />
+
+    <Callout variant="tip" icon="💡">
+      <p>
+        <strong>Recommended Approach</strong><br/>
+        Use `col-list-menu` and `col-list-menu-item` components for built-in features like keyboard navigation, selection states, link handling, and consistent theming. Custom data attributes should only be used for unique styling requirements.
+      </p>
+    </Callout>
+
+    ## Form Integration
+
+    <div>
+      The `col-select` component integrates seamlessly with HTML forms, providing comprehensive validation, accessibility, and event handling for building robust user interfaces.
+    </div>
+
+    ### Custom Validation Message
+    <div>
+      You can provide custom validation messages using the `error-message` property to give users specific feedback about validation failures.
+    </div>
+    <Canvas of={SelectStories.WithCustomValidationMessage} />
+
+    ### Interactive Form Example
+    <div>
+      This example demonstrates how the `col-select` component works within a real HTML form, including validation, form submission, and data handling.
+    </div>
+    <Callout variant="info" icon="ℹ️">
+      This preview shows the form structure and styling excluding the form submission and reset functionality. For the **full interactive experience** with working form submission, reset, and validation, visit the [Canvas tab](/story/molecules-select--interactive-form-example).
+    </Callout>
+    <Canvas of={SelectStories.InteractiveFormExample} />
+
+    ## Accessibility
+
+    <div>
+      The `col-select` component follows the [ARIA combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) and includes comprehensive accessibility features to ensure all users can interact with the component effectively.
+    </div>
+
+    ### Keyboard Navigation
+    <div>
+      The component supports full keyboard navigation for accessibility:
+    </div>
+    <ul>
+      <li><strong>Arrow Keys</strong>: Navigate through available options</li>
+      <li><strong>Enter/Space</strong>: Select the currently focused option</li>
+      <li><strong>Escape</strong>: Close the dropdown without making a selection</li>
+      <li><strong>Tab</strong>: Move focus to the next form element</li>
+    </ul>
+
+    ### Screen Reader Support
+    <div>
+      The component includes proper ARIA attributes and live regions for screen reader compatibility:
+    </div>
+    <ul>
+      <li><strong>ARIA Labels</strong>: Proper labeling for form integration</li>
+      <li><strong>Live Regions</strong>: Announce state changes and validation messages</li>
+      <li><strong>Role Attributes</strong>: Correct semantic roles for combobox pattern</li>
+      <li><strong>State Announcements</strong>: Clear feedback for selection changes</li>
+    </ul>
+
+    ### Focus Management
+    <div>
+      The component implements proper focus management to ensure a logical tab order and return focus appropriately after interactions.
+    </div>
+
+    ## Properties
+
+    <div>
+      The `col-select` component provides a comprehensive set of properties for customization, validation, and integration with forms and applications.
+    </div>
+    <ArgTypes of={SelectStories} />
+
+    ## Interact with the component
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/molecules-select--default) section.
+
+  </div>
+</div>
