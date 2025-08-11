@@ -5,7 +5,7 @@ import { formatCodeString } from '@/utils';
 type StoryArgs = {
   open: Boolean;
   disabled: Boolean;
-  align: 'start' | 'end';
+  placement: 'start' | 'end';
 };
 
 const meta = {
@@ -39,10 +39,10 @@ const meta = {
       },
       if: { arg: 'disabled', neq: false },
     },
-    align: {
+    placement: {
       control: 'select',
       options: ['start', 'end'],
-      description: 'Determines the aligment of the content displayed inside the dropdown',
+      description: 'Determines the placement of the content displayed inside the dropdown',
       table: {
         type: {
           summary: `'start' | 'end'`,
@@ -53,7 +53,7 @@ const meta = {
     },
   },
   args: {
-    align: 'start',
+    placement: 'start',
     disabled: false,
     open: false,
   },
@@ -69,8 +69,8 @@ export const Default: Story = {
       height: '150px',
     },
   },
-  render: ({ disabled, open, align }) => html`
-    <col-dropdown align=${align} ?open=${open} ?disabled=${disabled}>
+  render: ({ disabled, open, placement }) => html`
+    <col-dropdown placement=${placement} ?open=${open} ?disabled=${disabled}>
       <col-button color="primary" slot="trigger">Toggle</col-button>
       <div>
         <div>Option 1</div>
@@ -91,7 +91,7 @@ export const DefaultWithComponents: Story = {
     const isInDocs = window.location.search.includes('viewMode=docs');
 
     return html`
-      <col-dropdown align=${args.align} ?open=${args.open} ?disabled=${args.disabled}>
+      <col-dropdown placement=${args.placement} ?open=${args.open} ?disabled=${args.disabled}>
         <col-button color="primary" slot="trigger">
           Dropdown
           <col-icon name="chevron-down"></col-icon>
@@ -116,7 +116,7 @@ export const SmallListItems: Story = {
   args: {
     open: true,
     disabled: false,
-    align: 'end',
+    placement: 'end',
   },
   parameters: {
     __sb: {
@@ -127,7 +127,7 @@ export const SmallListItems: Story = {
     },
   },
   render: args => html`
-    <col-dropdown align=${args.align} ?open=${args.open} ?disabled=${args.disabled}>
+    <col-dropdown placement=${args.placement} ?open=${args.open} ?disabled=${args.disabled}>
       <col-button color="primary" slot="trigger">
         Click me
         <col-icon name="chevron-down"></col-icon>
@@ -146,7 +146,7 @@ export const ColibriComponents: Story = {
   args: {
     open: false,
     disabled: false,
-    align: 'start',
+    placement: 'start',
   },
   parameters: {
     __sb: {
@@ -154,7 +154,7 @@ export const ColibriComponents: Story = {
     },
   },
   render: args => html`
-    <col-dropdown align=${args.align} ?open=${args.open} ?disabled=${args.disabled}>
+    <col-dropdown placement=${args.placement} ?open=${args.open} ?disabled=${args.disabled}>
       <col-button color="primary" slot="trigger">
         Hello! Click me
         <col-icon name="chevron-down"></col-icon>
@@ -171,7 +171,7 @@ export const MediumListItems: Story = {
   args: {
     open: true,
     disabled: true,
-    align: 'start',
+    placement: 'start',
   },
   parameters: {
     __sb: {
@@ -179,7 +179,7 @@ export const MediumListItems: Story = {
     },
   },
   render: args => html`
-    <col-dropdown align=${args.align} ?open=${args.open} ?disabled=${args.disabled}>
+    <col-dropdown placement=${args.placement} ?open=${args.open} ?disabled=${args.disabled}>
       <col-button color="primary" slot="trigger"> Button with large text and no Icon </col-button>
       <ul role="menuitem">
         <p>Lorem ipsum dolor sit amet</p>
@@ -197,10 +197,10 @@ export const Disabled: Story = {
   args: {
     open: false,
     disabled: true,
-    align: 'end',
+    placement: 'end',
   },
   render: args => html`
-    <col-dropdown align=${args.align} ?open=${args.open} ?disabled=${args.disabled}>
+    <col-dropdown placement=${args.placement} ?open=${args.open} ?disabled=${args.disabled}>
       <col-button color="success" slot="trigger"> Toogle </col-button>
     </col-dropdown>
   `,
