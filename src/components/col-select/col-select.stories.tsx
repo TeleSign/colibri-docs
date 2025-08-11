@@ -10,7 +10,7 @@ type StoryArgs = {
   placeholder: string;
   name: string;
   variant: 'outline' | 'plain';
-  align: 'start' | 'end';
+  placement: 'start' | 'end';
   loading: boolean;
   disabled: boolean;
   error: boolean;
@@ -137,10 +137,10 @@ const meta = {
         defaultValue: { summary: 'outline' },
       },
     },
-    align: {
+    placement: {
       control: 'select',
       options: ['start', 'end'],
-      description: 'The alignment of the dropdown.',
+      description: 'The placement of the dropdown.',
       table: {
         category: 'Core',
         type: { summary: "'start' | 'end'" },
@@ -350,7 +350,7 @@ const meta = {
     placeholder: 'Enter text here...',
     name: '',
     id: '',
-    align: 'start',
+    placement: 'start',
     loading: false,
     disabled: false,
     error: false,
@@ -414,7 +414,7 @@ const renderColSelect: Story['render'] = args => {
       helper=${args.helper || nothing}
       placeholder=${args.placeholder || nothing}
       variant=${args.variant}
-      align=${args.align}
+      placement=${args.placement}
       error-message=${args.errorMessage || nothing}
       ?loading=${args.loading}
       ?disabled=${args.disabled}
