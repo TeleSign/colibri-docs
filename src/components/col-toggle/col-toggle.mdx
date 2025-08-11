@@ -1,0 +1,108 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title, Description } from '@storybook/blocks';
+import * as ToggleStories from './col-toggle.stories';
+import { Callout } from '../../_storybook/components';
+
+<Meta of={ToggleStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Toggle</Title>
+    The `col-toggle` component is a control that is used to quickly switch between two possible states. Toggles are only used for these binary actions that occur immediately after the user “flips the switch”.
+
+    <Subtitle>Table of contents</Subtitle>
+    - [How to use it](#how-to-use-it)
+    - [When to use it](#when-to-use-it)
+    - [Component preview](#component-preview)
+      - [Default Toggle](#default-toggle)
+      - [With Label](#with-label)
+      - [With Left Label](#with-left-label)
+      - [With Helper Text](#with-helper-text)
+    - [States](#states)
+      - [Checked](#checked)
+      - [Disabled](#disabled)
+      - [Checked and Disabled](#checked-and-disabled)
+    - [Form Integration](#form-integration)
+    - [Accessibility](#accessibility)
+    - [Properties](#properties)
+    - [Interact with the component](#interact-with-the-component)
+
+    ## How to use it
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, ColToggle } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web component:
+        ```typescript
+        registerColibriComponents([ColToggle]);
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-toggle>Enable Notifications</col-toggle>
+        ```
+
+    ## When to use it
+    The toggle component is a simple yet powerful UI element that allows users to switch between two states, such as on/off, active/inactive, or enabled/disabled. It is commonly used for settings, preferences, and various interactive controls:
+
+    - **Enabling and Disabling Features:** A toggle used to turn features or settings on and off.
+    - **Privacy Settings:** A toggle for managing privacy settings and permissions.
+    - **Account Management:** A toggle for managing account preferences.
+    - **Content Preferences:** A toggle for selecting content preferences.
+    - **Notification Settings:** A toggle for managing notification preferences.
+    - **User Interface Customization:** A toggle for customizing the user interface.
+    - **Security and Privacy Controls:** A toggle for security and privacy-related controls.
+
+    ### Differences from checkbox
+    Checkboxes and toggles are both user interface elements for binary choices, but they differ in their intended use and the user experience they convey.
+    - **Checkboxes** are typically used for selecting multiple options from a list.
+    - **Toggles** are used for immediate on/off actions.
+
+    ## Component preview
+    The following examples showcase the core features and visual options of the `col-toggle` component.
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+
+    ### Default Toggle
+    <Canvas of={ToggleStories.Default} />
+
+    ### With Label
+
+    ### With Left Label
+
+    ### With Helper Text
+
+    ## States
+
+    ### Checked
+
+    ### Disabled
+
+    ### Checked and Disabled
+
+    ## Form Integration
+
+
+
+    ## Properties
+    <ArgTypes of={ToggleStories} />
+
+    ## Accessibility
+
+    The toggle component follows accessibility best practices:
+
+    - Uses proper ARIA attributes (`role="checkbox"`, `aria-checked`, `aria-disabled`)
+    - Supports keyboard navigation and interaction (Space and Enter keys)
+    - Maintains proper focus states
+    - Provides appropriate visual states (checked, unchecked, disabled)
+
+
+    ## Interact with the component
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-toggle--default) section.
+
+  </div>
+</div>
