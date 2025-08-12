@@ -6,11 +6,11 @@ import { Callout } from '../../_storybook/components';
 
 <div className="col-doc__wrapper">
   <div className="col-doc__container">
-    <Title>List Menu</Title>
-    The list menu is composed of items containing primary and supplemental actions, represented by icons and text.
+    <Title>ColListMenu</Title>
+    The ColListMenu is composed of items containing primary and supplemental actions, represented by icons and text.
 
     <Callout variant="info" icon="ℹ️">
-      The List Menu must be used in conjunction with the List Menu Item. Both are outlined in this document, with examples demonstrating correct usage.
+      The ColListMenu must be used in conjunction with the ColListMenuItem. Both are outlined in this document, with examples demonstrating correct usage.
     </Callout>
 
     <Subtitle>Table of contents</Subtitle>
@@ -24,8 +24,8 @@ import { Callout } from '../../_storybook/components';
       - [Using ColCheckbox](#using-colcheckbox)
       - [Using ColRadio](#using-colradio)
     - [Slots](#slots)
-      - [ListMenu Slots](#listmenu-slots)
-      - [ListMenuItem Slots](#listmenuitem-slots)
+      - [ColListMenu Slots](#collistmenu-slots)
+      - [ColListMenuItem Slots](#collistmenuitem-slots)
     - [Properties](#properties)
     - [Accessibility](#accessibility)
     - [Interact with the component](#interact-with-the-component)
@@ -74,13 +74,13 @@ import { Callout } from '../../_storybook/components';
         ```
 
     <Callout variant="info" icon="ℹ️">
-      The ListMenuItem `label` variant component uses `col-typography` internally. Make sure to register the ColTypography component when using ColListMenu.
+      The ColListMenuItem `label` variant component uses `col-typography` internally. Make sure to register the ColTypography component when using ColListMenu.
     </Callout>
 
     ## When to use it
     Use the `<col-list-menu>` always accompanied by an input component (like dropdown, select, etc) to give the component a context.
 
-    Each list menu variant has a particular function and its design signals that function to the user. It is therefore very important that the different variants are implemented consistently across products, so that they message the correct actions.
+    Each ColListMenu variant has a particular function and its design signals that function to the user. It is therefore very important that the different variants are implemented consistently across products, so that they message the correct actions.
 
     * **Default list**:	This list allows the user to select a single option from the list.
     * **Multiple list select**:	This list allows the user to select one or more options from the list, remember that you can use the **checkbox** option to select several items from the list.
@@ -93,7 +93,7 @@ import { Callout } from '../../_storybook/components';
     </Callout>
 
     ### Basic Usage
-    The most basic usage of ListMenu is to show a small group of options
+    The most basic usage of ColListMenu is to show a small group of options
     <Canvas className="col-doc__canvas--with-background" of={stories.Default} />
 
     <Callout variant="info" icon="ℹ️">
@@ -131,11 +131,11 @@ import { Callout } from '../../_storybook/components';
     ```
 
     ### Option Grouping
-    ListMenu may want to group options, for that purpose, the ListMenuItem has a `variant` property which can be set to `label`
+    ColListMenu may want to group options, for that purpose, the ColListMenuItem has a `variant` property which can be set to `label`
     <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuWithLabelItems} />
 
     ### Navigation Lists
-    ListMenu's are also commonly used for navigation, linking to internal and external resources. We've used our standardized [navigation properties](#properties), but here's an example with links that open in new tabs.
+    ColListMenus are also commonly used for navigation, linking to internal and external resources. We've used our standardized [navigation properties](#properties), but here's an example with links that open in new tabs.
 
     <Callout variant="info" icon="ℹ️">
       Remember, when using a ColListMenu for navigation, you **must** set the `role="menu"` on the `<col-list-menu>` element.
@@ -144,25 +144,25 @@ import { Callout } from '../../_storybook/components';
     <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuWithNavigation} />
 
     #### Using ColIcon
-    ListMenuItems may include ColIcons to visually aid with the option description
+    ColListMenuItems may include ColIcons to visually aid with the option description
     <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuItemsWithIcons} />
 
     ### Using ColCheckbox
-    ListMenuItems may require additional selection input components like ColCheckbox
+    ColListMenuItems may require additional selection input components like ColCheckbox
     <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuCheckbox} />
 
-    If the ListMenu has `multiselectable` attribute, then the list will allow for multiple items to be selected
+    If the ColListMenu has `multiselectable` attribute, then the list will allow for multiple items to be selected
     <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuCheckboxWithMultiSelect} />
 
     ### Using ColRadio
-    ColRadio can also be used with ListMenuItem, be careful not to add `multiselectable` as this would be very confusing user experience since by default, radio components are meant to be used when only one option should be selected.
+    ColRadio can also be used with ColListMenuItem, be careful not to add `multiselectable` as this would be very confusing user experience since by default, radio components are meant to be used when only one option should be selected.
     <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuRadio} />
 
 ## Slots
 
-    ### ListMenu Slots
+    ### ColListMenu Slots
 
-    The ListMenu component has 4 different slots, 3 named and one default slot:
+    The ColListMenu component has 4 different slots, 3 named and one default slot:
 
     **Named Slots**
 
@@ -171,13 +171,13 @@ import { Callout } from '../../_storybook/components';
 
     **Default Slot**
 
-    * The `default` slot is where we want to make sure we add the `<col-list-menu-item>` to represent the options in the list menu.
+    * The `default` slot is where we want to make sure we add the `<col-list-menu-item>` to represent the options in the ColListMenu.
 
     <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuSlots} />
 
-    ### ListMenuItem Slots
+    ### ColListMenuItem Slots
 
-    The ListMenuItem component has 2 slots, 1 named and 1 default slot:
+    The ColListMenuItem component has 2 slots, 1 named and 1 default slot:
 
     **Named Slot**
 
@@ -188,7 +188,7 @@ import { Callout } from '../../_storybook/components';
 
     **Default Slot**
 
-    * The `default` slot is the content for the ListMenuItem itself.
+    * The `default` slot is the content for the ColListMenuItem itself.
 
     <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuItemSlots} />
 
@@ -256,7 +256,7 @@ import { Callout } from '../../_storybook/components';
     - **Disabled State:**
       - Items use `aria-disabled="true"` when disabled, ensuring they are skipped by keyboard navigation and announced as unavailable.
     - **Multi-Select:**
-      - When `multiSelectable` is enabled and `role="listbox"`, the list uses `aria-multiselectable="true"`, and the ListMenu component allows multiple items to be selected.
+      - When `multiSelectable` is enabled and `role="listbox"`, the list uses `aria-multiselectable="true"`, and the ColListMenu component allows multiple items to be selected.
 
     ### Keyboard Navigation
 
