@@ -73,10 +73,6 @@ import { Callout } from '../../_storybook/components';
         </col-list-menu>
         ```
 
-    <Callout variant="info" icon="ℹ️">
-      The ColListMenuItem `label` variant component uses `col-typography` internally. Make sure to register the ColTypography component when using ColListMenu.
-    </Callout>
-
     ## When to use it
     Use the `<col-list-menu>` always accompanied by an input component (like dropdown, select, etc) to give the component a context.
 
@@ -97,7 +93,9 @@ import { Callout } from '../../_storybook/components';
     <Canvas className="col-doc__canvas--with-background" of={stories.Default} />
 
     <Callout variant="info" icon="ℹ️">
-      **Selection handling**: "Marking" an option as `selected` is left up to the developer at time of implementation since ColListMenu's with "menu" role do not need it. Please see the code snippet for an example of how to handle it.
+      **Selection handling**:
+      * To get the `value` of the selected option, you need to add an event listener for the `list-menu-item-click` event on each `col-list-menu-item`. This event will provide you with the `value`, `index`, and `href` of the clicked item in the `event.detail` object.
+      * "Marking" an option as `selected` is left up to the developer at time of implementation since ColListMenu's with "menu" role do not need it. Please see the code snippet for an example of how to handle it.
     </Callout>
 
     ```html

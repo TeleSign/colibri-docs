@@ -150,6 +150,9 @@ const meta = {
     },
   },
   args: {
+    ariaLabel: 'List Menu',
+    multiselectable: false,
+    role: 'listbox',
     disabled: false,
     href: '',
     newTab: false,
@@ -201,7 +204,32 @@ const handleListMenuItemClick = (event: Event) => {
 };
 
 export const Default: Story = {
-  render: ({ disabled, href, newTab, router, selected, variant, value, onListMenuItemClick }) => {
+  args: {
+    ariaLabel: 'List Menu',
+    multiselectable: false,
+    role: 'listbox',
+    disabled: false,
+    href: '',
+    newTab: false,
+    router: false,
+    selected: false,
+    variant: LIST_MENU_ITEM_VARIANTS.BUTTON,
+    value: 'list-menu-item-value',
+    onListMenuItemClick: action('list-menu-item-click'),
+  },
+  render: ({
+    ariaLabel,
+    multiselectable,
+    role,
+    disabled,
+    href,
+    newTab,
+    router,
+    selected,
+    variant,
+    value,
+    onListMenuItemClick,
+  }) => {
     // Attach event listeners after rendering
     requestAnimationFrame(() => {
       document.querySelectorAll('col-list-menu-item').forEach(item => {
@@ -210,7 +238,7 @@ export const Default: Story = {
     });
 
     return html`
-      <col-list-menu>
+      <col-list-menu aria-label=${ariaLabel} ?multiselectable=${multiselectable} role=${role}>
         <col-list-menu-item
           href=${href}
           variant=${variant}
