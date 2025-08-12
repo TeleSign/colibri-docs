@@ -30,13 +30,18 @@ import { Callout } from '../../_storybook/components';
         ```
     2. Import the dependencies:
         ```typescript
-        import { registerColibriComponents, registerAllComponents, ColTypography } from '@telesign/colibri';
+        import { registerColibriComponents, registerAllComponents, ColTextField, ColTypography } from '@telesign/colibri';
         import '@telesign/colibri/styles/styles.css';
         ```
+
+        <Callout variant="info" icon="ℹ️">
+          **Dependency Note:** The `col-text-field` component depends on the `col-typography` component for rendering labels, helper text, and error messages. Make sure to import and register `ColTypography` along with `ColTextField`.
+        </Callout>
+
     3. Register the web components:
         ```typescript
         // Option 1: Register specific components
-        registerColibriComponents([ColTypography]);
+        registerColibriComponents([ColTextField, ColTypography]);
 
         // Option 2: Register all Colibri components
         registerAllComponents();

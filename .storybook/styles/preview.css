@@ -73,6 +73,10 @@
   hyphens: auto;
 }
 
+div.col-doc__canvas--with-background {
+  background-color: var(--col-theme-primary-lighter);
+}
+
 .col-intro-text {
   margin-block-end: 2rem;
 }

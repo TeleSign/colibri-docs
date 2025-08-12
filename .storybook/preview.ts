@@ -3,12 +3,10 @@ import { createElement } from 'react';
 import type { DecoratorFunction, StoryContext } from '@storybook/types';
 import { DocsContainer } from '@storybook/blocks';
 import type { Preview, WebComponentsRenderer } from '@storybook/web-components';
-import { registerColibriComponents, registerAllComponents } from '@telesign/colibri';
-import { ColIcon } from '@telesign/colibri-icons';
+import { registerAllComponents } from '@telesign/colibri';
 import '@telesign/colibri/styles/styles.css';
 
 registerAllComponents();
-registerColibriComponents([ColIcon]);
 
 /**
  * Type definitions for style properties.
@@ -23,6 +21,7 @@ type JustifyContent =
   | 'space-between'
   | 'space-around'
   | 'space-evenly';
+type AlignItems = 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'stretch';
 type FlexWrap = 'nowrap' | 'wrap' | 'wrap-reverse';
 
 /**
@@ -48,7 +47,11 @@ export type Styles = {
   gap?: string;
   flexDirection?: FlexDirection;
   justifyContent?: JustifyContent;
+  alignItems?: AlignItems;
   flexWrap?: FlexWrap;
+  height?: string;
+  width?: string;
+  margin?: string;
 };
 
 export interface StylesOptions {
@@ -68,24 +71,21 @@ export interface StylesOptions {
 
 /**
  * Generates CSS styles string based on provided options.
+ * Uses a property mapping approach to convert StyleOptions to CSS declarations.
  * Only applies styles when explicitly provided via options.__sb to avoid conflicts with custom CSS.
  *
  * This function can be extended to handle new style properties:
  *
- * 1. For simple properties:
- *    - Add a condition to check if the property exists
- *    - Push the CSS declaration to the styles array
+ * 1. Add the new property to the Styles type definition
+ * 2. Add the CSS property mapping to the cssProperties object
+ * 3. The function will automatically handle the new property
  *
- * 2. For conditional properties:
- *    - Add nested conditions within display-specific blocks
- *
- * 3. For complex properties:
- *    - Add helper functions to handle the logic
- *
- * Example extension:
+ * For conditional properties that depend on other properties (like flex properties
+ * that only apply when display is 'flex'), you'll need to add custom logic:
  * ```typescript
- * if (newProperty) {
- *   styles.push(`new-property: ${newProperty};`);
+ * // Handle conditional properties before the main mapping
+ * if (styles.display === 'flex' && styles.flexDirection) {
+ *   styleArray.push(`flex-direction: ${styles.flexDirection};`);
  * }
  * ```
  *
@@ -93,30 +93,30 @@ export interface StylesOptions {
  * @returns CSS styles string with space-separated declarations
  */
 const getStyles = (options?: StylesOptions): string => {
-  const { display, gridTemplateColumns, flexDirection, justifyContent, flexWrap, gap } =
-    options?.__sb || {};
+  const styles = options?.__sb || {};
 
-  const styles: string[] = [];
+  const cssProperties: Record<string, string> = {
+    display: 'display',
+    flexDirection: 'flex-direction',
+    justifyContent: 'justify-content',
+    alignItems: 'align-items',
+    gridTemplateColumns: 'grid-template-columns',
+    flexWrap: 'flex-wrap',
+    gap: 'gap',
+    height: 'height',
+    width: 'width',
+    margin: 'margin',
+  };
 
-  if (display) {
-    styles.push(`display: ${display};`);
+  const styleArray: string[] = [];
 
-    if (display === 'grid' && gridTemplateColumns) {
-      styles.push(`grid-template-columns: ${gridTemplateColumns};`);
+  Object.entries(styles).forEach(([key, value]) => {
+    if (value && cssProperties[key]) {
+      styleArray.push(`${cssProperties[key]}: ${value};`);
     }
+  });
 
-    if (display === 'flex') {
-      if (flexDirection) styles.push(`flex-direction: ${flexDirection};`);
-      if (justifyContent) styles.push(`justify-content: ${justifyContent};`);
-      if (flexWrap) styles.push(`flex-wrap: ${flexWrap};`);
-    }
-  }
-
-  if (gap) {
-    styles.push(`gap: ${gap};`);
-  }
-
-  return styles.join(' ');
+  return styleArray.join(' ');
 };
 
 /**

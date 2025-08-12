@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { html, nothing, TemplateResult } from 'lit';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
 
@@ -26,42 +26,53 @@ const meta = {
       control: 'text',
       description: 'Label text for the group',
       table: {
+        category: 'Core',
         type: { summary: 'string' },
         defaultValue: { summary: '' },
       },
+      if: { arg: 'label', neq: '' },
     },
     helper: {
       control: 'text',
       description: 'Helper text displayed below the group',
       table: {
+        category: 'Core',
         type: { summary: 'string' },
         defaultValue: { summary: '' },
       },
+      if: { arg: 'helper', neq: '' },
     },
     role: {
       control: 'text',
       description: 'ARIA role for the group container',
       table: {
+        category: 'Accessibility',
         type: { summary: 'string' },
         defaultValue: { summary: 'group' },
       },
+      if: { arg: 'role', neq: 'group' },
     },
     orientation: {
       control: 'radio',
       options: ['horizontal', 'vertical'],
       description: 'Layout orientation of grouped items',
       table: {
+        category: 'Core',
         type: { summary: "'horizontal' | 'vertical'" },
         defaultValue: { summary: 'horizontal' },
       },
+      if: { arg: 'orientation', neq: '' },
     },
     withoutGap: {
+      name: 'withoutgap',
       control: 'boolean',
       description: 'Removes gap between grouped items',
       table: {
+        category: 'Core',
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
       },
+      if: { arg: 'withoutGap', neq: false },
     },
   },
   args: {
@@ -77,26 +88,32 @@ export default meta;
 
 type Story = ColibriStory<StoryArgs>;
 
+const renderGroup = (args: StoryArgs, children: TemplateResult[]) => html`
+  <col-group
+    label=${args.label || nothing}
+    helper=${args.helper || nothing}
+    role=${args.role || nothing}
+    orientation=${args.orientation || nothing}
+    ?withoutGap=${args.withoutGap}
+  >
+    ${children}
+  </col-group>
+`;
+
 /**
  * Default horizontal group with buttons
  */
 export const Default: Story = {
   args: {
     orientation: 'horizontal',
+    role: 'group',
   },
-  render: args => html`
-    <col-group
-      .label=${args.label}
-      .helper=${args.helper}
-      .role=${args.role}
-      .orientation=${args.orientation}
-      .withoutGap=${args.withoutGap}
-    >
-      <col-button variant="primary">Save</col-button>
-      <col-button variant="secondary">Cancel</col-button>
-      <col-button variant="tertiary">Reset</col-button>
-    </col-group>
-  `,
+  render: args =>
+    renderGroup(args, [
+      html`<col-button variant="default" color="success">Save</col-button>
+        <col-button variant="default" color="danger">Cancel</col-button>
+        <col-button variant="default" color="primary">Reset</col-button>`,
+    ]),
 };
 
 /**
@@ -108,34 +125,12 @@ export const VerticalWithLabel: Story = {
     label: 'Notification Settings',
     helper: 'Choose how you want to receive notifications',
   },
-  render: args => html`
-    <col-group
-      .label=${args.label}
-      .helper=${args.helper}
-      .role=${args.role}
-      .orientation=${args.orientation}
-      .withoutGap=${args.withoutGap}
-    >
-      <col-checkbox>Email notifications</col-checkbox>
-      <col-checkbox>SMS notifications</col-checkbox>
-      <col-checkbox>Push notifications</col-checkbox>
-    </col-group>
-  `,
-  parameters: {
-    docs: {
-      source: {
-        code: `<col-group
-  orientation="vertical"
-  label="Notification Settings"
-  helper="Choose how you want to receive notifications"
->
-  <col-checkbox>Email notifications</col-checkbox>
-  <col-checkbox>SMS notifications</col-checkbox>
-  <col-checkbox>Push notifications</col-checkbox>
-</col-group>`,
-      },
-    },
-  },
+  render: args =>
+    renderGroup(args, [
+      html`<col-checkbox>Email notifications</col-checkbox>
+        <col-checkbox>SMS notifications</col-checkbox>
+        <col-checkbox>Push notifications</col-checkbox>`,
+    ]),
 };
 
 /**
@@ -146,36 +141,17 @@ export const WithoutGap: Story = {
     withoutGap: true,
     orientation: 'horizontal',
   },
-  render: args => html`
-    <col-group
-      .label=${args.label}
-      .helper=${args.helper}
-      .role=${args.role}
-      .orientation=${args.orientation}
-      .withoutGap=${args.withoutGap}
-    >
-      <col-checkbox-button>Day</col-checkbox-button>
-      <col-checkbox-button>Week</col-checkbox-button>
-      <col-checkbox-button>Month</col-checkbox-button>
-      <col-checkbox-button>Year</col-checkbox-button>
-    </col-group>
-  `,
-  parameters: {
-    docs: {
-      source: {
-        code: `<col-group withoutGap>
-      <col-checkbox-button>Day</col-checkbox-button>
-      <col-checkbox-button>Week</col-checkbox-button>
-      <col-checkbox-button>Month</col-checkbox-button>
-      <col-checkbox-button>Year</col-checkbox-button>
-</col-group>`,
-      },
-    },
-  },
+  render: args =>
+    renderGroup(args, [
+      html`<col-checkbox-button>Day</col-checkbox-button>
+        <col-checkbox-button>Week</col-checkbox-button>
+        <col-checkbox-button>Month</col-checkbox-button>
+        <col-checkbox-button>Year</col-checkbox-button>`,
+    ]),
 };
 
 /**
- * Radio button group
+ * Radio button group with proper ARIA role
  */
 export const RadioGroup: Story = {
   args: {
@@ -184,67 +160,35 @@ export const RadioGroup: Story = {
     orientation: 'vertical',
     withoutGap: true,
   },
-  render: args => html`
-    <col-group
-      .label=${args.label}
-      .helper=${args.helper}
-      .role=${args.role}
-      .orientation=${args.orientation}
-      .withoutGap=${args.withoutGap}
-    >
-      <col-radio-button name="plan" value="basic">Basic - $9/month</col-radio-button>
-      <col-radio-button name="plan" value="pro">Pro - $19/month</col-radio-button>
-      <col-radio-button name="plan" value="enterprise">Enterprise - Contact us</col-radio-button>
-    </col-group>
-  `,
-  parameters: {
-    docs: {
-      source: {
-        code: `<col-group
-  label="Select Plan"
-  role="radiogroup"
-  orientation="vertical"
->
-  <col-radio name="plan" value="basic">Basic - $9/month</col-radio>
-  <col-radio name="plan" value="pro">Pro - $19/month</col-radio>
-  <col-radio name="plan" value="enterprise">Enterprise - Contact us</col-radio>
-</col-group>`,
-      },
-    },
-  },
+  render: args =>
+    renderGroup(args, [
+      html`<col-radio-button group="plan" value="basic">Basic - $9/month</col-radio-button>
+        <col-radio-button group="plan" value="pro">Pro - $19/month</col-radio-button>
+        <col-radio-button group="plan" value="enterprise"
+          >Enterprise - Contact us</col-radio-button
+        >`,
+    ]),
 };
 
 /**
  * Nested groups for complex layouts
  */
 export const NestedGroups: Story = {
-  args: {},
-  render: () => html`
-    <col-group orientation="vertical" label="Form Actions">
+  args: {
+    orientation: 'vertical',
+    label: 'Form Actions',
+    helper: 'Additional options',
+  },
+  render: args => html`
+    <col-group orientation=${args.orientation} label=${args.label} helper=${args.helper}>
       <col-group orientation="horizontal">
-        <col-button variant="primary">Submit</col-button>
-        <col-button variant="secondary">Save Draft</col-button>
+        <col-button variant="default" color="success">Submit</col-button>
+        <col-button variant="default" color="primary">Save Draft</col-button>
       </col-group>
-      <col-group orientation="horizontal" helper="Additional options">
-        <col-button variant="tertiary" size="small">Reset Form</col-button>
-        <col-button variant="tertiary" size="small">Export Data</col-button>
+      <col-group orientation="horizontal">
+        <col-button variant="default" color="danger" size="small">Reset Form</col-button>
+        <col-button variant="default" color="primary" size="small">Export Data</col-button>
       </col-group>
     </col-group>
   `,
-  parameters: {
-    docs: {
-      source: {
-        code: `<col-group orientation="vertical" label="Form Actions">
-  <col-group orientation="horizontal">
-    <col-button variant="primary">Submit</col-button>
-    <col-button variant="secondary">Save Draft</col-button>
-  </col-group>
-  <col-group orientation="horizontal" helper="Additional options">
-    <col-button variant="tertiary" size="small">Reset Form</col-button>
-    <col-button variant="tertiary" size="small">Export Data</col-button>
-  </col-group>
-</col-group>`,
-      },
-    },
-  },
 };

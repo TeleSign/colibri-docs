@@ -64,6 +64,26 @@ import * as ColCheckboxCardStories from './col-checkbox-card.stories';
     <p>Checkbox card with custom content instead of the default title/description structure.</p>
     <Canvas of={ColCheckboxCardStories.CustomContent} />
 
+    <h3>Disabled Checked State</h3>
+    <p>Checkbox card in disabled and checked state.</p>
+    <Canvas of={ColCheckboxCardStories.DisabledChecked} />
+
+    <h3>Indeterminate State</h3>
+    <p>Checkbox card in indeterminate state, useful for parent-child selection scenarios.</p>
+    <Canvas of={ColCheckboxCardStories.Indeterminate} />
+
+    <h3>With Custom Icon</h3>
+    <p>Checkbox card with a custom icon instead of the default checkmark.</p>
+    <Canvas of={ColCheckboxCardStories.WithCustomIcon} />
+
+    <h3>Card Group</h3>
+    <p>Multiple checkbox cards displayed in a grid layout for feature selection.</p>
+    <Canvas of={ColCheckboxCardStories.CardGroup} />
+
+    <h3>Custom Content Group</h3>
+    <p>Multiple checkbox cards with custom content for theme selection.</p>
+    <Canvas of={ColCheckboxCardStories.CustomContentGroup} />
+
     <h2>Properties</h2>
     <ArgTypes of={ColCheckboxCardStories} />
 

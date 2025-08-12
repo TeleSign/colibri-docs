@@ -44,13 +44,14 @@ import { Callout } from '../../_storybook/components';
     4. Use it in your HTML:
         ```html
         <col-group orientation="horizontal">
-          <col-button variant="primary">Save</col-button>
-          <col-button variant="secondary">Cancel</col-button>
+          <col-button variant="default" color="primary">Save</col-button>
+          <col-button variant="outlined" color="default">Cancel</col-button>
+          <col-button variant="plain" color="success">Reset</col-button>
         </col-group>
         ```
 
     <Callout variant="info" icon="ℹ️">
-      The Group component uses `col-typography` internally for labels and helper text. Make sure to register the ColTypography component when using groups with labels or helper text.
+      The Group component uses `col-typography` internally for labels and helper text. Make sure to register this component when using groups with labels or helper text.
     </Callout>
 
     ## When to use it
@@ -96,7 +97,7 @@ import { Callout } from '../../_storybook/components';
     </div>
 
     <Callout variant="info" icon="ℹ️">
-      Some components like `checkbox-button`, `radio-button` includes styles when are inside `col-group` requires `withoutGap` property.
+      Some components, such as `checkbox-button` and `radio-button`, include styles that require the `withoutGap` property when they are inside a `col-group`.
     </Callout>
 
     <Canvas of={ColGroupStories.WithoutGap} />
@@ -154,11 +155,7 @@ import { Callout } from '../../_storybook/components';
     - Form sections benefit from clear, descriptive labels
     - Complex nested groups should maintain a logical structure
 
-    <Callout variant="warning" icon="⚠️">
-      Remember to register the `ColTypography` component when using groups with labels or helper text, as it's a required dependency for these features.
-    </Callout>
-
     ## Interact with the component
-    To interact with the component, test different configurations, and verify accessibility compliance, navigate to the canvas tab of any story above.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-group--default) section.
   </div>
 </div>
