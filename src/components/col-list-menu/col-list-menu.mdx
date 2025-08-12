@@ -196,11 +196,39 @@ import { Callout } from '../../_storybook/components';
 
     ```html
     <col-list-menu>
-      <col-list-menu-item slot="list-menu-item-slot">
+      <col-list-menu-item value="option-0">
+        Option
+      </col-list-menu-item>
+      <col-list-menu-item value="option-1">
         Option 1
-        <col-button @click=${handleButtonClick}>Action</col-button>
+      </col-list-menu-item>
+      <col-list-menu-item value="option-2">
+        Option 2
       </col-list-menu-item>
     </col-list-menu>
+
+    <script>
+      document.querySelectorAll('col-list-menu-item').forEach(item => {
+        item.addEventListener('list-menu-item-click', function (event) {
+          // Example: event.detail = { value: 'option-1', index: 1, href: '' }
+          console.log('Element clicked:', event.detail);
+
+          // handle selection
+          if (item.hasAttribute('selected')) {
+            item.removeAttribute('selected');
+          } else {
+            item.setAttribute('selected', ' ');
+          }
+        });
+      });
+
+      // Very generic example, but showing you can listen for button clicks separately from list menu item clicks
+      document.querySelectorAll('col-button').forEach(button => {
+        button.addEventListener('click', function (event) {
+          console.log('Button clicked:', event.target);
+        });
+      });
+    </script>
     ```
 
     ## Properties
@@ -251,16 +279,6 @@ import { Callout } from '../../_storybook/components';
     - Always provide clear labels for each menu/list item.
     - Use the appropriate role (`listbox` or `menu`) on the parent `<col-list-menu>` for your use case. Remember: `listbox` is the default value.
     - For multi-select lists, set `multiSelectable` and ensure the role is default `listbox` not `menu`.
-
-    ### Example: Accessible List Menu
-
-    ```html
-    <col-list-menu role="listbox" aria-label="Choose an option">
-      <col-list-menu-item value="option-1" selected>Option 1</col-list-menu-item>
-      <col-list-menu-item value="option-2">Option 2</col-list-menu-item>
-      <col-list-menu-item value="option-3" disabled>Option 3</col-list-menu-item>
-    </col-list-menu>
-    ```
 
     ### Screen Reader Support
 
