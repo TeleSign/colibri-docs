@@ -1,0 +1,141 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as BannerStories from './col-banner.stories';
+import { Callout } from '../../_storybook/components';
+
+<Meta of={BannerStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Banner</Title>
+    The `col-banner` component displays an important, succinct message, and provides actions for users to address (or dismiss the banner).
+
+    <Subtitle>Table of contents</Subtitle>
+    - [How to use it](#how-to-use-it)
+    - [When to use it](#when-to-use-it)
+    - [Component preview](#component-preview)
+      - [Default Banner](#default-banner)
+      - [Only Content](#only-content)
+      - [With Content and Actions](#with-content-and-actions)
+      - [With Title, Content and Actions](#with-title-content-and-actions)
+    - [Events](#events)
+      - [Component Closes Automatically](#component-closes-automatically)
+      - [Interactive Example](#interactive-example)
+    - [Accessibility](#accessibility)
+    - [Properties](#properties)
+    - [Interact with the component](#interact-with-the-component)
+
+    ## How to use it
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        npm install @telesign/colibri-icons
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, registerAllComponents, ColBanner, ColButton, ColGroup } from '@telesign/colibri';
+        import { ColIcon } from '@telesign/colibri-icons';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web components:
+        ```typescript
+        // Option 1: Register specific components
+        registerColibriComponents([ColBanner, ColButton, ColGroup, ColIcon]);
+
+        // Option 2: Register all Colibri components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-banner variant="info">
+          <span slot="title">Title</span>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+          <col-group slot="actions">
+            <col-button color="primary" variant="outlined"> Button </col-button>
+            <col-button color="primary" variant="plain"> Button </col-button>
+          </col-group>
+        </col-banner>
+        ```
+
+    ## When to use it
+    The `col-banner` component is a visual tool used to grab the user's attention and communicate important messages in a prominent way. Some use cases are described below:
+
+    - **System Updates**: Inform users of scheduled maintenance, software upgrades, or service changes.
+    - **Security Alerts**: Communicate security issues or important warnings that require the user's immediate attention.
+    - **Product Launches**: Highlight new products or services available to attract users' attention.
+    - **Policy Changes**: Inform about updates to privacy policies, terms of service, or any significant changes to the terms of use.
+    - **Critical Errors**: Inform users of critical errors that affect the functionality of the platform and provide steps for resolution.
+    - **Confirmations**: Display confirmation messages for successfully completed actions.
+
+    ## Component preview
+
+    The following examples showcase the core features and visual options of the `col-banner` component.
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+    <Callout  variant="info" icon="ℹ️">
+      You can check out the `ColIcon` icons for each variant in the [All Icons](/story/atoms-icons--all-icons) section.
+    </Callout>
+
+    ### Default Banner
+    For example purposes, the default banner is the one shown in the [Installation](#how-to-use-it) example.
+    <Canvas of={BannerStories.Default} />
+    - It's expected for the Actions slot to use `col-button` and `col-group` but you can use your own implementation or the `div` and `button` HTML tags.
+    - It's not mandatory to have Title, Content or Actions. In the further examples you will see how the Banner looks without one or more of these slots.
+    - With **Information** variant the icon will change to `info-circle-fill`.
+
+    ### Only Content
+    With the **Success** variant the Banner automatically will change the `ColIcon` icon to `check-circle-fill` and the content will fit even if there is no Title or Actions slots.
+    <Canvas of={BannerStories.OnlyContent} />
+
+    ### With Content and Actions
+    On the snippet you will find the Actions slot using the `div` and `button` HTML tags with the correct styling and alignment even if you decide not to use `col-button` and `col-group`.
+    <Canvas of={BannerStories.WithContentActions} />
+    - With **Warning** variant the icon will change to `info-major-triangle-up-fill`.
+
+    ### With Title, Content and Actions
+    Even if the parent component has smaller dimensions, the banner will fit and align its content accordinally.
+    <Canvas of={BannerStories.WithTitleContentActions} />
+    - With **Danger** variant the icon remains the same as Information one.
+
+    ## Events
+    There are three ways to dismiss the `col-banner` component such as clicking or focusing (with keyborad) the close button and focusing the component.
+    ### Component Closes Automatically
+    When `duration` property is specified the Banner will close and dispatch the `banner-closed` event. For this example the duration time is <ins>10 seconds</ins>.
+
+    **Note:** If you can see any content on the Canvas, reload the page (or press F5) and navigate to this section again. Maybe the banner had closed before you could see it.
+    <Canvas of={BannerStories.WithDuration} />
+
+    ### Interactive Example
+    <Callout  variant="info" icon="ℹ️">
+      All variants are working on different scenarios in this example.
+    </Callout>
+    To close the banner there are 3 ways to do it:
+    - The `click` action on the close button dispatch the `banner-closed` event.
+    - If the close button 'x' is focused, pressing the `Enter` or `Space` keys will dispatch the `banner-closed` event.
+    - If the component is focused, pressing `Escape` key will dispatch the `banner-closed` event.
+
+    **Scenarios**
+    - By clicking Send button a Info Banner will be displayed.
+      - If you click the Resend button it'd displayed a Success Banner.
+    - By clicking Send button but with input errors you will see a Danger Banner displayed.
+    <Canvas of={BannerStories.InteractiveExample} />
+
+    ## Accessibility
+    The `col-banner` can be searched up or placed under an element that needs to be classified categorically.  They can help group similar elements by color and group names.
+
+    - **Keyboard Navigation:** Fully navigable using Tab. All interactive elements (element and buttons) are accessible via keyboard.
+    - **Actions Supported:** The component handles `@keydown` and `@click`.
+    - **Display:** Banners should be displayed at the top of the screen, below a top app bar. They’re persistent and nonmodal, allowing the user to either ignore them or interact with them at any time. <ins>Only one banner should be shown at a time</ins>.
+    - **Best Practices:**
+      - Make sure you include the `slot='title'` and `slot='actions'` in order to display correctly the Title and Actions sections on the Banner.
+
+    ## Properties
+
+    <ArgTypes of={BannerStories} />
+
+    ## Interact with the component
+
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-banner--default) section.
+
+  </div>
+</div>
