@@ -74,7 +74,7 @@
 }
 
 div.col-doc__canvas--with-background {
-  background-color: var(--col-theme-primary-lighter);
+  background-color: #e5e5e5;
 }
 
 .col-intro-text {

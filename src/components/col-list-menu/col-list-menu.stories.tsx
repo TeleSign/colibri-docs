@@ -1,11 +1,17 @@
-import { html, TemplateResult } from 'lit';
+import { html } from 'lit';
 import { action } from '@storybook/addon-actions';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
 import { ColListMenuItem, LIST_MENU_ITEM_VARIANTS } from '@telesign/colibri';
 
 type StoryArgs = {
-  // col-list-menu-item properties
+  // col-list-menu
+  // properties
+  ariaLabel?: string;
+  multiselectable?: boolean;
+  role: string;
+  // col-list-menu-item
+  // properties
   disabled: boolean;
   href: string;
   newTab: boolean;
@@ -16,6 +22,8 @@ type StoryArgs = {
   // action handlers
   onListMenuItemClick: () => void;
 };
+
+const withWhiteBackground = (Story: any) => html` <div style="background: #fff;">${Story()}</div> `;
 
 const meta = {
   title: 'Molecules/ListMenu',
@@ -29,13 +37,45 @@ const meta = {
     },
   },
   argTypes: {
+    ariaLabel: {
+      control: 'text',
+      description: 'ARIA label for the list menu',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'List Menu' },
+        category: 'List Menu',
+        subcategory: 'Accessibility',
+      },
+    },
+    multiselectable: {
+      control: 'boolean',
+      description: 'Attribute to indicate if a ListMenu should allow multiple item selections',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+        category: 'List Menu',
+        subcategory: 'State',
+      },
+    },
+    role: {
+      control: 'select',
+      description: 'ARIA role for the list menu',
+      options: ['listbox', 'menu'],
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'listbox' },
+        category: 'List Menu',
+        subcategory: 'State',
+      },
+    },
     disabled: {
       control: 'boolean',
       description: 'State declaring if a ListMenuItem is disabled or not',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
-        category: 'State',
+        category: 'List Menu Item',
+        subcategory: 'State',
       },
     },
     href: {
@@ -44,7 +84,8 @@ const meta = {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-        category: 'Navigation',
+        category: 'List Menu Item',
+        subcategory: 'Navigation',
       },
     },
     newTab: {
@@ -53,7 +94,8 @@ const meta = {
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
-        category: 'Navigation',
+        category: 'List Menu Item',
+        subcategory: 'Navigation',
       },
     },
     router: {
@@ -62,7 +104,8 @@ const meta = {
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
-        category: 'Navigation',
+        category: 'List Menu Item',
+        subcategory: 'Navigation',
       },
     },
     selected: {
@@ -71,7 +114,8 @@ const meta = {
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
-        category: 'State',
+        category: 'List Menu Item',
+        subcategory: 'State',
       },
     },
     variant: {
@@ -81,7 +125,8 @@ const meta = {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'button' },
-        category: 'Core',
+        category: 'List Menu Item',
+        subcategory: 'Core',
       },
     },
     value: {
@@ -90,14 +135,16 @@ const meta = {
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
-        category: 'Core',
+        category: 'List Menu Item',
+        subcategory: 'Core',
       },
     },
     onListMenuItemClick: {
       action: 'list-menu-item-click',
       description: 'Fired when a ListMenuItem is clicked',
       table: {
-        category: 'Events',
+        category: 'List Menu Item',
+        subcategory: 'Events',
         type: { summary: 'ListMenuItemClickDetail' },
       },
     },
@@ -112,6 +159,7 @@ const meta = {
     value: 'list-menu-item-value',
     onListMenuItemClick: action('list-menu-item-click'),
   },
+  decorators: [withWhiteBackground],
 } satisfies ColibriStoryMeta<StoryArgs>;
 
 export default meta;
@@ -122,8 +170,6 @@ const options = [
   { title: 'Option 1', value: 'option-1', icon: 'check-circle' },
   { title: 'Option 2', value: 'option-2', icon: 'check-circle' },
   { title: 'Option 3', value: 'option-3', icon: 'check-circle' },
-  { title: 'Option 4', value: 'option-4', icon: 'check-circle' },
-  { title: 'Option 5', value: 'option-5', icon: 'check-circle' },
 ];
 
 const handleListMenuItemClick = (event: Event) => {
@@ -188,19 +234,19 @@ export const ListMenuWithLabelItems: Story = {
   render: () => html`
     <col-list-menu>
       <col-list-menu-item variant="label">Group Title</col-list-menu-item>
-      <col-list-menu-item value="option-1">Option 1</col-list-menu-item>
-      <col-list-menu-item value="option-2">Option 2</col-list-menu-item>
+      <col-list-menu-item value="option-1">Option 1 - 1</col-list-menu-item>
+      <col-list-menu-item value="option-2">Option 1 - 2</col-list-menu-item>
       <col-list-menu-item variant="label">Group Title</col-list-menu-item>
-      <col-list-menu-item value="option-3">Option 3</col-list-menu-item>
-      <col-list-menu-item value="option-4">Option 4</col-list-menu-item>
-      <col-list-menu-item value="option-5">Option 5</col-list-menu-item>
+      <col-list-menu-item value="option-3">Option 2 - 1</col-list-menu-item>
+      <col-list-menu-item value="option-4">Option 2 - 2</col-list-menu-item>
+      <col-list-menu-item value="option-5">Option 2 - 3</col-list-menu-item>
     </col-list-menu>
   `,
 };
 
 export const ListMenuWithNavigation: Story = {
   render: () => html`
-    <col-list-menu>
+    <col-list-menu role="menu">
       <col-list-menu-item variant="label">External Links</col-list-menu-item>
       <col-list-menu-item href="https://chat.chatbot.app/gpt4o" newtab>ChatGPT</col-list-menu-item>
       <col-list-menu-item href="https://claude.ai/" newtab>Claude</col-list-menu-item>
@@ -240,6 +286,38 @@ export const ListMenuCheckbox: Story = {
   `,
 };
 
+export const ListMenuCheckboxWithMultiSelect: Story = {
+  render: () => html`
+    <col-list-menu multiselectable>
+      ${options.map(
+        ({ title, value, icon }) => html`
+          <col-list-menu-item value=${value}>
+            <col-checkbox></col-checkbox>
+            <col-icon name=${icon} size="16"></col-icon>
+            ${title}
+          </col-list-menu-item>
+        `
+      )}
+    </col-list-menu>
+  `,
+};
+
+export const ListMenuRadio: Story = {
+  render: () => html`
+    <col-list-menu>
+      ${options.map(
+        ({ title, value, icon }) => html`
+          <col-list-menu-item value=${value}>
+            <col-radio group="demo"></col-radio>
+            <col-icon name=${icon} size="16"></col-icon>
+            ${title}
+          </col-list-menu-item>
+        `
+      )}
+    </col-list-menu>
+  `,
+};
+
 export const ListMenuSlots: Story = {
   render: () => html`
     <style>
@@ -251,7 +329,16 @@ export const ListMenuSlots: Story = {
       }
     </style>
     <col-list-menu>
-      <div slot="banner">TODO: Include ColBanner when ready</div>
+      <div slot="banner">
+        <col-banner variant="info">
+          <span slot="title">Title</span>
+          An example of an information type banner within a ListMenu
+          <col-group slot="actions">
+            <col-button color="primary" variant="outlined">Button</col-button>
+            <col-button color="primary" variant="outlined">Button</col-button>
+          </col-group>
+        </col-banner>
+      </div>
       <div slot="header" class="just-for-story">
         <span>Header Slot</span>
       </div>
@@ -271,44 +358,60 @@ export const ListMenuSlots: Story = {
 
 export const ListMenuItemSlots: Story = {
   render: () => html`
-    <col-grid cols="3" gap="m">
-      <col-grid-item>
-        <col-list-menu>
-          <col-list-menu-item>
-            Option
-            <col-button slot="list-menu-item-slot">
-              <col-icon name="save" size="16px"></col-icon>
-            </col-button>
-          </col-list-menu-item>
-          <col-list-menu-item>Option</col-list-menu-item>
-          <col-list-menu-item>Option</col-list-menu-item>
-        </col-list-menu>
-      </col-grid-item>
-      <col-grid-item>
-        <col-list-menu>
-          <col-list-menu-item>
-            Option
-            <col-tag slot="list-menu-item-slot" text="Option" readonly>
-              <col-icon slot="icon" name="emoji-circle" size="16px"></col-icon>
-            </col-tag>
-          </col-list-menu-item>
-          <col-list-menu-item>Option</col-list-menu-item>
-          <col-list-menu-item>Option</col-list-menu-item>
-        </col-list-menu>
-      </col-grid-item>
-      <col-grid-item>
-        <col-list-menu>
-          <col-list-menu-item>
-            Option
-            <col-status slot="list-menu-item-slot" status="neutral">
-              <col-icon name="check-circle-fill"></col-icon>
-              Neutral
-            </col-status>
-          </col-list-menu-item>
-          <col-list-menu-item>Option</col-list-menu-item>
-          <col-list-menu-item>Option</col-list-menu-item>
-        </col-list-menu>
-      </col-grid-item>
-    </col-grid>
+    <style>
+      .list-menu-grid {
+        background-color: #e5e5e5;
+      }
+      .list-menu-wrapper {
+        background-color: #fff;
+      }
+    </style>
+    <div class="list-menu-grid">
+      <col-grid cols="3" gap="m">
+        <col-grid-item>
+          <div class="list-menu-wrapper">
+            <col-list-menu>
+              <col-list-menu-item>
+                Option
+                <col-button slot="list-menu-item-slot">
+                  <col-icon name="save" size="16px"></col-icon>
+                </col-button>
+              </col-list-menu-item>
+              <col-list-menu-item>Option</col-list-menu-item>
+              <col-list-menu-item>Option</col-list-menu-item>
+            </col-list-menu>
+          </div>
+        </col-grid-item>
+        <col-grid-item>
+          <div class="list-menu-wrapper">
+            <col-list-menu>
+              <col-list-menu-item>
+                Option
+                <col-tag slot="list-menu-item-slot" text="Option" readonly>
+                  <col-icon slot="icon" name="emoji-circle" size="16px"></col-icon>
+                </col-tag>
+              </col-list-menu-item>
+              <col-list-menu-item>Option</col-list-menu-item>
+              <col-list-menu-item>Option</col-list-menu-item>
+            </col-list-menu>
+          </div>
+        </col-grid-item>
+        <col-grid-item>
+          <div class="list-menu-wrapper">
+            <col-list-menu>
+              <col-list-menu-item>
+                Option
+                <col-status slot="list-menu-item-slot" status="neutral">
+                  <col-icon name="check-circle-fill"></col-icon>
+                  Neutral
+                </col-status>
+              </col-list-menu-item>
+              <col-list-menu-item>Option</col-list-menu-item>
+              <col-list-menu-item>Option</col-list-menu-item>
+            </col-list-menu>
+          </div>
+        </col-grid-item>
+      </col-grid>
+    </div>
   `,
 };
