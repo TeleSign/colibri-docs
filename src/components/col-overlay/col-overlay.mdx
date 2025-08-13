@@ -1,0 +1,213 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as ColOverlayStories from './col-overlay.stories';
+import { Callout } from '../../_storybook/components';
+
+<Meta of={ColOverlayStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Overlay</Title>
+    The Colibri Overlay component creates a backdrop and positions content over the page. It's the foundation for modals, dialogs, drawers, and other overlay patterns.
+
+    <Callout variant="info" icon="💡">
+      This component is commonly used as a building block by other Colibri components. For example, the [Drawer component](/story/organisms-drawer--default) uses Overlay internally to handle the backdrop, focus management, and escape key behavior.
+    </Callout>
+
+    <Subtitle>How to use it</Subtitle>
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, registerAllComponents, ColOverlay } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web components:
+        ```typescript
+        // Option 1: Register specific components
+        registerColibriComponents([ColOverlay]);
+
+        // Option 2: Register all Colibri components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-overlay active>
+          <div>Your overlay content here</div>
+        </col-overlay>
+        ```
+
+    <Subtitle>When to use it</Subtitle>
+    The Overlay component is a versatile foundation for various UI patterns:
+
+    - **Modal Dialogs** - Center-aligned overlays with backdrop for important interactions
+    - **Drawers/Sidebars** - Edge-aligned panels (see [Drawer component](/story/organisms-drawer--default))
+    - **Loading States** - Full-screen loading indicators
+    - **Tooltips/Popovers** - Contextual overlays without backdrop
+    - **Image Lightboxes** - Full-screen image viewers
+    - **Custom Overlays** - Any content that needs to appear above the main page
+
+    <Subtitle>Component preview</Subtitle>
+    You can click on the **Show code** button in the bottom-right section of the following code snippets to see how to use the component:
+
+    <h4>Default Overlay</h4>
+    <Canvas of={ColOverlayStories.Default}/>
+
+    <h4>Without Backdrop</h4>
+    <Canvas of={ColOverlayStories.NoBackdrop} />
+
+    <h4>Persistent Overlay</h4>
+    <Canvas of={ColOverlayStories.Persistent} />
+
+    <h4>Custom Position</h4>
+    <Canvas of={ColOverlayStories.CustomPosition} />
+
+    <h4>Without Focus Trap</h4>
+    <Canvas of={ColOverlayStories.NoFocusTrap} />
+
+    <Subtitle>Properties</Subtitle>
+
+    <ArgTypes of={ColOverlayStories} />
+
+    <Subtitle>Slots</Subtitle>
+
+    | Slot Name | Description |
+    |-----------|-------------|
+    | default | The overlay content to display |
+    | activator | The element that triggers the overlay (when using activator pattern) |
+
+    <Subtitle>Events</Subtitle>
+
+    | Event Name | Description | Event Detail |
+    |------------|-------------|--------------|
+    | `overlay-click-outside` | Fired when clicking outside the overlay content | `{ overlay: ColOverlay, originalEvent: Event }` |
+    | `overlay-escape` | Fired when pressing the Escape key | `{ overlay: ColOverlay, originalEvent: KeyboardEvent }` |
+
+    <Subtitle>Usage Examples</Subtitle>
+
+    ### Basic Modal Pattern
+    ```html
+    <col-overlay active>
+      <div class="modal-content">
+        <h2>Modal Title</h2>
+        <p>Modal content goes here</p>
+        <button onclick="closeOverlay()">Close</button>
+      </div>
+    </col-overlay>
+    ```
+
+    ### Loading Overlay
+    ```html
+    <col-overlay active persistent no-focus-trap>
+      <div class="loading-spinner">
+        <span>Loading...</span>
+      </div>
+    </col-overlay>
+    ```
+
+    ### Tooltip/Popover (no backdrop)
+    ```html
+    <col-overlay active no-backdrop no-centered>
+      <div class="tooltip" style="position: fixed; top: 100px; left: 200px;">
+        Tooltip content
+      </div>
+    </col-overlay>
+    ```
+
+    ### How Other Components Use Overlay
+
+    The Overlay component is used internally by several Colibri components:
+
+    #### Drawer Component Example
+    The [Drawer component](/story/organisms-drawer--default) uses Overlay with specific settings:
+    ```html
+    <!-- Internal implementation of col-drawer -->
+    <col-overlay
+      active
+      no-centered
+      no-focus-trap
+      @overlay-click-outside=${handleClose}
+      @overlay-escape=${handleClose}
+    >
+      <div class="drawer-panel">
+        <!-- Drawer content -->
+      </div>
+    </col-overlay>
+    ```
+
+    <Subtitle>JavaScript API</Subtitle>
+
+    ### Opening and Closing Programmatically
+    ```javascript
+    const overlay = document.querySelector('col-overlay');
+
+    // Open overlay
+    overlay.active = true;
+    // or
+    overlay.setAttribute('active', 'true');
+
+    // Close overlay
+    overlay.active = false;
+    // or
+    overlay.removeAttribute('active');
+
+    // Listen for close events
+    overlay.addEventListener('overlay-click-outside', (e) => {
+      console.log('Clicked outside overlay');
+    });
+
+    overlay.addEventListener('overlay-escape', (e) => {
+      console.log('Escape key pressed');
+    });
+    ```
+
+    ### Updating Focus Trap
+    If you dynamically change the overlay content:
+    ```javascript
+    const overlay = document.querySelector('col-overlay');
+
+    // After adding new focusable elements
+    overlay.updateFocusTrap();
+    ```
+
+    <Subtitle>CSS Custom Properties</Subtitle>
+
+    You can customize the overlay using CSS custom properties:
+
+    ```css
+    col-overlay {
+      --col-overlay-z-index: 9999; /* Custom z-index */
+    }
+    ```
+
+    <Subtitle>Accessibility</Subtitle>
+
+    The Overlay component includes comprehensive accessibility features:
+
+    - **Focus Trap**: Keeps keyboard focus within the overlay when active
+    - **Escape Key**: Closes the overlay when Escape is pressed (unless persistent)
+    - **ARIA Attributes**: Proper `role="dialog"`, `aria-modal`, and `aria-hidden` attributes
+    - **Scroll Lock**: Prevents body scroll when overlay is active
+    - **Backdrop Click**: Closes overlay when clicking outside (configurable)
+
+    <Subtitle>Best Practices</Subtitle>
+
+    - **Focus Management**: Use the built-in focus trap for modal dialogs
+    - **Escape Handling**: Allow users to close with Escape key unless critical action required
+    - **Backdrop Usage**: Include backdrop for modal interactions, hide for tooltips
+    - **Loading States**: Use `persistent` for loading overlays to prevent accidental dismissal
+    - **Z-Index Management**: Use the `z-index` prop to manage stacking order
+    - **Content Styling**: Always style the content within the overlay (background, padding, etc.)
+
+    <Subtitle>Related Components</Subtitle>
+
+    - [Drawer](/story/organisms-drawer--default) - Uses Overlay internally for sliding panels
+    - [Modal Header](/story/molecules-modal-header--default) - Pairs well with Overlay for modal dialogs
+    - [Modal Footer](/story/molecules-modal-footer--default) - Complements modal overlays
+
+    <Subtitle>Interact with the component</Subtitle>
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/molecules-overlay--default) section.
+
+  </div>
+</div>
