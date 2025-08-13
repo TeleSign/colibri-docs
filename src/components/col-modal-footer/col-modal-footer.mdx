@@ -1,0 +1,161 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as ColModalFooterStories from './col-modal-footer.stories';
+
+<Meta of={ColModalFooterStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Modal Footer</Title>
+    The Colibri Modal Footer component provides a consistent footer layout for modals and dialogs with support for description text and action buttons.
+
+    <Subtitle>How to use it</Subtitle>
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, registerAllComponents, ColModalFooter } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web components:
+        ```typescript
+        // Option 1: Register specific components
+        registerColibriComponents([ColModalFooter]);
+
+        // Option 2: Register all Colibri components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-modal-footer description="2 items selected">
+          <col-button slot="actions" color="secondary">Cancel</col-button>
+          <col-button slot="actions" color="primary">Save</col-button>
+        </col-modal-footer>
+        ```
+
+    <Subtitle>When to use it</Subtitle>
+    The Modal Footer component is designed to be used in various overlay components to provide consistent footer structure:
+
+    - **Modal Dialogs** - Standard footer for modal windows with action buttons
+    - **Drawers** - Footer section for sliding drawer panels with actions
+    - **Forms** - Footer with submit and cancel buttons
+    - **Wizards** - Navigation buttons for multi-step processes
+    - **Confirmations** - Action buttons for confirmation dialogs
+
+    <Subtitle>Component preview</Subtitle>
+    You can click on the **Show code** button in the bottom-right section of the following code snippets to see how to use the component:
+
+    <h4>Default Modal Footer</h4>
+    <Canvas of={ColModalFooterStories.Default}/>
+
+    <h4>With Description</h4>
+    <Canvas of={ColModalFooterStories.WithDescription} />
+
+    <h4>Single Action</h4>
+    <Canvas of={ColModalFooterStories.SingleAction} />
+
+    <h4>Custom Description</h4>
+    <Canvas of={ColModalFooterStories.CustomDescription} />
+
+    <h4>Description Only</h4>
+    <Canvas of={ColModalFooterStories.DescriptionOnly} />
+
+    <Subtitle>Properties</Subtitle>
+
+    <ArgTypes of={ColModalFooterStories} />
+
+    <Subtitle>Slots</Subtitle>
+
+    The Modal Footer component provides two slots for customization:
+
+    | Slot Name | Description |
+    |-----------|-------------|
+    | default | The default slot for description content (used when description property is not provided or in custom mode) |
+    | actions | Action buttons to display on the right side of the footer |
+
+    <Subtitle>Usage Examples</Subtitle>
+
+    ### Basic Modal Footer with Actions
+    ```html
+    <col-modal-footer>
+      <col-button slot="actions" color="secondary">Cancel</col-button>
+      <col-button slot="actions" color="primary">Save</col-button>
+    </col-modal-footer>
+    ```
+
+    ### With Description Text
+    ```html
+    <col-modal-footer description="3 files selected">
+      <col-button slot="actions" color="danger">Delete</col-button>
+    </col-modal-footer>
+    ```
+
+    ### Custom Description Mode
+    When you need full control over the description area:
+    ```html
+    <col-modal-footer custom-description>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <col-icon name="info-circle"></col-icon>
+        <span>Custom content here</span>
+      </div>
+      <col-button slot="actions" color="primary">OK</col-button>
+    </col-modal-footer>
+    ```
+
+    ### Description Only (No Actions)
+    ```html
+    <col-modal-footer description="Loading... Please wait">
+    </col-modal-footer>
+    ```
+
+    <Subtitle>Integration with Other Components</Subtitle>
+
+    The Modal Footer is designed to work seamlessly with Modal Header and other Colibri components:
+
+    ### Complete Modal Structure
+    ```html
+    <col-modal>
+      <col-modal-header title="Edit Profile"></col-modal-header>
+      <div class="modal-content">
+        <!-- Your content here -->
+      </div>
+      <col-modal-footer description="All fields are required">
+        <col-button slot="actions" color="secondary">Cancel</col-button>
+        <col-button slot="actions" color="primary">Save</col-button>
+      </col-modal-footer>
+    </col-modal>
+    ```
+
+    ### With Drawer
+    ```html
+    <col-drawer>
+      <col-modal-header slot="header" title="Settings"></col-modal-header>
+      <!-- drawer content -->
+      <col-modal-footer slot="footer">
+        <col-button slot="actions" color="primary">Apply</col-button>
+      </col-modal-footer>
+    </col-drawer>
+    ```
+
+    <Subtitle>Accessibility</Subtitle>
+
+    The Modal Footer component includes built-in accessibility features:
+
+    - **ARIA Labels**: The footer toolbar has `role="contentinfo"` and `aria-label="Modal footer"`
+    - **Semantic HTML**: Uses appropriate semantic elements through the toolbar component
+    - **Keyboard Support**: All action buttons are keyboard accessible
+
+    <Subtitle>Best Practices</Subtitle>
+
+    - **Button Order**: Place the primary action on the right, secondary actions on the left
+    - **Clear Labels**: Use clear, action-oriented button labels (e.g., "Save Changes" instead of "OK")
+    - **Description Usage**: Use descriptions to provide context about the current state or selection
+    - **Consistent Actions**: Keep button placement and styling consistent across your application
+    - **Loading States**: Use the description area to show loading or processing messages
+
+    <Subtitle>Interact with the component</Subtitle>
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/molecules-modal-footer--default) section.
+
+  </div>
+</div>
