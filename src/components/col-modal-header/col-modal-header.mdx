@@ -1,0 +1,183 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as ColModalHeaderStories from './col-modal-header.stories';
+
+<Meta of={ColModalHeaderStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Modal Header</Title>
+    The Colibri Modal Header component provides a consistent header layout for modals, dialogs, and drawers with support for title, icon, badge, actions, and close button.
+
+    <Subtitle>How to use it</Subtitle>
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, registerAllComponents, ColModalHeader } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web components:
+        ```typescript
+        // Option 1: Register specific components
+        registerColibriComponents([ColModalHeader]);
+
+        // Option 2: Register all Colibri components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-modal-header title="Modal Title">
+          <col-icon slot="icon" name="settings"></col-icon>
+        </col-modal-header>
+        ```
+
+    <Subtitle>When to use it</Subtitle>
+    The Modal Header component is designed to be used in various overlay components to provide consistent header structure:
+
+    - **Modal Dialogs** - Standard header for modal windows with title and close functionality
+    - **Drawers** - Header section for sliding drawer panels
+    - **Dialog Boxes** - Confirmation dialogs, alert dialogs, and form dialogs
+    - **Detail Views** - Headers for detail panels and information cards
+    - **Wizards** - Step headers in multi-step processes
+
+    <Subtitle>Component preview</Subtitle>
+    You can click on the **Show code** button in the bottom-right section of the following code snippets to see how to use the component:
+
+    <h4>Default Modal Header</h4>
+    <Canvas of={ColModalHeaderStories.Default}/>
+
+    <h4>With Icon</h4>
+    <Canvas of={ColModalHeaderStories.WithIcon} />
+
+    <h4>With Badge</h4>
+    <Canvas of={ColModalHeaderStories.WithBadge} />
+
+    <h4>With Actions</h4>
+    <Canvas of={ColModalHeaderStories.WithActions} />
+
+    <h4>Without Close Button</h4>
+    <Canvas of={ColModalHeaderStories.NoCloseButton} />
+
+    <h4>Full Featured</h4>
+    <Canvas of={ColModalHeaderStories.FullFeatured} />
+
+    <Subtitle>Properties</Subtitle>
+
+    <ArgTypes of={ColModalHeaderStories} />
+
+    <Subtitle>Slots</Subtitle>
+
+    The Modal Header component provides several slots for customization:
+
+    | Slot Name | Description |
+    |-----------|-------------|
+    | default | The default slot for title content (used when title property is not provided) |
+    | icon | Optional icon to display before the title |
+    | badge | Optional badge to display after the title |
+    | actions | Optional action buttons to display before the close button |
+
+    <Subtitle>Events</Subtitle>
+
+    | Event Name | Description | Event Detail |
+    |------------|-------------|--------------|
+    | `on-close` | Fired when the close button is clicked | None |
+
+    <Subtitle>Usage Examples</Subtitle>
+
+    ### Basic Modal Header
+    ```html
+    <col-modal-header title="Edit Profile"></col-modal-header>
+    ```
+
+    ### With Icon and Badge
+    ```html
+    <col-modal-header title="Notifications">
+      <col-icon slot="icon" name="bell"></col-icon>
+      <col-badge slot="badge" variant="danger">5</col-badge>
+    </col-modal-header>
+    ```
+
+    ### With Multiple Actions
+    ```html
+    <col-modal-header title="Document">
+      <col-button slot="actions" size="small" color="secondary">
+        <col-icon name="share"></col-icon>
+      </col-button>
+      <col-button slot="actions" size="small" color="primary">
+        Save
+      </col-button>
+    </col-modal-header>
+    ```
+
+    ### Custom Header Mode
+    When you need full control over the header layout, use the `custom-header` attribute:
+    ```html
+    <col-modal-header custom-header>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <col-avatar name="John Doe"></col-avatar>
+        <div>
+          <div>John Doe</div>
+          <small>Active now</small>
+        </div>
+      </div>
+    </col-modal-header>
+    ```
+
+    ### Without Close Button
+    For required actions or uncloseable modals:
+    ```html
+    <col-modal-header title="Required Action" hidden-close-button>
+    </col-modal-header>
+    ```
+
+    <Subtitle>Integration with Other Components</Subtitle>
+
+    The Modal Header is designed to work seamlessly with other Colibri components:
+
+    ### With Drawer
+    ```html
+    <col-drawer>
+      <col-modal-header slot="header" title="Settings">
+        <col-icon slot="icon" name="settings"></col-icon>
+      </col-modal-header>
+      <!-- drawer content -->
+    </col-drawer>
+    ```
+
+    ### With Modal
+    ```html
+    <col-modal>
+      <col-modal-header title="Confirm Action">
+        <col-icon slot="icon" name="alert-triangle"></col-icon>
+      </col-modal-header>
+      <!-- modal content -->
+      <col-modal-footer>
+        <!-- footer content -->
+      </col-modal-footer>
+    </col-modal>
+    ```
+
+    <Subtitle>Accessibility</Subtitle>
+
+    The Modal Header component includes built-in accessibility features:
+
+    - **ARIA Labels**: The header toolbar has `role="banner"` and `aria-label="Modal header"`
+    - **Close Button**: The close button includes `aria-label="Close modal"` and `title="Close modal"` for screen readers
+    - **Semantic HTML**: Uses appropriate heading elements through the `col-typography` component
+    - **Keyboard Support**: The close button is keyboard accessible and can be activated with Enter or Space keys
+
+    <Subtitle>Best Practices</Subtitle>
+
+    - **Clear Titles**: Use concise, descriptive titles that clearly indicate the modal's purpose
+    - **Icon Usage**: Use icons that reinforce the meaning of the modal (e.g., warning icon for alerts)
+    - **Badge Placement**: Use badges to indicate status or counts relevant to the modal content
+    - **Action Grouping**: Group related actions together in the actions slot
+    - **Close Button**: Only hide the close button when the user must complete an action
+
+    <Subtitle>Interact with the component</Subtitle>
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/molecules-modal-header--default) section.
+
+  </div>
+</div>
