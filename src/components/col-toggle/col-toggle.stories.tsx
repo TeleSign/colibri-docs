@@ -7,7 +7,7 @@ type StoryArgs = {
   name: string;
   checked: boolean;
   disabled: boolean;
-  labelLeft: boolean;
+  labelfirst: boolean;
   change: () => void;
 };
 
@@ -52,7 +52,7 @@ const meta = {
       },
       if: { arg: 'disabled', neq: false },
     },
-    labelLeft: {
+    labelfirst: {
       control: 'boolean',
       description: 'Enables the label to be positioned on the left side of the toggle',
       table: {
@@ -60,7 +60,7 @@ const meta = {
         category: 'core',
         defaultValue: { summary: 'false' },
       },
-      if: { arg: 'labelLeft', neq: false },
+      if: { arg: 'labelfirst', neq: false },
     },
     change: {
       action: 'clicked',
@@ -75,7 +75,7 @@ const meta = {
     name: 'toggle',
     checked: false,
     disabled: false,
-    labelLeft: false,
+    labelfirst: false,
     change: fn(),
   },
 } satisfies ColibriStoryMeta<StoryArgs>;
@@ -84,12 +84,12 @@ export default meta;
 type Story = ColibriStory<StoryArgs>;
 
 export const Default: Story = {
-  render: ({ name, checked, disabled, labelLeft }) => html`
+  render: ({ name, checked, disabled, labelfirst }) => html`
     <col-toggle
       name=${name}
       ?checked=${checked}
       ?disabled=${disabled}
-      ?labelLeft=${labelLeft}
+      ?labelfirst=${labelfirst}
     ></col-toggle>
   `,
 };
@@ -100,23 +100,23 @@ export const WithLabel: Story = {
       name=${args.name}
       ?checked=${args.checked}
       ?disabled=${args.disabled}
-      ?labelLeft=${args.labelLeft}
+      ?labelfirst=${args.labelfirst}
     >
       Enable Notifications
     </col-toggle>
   `,
 };
 
-export const WithLeftLabel: Story = {
+export const WithLeftSideLabel: Story = {
   args: {
-    labelLeft: true,
+    labelfirst: true,
   },
   render: args => html`
     <col-toggle
       name=${args.name}
       ?checked=${args.checked}
       ?disabled=${args.disabled}
-      ?labelLeft=${args.labelLeft}
+      ?labelfirst=${args.labelfirst}
     >
       Receive Email Updates
     </col-toggle>
@@ -125,14 +125,14 @@ export const WithLeftLabel: Story = {
 
 export const WithHelpText: Story = {
   args: {
-    labelLeft: true,
+    labelfirst: true,
   },
   render: args => html`
     <col-toggle
       name=${args.name}
       ?checked=${args.checked}
       ?disabled=${args.disabled}
-      ?labelLeft=${args.labelLeft}
+      ?labelfirst=${args.labelfirst}
     >
       Show Online Status
       <span slot="help-text">This is a helper text</span>
@@ -143,14 +143,14 @@ export const WithHelpText: Story = {
 export const Checked: Story = {
   args: {
     checked: true,
-    labelLeft: true,
+    labelfirst: true,
   },
   render: args => html`
     <col-toggle
       name=${args.name}
       ?checked=${args.checked}
       ?disabled=${args.disabled}
-      ?labelLeft=${args.labelLeft}
+      ?labelfirst=${args.labelfirst}
     >
       Enable Animations
       <span slot="help-text">This is a helper text</span>
@@ -168,7 +168,7 @@ export const Disabled: Story = {
       name=${args.name}
       ?checked=${args.checked}
       ?disabled=${args.disabled}
-      ?labelLeft=${args.labelLeft}
+      ?labelfirst=${args.labelfirst}
     >
       Dark Mode
       <span slot="help-text">This is a helper text</span>
@@ -180,14 +180,14 @@ export const DisabledChecked: Story = {
   args: {
     checked: true,
     disabled: true,
-    labelLeft: true,
+    labelfirst: true,
   },
   render: args => html`
     <col-toggle
       name=${args.name}
       ?checked=${args.checked}
       ?disabled=${args.disabled}
-      ?labelLeft=${args.labelLeft}
+      ?labelfirst=${args.labelfirst}
     >
       Two-Factor Authentication
       <span slot="help-text">This is a helper text</span>
