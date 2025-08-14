@@ -37,12 +37,8 @@ export const HTML_BOOLEAN_ATTRIBUTES = [
   'newtab',
   'router',
   'downloadable',
-  'labelfirst',
   'loading',
   'badge',
   'counter',
   'labelfirst',
-  'loading',
-  'badge',
-  'counter',
 ];
