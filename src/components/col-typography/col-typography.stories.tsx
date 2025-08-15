@@ -237,7 +237,6 @@ const meta = {
     required: false,
     disabled: false,
     ellipsis: false,
-    maxLines: 1,
     href: '',
     newTab: false,
     downloadable: false,
@@ -446,6 +445,21 @@ export const Link: Story = {
     newTab: true,
   },
   render: renderTypography,
+};
+
+/**
+ * Div as link
+ * Hidden individual stories for MDX Canvas usage
+ */
+export const DivAsLink: Story = {
+  args: {
+    text: SampleText,
+    variant: TYPOGRAPHY_VARIANTS.LINK,
+    element: TYPOGRAPHY_ELEMENTS.DIV,
+    href: 'https://example.com',
+  },
+  render: renderTypography,
+  tags: ['!dev'],
 };
 
 /**
