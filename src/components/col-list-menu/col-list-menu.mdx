@@ -117,7 +117,7 @@ import { Callout } from '../../_storybook/components';
           // Example: event.detail = { value: 'option-1', index: 1, href: '' }
           console.log('Element clicked:', event.detail);
 
-          // handle selection
+          // IMPORTANT: Handle selection
           if (item.hasAttribute('selected')) {
             item.removeAttribute('selected');
           } else {
@@ -147,13 +147,25 @@ import { Callout } from '../../_storybook/components';
 
     ### Using ColCheckbox
     ColListMenuItems may require additional selection input components like ColCheckbox
+
+    <Callout variant='info' icon='ℹ️'>
+      <p>Open "Show code" to see Javascript example special Checkbox single select state and event management.</p>
+    </Callout>
     <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuCheckbox} />
 
     If the ColListMenu has `multiselectable` attribute, then the list will allow for multiple items to be selected
+
+    <Callout variant='info' icon='ℹ️'>
+      <p>Open "Show code" to see Javascript example special Checkbox multiple select state and event management.</p>
+    </Callout>
     <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuCheckboxWithMultiSelect} />
 
     ### Using ColRadio
     ColRadio can also be used with ColListMenuItem, be careful not to add `multiselectable` as this would be very confusing user experience since by default, radio components are meant to be used when only one option should be selected.
+
+    <Callout variant='info' icon='ℹ️'>
+      <p>Open "Show code" to see Javascript example special Radio single select state and event management.</p>
+    </Callout>
     <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuRadio} />
 
 ## Slots
@@ -188,46 +200,11 @@ import { Callout } from '../../_storybook/components';
 
     * The `default` slot is the content for the ColListMenuItem itself.
 
+    <Callout variant='info' icon='ℹ️'>
+      When using a ColButton in the `list-menu-item-slot`, make sure you add the necessary code to capture the events. To see sample code, please open the "Show code" option.
+    </Callout>
+
     <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuItemSlots} />
-
-    When using a ColButton in the `list-menu-item-slot`, make sure you add the necessary code to capture the events:
-
-    ```html
-    <col-list-menu>
-      <col-list-menu-item value="option-0">
-        Option
-      </col-list-menu-item>
-      <col-list-menu-item value="option-1">
-        Option 1
-      </col-list-menu-item>
-      <col-list-menu-item value="option-2">
-        Option 2
-      </col-list-menu-item>
-    </col-list-menu>
-
-    <script>
-      document.querySelectorAll('col-list-menu-item').forEach(item => {
-        item.addEventListener('list-menu-item-click', function (event) {
-          // Example: event.detail = { value: 'option-1', index: 1, href: '' }
-          console.log('Element clicked:', event.detail);
-
-          // handle selection
-          if (item.hasAttribute('selected')) {
-            item.removeAttribute('selected');
-          } else {
-            item.setAttribute('selected', ' ');
-          }
-        });
-      });
-
-      // Very generic example, but showing you can listen for button clicks separately from list menu item clicks
-      document.querySelectorAll('col-button').forEach(button => {
-        button.addEventListener('click', function (event) {
-          console.log('Button clicked:', event.target);
-        });
-      });
-    </script>
-    ```
 
     ## Properties
 

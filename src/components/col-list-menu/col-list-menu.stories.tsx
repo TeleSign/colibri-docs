@@ -312,6 +312,57 @@ export const ListMenuCheckbox: Story = {
       )}
     </col-list-menu>
   `,
+  parameters: {
+    docs: {
+      source: {
+        code: `
+// --- JAVASCRIPT CODE ---
+// State and Event management needed for ColListMenu
+
+// Helper to clear selection for all items except the one clicked
+function selectSingle(listMenu, clickedItem) {
+  listMenu.querySelectorAll('col-list-menu-item').forEach(item => {
+    if (item !== clickedItem) {
+      item.removeAttribute('selected');
+    }
+  });
+  clickedItem.setAttribute('selected', '');
+}
+// Add the EventListener to handle item selection
+const menuList = document.querySelector('col-list-menu');
+if (menuList) {
+  menuList.querySelectorAll('col-list-menu-item').forEach(item => {
+    // Listen for our CustomEvent: 'list-menu-item-click'
+    item.addEventListener('list-menu-item-click', (event) => {
+      console.log("Get the information of the selected item: ", event.detail);
+
+      // since 'multiselectable' is not present we only allow 1 item to be selected at a time
+      selectSingle(menuList, item);
+    });
+  });
+}
+
+// --- HTML ---
+<col-list-menu>
+  <col-list-menu-item value="option-1">
+    <col-checkbox></col-checkbox>
+    <col-icon size="16" name="check-circle"></col-icon>
+    Option 1
+  </col-list-menu-item>
+  <col-list-menu-item value="option-2">
+    <col-checkbox></col-checkbox>
+    <col-icon size="16" name="check-circle"></col-icon>
+    Option 2
+  </col-list-menu-item>
+  <col-list-menu-item value="option-3">
+    <col-checkbox></col-checkbox>
+    <col-icon size="16" name="check-circle"></col-icon>
+    Option 3
+  </col-list-menu-item>
+</col-list-menu>`,
+      },
+    },
+  },
 };
 
 export const ListMenuCheckboxWithMultiSelect: Story = {
@@ -328,6 +379,58 @@ export const ListMenuCheckboxWithMultiSelect: Story = {
       )}
     </col-list-menu>
   `,
+  parameters: {
+    docs: {
+      source: {
+        code: `
+// --- JAVASCRIPT CODE ---
+// State and Event management needed for ColListMenu
+
+// Helper for multiselectable (checkbox)
+function toggleCheckbox(item) {
+  const checkbox = item.querySelector('col-checkbox');
+  if (checkbox) {
+    const isSelected = item.hasAttribute('selected');
+    checkbox.checked = !isSelected;
+    if (isSelected) {
+      item.removeAttribute('selected');
+    } else {
+      item.setAttribute('selected', '');
+    }
+  }
+}
+// Add the EventListener to handle item selection
+const multiList = document.querySelector('col-list-menu[multiselectable]');
+if (multiList) {
+  multiList.querySelectorAll('col-list-menu-item').forEach(item => {
+    item.addEventListener('list-menu-item-click', (event) => {
+      console.log("Get the information of the selected item: ", event.detail);
+      toggleCheckbox(item);
+    });
+  });
+}
+
+// --- HTML ---
+<col-list-menu>
+  <col-list-menu-item value="option-1">
+    <col-checkbox></col-checkbox>
+    <col-icon size="16" name="check-circle"></col-icon>
+    Option 1
+  </col-list-menu-item>
+  <col-list-menu-item value="option-2">
+    <col-checkbox></col-checkbox>
+    <col-icon size="16" name="check-circle"></col-icon>
+    Option 2
+  </col-list-menu-item>
+  <col-list-menu-item value="option-3">
+    <col-checkbox></col-checkbox>
+    <col-icon size="16" name="check-circle"></col-icon>
+    Option 3
+  </col-list-menu-item>
+</col-list-menu>`,
+      },
+    },
+  },
 };
 
 export const ListMenuRadio: Story = {
@@ -344,6 +447,60 @@ export const ListMenuRadio: Story = {
       )}
     </col-list-menu>
   `,
+  parameters: {
+    docs: {
+      source: {
+        code: `
+// --- JAVASCRIPT CODE ---
+// State and Event management needed for ColListMenu
+
+// Helper to handle radio selection
+function selectRadio(listMenu, clickedItem) {
+  listMenu.querySelectorAll('col-list-menu-item').forEach(item => {
+    const radio = item.querySelector('col-radio');
+    if (radio) {
+      radio.checked = false;
+      item.removeAttribute('selected');
+    }
+  });
+  const radio = clickedItem.querySelector('col-radio');
+  if (radio) {
+    radio.checked = true;
+    clickedItem.setAttribute('selected', '');
+  }
+}
+// Add the EventListener to handle item selection
+const radioList = document.querySelector('col-list-menu');
+if (radioList) {
+  radioList.querySelectorAll('col-list-menu-item').forEach(item => {
+    item.addEventListener('list-menu-item-click', (event) => {
+      console.log("Get the information of the selected item: ", event.detail);
+      selectRadio(radioList, item);
+    });
+  });
+}
+
+// --- HTML ---
+<col-list-menu>
+  <col-list-menu-item value="option-1">
+    <col-radio group="demo"></col-radio>
+    <col-icon size="16" name="check-circle"></col-icon>
+    Option 1
+  </col-list-menu-item>
+  <col-list-menu-item value="option-2">
+    <col-radio group="demo"></col-radio>
+    <col-icon size="16" name="check-circle"></col-icon>
+    Option 2
+  </col-list-menu-item>
+  <col-list-menu-item value="option-3">
+    <col-radio group="demo"></col-radio>
+    <col-icon size="16" name="check-circle"></col-icon>
+    Option 3
+  </col-list-menu-item>
+</col-list-menu>`,
+      },
+    },
+  },
 };
 
 export const ListMenuSlots: Story = {
@@ -442,4 +599,100 @@ export const ListMenuItemSlots: Story = {
       </col-grid>
     </div>
   `,
+  parameters: {
+    docs: {
+      source: {
+        code: `
+// --- JAVASCRIPT CODE ---
+// State and Event management needed for ColListMenu
+
+// Helper to ensure only one item is selected at a time in a list
+function selectSingle(listMenu, clickedItem) {
+  listMenu.querySelectorAll('col-list-menu-item').forEach(item => {
+    if (item !== clickedItem) {
+      item.removeAttribute('selected');
+    }
+  });
+  clickedItem.setAttribute('selected', '');
+}
+
+// Handle selection and logging for all col-list-menu-item clicks
+document.querySelectorAll('col-list-menu').forEach(listMenu => {
+  listMenu.querySelectorAll('col-list-menu-item').forEach(item => {
+    item.addEventListener('list-menu-item-click', event => {
+      console.log(event.detail);
+      selectSingle(listMenu, item);
+    });
+
+    // Add listeners for all col-buttons in the named slot of each item
+    item.querySelectorAll('col-button[slot="list-menu-item-slot"]').forEach(button => {
+      button.addEventListener('click', () => {
+        // You can distinguish buttons by index, text, or a custom attribute
+        // Example: log which button was clicked and its parent item
+        console.log('ColButton was clicked', {
+          button,
+          parentItem: item,
+          value: item.getAttribute('value'),
+        });
+
+        // Example: perform different actions based on button or parent item
+        if (item.getAttribute('value') === 'special') {
+          // Do something special for this item
+        }
+      });
+    });
+  });
+});
+
+// --- HTML ---
+<div class="list-menu-grid">
+  <col-grid cols="3" gap="m">
+    <col-grid-item>
+      <div class="list-menu-wrapper">
+        <col-list-menu>
+          <col-list-menu-item>
+            Option
+            <col-button slot="list-menu-item-slot">
+              <col-icon name="save" size="16px"></col-icon>
+            </col-button>
+          </col-list-menu-item>
+          <col-list-menu-item>Option</col-list-menu-item>
+          <col-list-menu-item>Option</col-list-menu-item>
+        </col-list-menu>
+      </div>
+    </col-grid-item>
+    <col-grid-item>
+      <div class="list-menu-wrapper">
+        <col-list-menu>
+          <col-list-menu-item>
+            Option
+            <col-tag slot="list-menu-item-slot" text="Option" readonly>
+              <col-icon slot="icon" name="emoji-circle" size="16px"></col-icon>
+            </col-tag>
+          </col-list-menu-item>
+          <col-list-menu-item>Option</col-list-menu-item>
+          <col-list-menu-item>Option</col-list-menu-item>
+        </col-list-menu>
+      </div>
+    </col-grid-item>
+    <col-grid-item>
+      <div class="list-menu-wrapper">
+        <col-list-menu>
+          <col-list-menu-item>
+            Option
+            <col-status slot="list-menu-item-slot" status="neutral">
+              <col-icon name="check-circle-fill"></col-icon>
+              Neutral
+            </col-status>
+          </col-list-menu-item>
+          <col-list-menu-item>Option</col-list-menu-item>
+          <col-list-menu-item>Option</col-list-menu-item>
+        </col-list-menu>
+      </div>
+    </col-grid-item>
+  </col-grid>
+</div>`,
+      },
+    },
+  },
 };
