@@ -23,6 +23,8 @@ type JustifyContent =
   | 'space-evenly';
 type AlignItems = 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'stretch';
 type FlexWrap = 'nowrap' | 'wrap' | 'wrap-reverse';
+type MinHeight = '200px' | '300px' | '400px' | '500px';
+type Position = 'relative' | 'absolute';
 
 /**
  * Type defining available style properties for story layouts.
@@ -52,6 +54,8 @@ export type Styles = {
   height?: string;
   width?: string;
   margin?: string;
+  minHeight?: MinHeight;
+  position?: Position;
 };
 
 export interface StylesOptions {
@@ -106,6 +110,8 @@ const getStyles = (options?: StylesOptions): string => {
     height: 'height',
     width: 'width',
     margin: 'margin',
+    minHeight: 'min-height',
+    position: 'position',
   };
 
   const styleArray: string[] = [];

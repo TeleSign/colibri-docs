@@ -41,4 +41,5 @@ export const HTML_BOOLEAN_ATTRIBUTES = [
   'badge',
   'counter',
   'multiselectable',
+  'labelfirst',
 ];
