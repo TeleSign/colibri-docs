@@ -276,11 +276,29 @@ export const SampleText = 'Lorem ipsum dolor sit amet';
     **With disabled state:**
     <Canvas of={ColTypographyStories.LinkWithDisabledState} />
 
+    **Non-anchor elements as links:**
+    <Canvas of={ColTypographyStories.DivAsLink} />
+
     For semantic HTML, it is recommended to set the `element` attribute to `a` as shown in the code snippets above and as follows:
 
     ```html
     <col-typography variant="link" element="a">Link</col-typography>
     ```
+
+    However, you can also use other HTML elements as interactive links. When you set `variant="link"` with any element (like `div`, `span`, `p`, etc.), the component automatically provides full link functionality:
+
+    - **Accessibility**: Proper keyboard navigation and screen reader support
+    - **Navigation**: Click handling for URLs, new tab opening, and downloads
+    - **Visual feedback**: Cursor changes and hover states
+    - **State management**: Disabled state handling and proper focus management
+
+    ```html
+    <col-typography variant="link" element="div" href="https://example.com" newtab>
+      Clickable div that opens in new tab
+    </col-typography>
+    ```
+
+    This is particularly useful when you need to maintain specific HTML structure while still providing link functionality.
 
     <h4>Sizes</h4>
     The Link variant offers 2 different sizes. The size is set using the `size` attribute on the component:
