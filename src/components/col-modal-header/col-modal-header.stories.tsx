@@ -1,4 +1,4 @@
-import { html, nothing } from 'lit';
+import { css, html } from 'lit';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
 import { fn } from '@storybook/test';
@@ -116,6 +116,18 @@ export default meta;
 
 type Story = ColibriStory<StoryArgs>;
 
+const styles = css`
+    .example-container {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+  .example-content {
+    padding: 20px;
+    background: #f5f5f5;
+  }
+`;
+
 const renderModalHeader: Story['render'] = ({
                                               title,
                                               customHeader,
@@ -126,11 +138,14 @@ const renderModalHeader: Story['render'] = ({
                                               actionText,
                                               onClose,
                                             }) => html`
-  <div style="border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
+  <style>
+    ${styles}
+  </style>
+  <div class="example-container">
     <col-modal-header
       title=${title}
-      ?custom-header=${customHeader || nothing}
-      ?hidden-close-button=${hiddenCloseButton || nothing}
+      ?custom-header=${customHeader}
+      ?hidden-close-button=${hiddenCloseButton}
       @on-close=${onClose}
     >
       ${iconName && html`<col-icon slot="icon" name=${iconName}></col-icon>`}
@@ -141,7 +156,7 @@ const renderModalHeader: Story['render'] = ({
         </col-button>
       `}
     </col-modal-header>
-    <div style="padding: 20px; background: #f5f5f5;">
+    <div class="example-content">
       <p>Modal content goes here...</p>
     </div>
   </div>

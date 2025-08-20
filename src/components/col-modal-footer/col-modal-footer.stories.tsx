@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { css, html } from 'lit';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
 import { fn } from '@storybook/test';
@@ -88,6 +88,23 @@ export default meta;
 
 type Story = ColibriStory<StoryArgs>;
 
+const styles = css`
+    .example-main {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+  .example-content {
+    padding: 20px;
+    background: #f5f5f5;
+  }
+  .example-description {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+`;
+
 const renderModalFooter: Story['render'] = ({
                                               description,
                                               customDescription,
@@ -96,8 +113,11 @@ const renderModalFooter: Story['render'] = ({
                                               onPrimaryClick,
                                               onSecondaryClick,
                                             }) => html`
-  <div style="border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
-    <div style="padding: 20px; background: #f5f5f5;">
+  <style>
+    ${styles}
+  </style>
+  <div class="example-main">
+    <div class="example-content">
       <p>Modal content goes here...</p>
     </div>
     <col-modal-footer
@@ -146,8 +166,11 @@ export const SingleAction: Story = {
     description: '',
   },
   render: ({ description, customDescription, primaryButtonText, onPrimaryClick }) => html`
-    <div style="border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
-      <div style="padding: 20px; background: #f5f5f5;">
+    <style>
+      ${styles}
+    </style>
+    <div class="example-main">
+      <div class="example-content">
         <p>Modal content goes here...</p>
       </div>
       <col-modal-footer
@@ -170,14 +193,17 @@ export const CustomDescription: Story = {
     customDescription: true,
   },
   render: ({ customDescription, onPrimaryClick, onSecondaryClick }) => html`
-    <div style="border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
-      <div style="padding: 20px; background: #f5f5f5;">
+    <style>
+      ${styles}
+    </style>
+    <div class="example-main">
+      <div class="example-content">
         <p>Modal content goes here...</p>
       </div>
       <col-modal-footer ?custom-description=${customDescription}>
-        <div style="display: flex; align-items: center; gap: 8px;">
+        <div class="example-description">
           <col-icon name="info-circle" style="color: #2196F3;"></col-icon>
-          <span style="font-size: 14px; color: #666;">
+          <span>
             Your changes will be saved automatically
           </span>
         </div>
@@ -200,8 +226,11 @@ export const DescriptionOnly: Story = {
     description: 'Processing... Please wait',
   },
   render: ({ description, customDescription }) => html`
-    <div style="border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
-      <div style="padding: 20px; background: #f5f5f5;">
+    <style>
+      ${styles}
+    </style>
+    <div class="example-main">
+      <div class="example-content">
         <p>Modal content goes here...</p>
       </div>
       <col-modal-footer

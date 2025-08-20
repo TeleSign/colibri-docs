@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { css, html } from 'lit';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
 import { fn } from '@storybook/test';
@@ -25,6 +25,9 @@ const meta = {
         transform: formatCodeString,
       },
     },
+    __sb: {
+      minHeight: '400px',
+    }
   },
   argTypes: {
     active: {
@@ -283,7 +286,7 @@ export const WithHeaderFooter: Story = {
         >
           <col-modal-header slot="header" title="Drawer Title" @on-close=${handleClose}></col-modal-header>
 
-          <div style="padding: 20px;">
+          <div>
             <h3>Main Content Area</h3>
             <p>This drawer demonstrates the use of header and footer slots.</p>
             <p>The header includes a title and close button.</p>
@@ -299,6 +302,30 @@ export const WithHeaderFooter: Story = {
     `;
   },
 };
+
+const navStylesExample = css`
+  .navExample {
+    padding: 20px;
+  }
+
+  .listExample {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .listItemExample {
+    margin-bottom: 16px;
+  }
+
+  .itemExample {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+  }
+`;
 
 /**
  * Navigation drawer example
@@ -325,6 +352,9 @@ export const NavigationDrawer: Story = {
     };
 
     return html`
+      <style>
+        ${navStylesExample}
+      </style>
       <div>
         <col-button @click=${handleButtonClick}>
           <col-icon name="six-dots"></col-icon>
@@ -341,28 +371,28 @@ export const NavigationDrawer: Story = {
         >
           <col-modal-header slot="header" title="Navigation" @on-close=${handleClose}></col-modal-header>
 
-          <nav style="padding: 20px;">
-            <ul style="list-style: none; padding: 0; margin: 0;">
-              <li style="margin-bottom: 16px;">
-                <a href="#" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit;">
+          <nav class="navExample">
+            <ul class="listExample">
+              <li class="listItemExample">
+                <a href="#" class="itemExample">
                   <col-icon name="home"></col-icon>
                   <span>Home</span>
                 </a>
               </li>
-              <li style="margin-bottom: 16px;">
-                <a href="#" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit;">
+              <li class="listItemExample">
+                <a href="#" class="itemExample">
                   <col-icon name="person"></col-icon>
                   <span>Profile</span>
                 </a>
               </li>
-              <li style="margin-bottom: 16px;">
-                <a href="#" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit;">
+              <li class="listItemExample">
+                <a href="#" class="itemExample">
                   <col-icon name="settings"></col-icon>
                   <span>Settings</span>
                 </a>
               </li>
-              <li style="margin-bottom: 16px;">
-                <a href="#" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit;">
+              <li class="listItemExample">
+                <a href="#" class="itemExample">
                   <col-icon name="alert-circle"></col-icon>
                   <span>Help</span>
                 </a>
@@ -413,57 +443,25 @@ export const FormDrawer: Story = {
         >
           <col-modal-header slot="header" title="Edit User" @on-close=${handleClose}></col-modal-header>
 
-          <form style="padding: 20px; display: flex; flex-direction: column; gap: 20px;">
+          <form>
             <div>
-              <label for="firstName" style="display: block; margin-bottom: 8px;">First Name</label>
-              <input
-                type="text"
-                id="firstName"
-                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"
-                placeholder="Enter first name"
-              />
+              <col-text-field label="With Label" input-type="text" variant="outline" placeholder="Enter text here..." validation-timing="blur">
+              </col-text-field>
             </div>
 
             <div>
-              <label for="lastName" style="display: block; margin-bottom: 8px;">Last Name</label>
-              <input
-                type="text"
-                id="lastName"
-                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"
-                placeholder="Enter last name"
-              />
+              <col-text-field label="With Label" input-type="text" variant="outline" placeholder="Enter text here..." validation-timing="blur">
+              </col-text-field>
             </div>
 
             <div>
-              <label for="email" style="display: block; margin-bottom: 8px;">Email</label>
-              <input
-                type="email"
-                id="email"
-                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"
-                placeholder="Enter email address"
-              />
+              <col-text-field label="With Label" input-type="text" variant="outline" placeholder="Enter text here..." validation-timing="blur">
+              </col-text-field>
             </div>
 
             <div>
-              <label for="role" style="display: block; margin-bottom: 8px;">Role</label>
-              <select
-                id="role"
-                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"
-              >
-                <option>Admin</option>
-                <option>Editor</option>
-                <option>Viewer</option>
-              </select>
-            </div>
-
-            <div>
-              <label for="notes" style="display: block; margin-bottom: 8px;">Notes</label>
-              <textarea
-                id="notes"
-                rows="4"
-                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"
-                placeholder="Add any notes..."
-              ></textarea>
+              <col-text-field label="With Label" input-type="text" variant="outline" placeholder="Enter text here..." validation-timing="blur">
+              </col-text-field>
             </div>
           </form>
 
@@ -481,6 +479,12 @@ export const FormDrawer: Story = {
  * Multiple drawers example
  */
 export const MultipleDrawers: Story = {
+  parameters: {
+    __sb: {
+      display: 'flex',
+      gap: '16px',
+    }
+  },
   render: () => {
     const handleLeftClick = () => {
       const drawer = document.querySelector('#leftDrawer');
@@ -497,24 +501,22 @@ export const MultipleDrawers: Story = {
     };
 
     return html`
-      <div style="display: flex; gap: 16px;">
-        <col-button @click=${handleLeftClick}>Open Left Drawer</col-button>
-        <col-button @click=${handleRightClick}>Open Right Drawer</col-button>
+      <col-button @click=${handleLeftClick}>Open Left Drawer</col-button>
+      <col-button @click=${handleRightClick}>Open Right Drawer</col-button>
 
-        <col-drawer id="leftDrawer" position="left" size="small">
-          <div style="padding: 20px;">
-            <h3>Left Drawer</h3>
-            <p>This drawer slides in from the left.</p>
-          </div>
-        </col-drawer>
+      <col-drawer id="leftDrawer" position="left" size="small">
+        <div>
+          <h3>Left Drawer</h3>
+          <p>This drawer slides in from the left.</p>
+        </div>
+      </col-drawer>
 
-        <col-drawer id="rightDrawer" position="right" size="small">
-          <div style="padding: 20px;">
-            <h3>Right Drawer</h3>
-            <p>This drawer slides in from the right.</p>
-          </div>
-        </col-drawer>
-      </div>
+      <col-drawer id="rightDrawer" position="right" size="small">
+        <div>
+          <h3>Right Drawer</h3>
+          <p>This drawer slides in from the right.</p>
+        </div>
+      </col-drawer>
     `;
   },
 };

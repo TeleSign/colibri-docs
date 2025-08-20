@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { css, html } from 'lit';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
 import { fn } from '@storybook/test';
@@ -8,9 +8,9 @@ type StoryArgs = {
   absolute: boolean;
   contained: boolean;
   persistent: boolean;
-  noBackdrop: boolean;
-  noCentered: boolean;
-  noFocusTrap: boolean;
+  nobackdrop: boolean;
+  nocentered: boolean;
+  nofocustrap: boolean;
   zIndex?: number;
   content: string;
   onOverlayClickOutside?: () => void;
@@ -26,6 +26,10 @@ const meta = {
         excludeDecorators: true,
         transform: formatCodeString,
       },
+    },
+    __sb: {
+      minHeight: '200px',
+      position: 'relative',
     },
   },
   argTypes: {
@@ -65,7 +69,7 @@ const meta = {
         defaultValue: { summary: 'false' },
       },
     },
-    noBackdrop: {
+    nobackdrop: {
       name: 'no-backdrop',
       control: 'boolean',
       description: 'Hide the backdrop',
@@ -75,7 +79,7 @@ const meta = {
         defaultValue: { summary: 'false' },
       },
     },
-    noCentered: {
+    nocentered: {
       name: 'no-centered',
       control: 'boolean',
       description: 'Remove centering transforms for custom positioning',
@@ -85,7 +89,7 @@ const meta = {
         defaultValue: { summary: 'false' },
       },
     },
-    noFocusTrap: {
+    nofocustrap: {
       name: 'no-focus-trap',
       control: 'boolean',
       description: 'Disable focus trapping',
@@ -133,9 +137,9 @@ const meta = {
     absolute: false,
     contained: false,
     persistent: false,
-    noBackdrop: false,
-    noCentered: false,
-    noFocusTrap: false,
+    nobackdrop: false,
+    nocentered: false,
+    nofocustrap: false,
     content: 'Overlay content goes here. Click outside or press Escape to close.',
     onOverlayClickOutside: fn(),
     onOverlayEscape: fn(),
@@ -146,14 +150,40 @@ export default meta;
 
 type Story = ColibriStory<StoryArgs>;
 
+const styles = css`
+  .example-container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .example-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .example-custom-position {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+`;
+
 const renderOverlay: Story['render'] = ({
                                           active,
                                           absolute,
                                           contained,
                                           persistent,
-                                          noBackdrop,
-                                          noCentered,
-                                          noFocusTrap,
+                                          nobackdrop,
+                                          nocentered,
+                                          nofocustrap,
                                           zIndex,
                                           content,
                                           onOverlayClickOutside,
@@ -175,32 +205,33 @@ const renderOverlay: Story['render'] = ({
   };
 
   return html`
-    <div style="min-height: 200px; position: relative;">
-      <col-button @click=${handleButtonClick}>Open Overlay</col-button>
+    <style>
+      ${styles}
+    </style>
+    <col-button @click=${handleButtonClick}>Open Overlay</col-button>
 
-      ${persistent ? "Please click on close button after open overlay" : ''}
+    ${persistent ? 'Please click on close button after open overlay' : ''}
 
-      <col-overlay
-        id=${ID}
-        ?active=${active}
-        ?absolute=${absolute}
-        ?contained=${contained}
-        ?persistent=${persistent}
-        ?no-backdrop=${noBackdrop}
-        ?no-centered=${noCentered}
-        ?no-focus-trap=${noFocusTrap}
-        z-index=${zIndex || null}
-        @overlay-click-outside=${onOverlayClickOutside}
-        @overlay-escape=${onOverlayEscape}
-      >
-        <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
-          ${content}
-          <div style="display: flex; align-items: center; justify-content: center; margin-top: 10px">
-            <col-button slot="actions" color="primary" @click=${handleClose}>Close</col-button>
-          </div>
+    <col-overlay
+      id=${ID}
+      ?active=${active}
+      ?absolute=${absolute}
+      ?contained=${contained}
+      ?persistent=${persistent}
+      ?no-backdrop=${nobackdrop}
+      ?no-centered=${nocentered}
+      ?no-focus-trap=${nofocustrap}
+      z-index=${zIndex || null}
+      @overlay-click-outside=${onOverlayClickOutside}
+      @overlay-escape=${onOverlayEscape}
+    >
+      <div class="example-container">
+        ${content}
+        <div class="example-item">
+          <col-button slot="actions" color="primary" @click=${handleClose}>Close</col-button>
         </div>
-      </col-overlay>
-    </div>
+      </div>
+    </col-overlay>
   `;
 };
 
@@ -224,7 +255,7 @@ export const Default: Story = {
 export const NoBackdrop: Story = {
   args: {
     active: false,
-    noBackdrop: true,
+    nobackdrop: true,
     content: 'This overlay has no backdrop. Click the content area or press Escape to close.',
   },
   render: renderOverlay,
@@ -251,10 +282,21 @@ export const Persistent: Story = {
 export const CustomPosition: Story = {
   args: {
     active: false,
-    noCentered: true,
+    nocentered: true,
     content: 'This overlay is not centered. Custom positioning can be applied.',
   },
-  render: ({ active, absolute, contained, persistent, noBackdrop, noCentered, noFocusTrap, zIndex, onOverlayClickOutside, onOverlayEscape }) => {
+  render: ({
+             active,
+             absolute,
+             contained,
+             persistent,
+             nobackdrop,
+             nocentered,
+             nofocustrap,
+             zIndex,
+             onOverlayClickOutside,
+             onOverlayEscape,
+           }) => {
     const handleButtonClick = () => {
       const overlay = document.getElementById('overlay-custom-position');
       if (overlay) {
@@ -263,27 +305,28 @@ export const CustomPosition: Story = {
     };
 
     return html`
-      <div style="min-height: 200px; position: relative;">
-        <col-button @click=${handleButtonClick}>Open Custom Positioned Overlay</col-button>
+      <style>
+        ${styles}
+      </style>
+      <col-button @click=${handleButtonClick}>Open Custom Positioned Overlay</col-button>
 
-        <col-overlay
-          id="overlay-custom-position"
-          ?active=${active}
-          ?absolute=${absolute}
-          ?contained=${contained}
-          ?persistent=${persistent}
-          ?no-backdrop=${noBackdrop}
-          ?no-centered=${noCentered}
-          ?no-focus-trap=${noFocusTrap}
-          z-index=${zIndex || null}
-          @overlay-click-outside=${onOverlayClickOutside}
-          @overlay-escape=${onOverlayEscape}
-        >
-          <div style="position: fixed; top: 20px; right: 20px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
-            Custom positioned content (top-right corner)
-          </div>
-        </col-overlay>
-      </div>
+      <col-overlay
+        id="overlay-custom-position"
+        ?active=${active}
+        ?absolute=${absolute}
+        ?contained=${contained}
+        ?persistent=${persistent}
+        ?no-backdrop=${nobackdrop}
+        ?no-centered=${nocentered}
+        ?no-focus-trap=${nofocustrap}
+        z-index=${zIndex || null}
+        @overlay-click-outside=${onOverlayClickOutside}
+        @overlay-escape=${onOverlayEscape}
+      >
+        <div class="example-custom-position">
+          Custom positioned content (top-right corner)
+        </div>
+      </col-overlay>
     `;
   },
 };
@@ -294,7 +337,7 @@ export const CustomPosition: Story = {
 export const NoFocusTrap: Story = {
   args: {
     active: false,
-    noFocusTrap: true,
+    nofocustrap: true,
     content: 'This overlay does not trap focus. Tab navigation will move outside the overlay.',
   },
   render: renderOverlay,
