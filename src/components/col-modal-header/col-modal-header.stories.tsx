@@ -5,8 +5,8 @@ import { fn } from '@storybook/test';
 
 type StoryArgs = {
   title: string;
-  customHeader: boolean;
-  hiddenCloseButton: boolean;
+  customheader: boolean;
+  noclosebutton: boolean;
   iconName: string;
   badgeText: string;
   badgeVariant: string;
@@ -35,8 +35,8 @@ const meta = {
         defaultValue: { summary: '""' },
       },
     },
-    customHeader: {
-      name: 'custom-header',
+    customheader: {
+      name: 'customheader',
       control: 'boolean',
       description: 'Enable custom header mode for full control over layout',
       table: {
@@ -45,8 +45,8 @@ const meta = {
         defaultValue: { summary: 'false' },
       },
     },
-    hiddenCloseButton: {
-      name: 'hidden-close-button',
+    noclosebutton: {
+      name: 'noclosebutton',
       control: 'boolean',
       description: 'Hide the default close button',
       table: {
@@ -102,8 +102,8 @@ const meta = {
   },
   args: {
     title: 'Modal Title',
-    customHeader: false,
-    hiddenCloseButton: false,
+    customheader: false,
+    noclosebutton: false,
     iconName: '',
     badgeText: '',
     badgeVariant: 'default',
@@ -130,8 +130,8 @@ const styles = css`
 
 const renderModalHeader: Story['render'] = ({
                                               title,
-                                              customHeader,
-                                              hiddenCloseButton,
+                                              customheader,
+                                              noclosebutton,
                                               iconName,
                                               badgeText,
                                               badgeVariant,
@@ -144,8 +144,8 @@ const renderModalHeader: Story['render'] = ({
   <div class="example-container">
     <col-modal-header
       title=${title}
-      ?custom-header=${customHeader}
-      ?hidden-close-button=${hiddenCloseButton}
+      ?customheader=${customheader}
+      ?noclosebutton=${noclosebutton}
       @on-close=${onClose}
     >
       ${iconName && html`<col-icon slot="icon" name=${iconName}></col-icon>`}
@@ -212,7 +212,7 @@ export const WithActions: Story = {
 export const NoCloseButton: Story = {
   args: {
     title: 'Required Action',
-    hiddenCloseButton: true,
+    noclosebutton: true,
   },
   render: renderModalHeader,
 };

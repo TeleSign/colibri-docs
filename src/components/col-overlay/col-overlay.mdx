@@ -99,7 +99,7 @@ import { Callout } from '../../_storybook/components';
 
     ### Loading Overlay
     ```html
-    <col-overlay active persistent no-focus-trap>
+    <col-overlay active persistent nofocustrap>
       <div class="loading-spinner">
         <span>Loading...</span>
       </div>
@@ -108,7 +108,7 @@ import { Callout } from '../../_storybook/components';
 
     ### Tooltip/Popover (no backdrop)
     ```html
-    <col-overlay active no-backdrop no-centered>
+    <col-overlay active nobackdrop nocentered>
       <div class="tooltip" style="position: fixed; top: 100px; left: 200px;">
         Tooltip content
       </div>
@@ -125,8 +125,8 @@ import { Callout } from '../../_storybook/components';
     <!-- Internal implementation of col-drawer -->
     <col-overlay
       active
-      no-centered
-      no-focus-trap
+      nocentered
+      nofocustrap
       @overlay-click-outside=${handleClose}
       @overlay-escape=${handleClose}
     >

@@ -70,7 +70,7 @@ const meta = {
       },
     },
     nobackdrop: {
-      name: 'no-backdrop',
+      name: 'nobackdrop',
       control: 'boolean',
       description: 'Hide the backdrop',
       table: {
@@ -80,7 +80,7 @@ const meta = {
       },
     },
     nocentered: {
-      name: 'no-centered',
+      name: 'nocentered',
       control: 'boolean',
       description: 'Remove centering transforms for custom positioning',
       table: {
@@ -90,7 +90,7 @@ const meta = {
       },
     },
     nofocustrap: {
-      name: 'no-focus-trap',
+      name: 'nofocustrap',
       control: 'boolean',
       description: 'Disable focus trapping',
       table: {
@@ -218,9 +218,9 @@ const renderOverlay: Story['render'] = ({
       ?absolute=${absolute}
       ?contained=${contained}
       ?persistent=${persistent}
-      ?no-backdrop=${nobackdrop}
-      ?no-centered=${nocentered}
-      ?no-focus-trap=${nofocustrap}
+      ?nobackdrop=${nobackdrop}
+      ?nocentered=${nocentered}
+      ?nofocustrap=${nofocustrap}
       z-index=${zIndex || null}
       @overlay-click-outside=${onOverlayClickOutside}
       @overlay-escape=${onOverlayEscape}
@@ -316,9 +316,9 @@ export const CustomPosition: Story = {
         ?absolute=${absolute}
         ?contained=${contained}
         ?persistent=${persistent}
-        ?no-backdrop=${nobackdrop}
-        ?no-centered=${nocentered}
-        ?no-focus-trap=${nofocustrap}
+        ?nobackdrop=${nobackdrop}
+        ?nocentered=${nocentered}
+        ?nofocustrap=${nofocustrap}
         z-index=${zIndex || null}
         @overlay-click-outside=${onOverlayClickOutside}
         @overlay-escape=${onOverlayEscape}

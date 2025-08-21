@@ -8,7 +8,7 @@ type StoryArgs = {
   position: 'left' | 'right';
   size: 'small' | 'medium' | 'large';
   width?: number;
-  noFocusTrap: boolean;
+  nofocustrap: boolean;
   headerContent?: string;
   footerContent?: string;
   mainContent?: string;
@@ -68,8 +68,8 @@ const meta = {
         defaultValue: { summary: 'undefined' },
       },
     },
-    noFocusTrap: {
-      name: 'no-focus-trap',
+    nofocustrap: {
+      name: 'nofocustrap',
       control: 'boolean',
       description: 'Disable focus trapping within the drawer',
       table: {
@@ -114,7 +114,7 @@ const meta = {
     active: false,
     position: 'right',
     size: 'small',
-    noFocusTrap: false,
+    nofocustrap: false,
     headerContent: '',
     footerContent: '',
     mainContent: 'This is the drawer content. Click outside or press Escape to close.',
@@ -134,7 +134,7 @@ const renderDrawer: Story['render'] = ({
                                          position,
                                          size,
                                          width,
-                                         noFocusTrap,
+                                         nofocustrap,
                                          headerContent,
                                          footerContent,
                                          mainContent,
@@ -158,7 +158,7 @@ const renderDrawer: Story['render'] = ({
         position=${position}
         size=${size}
         width=${width || null}
-        ?no-focus-trap=${noFocusTrap}
+        ?nofocustrap=${nofocustrap}
         @overlay-click-outside=${onOverlayClickOutside}
       >
         ${headerContent ? html`
@@ -256,7 +256,7 @@ export const WithHeaderFooter: Story = {
     footerContent: '',
     mainContent: '',
   },
-  render: ({ active, position, size, width, noFocusTrap, onOverlayClickOutside }) => {
+  render: ({ active, position, size, width, nofocustrap, onOverlayClickOutside }) => {
     const handleButtonClick = () => {
       const drawer = document.getElementById('drawer-header-footer');
       if (drawer) {
@@ -281,7 +281,7 @@ export const WithHeaderFooter: Story = {
           position=${position}
           size=${size}
           width=${width || null}
-          ?no-focus-trap=${noFocusTrap}
+          ?nofocustrap=${nofocustrap}
           @overlay-click-outside=${onOverlayClickOutside}
         >
           <col-modal-header slot="header" title="Drawer Title" @on-close=${handleClose}></col-modal-header>
@@ -336,7 +336,7 @@ export const NavigationDrawer: Story = {
     position: 'left',
     size: 'small',
   },
-  render: ({ active, position, size, noFocusTrap, onOverlayClickOutside }) => {
+  render: ({ active, position, size, nofocustrap, onOverlayClickOutside }) => {
     const handleButtonClick = () => {
       const drawer = document.getElementById('drawer-navigation');
       if (drawer) {
@@ -366,7 +366,7 @@ export const NavigationDrawer: Story = {
           ?active=${active}
           position=${position}
           size=${size}
-          ?no-focus-trap=${noFocusTrap}
+          ?nofocustrap=${nofocustrap}
           @overlay-click-outside=${onOverlayClickOutside}
         >
           <col-modal-header slot="header" title="Navigation" @on-close=${handleClose}></col-modal-header>
@@ -414,7 +414,7 @@ export const FormDrawer: Story = {
     position: 'right',
     size: 'medium',
   },
-  render: ({ active, position, size, noFocusTrap, onOverlayClickOutside }) => {
+  render: ({ active, position, size, nofocustrap, onOverlayClickOutside }) => {
     const handleButtonClick = () => {
       const drawer = document.getElementById('drawer-form-focus');
       if (drawer) {
@@ -438,7 +438,7 @@ export const FormDrawer: Story = {
           ?active=${active}
           position=${position}
           size=${size}
-          ?no-focus-trap=${noFocusTrap}
+          ?nofocustrap=${nofocustrap}
           @overlay-click-outside=${onOverlayClickOutside}
         >
           <col-modal-header slot="header" title="Edit User" @on-close=${handleClose}></col-modal-header>
