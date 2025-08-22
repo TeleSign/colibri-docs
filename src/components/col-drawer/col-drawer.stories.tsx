@@ -69,7 +69,6 @@ const meta = {
       },
     },
     nofocustrap: {
-      name: 'nofocustrap',
       control: 'boolean',
       description: 'Disable focus trapping within the drawer',
       table: {

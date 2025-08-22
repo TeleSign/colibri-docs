@@ -34,7 +34,6 @@ const meta = {
       },
     },
     customDescription: {
-      name: 'custom-description',
       control: 'boolean',
       description: 'Enable custom description mode for full control over left content',
       table: {

@@ -36,7 +36,6 @@ const meta = {
       },
     },
     customheader: {
-      name: 'customheader',
       control: 'boolean',
       description: 'Enable custom header mode for full control over layout',
       table: {
@@ -46,7 +45,6 @@ const meta = {
       },
     },
     noclosebutton: {
-      name: 'noclosebutton',
       control: 'boolean',
       description: 'Hide the default close button',
       table: {

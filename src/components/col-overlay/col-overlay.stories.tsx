@@ -70,7 +70,6 @@ const meta = {
       },
     },
     nobackdrop: {
-      name: 'nobackdrop',
       control: 'boolean',
       description: 'Hide the backdrop',
       table: {
@@ -80,7 +79,6 @@ const meta = {
       },
     },
     nocentered: {
-      name: 'nocentered',
       control: 'boolean',
       description: 'Remove centering transforms for custom positioning',
       table: {
@@ -90,7 +88,6 @@ const meta = {
       },
     },
     nofocustrap: {
-      name: 'nofocustrap',
       control: 'boolean',
       description: 'Disable focus trapping',
       table: {
