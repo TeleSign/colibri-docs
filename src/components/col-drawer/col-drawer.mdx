@@ -1,0 +1,192 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as ColDrawerStories from './col-drawer.stories';
+import { Callout } from '../../_storybook/components';
+
+<Meta of={ColDrawerStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Drawer</Title>
+    The Drawer component is a sliding panel that overlays the main content from the edge of the viewport. It's commonly used for navigation menus, forms, filters, or displaying supplementary content without navigating away from the current page.
+
+    <Subtitle>Table of contents</Subtitle>
+    - [How to use it](#how-to-use-it)
+      - [Installation](#installation)
+      - [Best Practices](#best-practices)
+    - [When to use it](#when-to-use-it)
+    - [Component preview](#component-preview)
+      - [Basic Drawer](#basic-drawer)
+      - [Left Position](#left-position)
+      - [Different Sizes](#different-sizes)
+      - [With Header and Footer](#with-header-and-footer)
+      - [Navigation Drawer](#navigation-drawer)
+      - [Form Drawer](#form-drawer)
+    - [Properties](#properties)
+    - [Events](#events)
+    - [Accessibility](#accessibility)
+    - [Interact with the component](#interact-with-the-component)
+
+    ## How to use it
+
+    ### Installation
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, ColDrawer, ColOverlay, ColModalHeader, ColModalFooter } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web components:
+        ```typescript
+        // Register specific components
+        registerColibriComponents([ColDrawer, ColOverlay, ColModalHeader, ColModalFooter]);
+
+        // Or register all components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-drawer active position="right" size="small">
+          <p>Drawer content goes here</p>
+        </col-drawer>
+        ```
+
+    ### Best Practices
+
+    * **Clear purpose**: Use drawers for secondary actions or content that doesn't require a full page navigation.
+    * **Appropriate sizing**: Choose the drawer size based on content needs - small for navigation, medium for forms, large for detailed content.
+    * **Focus management**: The drawer automatically traps focus when open, ensuring keyboard navigation stays within the drawer.
+    * **Escape hatch**: Always provide a clear way to close the drawer (close button, backdrop click, or Escape key).
+    * **Responsive design**: Consider how drawers behave on mobile devices - they may need to be full-width on smaller screens.
+    * **Animation**: The drawer includes smooth slide-in/out animations for better user experience.
+
+    ## When to use it
+
+    * **Navigation menus**: Mobile-style navigation that slides in from the side
+    * **Forms and filters**: Edit forms or filter panels that don't require full page navigation
+    * **Settings panels**: Configuration or preference screens
+    * **Shopping carts**: E-commerce cart summaries and checkout flows
+    * **Detail views**: Additional information that supplements the main content
+    * **Task panels**: Multi-step workflows or wizards
+
+    ## Component preview
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+
+    ### Basic Drawer
+    A simple drawer that slides in from the right side (default).
+    <Canvas of={ColDrawerStories.Default} />
+
+    ### Left Position
+    Drawer sliding in from the left side of the viewport.
+    <Canvas of={ColDrawerStories.LeftPosition} />
+
+    ### Different Sizes
+    The drawer component offers three preset sizes:
+
+    #### Medium Size (640px)
+    <Canvas of={ColDrawerStories.MediumSize} />
+
+    #### Large Size (960px)
+    <Canvas of={ColDrawerStories.LargeSize} />
+
+    #### Custom Width
+    You can also set a custom width in pixels.
+    <Canvas of={ColDrawerStories.CustomWidth} />
+
+    ### With Header and Footer
+    Using modal header and footer components for consistent layout.
+    <Canvas of={ColDrawerStories.WithHeaderFooter} />
+
+    ### Navigation Drawer
+    Example of a navigation menu drawer pattern.
+    <Canvas of={ColDrawerStories.NavigationDrawer} />
+
+    ### Form Drawer
+    Example of using a drawer for form editing.
+    <Canvas of={ColDrawerStories.FormDrawer} />
+
+    ## Properties
+    <ArgTypes of={ColDrawerStories} />
+
+    ## Events
+
+    | Event Name | Description | Event Detail |
+    |------------|-------------|--------------|
+    | `overlay-click-outside` | Fired when clicking outside the drawer (on the backdrop) | `{ overlay: ColOverlay, originalEvent: Event }` |
+    | `overlay-escape` | Fired when pressing the Escape key | `{ overlay: ColOverlay, originalEvent: KeyboardEvent }` |
+
+    ## Accessibility
+
+    The Drawer component is built with accessibility in mind:
+
+    * **Focus trap**: When open, focus is trapped within the drawer to prevent keyboard navigation outside
+    * **ARIA attributes**: Proper ARIA labels and roles for screen readers
+    * **Keyboard navigation**:
+      - `Tab` / `Shift+Tab` to navigate through focusable elements
+      - `Escape` to close the drawer (when not persistent)
+    * **Backdrop click**: Clicking outside the drawer closes it (configurable)
+    * **Scroll lock**: Body scroll is disabled when drawer is open to prevent background scrolling
+
+    ### Disabling Focus Trap
+
+    In some cases, you may want to disable the focus trap:
+    ```html
+    <col-drawer nofocustrap>
+      <!-- Content -->
+    </col-drawer>
+    ```
+
+    ## CSS Custom Properties
+
+    You can customize the drawer width using CSS custom properties:
+
+    ```css
+    col-drawer {
+      --col-drawer-width: 500px; /* Custom width */
+    }
+    ```
+
+    ## JavaScript API
+
+    ### Opening and Closing Programmatically
+
+    ```javascript
+    // Get drawer element
+    const drawer = document.querySelector('col-drawer');
+
+    // Open drawer
+    drawer.active = true;
+    // or
+    drawer.setAttribute('active', 'true');
+
+    // Close drawer
+    drawer.active = false;
+    // or
+    drawer.removeAttribute('active');
+
+    // Listen for close events
+    drawer.addEventListener('overlay-click-outside', (e) => {
+      console.log('Drawer closed by clicking outside');
+    });
+    ```
+
+    ### Updating Focus Trap
+
+    If you dynamically change the drawer content, you may need to update the focus trap:
+
+    ```javascript
+    const drawer = document.querySelector('col-drawer');
+
+    // After adding new focusable elements
+    drawer.updateFocusTrap();
+    ```
+
+    <Subtitle>Interact with the component</Subtitle>
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/organisms-drawer--default) section.
+
+  </div>
+</div>
