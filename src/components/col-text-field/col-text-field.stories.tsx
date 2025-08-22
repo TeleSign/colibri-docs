@@ -35,6 +35,7 @@ type StoryArgs = {
   keyup: () => void;
   paste: () => void;
   invalid: () => void;
+  validationChange: () => void;
 };
 
 const meta = {
@@ -251,6 +252,17 @@ const meta = {
       },
       if: { arg: 'name', neq: '' },
     },
+    validationChange: {
+      action: 'validation-change',
+      description: 'Fired when validation state changes.',
+      table: {
+        category: 'Events',
+        type: {
+          summary:
+            'CustomEvent<{ valid: boolean, validationMessage: string, validity: ValidityState, value: string, touched: boolean, dirty: boolean }>',
+        },
+      },
+    },
     change: {
       action: 'change',
       description: 'Fired when the value is committed.',
@@ -360,6 +372,7 @@ const meta = {
     pattern: '',
     minLength: 0,
     validationTiming: 'blur',
+    validationChange: action('validation-change'),
     change: action('change'),
     input: action('input'),
     focus: action('focus'),
@@ -406,6 +419,7 @@ const renderTextField: Story['render'] = args => html`
     @keyup=${args.keyup}
     @paste=${args.paste}
     @invalid=${args.invalid}
+    @validation-change=${args.validationChange}
   >
     ${args.iconVisible
       ? html`<col-icon slot="icon" name=${args.iconName} size=${args.iconSize}></col-icon>`
