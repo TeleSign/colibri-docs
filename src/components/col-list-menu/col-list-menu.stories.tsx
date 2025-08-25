@@ -396,7 +396,7 @@ const interactiveStoryStyles = (outputId: string) => {
   `;
 };
 
-const listMenu = (listMenuId: string, multiple: boolean = false) => html`
+const checkboxList = (listMenuId: string, multiple: boolean = false) => html`
   <col-list-menu id="${listMenuId}" ?multiselectable=${multiple}>
     <col-list-menu-item value="option-1">
       <col-checkbox></col-checkbox>
@@ -492,7 +492,7 @@ export const ListMenuCheckbox: Story = {
               <div class="storybook-flex">
                 <div class="storybook-col">
                   <h4>ColListMenu</h4>
-                  <div class="list-menu-container">${listMenu(listMenuId)}</div>
+                  <div class="list-menu-container">${checkboxList(listMenuId)}</div>
                   <h4>Event Output</h4>
                   <pre id="${outputId}">Select an item to see the event detail</pre>
                 </div>
@@ -509,7 +509,7 @@ export const ListMenuCheckbox: Story = {
             `
           : html`
               <h3>ColListMenu with single select ColCheckbox</h3>
-              ${listMenu(listMenuId)}
+              ${checkboxList(listMenuId)}
             `}
       </div>
     `;
@@ -577,7 +577,7 @@ export const ListMenuCheckboxWithMultiSelect: Story = {
               <div class="storybook-flex">
                 <div class="storybook-col">
                   <h4>ColListMenu</h4>
-                  <div class="list-menu-container">${listMenu(listMenuId, true)}</div>
+                  <div class="list-menu-container">${checkboxList(listMenuId, true)}</div>
                   <h4>Event Output</h4>
                   <pre id="${outputId}">Select an item to see the event detail</pre>
                 </div>
@@ -594,7 +594,7 @@ export const ListMenuCheckboxWithMultiSelect: Story = {
             `
           : html`
               <h3>ColListMenu with multiple select ColCheckbox</h3>
-              ${listMenu(listMenuId, true)}
+              ${checkboxList(listMenuId, true)}
             `}
       </div>
     `;
@@ -717,7 +717,7 @@ export const ListMenuSlots: Story = {
         justify-content: center;
       }
     </style>
-    <col-list-menu>
+    <col-list-menu id="list-menu-slots">
       <div slot="banner">
         <col-banner variant="info">
           <span slot="title">Title</span>
@@ -743,6 +743,17 @@ export const ListMenuSlots: Story = {
       </div>
     </col-list-menu>
   `,
+  play: async ({ canvasElement }) => {
+    const menu = canvasElement.querySelector('#list-menu-slots') as ColListMenu;
+    setupSingleSelect(menu);
+  },
+  parameters: {
+    docs: {
+      story: {
+        autoplay: true,
+      },
+    },
+  },
 };
 
 export const ListMenuItemSlots: Story = {
@@ -759,7 +770,7 @@ export const ListMenuItemSlots: Story = {
       <col-grid cols="3" gap="m">
         <col-grid-item>
           <div class="list-menu-wrapper">
-            <col-list-menu>
+            <col-list-menu id="list-menu-item-button-slot">
               <col-list-menu-item>
                 Option
                 <col-button slot="list-menu-item-slot">
@@ -773,7 +784,7 @@ export const ListMenuItemSlots: Story = {
         </col-grid-item>
         <col-grid-item>
           <div class="list-menu-wrapper">
-            <col-list-menu>
+            <col-list-menu id="list-menu-item-tag-slot">
               <col-list-menu-item>
                 Option
                 <col-tag slot="list-menu-item-slot" text="Option" readonly>
@@ -787,7 +798,7 @@ export const ListMenuItemSlots: Story = {
         </col-grid-item>
         <col-grid-item>
           <div class="list-menu-wrapper">
-            <col-list-menu>
+            <col-list-menu id="list-menu-item-status-slot">
               <col-list-menu-item>
                 Option
                 <col-status slot="list-menu-item-slot" status="neutral">
@@ -803,8 +814,19 @@ export const ListMenuItemSlots: Story = {
       </col-grid>
     </div>
   `,
+  play: async ({ canvasElement }) => {
+    const buttonMenu = canvasElement.querySelector('#list-menu-item-button-slot') as ColListMenu;
+    setupSingleSelect(buttonMenu);
+    const tagMenu = canvasElement.querySelector('#list-menu-item-tag-slot') as ColListMenu;
+    setupSingleSelect(tagMenu);
+    const statusMenu = canvasElement.querySelector('#list-menu-item-status-slot') as ColListMenu;
+    setupSingleSelect(statusMenu);
+  },
   parameters: {
     docs: {
+      story: {
+        autoplay: true,
+      },
       source: {
         code: `
 // --- JAVASCRIPT CODE ---
