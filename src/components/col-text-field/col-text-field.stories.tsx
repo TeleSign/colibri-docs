@@ -614,12 +614,16 @@ export const InteractiveFormExample: Story = {
 
       if (!isInDocs) {
         form.addEventListener('submit', (event) => {
-          event.preventDefault();
-          if (!form.checkValidity()) {
-            const firstInvalid = form.querySelector(':invalid');
-            if (firstInvalid) firstInvalid.focus();
+          // Check if the event was already prevented by the FormValidationController
+          if (event.defaultPrevented) {
+            output.textContent = 'Form submission blocked by validation';
             return;
           }
+
+          // Prevent the default form submission (page reload)
+          event.preventDefault();
+
+          // Only process if validation passed
           const formData = new FormData(form);
           const data = Object.fromEntries(formData.entries());
           output.textContent = JSON.stringify(data, null, 2);
@@ -730,10 +734,29 @@ export const InteractiveFormExample: Story = {
                   <h3>Form Data</h3>
                   <div class="storybook-code">
                     <pre>
-// Handle form submit
-const form = event.target as HTMLFormElement;
-const formData = new FormData(form);
-const formValues = Object.fromEntries(formData.entries());
+// Handle form submit with FormValidationController
+form.addEventListener('submit', (event) => {
+  // Check if validation was already prevented
+  if (event.defaultPrevented) {
+    console.log('Form submission blocked by validation');
+    return;
+  }
+
+  // Prevent page reload
+  event.preventDefault();
+
+  // Process form data only if validation passed
+  const formData = new FormData(form);
+  const formValues = Object.fromEntries(formData.entries());
+  console.log('Form submitted successfully:', formValues);
+});
+
+// Handle form reset - FormResetController handles component reset automatically
+form.addEventListener('reset', () => {
+  // Only handle UI cleanup - components reset automatically
+  // A custom message or action can be added here
+  console.log('Form reset completed');
+});
                     </pre
                     >
                   </div>

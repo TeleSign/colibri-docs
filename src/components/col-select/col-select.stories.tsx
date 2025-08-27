@@ -650,33 +650,16 @@ export const InteractiveFormExample: Story = {
 
       if (!isInDocs) {
         form.addEventListener('submit', (event) => {
+          // Check if the event was already prevented by the FormValidationController
+          if (event.defaultPrevented) {
+            output.textContent = 'Form submission blocked by validation';
+            return;
+          }
+
+          // Prevent the default form submission (page reload)
           event.preventDefault();
 
-          // Validate col-select components manually since they use readonly inputs
-          const selects = form.querySelectorAll('col-select');
-          let isFormValid = true;
-          let firstInvalidSelect = null;
-
-          selects.forEach(select => {
-            const isValid = select.validate(select.value);
-            if (!isValid && !firstInvalidSelect) {
-              firstInvalidSelect = select;
-            }
-            isFormValid = isFormValid && isValid;
-          });
-
-          // Also check other form elements
-          if (isFormValid && !form.checkValidity()) {
-            const firstInvalid = form.querySelector(':invalid');
-            if (firstInvalid) firstInvalid.focus();
-            return;
-          }
-
-          if (!isFormValid && firstInvalidSelect) {
-            firstInvalidSelect.focus();
-            return;
-          }
-
+          // Only process if validation passed
           const formData = new FormData(form);
           const data = Object.fromEntries(formData.entries());
           output.textContent = JSON.stringify(data, null, 2);
@@ -759,6 +742,7 @@ export const InteractiveFormExample: Story = {
                       id="country"
                       name="country"
                       label="Country"
+                      value="us"
                       placeholder="Select your country"
                       required
                       helper="This will be used for shipping."
@@ -776,6 +760,7 @@ export const InteractiveFormExample: Story = {
                       id="role"
                       name="role"
                       label="User Role"
+                      value="admin"
                       placeholder="Select your role"
                       required
                       badge
@@ -814,21 +799,29 @@ export const InteractiveFormExample: Story = {
                   <h3>Form Data</h3>
                   <div class="storybook-code">
                     <pre>
-// Handle form submit with col-select validation
-const form = event.target as HTMLFormElement;
-event.preventDefault();
+// Handle form submit with FormValidationController
+form.addEventListener('submit', (event) => {
+  // Check if validation was already prevented
+  if (event.defaultPrevented) {
+    console.log('Form submission blocked by validation');
+    return;
+  }
 
-// Col-select uses readonly inputs, so validate manually
-const selects = form.querySelectorAll('col-select');
-const selectsValid = Array.from(selects).every(select => select.validate(select.value));
+  // Prevent page reload
+  event.preventDefault();
 
-if (!selectsValid || !form.checkValidity()) {
-  // Focus first invalid element and prevent submission
-  return;
-}
+  // Process form data only if validation passed
+  const formData = new FormData(form);
+  const formValues = Object.fromEntries(formData.entries());
+  console.log('Form submitted successfully:', formValues);
+});
 
-const formData = new FormData(form);
-const formValues = Object.fromEntries(formData.entries());
+// Handle form reset - FormResetController handles component reset automatically
+form.addEventListener('reset', () => {
+  // Only handle UI cleanup - components reset automatically
+  // A custom message or action can be added here
+  console.log('Form reset completed');
+});
                     </pre
                     >
                   </div>
