@@ -519,7 +519,7 @@ export const InteractiveFormExample: Story = {
         }
       </style>
       <div class="storybook-card">
-        ${isInDocs
+        ${!isInDocs
           ? html`
               <div class="storybook-flex">
                 <div class="storybook-col">
