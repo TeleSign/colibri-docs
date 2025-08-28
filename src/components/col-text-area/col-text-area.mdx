@@ -1,0 +1,236 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as stories from './col-text-area.stories';
+import { Callout } from '../../_storybook/components';
+
+<Meta of={stories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Text Area</Title>
+    The `col-text-area` component captures multi-line user input within forms. It extends the standard HTML `<textarea>` element with enhanced features, including integrated labels, helper text, validation states, and character counting, all while ensuring full accessibility and seamless form integration.
+
+    <Callout variant="info" icon="ℹ️">
+      This component is built upon the `FormComponent` base, inheriting properties like `name` for native form participation. For more details on form integration, see the [Form Integration](#form-integration) section.
+    </Callout>
+
+    <Subtitle>Table of contents</Subtitle>
+    - [How to use it](#how-to-use-it)
+    - [When to use it](#when-to-use-it)
+    - [Component preview](#component-preview)
+    - [States](#states)
+    - [Form Integration](#form-integration)
+    - [Accessibility](#accessibility)
+    - [Properties](#properties)
+    - [Interact with the component](#interact-with-the-component)
+
+    ## How to use it
+    1. Install the packages:
+        ```bash
+        npm install @colibri/colibri-components
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, registerAllComponents, ColTextArea, ColTypography } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+
+        <Callout variant="info" icon="ℹ️">
+          **Dependency Note:** The `col-text-area` component depends on the `col-typography` component for rendering labels, helper text, and error messages. Make sure to import and register `ColTypography` along with `ColTextArea`.
+        </Callout>
+
+    3. Register the web components:
+        ```typescript
+        // Option 1: Register specific components
+        registerColibriComponents([ColTextArea, ColTypography]);
+
+        // Option 2: Register all Colibri components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-text-area
+          id="user-comment"
+          name="user-comment"
+          label="Your Comment"
+          placeholder="Enter your comment"
+        ></col-text-area>
+        ```
+
+    ## When to use it
+    The `col-text-area` component is the standard choice for multi-line text inputs. Use it when you need to:
+
+    - **Collect Detailed Feedback**: Gather extensive user comments, reviews, or messages.
+    - **Implement Descriptions**: Allow users to enter detailed descriptions or biographical information.
+    - **Enforce Constraints**: Apply character limits using `charCount`.
+    - **Build Forms**: Integrate seamlessly into HTML forms for data submission and validation.
+    - **Provide Guidance**: Use `label`, `subLabel`, and `helper` text to guide the user.
+
+    ## Component preview
+
+    <div>
+      The following examples showcase the core features and visual options of the `col-text-area` component.
+    </div>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+
+    ### Basic Usage
+    <div>
+      The most fundamental text area requires only a `label` to identify its purpose.
+    </div>
+    <Canvas of={stories.Default} />
+
+    ### With Sub-Label
+    <div>
+      Use the `sub-label` property to display additional, non-critical information directly next to the main label. This is often used for marking fields as "(Optional)".
+    </div>
+    <Canvas of={stories.WithSubLabel} />
+
+    ### With Helper Text
+    <div>
+     The `helper` property provides instructional text that appears below the input, guiding the user on the expected data format or purpose.
+    </div>
+    <Canvas of={stories.WithHelper} />
+
+    ### With Character Count
+    <div>
+      Set the `char-count` property to enforce a maximum length. The component will display a running count and prevent further input once the limit is reached.
+    </div>
+    <Canvas of={stories.WithCharacterCount} />
+
+    ### With Custom ID
+
+    <div>
+      This example demonstrates how to provide a custom ID for better form integration and accessibility.
+    </div>
+    <Canvas of={stories.WithCustomId} />
+
+  </div>
+</div>
+
+## States
+
+<div>
+  The `col-text-area` component supports several states to reflect user interaction and validation
+  feedback.
+</div>
+
+### Disabled
+
+<div>
+  Use the `disabled` property to render the field non-interactive. This is useful for preventing
+  user input when a field is not applicable.
+</div>
+<Canvas of={stories.Disabled} />
+
+### Readonly
+
+<div>
+  The `readonly` property allows the field to display a value that cannot be edited by the user, but
+  can still be selected and copied.
+</div>
+<Canvas of={stories.ReadOnly} />
+
+### Error
+
+<div>
+  The `error` property visually marks the field as invalid and displays an error message. This is
+  typically set in response to failed validation.
+</div>
+<Canvas of={stories.Error} />
+
+## Form Integration
+
+<div>
+  The `col-text-area` is designed for seamless integration with native HTML forms, supporting
+  standard validation attributes and custom validation logic.
+</div>
+
+<Callout variant="tip" icon="💡">
+  For best accessibility and form association, provide a unique `id` for each field. This ensures
+  proper label-input association and makes targeting fields in tests or scripts easier.
+</Callout>
+
+### Form Association
+
+The component automatically associates with HTML forms using the `name` attribute. For enhanced form integration, consider using the `id` attribute:
+
+```html
+<form id="user-feedback">
+  <col-text-area id="comment" name="comment" label="Comment" required></col-text-area>
+</form>
+```
+
+### Validation
+
+#### Required
+
+<div>Add the `required` property to ensure the field must be filled before form submission.</div>
+<Canvas of={stories.Required} />
+
+#### Minimum Length
+
+<div>Use the `min-length` property to enforce a minimum number of characters.</div>
+<Canvas of={stories.WithMinLength} />
+
+#### Custom Validation Message
+
+<div>
+  You can provide a custom error message using the `validation-message` property, which will be
+  shown when the field is invalid.
+</div>
+<Canvas of={stories.WithCustomValidationMessage} />
+
+#### Custom Validation Timing
+
+<div>
+  Control when validation occurs by setting the `validation-timing` property to `blur` (default) or
+  `input`.
+</div>
+<Canvas of={stories.WithCustomValidationTiming} />
+
+### Interactive Form Example
+
+<div>
+  The following example demonstrates how multiple `col-text-area` components work together in a
+  native HTML form. It shows real-time validation, form submission, and reset behavior, with the
+  submitted data displayed below the form.
+</div>
+<Callout variant="info" icon="ℹ️">
+  This preview shows the form structure and styling excluding the form submission and reset
+  functionality. For the **full interactive experience** with working form submission, reset, and
+  validation, visit the [Canvas tab](/story/molecules-text-area--interactive-form-example).
+</Callout>
+<Canvas of={stories.InteractiveFormExample} />
+
+## Accessibility
+
+<div>
+  The `col-text-area` component is designed with accessibility in mind, ensuring that all users
+  including those using assistive technologies can interact with forms effectively.
+</div>
+
+- **Labeling:** The `label` property is always associated with the input for screen readers, either via a visible label or `aria-label`.
+- **Unique Identification:** Each component instance has unique IDs for all interactive elements, ensuring proper screen reader navigation.
+- **ID Management:**
+  - By default, the component generates a unique ID for each instance (e.g., `col-text-area-abc123`).
+  - You can provide a custom `id` attribute for more predictable targeting, accessibility, and testing.
+  - When a custom `id` is provided, all internal elements (label, helper, error, etc.) use that base (e.g., `my-id-label`, `my-id-helper`).
+- **Keyboard Navigation:** Fully navigable using Tab/Shift+Tab.
+- **ARIA Attributes:**
+  - Error and validation states are communicated using `aria-invalid` and `aria-describedby`.
+  - The `helper` and `error-message` properties are linked to the input for screen readers.
+- **Screen Reader Support:** All states (disabled, readonly, error) are announced appropriately.
+- **Best Practices:**
+  - Always provide a descriptive `label`.
+  - Use `helper` for additional instructions.
+  - Consider providing custom `id` attributes for better form integration and accessibility.
+  - Ensure custom validation messages are clear and concise.
+
+## Properties
+
+<ArgTypes of={stories} />
+
+## Interact with the component
+
+To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/molecules-text-area--default) section.
