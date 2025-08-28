@@ -334,7 +334,7 @@ const interactiveStoryStyles = (outputId: string) => {
   return html`
     <style>
       .storybook-card {
-        background: #f5f6fa;
+        background: #f1f1f1;
         box-shadow: 0 2px 8px rgba(16, 30, 54, 0.04);
         padding: 2rem;
         margin-bottom: 2rem;
@@ -431,7 +431,7 @@ export const ListMenuCheckbox: Story = {
         // State and Event management needed for ColListMenu
 
         // Helper to toggle selected state for item
-        function toggleSelectedItem(clickedItem) {
+        function toggleSingleCheckboxItem(clickedItem) {
           const checkboxItem = clickedItem.querySelector('col-checkbox');
           if (clickedItem.hasAttribute('selected')) {
             clickedItem.removeAttribute('selected');
@@ -443,7 +443,7 @@ export const ListMenuCheckbox: Story = {
         }
 
         // Helper to clear selection for all items except the one clicked
-        function selectSingle(listMenu, clickedItem) {
+        function selectCheckboxItem(listMenu, clickedItem) {
           listMenu.querySelectorAll('col-list-menu-item').forEach(item => {
             const checkboxItem = item.querySelector('col-checkbox');
             if (item !== clickedItem) {
@@ -452,64 +452,59 @@ export const ListMenuCheckbox: Story = {
             }
           });
 
-          toggleSelectedItem(clickedItem);
+          toggleSingleCheckboxItem(clickedItem);
         }
 
-        ${inPreCode ? '' : `const output = document.querySelector('#${outputId}');`}
+        ${inPreCode ? '' : `const checkboxOutput = document.querySelector('#${outputId}');`}
         // Add the EventListener to handle item selection
-        const menuList = document.querySelector('#${listMenuId}');
-        if (menuList) {
-          menuList.querySelectorAll('col-list-menu-item').forEach(item => {
+        const checkboxListMenu = document.querySelector('#${listMenuId}');
+        if (checkboxListMenu) {
+          checkboxListMenu.querySelectorAll('col-list-menu-item').forEach(item => {
             // Listen for our CustomEvent: 'list-menu-item-click'
             item.addEventListener('list-menu-item-click', event => {
               ${
                 inPreCode
                   ? `console.log("Get the information of the selected item: ", event.detail);`
-                  : `output.textContent = JSON.stringify(event.detail);`
+                  : `checkboxOutput.textContent = JSON.stringify(event.detail);`
               };
 
               // since 'multiselectable' is not present we only allow 1 item to be selected at a time
-              selectSingle(menuList, item);
+              selectCheckboxItem(checkboxListMenu, item);
             });
           });
         }
     `;
 
-    const script = `
-      const singleSelectIsInDocs = ${isInDocs};
-
-      if (singleSelectIsInDocs) {
-        ${listMenuScript(false)};
-      }
-    `;
-
     return html`
       ${interactiveStoryStyles(outputId)}
       <div class="storybook-card">
-        ${isInDocs
+        ${!isInDocs
           ? html`
               <h3>ColListMenu with single select ColCheckbox</h3>
               <div class="storybook-flex">
                 <div class="storybook-col">
                   <h4>ColListMenu</h4>
                   <div class="list-menu-container">${checkboxList(listMenuId)}</div>
+                </div>
+                <div class="storybook-col">
                   <h4>Event Output</h4>
                   <pre id="${outputId}">Select an item to see the event detail</pre>
                 </div>
-                <div class="storybook-col">
-                  <h4>Required Javascript</h4>
-                  <div class="storybook-code">
-                    <pre>${listMenuScript(true)}</pre>
-                  </div>
-                  <script>
-                    ${script};
-                  </script>
-                </div>
               </div>
+              <h4>Required Javascript</h4>
+              <div class="storybook-code">
+                <pre>${listMenuScript(true)}</pre>
+              </div>
+              <script>
+                ${listMenuScript(false)};
+              </script>
             `
           : html`
               <h3>ColListMenu with single select ColCheckbox</h3>
-              ${checkboxList(listMenuId)}
+              <div class="list-menu-container">${checkboxList(listMenuId)}</div>
+              <script>
+                ${listMenuScript(true)};
+              </script>
             `}
       </div>
     `;
@@ -543,7 +538,7 @@ export const ListMenuCheckboxWithMultiSelect: Story = {
             }
           }
         }
-        ${inPreCode ? '' : `const output = document.querySelector('#${outputId}');`}
+        ${inPreCode ? '' : `const multipleOutput = document.querySelector('#${outputId}');`}
         // Add the EventListener to handle item selection
         const multiList = document.querySelector('#${listMenuId}');
         if (multiList) {
@@ -552,7 +547,7 @@ export const ListMenuCheckboxWithMultiSelect: Story = {
               ${
                 inPreCode
                   ? `console.log("Get the information of the selected item: ", event.detail);`
-                  : `output.textContent = JSON.stringify(event.detail);`
+                  : `multipleOutput.textContent = JSON.stringify(event.detail);`
               };
               toggleCheckbox(item);
             });
@@ -560,41 +555,36 @@ export const ListMenuCheckboxWithMultiSelect: Story = {
         }
     `;
 
-    const script = `
-      const multipleSelectIsInDocs = ${isInDocs};
-
-      if (multipleSelectIsInDocs) {
-        ${listMenuScript(false)};
-      }
-    `;
-
     return html`
       ${interactiveStoryStyles(outputId)}
       <div class="storybook-card">
-        ${isInDocs
+        ${!isInDocs
           ? html`
               <h3>ColListMenu with multiple select ColCheckbox</h3>
               <div class="storybook-flex">
                 <div class="storybook-col">
                   <h4>ColListMenu</h4>
                   <div class="list-menu-container">${checkboxList(listMenuId, true)}</div>
+                </div>
+                <div class="storybook-col">
                   <h4>Event Output</h4>
                   <pre id="${outputId}">Select an item to see the event detail</pre>
                 </div>
-                <div class="storybook-col">
-                  <h4>Required Javascript</h4>
-                  <div class="storybook-code">
-                    <pre>${listMenuScript(true)}</pre>
-                  </div>
-                  <script>
-                    ${script};
-                  </script>
-                </div>
               </div>
+              <h4>Required Javascript</h4>
+              <div class="storybook-code">
+                <pre>${listMenuScript(true)}</pre>
+              </div>
+              <script>
+                ${listMenuScript(false)};
+              </script>
             `
           : html`
               <h3>ColListMenu with multiple select ColCheckbox</h3>
-              ${checkboxList(listMenuId, true)}
+              <div class="list-menu-container">${checkboxList(listMenuId, true)}</div>
+              <script>
+                ${listMenuScript(true)};
+              </script>
             `}
       </div>
     `;
@@ -649,7 +639,7 @@ export const ListMenuRadio: Story = {
             clickedItem.setAttribute('selected', '');
           }
         }
-        ${inPreCode ? '' : `const output = document.querySelector('#${outputId}');`}
+        ${inPreCode ? '' : `const radioOutput = document.querySelector('#${outputId}');`}
         // Add the EventListener to handle item selection
         const radioList = document.querySelector('#radio-list');
         if (radioList) {
@@ -658,7 +648,7 @@ export const ListMenuRadio: Story = {
               ${
                 inPreCode
                   ? `console.log("Get the information of the selected item: ", event.detail);`
-                  : `output.textContent = JSON.stringify(event.detail);`
+                  : `radioOutput.textContent = JSON.stringify(event.detail);`
               };
               selectRadio(radioList, item);
             });
@@ -666,41 +656,36 @@ export const ListMenuRadio: Story = {
         }
     `;
 
-    const script = `
-      const radioIsInDocs = ${isInDocs};
-
-      if (radioIsInDocs) {
-        ${radioScript(false)};
-      }
-    `;
-
     return html`
       ${interactiveStoryStyles(outputId)}
       <div class="storybook-card">
-        ${isInDocs
+        ${!isInDocs
           ? html`
               <h3>ColListMenu with ColRadio</h3>
               <div class="storybook-flex">
                 <div class="storybook-col">
                   <h4>ColListMenu</h4>
                   <div class="list-menu-container">${radioList}</div>
+                </div>
+                <div class="storybook-col">
                   <h4>Event Output</h4>
                   <pre id="${outputId}">Select an item to see the event detail</pre>
                 </div>
-                <div class="storybook-col">
-                  <h4>Required Javascript</h4>
-                  <div class="storybook-code">
-                    <pre>${radioScript(true)}</pre>
-                  </div>
-                  <script>
-                    ${script};
-                  </script>
-                </div>
               </div>
+              <h4>Required Javascript</h4>
+              <div class="storybook-code">
+                <pre>${radioScript(true)}</pre>
+              </div>
+              <script>
+                ${radioScript(false)};
+              </script>
             `
           : html`
               <h3>ColListMenu with ColRadio</h3>
-              ${radioList}
+              <div class="list-menu-container">${radioList}</div>
+              <script>
+                ${radioScript(true)};
+              </script>
             `}
       </div>
     `;
@@ -757,168 +742,162 @@ export const ListMenuSlots: Story = {
 };
 
 export const ListMenuItemSlots: Story = {
-  render: () => html`
-    <style>
-      .list-menu-grid {
-        background-color: #e5e5e5;
-      }
-      .list-menu-wrapper {
-        background-color: #fff;
-      }
-    </style>
-    <div class="list-menu-grid">
-      <col-grid cols="3" gap="m">
-        <col-grid-item>
-          <div class="list-menu-wrapper">
-            <col-list-menu id="list-menu-item-button-slot">
-              <col-list-menu-item>
-                Option
-                <col-button slot="list-menu-item-slot">
-                  <col-icon name="save" size="16px"></col-icon>
-                </col-button>
-              </col-list-menu-item>
-              <col-list-menu-item>Option</col-list-menu-item>
-              <col-list-menu-item>Option</col-list-menu-item>
-            </col-list-menu>
-          </div>
-        </col-grid-item>
-        <col-grid-item>
-          <div class="list-menu-wrapper">
-            <col-list-menu id="list-menu-item-tag-slot">
-              <col-list-menu-item>
-                Option
-                <col-tag slot="list-menu-item-slot" text="Option" readonly>
-                  <col-icon slot="icon" name="emoji-circle" size="16px"></col-icon>
-                </col-tag>
-              </col-list-menu-item>
-              <col-list-menu-item>Option</col-list-menu-item>
-              <col-list-menu-item>Option</col-list-menu-item>
-            </col-list-menu>
-          </div>
-        </col-grid-item>
-        <col-grid-item>
-          <div class="list-menu-wrapper">
-            <col-list-menu id="list-menu-item-status-slot">
-              <col-list-menu-item>
-                Option
-                <col-status slot="list-menu-item-slot" status="neutral">
-                  <col-icon name="check-circle-fill"></col-icon>
-                  Neutral
-                </col-status>
-              </col-list-menu-item>
-              <col-list-menu-item>Option</col-list-menu-item>
-              <col-list-menu-item>Option</col-list-menu-item>
-            </col-list-menu>
-          </div>
-        </col-grid-item>
-      </col-grid>
-    </div>
-  `,
-  play: async ({ canvasElement }) => {
-    const buttonMenu = canvasElement.querySelector('#list-menu-item-button-slot') as ColListMenu;
-    setupSingleSelect(buttonMenu);
-    const tagMenu = canvasElement.querySelector('#list-menu-item-tag-slot') as ColListMenu;
-    setupSingleSelect(tagMenu);
-    const statusMenu = canvasElement.querySelector('#list-menu-item-status-slot') as ColListMenu;
-    setupSingleSelect(statusMenu);
-  },
   parameters: {
-    docs: {
-      story: {
-        autoplay: true,
-      },
-      source: {
-        code: `
-// --- JAVASCRIPT CODE ---
-// State and Event management needed for ColListMenu
+    controls: { disable: true },
+    __sb: { height: '100%' },
+  },
+  render: () => {
+    const outputId = 'list-menu-item-slots-output';
+    const isInDocs = window.location.search.includes('viewMode=docs');
 
-// Helper to ensure only one item is selected at a time in a list
-function selectSingle(listMenu, clickedItem) {
-  listMenu.querySelectorAll('col-list-menu-item').forEach(item => {
-    if (item !== clickedItem) {
-      item.removeAttribute('selected');
-    }
-  });
-  clickedItem.setAttribute('selected', '');
-}
-
-// Handle selection and logging for all col-list-menu-item clicks
-document.querySelectorAll('col-list-menu').forEach(listMenu => {
-  listMenu.querySelectorAll('col-list-menu-item').forEach(item => {
-    item.addEventListener('list-menu-item-click', event => {
-      console.log(event.detail);
-      selectSingle(listMenu, item);
-    });
-
-    // Add listeners for all col-buttons in the named slot of each item
-    item.querySelectorAll('col-button[slot="list-menu-item-slot"]').forEach(button => {
-      button.addEventListener('click', () => {
-        // You can distinguish buttons by index, text, or a custom attribute
-        // Example: log which button was clicked and its parent item
-        console.log('ColButton was clicked', {
-          button,
-          parentItem: item,
-          value: item.getAttribute('value'),
-        });
-
-        // Example: perform different actions based on button or parent item
-        if (item.getAttribute('value') === 'special') {
-          // Do something special for this item
+    const listMenuScript = (inPreCode: boolean) => `
+      // --- JAVASCRIPT CODE ---
+      // State and Event management needed for ColListMenu
+      // Helper to toggle selected state for item
+      function toggleSlotItem(clickedItem) {
+        if (clickedItem.hasAttribute('selected')) {
+          clickedItem.removeAttribute('selected');
+        } else {
+          clickedItem.setAttribute('selected', '');
         }
-      });
-    });
-  });
-});
+      }
 
-// --- HTML ---
-<div class="list-menu-grid">
-  <col-grid cols="3" gap="m">
-    <col-grid-item>
-      <div class="list-menu-wrapper">
-        <col-list-menu>
-          <col-list-menu-item>
-            Option
-            <col-button slot="list-menu-item-slot">
-              <col-icon name="save" size="16px"></col-icon>
-            </col-button>
-          </col-list-menu-item>
-          <col-list-menu-item>Option</col-list-menu-item>
-          <col-list-menu-item>Option</col-list-menu-item>
-        </col-list-menu>
+      // Helper to ensure only one item is selected at a time in a list
+      function slotSelectSingle(listMenu, clickedItem) {
+        listMenu.querySelectorAll('col-list-menu-item').forEach(item => {
+          if (item !== clickedItem) {
+            item.removeAttribute('selected');
+          }
+        });
+        toggleSlotItem(clickedItem);
+      }
+      ${inPreCode ? '' : `const slotOutput = document.querySelector('#${outputId}');`}
+      // Handle selection and logging for all col-list-menu-item clicks
+      document.querySelectorAll('.list-menu-slot-example').forEach(listMenu => {
+        listMenu.querySelectorAll('col-list-menu-item').forEach(item => {
+          item.addEventListener('list-menu-item-click', event => {
+            ${
+              inPreCode
+                ? `console.log("Get the information of the selected item: ", event.detail);`
+                : `slotOutput.textContent = JSON.stringify(event.detail);`
+            };
+            slotSelectSingle(listMenu, item);
+          });
+
+          // Add listeners for all col-buttons in the named slot of each item
+          item.querySelectorAll('col-button[slot="list-menu-item-slot"]').forEach(button => {
+            button.addEventListener('click', () => {
+              // You can distinguish buttons by index, text, or a custom attribute
+              // Example: log which button was clicked and its parent item
+              ${
+                inPreCode
+                  ? `console.log('ColButton was clicked', {
+                button,
+                parentItem: item,
+                value: item.getAttribute('value'),
+              });`
+                  : `slotOutput.textContent = 'ColButton from item with value: ' + item.getAttribute('value') + ' was clicked';`
+              };
+
+
+              // Example: perform different actions based on button or parent item
+              if (item.getAttribute('value') === 'special') {
+                // Do something special for this item
+              }
+            });
+          });
+        });
+      });
+    `;
+
+    const listMenuItemSlots = html`
+      <style>
+        .list-menu-grid {
+          background-color: #f1f1f1;
+        }
+        .list-menu-wrapper {
+          background-color: #fff;
+        }
+      </style>
+      <div class="list-menu-grid">
+        <col-grid cols="3" gap="m">
+          <col-grid-item>
+            <div class="list-menu-wrapper">
+              <col-list-menu id="list-menu-item-button-slot" class="list-menu-slot-example">
+                <col-list-menu-item value="option-1">
+                  Option
+                  <col-button slot="list-menu-item-slot">
+                    <col-icon name="save" size="16px"></col-icon>
+                  </col-button>
+                </col-list-menu-item>
+                <col-list-menu-item value="option-2">Option</col-list-menu-item>
+                <col-list-menu-item value="option-3">Option</col-list-menu-item>
+              </col-list-menu>
+            </div>
+          </col-grid-item>
+          <col-grid-item>
+            <div class="list-menu-wrapper">
+              <col-list-menu id="list-menu-item-tag-slot" class="list-menu-slot-example">
+                <col-list-menu-item value="option-4">
+                  Option
+                  <col-tag slot="list-menu-item-slot" text="Option" readonly>
+                    <col-icon slot="icon" name="emoji-circle" size="16px"></col-icon>
+                  </col-tag>
+                </col-list-menu-item>
+                <col-list-menu-item value="option-5">Option</col-list-menu-item>
+                <col-list-menu-item value="option-6">Option</col-list-menu-item>
+              </col-list-menu>
+            </div>
+          </col-grid-item>
+          <col-grid-item>
+            <div class="list-menu-wrapper">
+              <col-list-menu id="list-menu-item-status-slot" class="list-menu-slot-example">
+                <col-list-menu-item value="option-7">
+                  Option
+                  <col-status slot="list-menu-item-slot" status="neutral">
+                    <col-icon name="check-circle-fill"></col-icon>
+                    Neutral
+                  </col-status>
+                </col-list-menu-item>
+                <col-list-menu-item value="option-8">Option</col-list-menu-item>
+                <col-list-menu-item value="option-9">Option</col-list-menu-item>
+              </col-list-menu>
+            </div>
+          </col-grid-item>
+        </col-grid>
       </div>
-    </col-grid-item>
-    <col-grid-item>
-      <div class="list-menu-wrapper">
-        <col-list-menu>
-          <col-list-menu-item>
-            Option
-            <col-tag slot="list-menu-item-slot" text="Option" readonly>
-              <col-icon slot="icon" name="emoji-circle" size="16px"></col-icon>
-            </col-tag>
-          </col-list-menu-item>
-          <col-list-menu-item>Option</col-list-menu-item>
-          <col-list-menu-item>Option</col-list-menu-item>
-        </col-list-menu>
+    `;
+
+    return html`
+      ${interactiveStoryStyles(outputId)}
+      <div class="storybook-card">
+        ${!isInDocs
+          ? html`
+              <h3>ColListMenuItem with Slots</h3>
+              <div>
+                <h4>ColListMenu</h4>
+                <div class="list-menu-container">${listMenuItemSlots}</div>
+              </div>
+              <div>
+                <h4>Event Output</h4>
+                <pre id="${outputId}">Select an item to see the event detail</pre>
+              </div>
+              <h4>Required Javascript</h4>
+              <div class="storybook-code">
+                <pre>${listMenuScript(true)}</pre>
+              </div>
+              <script>
+                ${listMenuScript(false)};
+              </script>
+            `
+          : html`
+              <h3>ColListMenuItem with Slots</h3>
+              <div class="list-menu-container">${listMenuItemSlots}</div>
+              <script>
+                ${listMenuScript(true)};
+              </script>
+            `}
       </div>
-    </col-grid-item>
-    <col-grid-item>
-      <div class="list-menu-wrapper">
-        <col-list-menu>
-          <col-list-menu-item>
-            Option
-            <col-status slot="list-menu-item-slot" status="neutral">
-              <col-icon name="check-circle-fill"></col-icon>
-              Neutral
-            </col-status>
-          </col-list-menu-item>
-          <col-list-menu-item>Option</col-list-menu-item>
-          <col-list-menu-item>Option</col-list-menu-item>
-        </col-list-menu>
-      </div>
-    </col-grid-item>
-  </col-grid>
-</div>`,
-      },
-    },
+    `;
   },
 };
