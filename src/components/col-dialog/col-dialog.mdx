@@ -16,11 +16,12 @@ import { Callout } from '../../_storybook/components';
       - [Best Practices](#best-practices)
     - [Component preview](#component-preview)
       - [Basic Dialog](#basic-dialog)
-      - [Left Position](#left-position)
-      - [Different Sizes](#different-sizes)
+      - [Custom Width and Height Dialog](#custom-width-and-height-dialog)
+      - [Small Dialog with No Footer](#small-dialog-with-no-footer)
+      - [Medium Dialog with Prevent Close](#medium-dialog-with-prevent-close)
+      - [Multiple Dialogs](#multiple-dialogs)
       - [With Header and Footer](#with-header-and-footer)
-      - [Navigation Dialog](#navigation-Dialog)
-      - [Form Dialog](#form-Dialog)
+      - [Interactive Example](#interactive-example)
     - [Properties](#properties)
     - [Events](#events)
     - [Accessibility](#accessibility)
@@ -49,7 +50,7 @@ import { Callout } from '../../_storybook/components';
     4. Use it in your HTML:
         ```html
         <col-dialog>
-          <col-modal-header slot="header" title="Full Dialog"></col-modal-header>
+          <col-modal-header slot="header" title="Dialog Title"></col-modal-header>
 
           <p>Basic paragraph to see the dialog content</p>
 
@@ -91,8 +92,62 @@ import { Callout } from '../../_storybook/components';
     </Callout>
 
     ### Basic Dialog
-    A simple dialog with default layout (with header and footer) and default small size.
+    A simple dialog with default layout (with header and footer) and default small size. For example purposes, the default banner is the one shown in the [Installation](#how-to-use-it) example.
+
     <Canvas of={ColDialogStories.Default} />
+
+    - It's expected for the header and footer slots to use `col-modal-header` and `col-modal-footer` but you can use your own implementation with other HTML tags.
+    - It's not mandatory to have header, content or footer. In the further examples you will see how the Dialog looks without one or more of these slots.
+
+    #### Considerations
+    In order to dispatch close and action events correctly you must add the `data-action` attribute to the buttons you use (whether you use `col-button`, `button` or other interactive HTML tag).
+    - **dialog-close**: Only dispatched by the header. Must have `data-action=close` value. For `col-modal-header` it already has a close button so there is no need of the `data-action` attribute.
+    ```html
+    <!-- Modal Header example implementation -->
+    <col-modal-header slot="header" title="Dialog Title"></col-modal-header>
+
+    <!-- Custom example implementation -->
+    <div slot="header" style="display: flex; justify-content: space-between">
+      <h4>Dialog Title</h4>
+      <button data-action="close" type="button"> Close </button>
+    </div>
+    ```
+    - **dialog-action**: Only dispatched by the footer. Must have `data-action=cancel` and/or `data-action=confirm` value.
+    ```html
+    <!-- Modal Footer example implementation -->
+    <col-modal-footer slot="footer">
+      <col-button slot="actions" data-action="cancel" color="secondary">Cancel</col-button>
+      <col-button slot="actions" data-action="confirm" color="primary">Confirm</col-button>
+    </col-modal-footer>
+
+    <!-- Custom example implementation -->
+    <div slot="footer" style="display: flex; justify-content: end">
+      <button data-action="cancel">Cancel</button>
+      <button data-action="confirm">Confirm</button>
+    </div>
+    ```
+
+    ### Custom Width and Height Dialog
+    A dialog with no footer is considered a Passive Dialog which only presents information to the user with further action besides the header close button
+    <Canvas of={ColDialogStories.CustomWidthHeight} />
+
+    ### Small Dialog with No Footer
+    A dialog with no footer is considered a Passive Dialog which only presents information to the user with further action besides the header close button
+    <Canvas of={ColDialogStories.SmallNoFooter} />
+    - Despite having a footer slot it won't show because of the `layout="nofooter"` attribute.
+
+    ### Medium Dialog with Prevent Close
+    A dialog with the `preventclose` property won't allow the user to close it by clicking outside of the dialog or pressing the `Escape` key.
+    <Canvas of={ColDialogStories.MediumPreventClose} />
+
+    ### Large Dialog with No Header
+    A dialog with no header is considered a Transactional Dialog which requests the user to complete and action.
+    <Canvas of={ColDialogStories.LargeNoHeader} />
+    - Despite having a header slot it won't show because of the `layout="noheader"` attribute.
+
+    ### Multiple Dialogs
+    It's posible to have two dialogs open at the same time. With the property `keepopen` you define the dialog you want to keep open until an action is completed and changes the value of the property.
+    <Canvas of={ColDialogStories.Multiple} />
 
     ## Properties
     <ArgTypes of={ColDialogStories} />

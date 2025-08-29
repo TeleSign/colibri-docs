@@ -42,4 +42,6 @@ export const HTML_BOOLEAN_ATTRIBUTES = [
   'counter',
   'multiselectable',
   'labelfirst',
+  'keepopen',
+  'preventclose',
 ];
