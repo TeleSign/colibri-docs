@@ -415,7 +415,7 @@ export const WithCustomValidationMessage: Story = {
     required: true,
     minLength: 5,
     errorMessage: 'Hey! You need to enter at least 5 characters.',
-    validationTiming: 'input',
+    helper: 'Validation triggers on blur (default).',
   },
   render: renderTextArea,
 };
@@ -426,6 +426,8 @@ export const WithCustomValidationTiming: Story = {
     required: true,
     validationTiming: 'input',
     helper: 'Validation triggers as you type.',
+    minLength: 5,
+    errorMessage: 'The value must be at least 5 characters long.',
   },
   render: renderTextArea,
 };
@@ -601,8 +603,8 @@ form.addEventListener('reset', () => {
                   helper="Any suggestions for improvement? (Max 200 chars)"
                 ></col-text-area>
                 <div style="display: flex; gap: 8px;">
-                  <button type="submit" ?disabled=${isInDocs}>Submit</button>
-                  <button type="reset" ?disabled=${isInDocs}>Reset</button>
+                  <button type="submit">Submit</button>
+                  <button type="reset">Reset</button>
                 </div>
               </form>
             `}
