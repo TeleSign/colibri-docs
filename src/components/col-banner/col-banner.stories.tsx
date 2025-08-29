@@ -3,7 +3,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { fn } from '@storybook/test';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils';
-import { BANNER_VARIANTS, getEnumValues } from '@telesign/colibri';
+import { ALERT_VARIANTS, getEnumValues } from '@telesign/colibri';
 
 type StoryArgs = {
   variant: string;
@@ -11,7 +11,7 @@ type StoryArgs = {
   onBannerClosed: () => void;
 };
 
-const variantSummary = Object.values(BANNER_VARIANTS)
+const variantSummary = Object.values(ALERT_VARIANTS)
   .map(variant => `'${variant}'`)
   .join(' | ');
 
@@ -29,7 +29,7 @@ const meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: getEnumValues(BANNER_VARIANTS),
+      options: getEnumValues(ALERT_VARIANTS),
       description: 'The visual variant of the banner.',
       table: {
         category: 'Core',
@@ -197,9 +197,9 @@ export const InteractiveExample: Story = {
 
     const onSubmit = (e: Event) => {
       e.preventDefault();
-      let form = document.getElementById('form1') as HTMLElement;
+      let form = document.getElementById('form1') as HTMLFormElement;
       if (!form.checkValidity()) {
-        const firstInvalid = form.querySelector(':invalid');
+        const firstInvalid = form.querySelector(':invalid') as HTMLInputElement;
         if (firstInvalid) firstInvalid.focus();
         showDangerBanner = !showDangerBanner;
       } else {
