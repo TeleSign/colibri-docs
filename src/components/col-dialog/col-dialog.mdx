@@ -1,0 +1,171 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as ColDialogStories from './col-dialog.stories';
+import { Callout } from '../../_storybook/components';
+
+<Meta of={ColDialogStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Dialog</Title>
+    The `col-dialog` component is a sliding panel that overlays the main content from the edge of the viewport. It's commonly used for navigation menus, forms, filters, or displaying supplementary content without navigating away from the current page.
+
+    <Subtitle>Table of contents</Subtitle>
+    - [How to use it](#how-to-use-it)
+      - [Installation](#installation)
+    - [When to use it](#when-to-use-it)
+      - [Best Practices](#best-practices)
+    - [Component preview](#component-preview)
+      - [Basic Dialog](#basic-dialog)
+      - [Left Position](#left-position)
+      - [Different Sizes](#different-sizes)
+      - [With Header and Footer](#with-header-and-footer)
+      - [Navigation Dialog](#navigation-Dialog)
+      - [Form Dialog](#form-Dialog)
+    - [Properties](#properties)
+    - [Events](#events)
+    - [Accessibility](#accessibility)
+    - [Interact with the component](#interact-with-the-component)
+
+    ## How to use it
+
+    ### Installation
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, ColDialog, ColModalHeader, ColModalFooter } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web components:
+        ```typescript
+        // Register specific components
+        registerColibriComponents([ColDialog, ColModalHeader, ColModalFooter]);
+
+        // Or register all components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-dialog>
+          <col-modal-header slot="header" title="Full Dialog"></col-modal-header>
+
+          <p>Basic paragraph to see the dialog content</p>
+
+          <col-modal-footer slot="footer">
+            <col-button slot="actions" data-action="cancel" color="secondary">Cancel</col-button>
+            <col-button slot="actions" data-action="confirm" color="primary">Save</col-button>
+          </col-modal-footer>
+        </col-dialog>
+        ```
+
+    ## When to use it
+
+    The dialog component is a pop-up window that requests the user's attention to perform a specific action or provide important information. The following are some common use cases for the Dialog component:
+
+    * **Confirmation of Actions**: When a user attempts to delete an item, the dialog may request a confirmation to ensure that the action was not performed in error.
+    * **Warnings and Alerts**: Inform the user about possible risks or consequences of an action, such as downloading files from untrusted sources.
+    * **Forms and Data Entry**: Provide a pop-up form for registration or login without redirecting the user to a new page.
+    * **Additional Information**: Display additional information about a product without redirecting the user away from the main page.
+    * **Choice of Options**: Allow the user to select specific preferences or settings in a controlled environment.
+    * **Terms and Conditions**: Display the terms and conditions that the user must accept before proceeding with a specific action.
+    * **Feedback and Surveys**: Ask users to provide comments or ratings about their experience.
+    * **Authentication and Authorization**: Ask the user to confirm their identity using a verification code or two-factor authentication.
+    * **Processes and Workflows**: Show the progress of an ongoing task and provide step-by-step instructions for completing a task or configuration.
+
+    ### Best Practices
+
+    * **Use dialogs sparingly**: Don’t overuse dialogs. They are disruptive and can easily annoy the user if used incorrectly or too frequently.
+    * **Dialogs should be user initiated**: A user action, such as clicking a button, should trigger the dialog to open. Don’t interrupt the user by opening a dialog when they aren’t expecting it.
+    * **Keep dialog tasks simple and focused**: Use dialog for secondary actions or content that doesn't require a full page navigation.
+    * **Appropriate sizing**: Choose the dialog size and layout based on content needs (passive without footer for notifications or transactional for form handling with or without header).
+    * **Focus management**: The dialog automatically traps focus when open, ensuring keyboard navigation stays within the Dialog.
+    * **Escape hatch**: Always provide a clear way to close the dialog (close button, backdrop click, or Escape key).
+    * **Responsive design**: Despite the device you are using, the dialog will fit according to the screen no matter the size, width or height values.
+    * **Animation**: The Dialog includes smooth slide-in/out animations for better user experience.
+
+    ## Component preview
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+
+    ### Basic Dialog
+    A simple dialog with default layout (with header and footer) and default small size.
+    <Canvas of={ColDialogStories.Default} />
+
+    ## Properties
+    <ArgTypes of={ColDialogStories} />
+
+    ## Accessibility
+
+    The Dialog component is built with accessibility in mind:
+
+    * **Focus trap**: When open, focus is trapped within the Dialog to prevent keyboard navigation outside.
+    * **ARIA attributes**: Proper ARIA labels and roles for screen readers.
+    * **Keyboard navigation**:
+      - `Tab` / `Shift+Tab` to navigate through focusable elements.
+      - `Escape` to close the Dialog (when not persistent).
+    * **Backdrop click**: Clicking outside the Dialog closes it (depending on preventClose property).
+    * **Scroll lock**: Body scroll is disabled when Dialog is open to prevent background scrolling.
+    * **Hide on action**: Despite the action executed (close, cancel, confirm) the dialog will automatically be inactive.
+
+    ## CSS Custom Properties
+
+    You can customize the dialog width and height using CSS custom properties:
+
+    ```css
+    col-dialog {
+      --dialog-width: 500px; /* Custom width */
+      --dialog-height: 400px; /* Custom height */
+    }
+    ```
+
+    ## JavaScript API
+
+    ### Opening and Closing Programmatically
+
+    ```javascript
+    // Get dialog element
+    const dialog = document.querySelector('col-dialog');
+
+    // Open dialog
+    dialog.active = true;
+    // or
+    dialog.setAttribute('active', 'true');
+
+    // Close dialog
+    dialog.active = false;
+    // or
+    dialog.removeAttribute('active');
+
+    // Listen for close events
+    dialog.addEventListener('dialog-close', (e) => {
+      console.log('dialog closed by clicking on the header close button');
+    });
+
+    dialog.addEventListener('dialog-action', (e) => {
+      console.log('dialog closed by clicking one of the footer buttons');
+    });
+
+    dialog.addEventListener('dialog-prevented', (e) => {
+      console.log('dialog prevented from closing by clicking or pressing Esc key on the overlay');
+    });
+    ```
+
+    ### Updating Focus Trap
+
+    If you dynamically change the dialog content, you may need to update the focus trap:
+
+    ```javascript
+    const dialog = document.querySelector('col-dialog');
+
+    // After adding new focusable elements
+    dialog.updateFocusTrap();
+    ```
+
+    <Subtitle>Interact with the component</Subtitle>
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/organisms-dialog--default) section.
+
+  </div>
+</div>
