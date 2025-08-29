@@ -197,9 +197,9 @@ export const InteractiveExample: Story = {
 
     const onSubmit = (e: Event) => {
       e.preventDefault();
-      let form = document.getElementById('form1') as HTMLElement;
+      let form = document.getElementById('form1') as HTMLFormElement;
       if (!form.checkValidity()) {
-        const firstInvalid = form.querySelector(':invalid');
+        const firstInvalid = form.querySelector(':invalid') as HTMLInputElement;
         if (firstInvalid) firstInvalid.focus();
         showDangerBanner = !showDangerBanner;
       } else {

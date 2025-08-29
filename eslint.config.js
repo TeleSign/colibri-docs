@@ -22,6 +22,7 @@ export default [
         HTMLElement: true,
         HTMLStyleElement: true,
         HTMLInputElement: true,
+        HTMLFormElement: true,
         MediaQueryList: true,
         MediaQueryListEvent: true,
         CSSStyleSheet: true,
