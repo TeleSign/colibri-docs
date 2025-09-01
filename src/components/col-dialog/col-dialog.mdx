@@ -21,9 +21,8 @@ import { Callout } from '../../_storybook/components';
       - [Medium Dialog with Prevent Close](#medium-dialog-with-prevent-close)
       - [Multiple Dialogs](#multiple-dialogs)
       - [With Header and Footer](#with-header-and-footer)
-      - [Interactive Example](#interactive-example)
+      - [Full Integration Example](#full-integration-example)
     - [Properties](#properties)
-    - [Events](#events)
     - [Accessibility](#accessibility)
     - [Interact with the component](#interact-with-the-component)
 
@@ -148,6 +147,12 @@ import { Callout } from '../../_storybook/components';
     ### Multiple Dialogs
     It's posible to have two dialogs open at the same time. With the property `keepopen` you define the dialog you want to keep open until an action is completed and changes the value of the property.
     <Canvas of={ColDialogStories.Multiple} />
+
+    ### Full Integration Example
+    The purpose of this example is to show real life scenarios to use and test the `col-dialog` component.
+    - Confirmation of deletion for elements
+    - Submit data from forms within the components
+    <Canvas of={ColDialogStories.FullIntegration} />
 
     ## Properties
     <ArgTypes of={ColDialogStories} />
