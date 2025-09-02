@@ -1,8 +1,10 @@
 import { html, nothing } from 'lit';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { action } from '@storybook/addon-actions';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils';
 import { icons } from '@telesign/colibri-icons/icons-list';
+import hljs from 'highlight.js/lib/core';
 
 type StoryArgs = {
   name: string;
@@ -670,6 +672,31 @@ export const InteractiveFormExample: Story = {
     const formId = 'number-field-form-example';
     const outputId = 'number-field-form-output';
     const isInDocs = window.location.search.includes('viewMode=docs');
+    const codeSnippet = hljs.highlightAuto(`
+// Handle form submit with FormValidationController
+form.addEventListener('submit', (event) => {
+  // Check if validation was already prevented
+  if (event.defaultPrevented) {
+    console.log('Form submission blocked by validation');
+    return;
+  }
+
+  // Prevent page reload
+  event.preventDefault();
+
+  // Process form data only if validation passed
+  const formData = new FormData(form);
+  const formValues = Object.fromEntries(formData.entries());
+  console.log('Form submitted successfully:', formValues);
+});
+
+// Handle form reset - FormResetController handles component reset automatically
+form.addEventListener('reset', () => {
+  // Only handle UI cleanup - components reset automatically
+  // A custom message or action can be added here
+  console.log('Form reset completed');
+});
+    `).value;
 
     const script = `
       const form = document.getElementById('${formId}');
@@ -717,12 +744,13 @@ export const InteractiveFormExample: Story = {
           width: 50%;
         }
         .storybook-code {
-          background: #23272f;
+          background: #0e0e2c;
           color: #fff;
           border-radius: 8px;
           padding: 1rem;
           font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
           font-size: 0.95rem;
+          font-weight: 600;
           margin-bottom: 1rem;
           white-space: pre;
           overflow-x: auto;
@@ -827,34 +855,9 @@ export const InteractiveFormExample: Story = {
                   </form>
                 </div>
                 <div class="storybook-col">
-                  <h3>Form Data</h3>
+                  <h3>Form Data Integration in JavaScript</h3>
                   <div class="storybook-code">
-                    <pre>
-// Handle form submit with FormValidationController
-form.addEventListener('submit', (event) => {
-  // Check if validation was already prevented
-  if (event.defaultPrevented) {
-    console.log('Form submission blocked by validation');
-    return;
-  }
-
-  // Prevent page reload
-  event.preventDefault();
-
-  // Process form data only if validation passed
-  const formData = new FormData(form);
-  const formValues = Object.fromEntries(formData.entries());
-  console.log('Form submitted successfully:', formValues);
-});
-
-// Handle form reset - FormResetController handles component reset automatically
-form.addEventListener('reset', () => {
-  // Only handle UI cleanup - components reset automatically
-  // A custom message or action can be added here
-  console.log('Form reset completed');
-});
-                    </pre
-                    >
+                    <pre>${unsafeHTML(codeSnippet)}</pre>
                   </div>
                   <h3>Form Output</h3>
                   <pre id="${outputId}">Submit the form to see the data here</pre>
