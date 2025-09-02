@@ -603,8 +603,8 @@ form.addEventListener('reset', () => {
                   helper="Any suggestions for improvement? (Max 200 chars)"
                 ></col-text-area>
                 <div style="display: flex; gap: 8px;">
-                  <button type="submit">Submit</button>
-                  <button type="reset">Reset</button>
+                  <button type="submit" ?disabled=${isInDocs}>Submit</button>
+                  <button type="reset" ?disabled=${isInDocs}>Reset</button>
                 </div>
               </form>
             `}
