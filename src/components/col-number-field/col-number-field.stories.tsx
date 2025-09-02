@@ -171,6 +171,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
       },
     },
     currencyCode: {
+      name: 'currency-code',
       control: 'text',
       description: 'The currency code for currency format (e.g., USD, EUR).',
       table: {
@@ -181,6 +182,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
       if: { arg: 'format', eq: 'currency' },
     },
     displayType: {
+      name: 'display-type',
       control: { type: 'select' },
       options: ['placeholder', 'text'],
       description: 'The display mode for the input field.',
@@ -245,6 +247,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
 
     // Content Properties
     errorMessage: {
+      name: 'error-message',
       control: 'text',
       description: 'Error message displayed when the input is in an error state.',
       table: {
@@ -255,6 +258,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
       if: { arg: 'error', eq: true },
     },
     validationTiming: {
+      name: 'validation-timing',
       control: { type: 'select' },
       options: ['blur', 'change', 'input', 'submit'],
       description: 'When to trigger validation.',
@@ -265,6 +269,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
       },
     },
     defaultValue: {
+      name: 'default-value',
       control: 'number',
       description: 'The default value for the field on reset.',
       table: {
