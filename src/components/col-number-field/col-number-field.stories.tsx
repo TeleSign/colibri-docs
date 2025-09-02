@@ -531,3 +531,132 @@ export const ReadOnly: Story = {
   },
   render: renderNumberField,
 };
+
+/**
+ * Size variants comparison - Large and small size variants
+ */
+export const SizeVariants: Story = {
+  parameters: {
+    controls: { disable: true },
+    __sb: {
+      display: 'flex',
+      gap: '1rem',
+      alignItems: 'flex-start',
+    },
+  },
+  render: () => html`
+    <col-number-field
+      size="large"
+      label="Large Size"
+      value="42"
+      helper="Large size variant with full button layout"
+      min="0"
+      max="100"
+      step="1"
+    ></col-number-field>
+    <col-number-field
+      size="small"
+      label="Small Size"
+      value="42"
+      helper="Small size variant with compact button layout"
+      min="0"
+      max="100"
+      step="1"
+    ></col-number-field>
+  `,
+};
+
+export const WithInitialValue: Story = {
+  args: {
+    label: 'Starting Amount',
+    value: '1000',
+    helper: 'This field starts with a pre-set value',
+    defaultValue: 1000,
+    format: 'currency',
+    currencyCode: 'USD',
+    min: 0,
+    step: 100,
+    precision: 0,
+  },
+  render: renderNumberField,
+};
+
+export const WithCustomValidationMessage: Story = {
+  args: {
+    label: 'Custom Validation',
+    value: '999',
+    helper: 'This field has a custom validation message',
+    error: true,
+    errorMessage: 'Custom error: Value must be between 1 and 500',
+    min: 1,
+    max: 500,
+    required: true,
+  },
+  render: renderNumberField,
+};
+
+export const WithConstraints: Story = {
+  args: {
+    label: 'Constrained Input',
+    value: '50',
+    helper: 'Value must be between 10 and 200',
+    min: 10,
+    max: 200,
+    step: 5,
+    precision: 0,
+  },
+  render: renderNumberField,
+};
+
+export const WithStepValues: Story = {
+  args: {
+    label: 'Step Configuration',
+    value: '0.5',
+    helper: 'Step value of 0.5 for fine control',
+    min: 0,
+    max: 10,
+    step: 0.5,
+    precision: 1,
+  },
+  render: renderNumberField,
+};
+
+export const WithPrecision: Story = {
+  args: {
+    label: 'High Precision',
+    value: '3.14159',
+    helper: 'Supports up to 5 decimal places',
+    min: 0,
+    max: 10,
+    step: 0.00001,
+    precision: 5,
+  },
+  render: renderNumberField,
+};
+
+export const WithValidationTiming: Story = {
+  args: {
+    label: 'Input Validation',
+    value: '42',
+    helper: 'Validates on every input change',
+    validationTiming: 'input',
+    min: 1,
+    max: 100,
+    required: true,
+  },
+  render: renderNumberField,
+};
+
+export const WithDisplayType: Story = {
+  args: {
+    label: 'Placeholder Mode',
+    value: '',
+    placeholder: 'Enter a number between 1-100',
+    helper: 'Uses placeholder text instead of default value',
+    displayType: 'placeholder',
+    min: 1,
+    max: 100,
+    step: 1,
+  },
+  render: renderNumberField,
+};
