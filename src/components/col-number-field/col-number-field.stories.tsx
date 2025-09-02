@@ -363,12 +363,12 @@ const meta: ColibriStoryMeta<StoryArgs> = {
   },
   args: {
     name: 'number-field',
+    value: '',
+    variant: 'outline',
+    size: 'large',
     label: '',
     helper: '',
-    value: '',
     placeholder: '',
-    size: 'large',
-    variant: 'outline',
     step: 1,
     format: 'number',
     displayType: 'text',
@@ -441,6 +441,93 @@ export const Default: Story = {
     helper: 'Enter a quantity between 1 and 100',
     min: 1,
     max: 100,
+  },
+  render: renderNumberField,
+};
+
+export const WithLabel: Story = {
+  args: {
+    label: 'Amount',
+    value: '10.50',
+    helper: 'Enter the amount in dollars',
+    format: 'currency',
+    currencyCode: 'USD',
+    min: 0,
+    step: 0.01,
+    precision: 2,
+  },
+  render: renderNumberField,
+};
+
+export const WithHelper: Story = {
+  args: {
+    label: 'Percentage',
+    value: '25',
+    helper: 'Enter a percentage between 0 and 100',
+    format: 'percentage',
+    min: 0,
+    max: 100,
+    step: 1,
+    precision: 0,
+  },
+  render: renderNumberField,
+};
+
+export const WithIcon: Story = {
+  args: {
+    size: 'small',
+    label: 'Search Results',
+    value: '42',
+    helper: 'Number of search results found',
+    iconVisible: true,
+    iconName: 'search',
+    iconSize: '16px',
+  },
+  render: renderNumberField,
+};
+
+export const Required: Story = {
+  args: {
+    label: 'Required Amount',
+    value: '',
+    helper: 'This field is required',
+    required: true,
+    error: true,
+    errorMessage: 'Amount is required',
+    min: 1,
+    max: 1000,
+  },
+  render: renderNumberField,
+};
+
+export const Disabled: Story = {
+  args: {
+    label: 'Disabled Field',
+    value: '50',
+    helper: 'This field is disabled',
+    disabled: true,
+  },
+  render: renderNumberField,
+};
+
+export const Error: Story = {
+  args: {
+    label: 'Invalid Input',
+    value: '999',
+    helper: 'Value exceeds maximum limit',
+    error: true,
+    errorMessage: 'Value must be less than 100',
+    max: 100,
+  },
+  render: renderNumberField,
+};
+
+export const ReadOnly: Story = {
+  args: {
+    label: 'Read Only Value',
+    value: '42',
+    helper: 'This value cannot be modified',
+    readOnly: true,
   },
   render: renderNumberField,
 };
