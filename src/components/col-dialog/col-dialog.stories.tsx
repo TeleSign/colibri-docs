@@ -403,7 +403,7 @@ export const Multiple: Story = {
     };
 
     const handleConfirmButtonClick = () => {
-      const primaryDialog = document.getElementById(ID1);
+      const primaryDialog = document.getElementById(ID1) as HTMLElement;
       if (primaryDialog) {
         primaryDialog.removeAttribute('active');
       }

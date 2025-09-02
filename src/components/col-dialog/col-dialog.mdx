@@ -7,7 +7,7 @@ import { Callout } from '../../_storybook/components';
 <div className="col-doc__wrapper">
   <div className="col-doc__container">
     <Title>Dialog</Title>
-    The `col-dialog` component is a sliding panel that overlays the main content from the edge of the viewport. It's commonly used for navigation menus, forms, filters, or displaying supplementary content without navigating away from the current page.
+    The `col-dialog` component is a pop-up window that requests the user's atention to perform a specific action or provide important information.
 
     <Subtitle>Table of contents</Subtitle>
     - [How to use it](#how-to-use-it)
@@ -211,17 +211,6 @@ import { Callout } from '../../_storybook/components';
     dialog.addEventListener('dialog-prevented', (e) => {
       console.log('dialog prevented from closing by clicking or pressing Esc key on the overlay');
     });
-    ```
-
-    ### Updating Focus Trap
-
-    If you dynamically change the dialog content, you may need to update the focus trap:
-
-    ```javascript
-    const dialog = document.querySelector('col-dialog');
-
-    // After adding new focusable elements
-    dialog.updateFocusTrap();
     ```
 
     <Subtitle>Interact with the component</Subtitle>
