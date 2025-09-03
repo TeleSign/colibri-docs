@@ -1,10 +1,10 @@
 import { html, nothing } from 'lit';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { action } from '@storybook/addon-actions';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils';
 import { icons } from '@telesign/colibri-icons/icons-list';
 import hljs from 'highlight.js/lib/core';
+import '@/_storybook/templates/InteractiveFormTemplate';
 
 type StoryArgs = {
   name: string;
@@ -671,7 +671,6 @@ export const InteractiveFormExample: Story = {
   render: () => {
     const formId = 'number-field-form-example';
     const outputId = 'number-field-form-output';
-    const isInDocs = window.location.search.includes('viewMode=docs');
     const codeSnippet = hljs.highlightAuto(`
       // Handle form submit with FormValidationController
       form.addEventListener('submit', (event) => {
@@ -691,232 +690,82 @@ export const InteractiveFormExample: Story = {
       });
 
       // Handle form reset - FormResetController handles component reset automatically
-      form.addEventListener('reset', () => {
+      form.addEventListener('reset', (event) => {
         // Only handle UI cleanup - components reset automatically
         // A custom message or action can be added here
         console.log('Form reset completed');
       });
     `).value;
 
-    const script = `
-      const form = document.getElementById('${formId}');
-      const output = document.getElementById('${outputId}');
-      const isInDocs = ${isInDocs};
-
-      if (!isInDocs) {
-        form.addEventListener('submit', (event) => {
-          // Check if the event was already prevented by the FormValidationController
-          if (event.defaultPrevented) {
-            output.textContent = 'Form submission blocked by validation';
-            return;
-          }
-
-          // Prevent the default form submission (page reload)
-          event.preventDefault();
-
-          // Only process if validation passed
-          const formData = new FormData(form);
-          const data = Object.fromEntries(formData.entries());
-          output.textContent = JSON.stringify(data, null, 2);
-        });
-
-        form.addEventListener('reset', () => {
-          output.textContent = 'Submit the form to see the data here';
-        });
-      }
-    `;
-
     return html`
-      <style>
-        .storybook-card {
-          background: #f5f6fa;
-          border-radius: 12px;
-          box-shadow: 0 2px 8px rgba(16, 30, 54, 0.04);
-          padding: 2rem;
-          margin-bottom: 2rem;
-        }
-        .storybook-flex {
-          display: flex;
-          gap: 2rem;
-        }
-        .storybook-col {
-          flex: 1 1 0;
-        }
-        .storybook-code {
-          background: #0e0e2c;
-          color: #fff;
-          border-radius: 8px;
-          padding: 1rem;
-          font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
-          font-size: 0.95rem;
-          font-weight: 600;
-          margin-bottom: 1rem;
-          white-space: pre-wrap;
-          overflow-x: auto;
-        }
-        #${outputId} {
-          margin-top: 1rem;
-          padding: 1rem;
-          background-color: #f0f0f0;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          overflow-x: auto;
-        }
-        .form-container {
-          display: flex;
-          flex-direction: column;
-          gap: 1.5rem;
-        }
-        @media (max-width: 900px) {
-          .storybook-flex {
-            flex-direction: column;
-            gap: 1.5rem;
-          }
-          .storybook-card {
-            padding: 1rem;
-          }
-        }
-      </style>
-      <div class="storybook-card">
-        ${!isInDocs
-          ? html`
-              <div class="storybook-flex">
-                <div class="storybook-col">
-                  <h3>Product Configuration Form</h3>
-                  <form id="${formId}" class="form-container">
-                    <col-number-field
-                      id="quantity"
-                      name="quantity"
-                      label="Quantity"
-                      default-value="5"
-                      helper="Number of items to order"
-                      required
-                      min="1"
-                      max="100"
-                      step="1"
-                      precision="0"
-                      error-message="Quantity must be between 1 and 100"
-                      validation-timing="submit"
-                    ></col-number-field>
-                    <col-number-field
-                      id="price"
-                      name="price"
-                      label="Unit Price"
-                      default-value="29.99"
-                      helper="Price per unit in USD"
-                      required
-                      format="currency"
-                      currency-code="USD"
-                      min="0.01"
-                      step="0.01"
-                      precision="2"
-                      error-message="Price must be greater than 0"
-                      validation-timing="submit"
-                    ></col-number-field>
-                    <col-number-field
-                      id="discount"
-                      name="discount"
-                      label="Discount Percentage"
-                      default-value="15"
-                      helper="Discount percentage (0-100)"
-                      format="percentage"
-                      min="0"
-                      max="100"
-                      step="1"
-                      precision="0"
-                      error-message="Discount must be between 0% and 100%"
-                    ></col-number-field>
-                    <col-number-field
-                      id="weight"
-                      name="weight"
-                      label="Weight (kg)"
-                      default-value="2.5"
-                      helper="Product weight in kilograms"
-                      min="0.1"
-                      max="50"
-                      step="0.1"
-                      precision="1"
-                      error-message="Weight must be between 0.1 and 50 kg"
-                    ></col-number-field>
-                    <col-group>
-                      <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
-                      <col-button type="reset" ?disabled=${isInDocs}>Reset</col-button>
-                    </col-group>
-                  </form>
-                </div>
-                <div class="storybook-col">
-                  <h3>Form Output</h3>
-                  <pre id="${outputId}">Submit the form to see the data here</pre>
-                  <script>
-                    ${script};
-                  </script>
-                </div>
-              </div>
-              <h3>Form Data Integration in JavaScript</h3>
-              <div class="storybook-code">
-                <pre>${unsafeHTML(codeSnippet)}</pre>
-              </div>
-            `
-          : html`
-              <h3>Product Configuration Form</h3>
-              <form id="${formId}" class="form-container">
-                <col-number-field
-                  id="quantity"
-                  name="quantity"
-                  label="Quantity"
-                  default-value="5"
-                  helper="Number of items to order"
-                  required
-                  min="1"
-                  max="100"
-                  step="1"
-                  precision="0"
-                  validation-timing="submit"
-                ></col-number-field>
-                <col-number-field
-                  id="price"
-                  name="price"
-                  label="Unit Price"
-                  default-value="29.99"
-                  helper="Price per unit in USD"
-                  required
-                  format="currency"
-                  currency-code="USD"
-                  min="0.01"
-                  step="0.01"
-                  precision="2"
-                  validation-timing="submit"
-                ></col-number-field>
-                <col-number-field
-                  id="discount"
-                  name="discount"
-                  label="Discount Percentage"
-                  default-value="15"
-                  helper="Discount percentage (0-100)"
-                  format="percentage"
-                  min="0"
-                  max="100"
-                  step="1"
-                  precision="0"
-                ></col-number-field>
-                <col-number-field
-                  id="weight"
-                  name="weight"
-                  label="Weight (kg)"
-                  default-value="2.5"
-                  helper="Product weight in kilograms"
-                  min="0.1"
-                  max="50"
-                  step="0.1"
-                  precision="1"
-                ></col-number-field>
-                <col-group>
-                  <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
-                  <col-button type="reset" ?disabled=${isInDocs}>Reset</col-button>
-                </col-group>
-              </form>
-            `}
-      </div>
+      <interactive-form-template
+        form-id="${formId}"
+        output-id="${outputId}"
+        title="Product Configuration Form"
+        code-snippet="${codeSnippet}"
+        code-theme="dark"
+      >
+        <form slot="form" id="${formId}" class="form-container">
+          <col-number-field
+            id="quantity"
+            name="quantity"
+            label="Quantity"
+            default-value="5"
+            helper="Number of items to order"
+            required
+            min="1"
+            max="100"
+            step="1"
+            precision="0"
+            error-message="Quantity must be between 1 and 100"
+            validation-timing="submit"
+          ></col-number-field>
+          <col-number-field
+            id="price"
+            name="price"
+            label="Unit Price"
+            default-value="29.99"
+            helper="Price per unit in USD"
+            required
+            format="currency"
+            currency-code="USD"
+            min="0.01"
+            step="0.01"
+            precision="2"
+            error-message="Price must be greater than 0"
+            validation-timing="submit"
+          ></col-number-field>
+          <col-number-field
+            id="discount"
+            name="discount"
+            label="Discount Percentage"
+            default-value="15"
+            helper="Discount percentage (0-100)"
+            format="percentage"
+            min="0"
+            max="100"
+            step="1"
+            precision="0"
+            error-message="Discount must be between 0% and 100%"
+          ></col-number-field>
+          <col-number-field
+            id="weight"
+            name="weight"
+            label="Weight (kg)"
+            default-value="2.5"
+            helper="Product weight in kilograms"
+            min="0.1"
+            max="50"
+            step="0.1"
+            precision="1"
+            error-message="Weight must be between 0.1 and 50 kg"
+          ></col-number-field>
+          <col-group>
+            <col-button type="submit">Submit</col-button>
+            <col-button type="reset">Reset</col-button>
+          </col-group>
+        </form>
+      </interactive-form-template>
     `;
   },
 };
