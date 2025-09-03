@@ -661,6 +661,14 @@ export const InteractiveFormExample: Story = {
   name: 'Interactive Form Example',
   parameters: {
     controls: { disable: true },
+    docs: {
+      source: {
+        transform: (code: string) => {
+          const formMatch = code.match(/<form[^>]*>[\s\S]*?<\/form>/);
+          return formatCodeString(formMatch?.[0] || '');
+        },
+      },
+    },
   },
   render: () => {
     const formId = 'number-field-form-example';

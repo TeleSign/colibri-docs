@@ -3,6 +3,8 @@ import { action } from '@storybook/addon-actions';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils';
 import { icons } from '@telesign/colibri-icons/icons-list';
+import hljs from 'highlight.js/lib/core';
+import '@/_storybook/templates/InteractiveFormTemplate';
 
 type StoryArgs = {
   id: string;
@@ -637,259 +639,108 @@ export const InteractiveFormExample: Story = {
   parameters: {
     controls: { disable: true },
     __sb: { height: '100%' },
+    docs: {
+      source: {
+        transform: (code: string) => {
+          const formMatch = code.match(/<form[^>]*>[\s\S]*?<\/form>/);
+          return formatCodeString(formMatch?.[0] || '');
+        },
+      },
+    },
   },
   render: () => {
     const formId = 'select-form-example';
     const outputId = 'select-form-output';
-    const isInDocs = window.location.search.includes('viewMode=docs');
+    const codeSnippet = hljs.highlightAuto(`
+      // Handle form submit with FormValidationController
+      form.addEventListener('submit', (event) => {
+        // Check if validation was already prevented
+        if (event.defaultPrevented) {
+          console.log('Form submission blocked by validation');
+          return;
+        }
 
-    const script = `
-      const form = document.getElementById('${formId}');
-      const output = document.getElementById('${outputId}');
-      const isInDocs = ${isInDocs};
+        // Prevent page reload
+        event.preventDefault();
 
-      if (!isInDocs) {
-        form.addEventListener('submit', (event) => {
-          // Check if the event was already prevented by the FormValidationController
-          if (event.defaultPrevented) {
-            output.textContent = 'Form submission blocked by validation';
-            return;
-          }
+        // Process form data only if validation passed
+        const formData = new FormData(form);
+        const formValues = Object.fromEntries(formData.entries());
+        console.log('Form submitted successfully:', formValues);
+      });
 
-          // Prevent the default form submission (page reload)
-          event.preventDefault();
-
-          // Only process if validation passed
-          const formData = new FormData(form);
-          const data = Object.fromEntries(formData.entries());
-          output.textContent = JSON.stringify(data, null, 2);
-        });
-
-        form.addEventListener('reset', () => {
-          output.textContent = 'Submit the form to see the data here';
-        });
-      }
-    `;
+      // Handle form reset - FormResetController handles component reset automatically
+      form.addEventListener('reset', () => {
+        // Only handle UI cleanup - components reset automatically
+        // A custom message or action can be added here
+        console.log('Form reset completed');
+      });
+    `).value;
 
     return html`
-      <style>
-        .storybook-card {
-          background: #f5f6fa;
-          border-radius: 12px;
-          box-shadow: 0 2px 8px rgba(16, 30, 54, 0.04);
-          padding: 2rem;
-          margin-bottom: 2rem;
-        }
-        .storybook-flex {
-          display: flex;
-          gap: 2rem;
-        }
-        .storybook-col {
-          flex: 1 1 0;
-          width: 50%;
-        }
-        .storybook-code {
-          background: #23272f;
-          color: #fff;
-          border-radius: 8px;
-          padding: 1rem;
-          font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
-          font-size: 0.95rem;
-          margin-bottom: 1rem;
-          white-space: pre;
-          overflow-x: auto;
-          box-sizing: border-box;
-        }
-        .storybook-code pre {
-          margin: 0;
-          white-space: pre;
-          overflow-x: auto;
-        }
-        #${outputId} {
-          margin-top: 1rem;
-          padding: 1rem;
-          background-color: #f0f0f0;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          overflow-x: auto;
-        }
-        .form-container {
-          display: flex;
-          flex-direction: column;
-          gap: 1.5rem;
-        }
-        @media (max-width: 900px) {
-          .storybook-flex {
-            flex-direction: column;
-            gap: 1.5rem;
-          }
-          .storybook-card {
-            padding: 1rem;
-          }
-          .storybook-col {
-            width: 100%;
-          }
-        }
-      </style>
-      <div class="storybook-card">
-        ${!isInDocs
-          ? html`
-              <div class="storybook-flex">
-                <div class="storybook-col">
-                  <h3>User Preferences Form</h3>
-                  <form id="${formId}" class="form-container">
-                    <col-select
-                      id="country"
-                      name="country"
-                      label="Country"
-                      value="us"
-                      placeholder="Select your country"
-                      required
-                      helper="This will be used for shipping."
-                      error-message="Please select a country"
-                    >
-                      <col-list-menu role="menuitem">
-                        <col-list-menu-item value="us">United States</col-list-menu-item>
-                        <col-list-menu-item value="ca">Canada</col-list-menu-item>
-                        <col-list-menu-item value="uk">United Kingdom</col-list-menu-item>
-                        <col-list-menu-item value="de">Germany</col-list-menu-item>
-                        <col-list-menu-item value="fr">France</col-list-menu-item>
-                      </col-list-menu>
-                    </col-select>
-                    <col-select
-                      id="role"
-                      name="role"
-                      label="User Role"
-                      value="admin"
-                      placeholder="Select your role"
-                      required
-                      badge
-                      counter
-                      helper="This determines your access level."
-                      error-message="Please select a role"
-                    >
-                      <col-list-menu role="menuitem">
-                        <col-list-menu-item value="admin">Administrator</col-list-menu-item>
-                        <col-list-menu-item value="user">Standard User</col-list-menu-item>
-                        <col-list-menu-item value="guest">Guest</col-list-menu-item>
-                      </col-list-menu>
-                    </col-select>
-                    <col-select
-                      id="theme"
-                      name="theme"
-                      label="Theme Preference"
-                      value="light"
-                      helper="Choose your preferred theme."
-                    >
-                      <col-list-menu role="menuitem">
-                        <col-list-menu-item value="light">Light Theme</col-list-menu-item>
-                        <col-list-menu-item value="dark">Dark Theme</col-list-menu-item>
-                        <col-list-menu-item value="auto">Auto (System)</col-list-menu-item>
-                      </col-list-menu>
-                    </col-select>
-                    <col-group>
-                      <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
-                      <col-button type="reset" variant="secondary" ?disabled=${isInDocs}
-                        >Reset</col-button
-                      >
-                    </col-group>
-                  </form>
-                </div>
-                <div class="storybook-col">
-                  <h3>Form Data</h3>
-                  <div class="storybook-code">
-                    <pre>
-// Handle form submit with FormValidationController
-form.addEventListener('submit', (event) => {
-  // Check if validation was already prevented
-  if (event.defaultPrevented) {
-    console.log('Form submission blocked by validation');
-    return;
-  }
-
-  // Prevent page reload
-  event.preventDefault();
-
-  // Process form data only if validation passed
-  const formData = new FormData(form);
-  const formValues = Object.fromEntries(formData.entries());
-  console.log('Form submitted successfully:', formValues);
-});
-
-// Handle form reset - FormResetController handles component reset automatically
-form.addEventListener('reset', () => {
-  // Only handle UI cleanup - components reset automatically
-  // A custom message or action can be added here
-  console.log('Form reset completed');
-});
-                    </pre
-                    >
-                  </div>
-                  <h3>Form Output</h3>
-                  <pre id="${outputId}">Submit the form to see the data here</pre>
-                  <script>
-                    ${script};
-                  </script>
-                </div>
-              </div>
-            `
-          : html`
-              <h3>User Preferences Form</h3>
-              <form id="${formId}" class="form-container">
-                <col-select
-                  id="country"
-                  name="country"
-                  label="Country"
-                  placeholder="Select your country"
-                  required
-                  helper="This will be used for shipping."
-                >
-                  <col-list-menu role="menuitem">
-                    <col-list-menu-item value="us">United States</col-list-menu-item>
-                    <col-list-menu-item value="ca">Canada</col-list-menu-item>
-                    <col-list-menu-item value="uk">United Kingdom</col-list-menu-item>
-                    <col-list-menu-item value="de">Germany</col-list-menu-item>
-                    <col-list-menu-item value="fr">France</col-list-menu-item>
-                  </col-list-menu>
-                </col-select>
-                <col-select
-                  id="role"
-                  name="role"
-                  label="User Role"
-                  placeholder="Select your role"
-                  required
-                  badge
-                  counter
-                  helper="This determines your access level."
-                >
-                  <col-list-menu role="menuitem">
-                    <col-list-menu-item value="admin">Administrator</col-list-menu-item>
-                    <col-list-menu-item value="user">Standard User</col-list-menu-item>
-                    <col-list-menu-item value="guest">Guest</col-list-menu-item>
-                  </col-list-menu>
-                </col-select>
-                <col-select
-                  id="theme"
-                  name="theme"
-                  label="Theme Preference"
-                  value="light"
-                  helper="Choose your preferred theme."
-                >
-                  <div class="custom-options" role="menuitem">
-                    <div data-value="light" data-text="Light Theme">Light Theme</div>
-                    <div data-value="dark" data-text="Dark Theme">Dark Theme</div>
-                    <div data-value="auto" data-text="Auto (System)">Auto (System)</div>
-                  </div>
-                </col-select>
-                <col-group>
-                  <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
-                  <col-button type="reset" variant="secondary" ?disabled=${isInDocs}
-                    >Reset</col-button
-                  >
-                </col-group>
-              </form>
-            `}
-      </div>
+      <interactive-form-template
+        form-id="${formId}"
+        output-id="${outputId}"
+        title="User Preferences Form"
+        code-snippet="${codeSnippet}"
+        code-theme="dark"
+      >
+        <form slot="form" id="${formId}" class="form-container">
+          <col-select
+            id="country"
+            name="country"
+            label="Country"
+            value="us"
+            placeholder="Select your country"
+            required
+            helper="This will be used for shipping."
+            error-message="Please select a country"
+          >
+            <col-list-menu role="menuitem">
+              <col-list-menu-item value="us">United States</col-list-menu-item>
+              <col-list-menu-item value="ca">Canada</col-list-menu-item>
+              <col-list-menu-item value="uk">United Kingdom</col-list-menu-item>
+              <col-list-menu-item value="de">Germany</col-list-menu-item>
+              <col-list-menu-item value="fr">France</col-list-menu-item>
+            </col-list-menu>
+          </col-select>
+          <col-select
+            id="role"
+            name="role"
+            label="User Role"
+            value="admin"
+            placeholder="Select your role"
+            required
+            badge
+            counter
+            helper="This determines your access level."
+            error-message="Please select a role"
+          >
+            <col-list-menu role="menuitem">
+              <col-list-menu-item value="admin">Administrator</col-list-menu-item>
+              <col-list-menu-item value="user">Standard User</col-list-menu-item>
+              <col-list-menu-item value="guest">Guest</col-list-menu-item>
+            </col-list-menu>
+          </col-select>
+          <col-select
+            id="theme"
+            name="theme"
+            label="Theme Preference"
+            value="light"
+            helper="Choose your preferred theme."
+          >
+            <col-list-menu role="menuitem">
+              <col-list-menu-item value="light">Light Theme</col-list-menu-item>
+              <col-list-menu-item value="dark">Dark Theme</col-list-menu-item>
+              <col-list-menu-item value="auto">Auto (System)</col-list-menu-item>
+            </col-list-menu>
+          </col-select>
+          <col-group>
+            <col-button type="submit">Submit</col-button>
+            <col-button type="reset">Reset</col-button>
+          </col-group>
+        </form>
+      </interactive-form-template>
     `;
   },
 };
