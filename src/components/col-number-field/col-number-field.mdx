@@ -23,7 +23,6 @@ import { Callout } from '../../_storybook/components';
     - [Component preview](#component-preview)
     - [Variants](#variants)
     - [States and Features](#states-and-features)
-    - [Content and Layout](#content-and-layout)
     - [Form Integration](#form-integration)
     - [Accessibility](#accessibility)
     - [Properties](#properties)
@@ -218,6 +217,161 @@ import { Callout } from '../../_storybook/components';
       Control when validation occurs by setting the `validation-timing` property to `blur` (default), `change`, `input`, or `submit`. This allows you to balance user experience with validation feedback.
     </div>
     <Canvas of={stories.WithValidationTiming} />
+
+    ## Form Integration
+
+    <div>
+      The `col-number-field` component integrates seamlessly with HTML forms, providing comprehensive validation, accessibility, and event handling for building robust user interfaces.
+    </div>
+
+    <Callout variant="tip" icon="💡">
+      **CRITICAL:** For proper form integration, always use the `default-value` attribute instead of just `value` to establish initial state. This ensures proper form data extraction, reset functionality, and validation state management.
+    </Callout>
+
+    <Callout variant="info" icon="ℹ️">
+      For best accessibility and form association, provide a unique `id` for each field. This ensures proper label-input association and makes targeting fields in tests or scripts easier.
+    </Callout>
+
+    ### Form Association
+    The component automatically associates with HTML forms using the `name` attribute and integrates with FormValidationController for validation and FormResetController for reset behavior. For enhanced form integration, consider using the `id` attribute:
+
+    ```html
+    <form id="product-config">
+      <col-number-field
+        id="quantity"
+        name="quantity"
+        label="Quantity"
+        default-value="5"
+        required
+        min="1"
+        max="100"
+      ></col-number-field>
+      <col-number-field
+        id="price"
+        name="price"
+        label="Unit Price"
+        default-value="29.99"
+        format="currency"
+        currency-code="USD"
+        required
+        min="0.01"
+      ></col-number-field>
+    </form>
+    ```
+
+    ### Validation
+
+    #### Required Fields
+    <div>
+      Add the `required` property to ensure the field must have a value before form submission. This triggers validation and prevents form submission when the field is empty.
+    </div>
+
+    #### Min/Max Constraints
+    <div>
+      Use the `min` and `max` properties to enforce value boundaries and provide immediate feedback when constraints are violated.
+    </div>
+
+    #### Step and Precision
+    <div>
+      Configure `step` values for increment/decrement behavior and `precision` for decimal place control.
+    </div>
+
+    #### Format Validation
+    <div>
+      The component automatically validates currency codes and percentage ranges based on the selected format.
+    </div>
+
+    ### Interactive Form Example
+    <div>
+      This example demonstrates how the `col-number-field` component works within a real HTML form, including validation, form submission, and data handling.
+    </div>
+    <Callout variant="info" icon="ℹ️">
+      This preview shows the form structure and styling excluding the form submission and reset functionality. For the **full interactive experience** with working form submission, reset, and validation, visit the [Canvas tab](/story/molecules-number-field--interactive-form-example).
+    </Callout>
+    <Canvas of={stories.InteractiveFormExample} />
+
+    ## Accessibility
+
+    <div>
+      The `col-number-field` component follows accessibility best practices and includes comprehensive features to ensure all users can interact with the component effectively.
+    </div>
+
+    ### Keyboard Navigation
+    <div>
+      The component supports full keyboard navigation for accessibility:
+    </div>
+    <ul>
+      <li><strong>Tab/Shift+Tab</strong>: Navigate to and from the number field</li>
+      <li><strong>Arrow Keys</strong>: Increment/decrement values (Up/Down arrows)</li>
+      <li><strong>Shift + Arrow Keys</strong>: Increment/decrement by 10x step value</li>
+      <li><strong>Page Up/Page Down</strong>: Increment/decrement by 10x step value</li>
+      <li><strong>Enter/Space</strong>: Activate increment/decrement buttons</li>
+      <li><strong>Escape</strong>: Clear focus from the field</li>
+    </ul>
+
+    ### Screen Reader Support
+    <div>
+      The component includes proper ARIA attributes and live regions for screen reader compatibility:
+    </div>
+    <ul>
+      <li><strong>ARIA Labels</strong>: Proper labeling for form integration</li>
+      <li><strong>Live Regions</strong>: Announce state changes and validation messages</li>
+      <li><strong>Role Attributes</strong>: Correct semantic roles for spinbutton pattern</li>
+      <li><strong>State Announcements</strong>: Clear feedback for value changes and validation</li>
+    </ul>
+
+    ### ARIA Implementation
+    <div>
+      The component implements the ARIA spinbutton pattern with appropriate attributes:
+    </div>
+    <ul>
+      <li><strong>role="spinbutton"</strong>: Indicates the component is a numeric input with increment/decrement controls</li>
+      <li><strong>aria-valuemin</strong>: Minimum allowed value</li>
+      <li><strong>aria-valuemax</strong>: Maximum allowed value</li>
+      <li><strong>aria-valuenow</strong>: Current value</li>
+      <li><strong>aria-valuetext</strong>: Human-readable description of the current value</li>
+      <li><strong>aria-live="polite"</strong>: Announces value changes without interrupting other announcements</li>
+    </ul>
+
+    ### Focus Management
+    <div>
+      The component implements proper focus management to ensure a logical tab order and return focus appropriately after interactions.
+    </div>
+
+    ### Label Association
+    <div>
+      The component ensures proper label-input association for screen readers:
+    </div>
+    <ul>
+      <li><strong>Visible Labels</strong>: Always associated with the input via `aria-labelledby`</li>
+      <li><strong>Helper Text</strong>: Linked to the input via `aria-describedby`</li>
+      <li><strong>Error Messages</strong>: Announced when validation fails</li>
+      <li><strong>Button Descriptions</strong>: Increment/decrement buttons include descriptive `aria-describedby` text</li>
+    </ul>
+
+    ### State Announcements
+    <div>
+      All component states are properly announced to assistive technologies:
+    </div>
+    <ul>
+      <li><strong>Disabled State</strong>: Field is marked as `aria-disabled="true"`</li>
+      <li><strong>Error State</strong>: Field is marked as `aria-invalid="true"`</li>
+      <li><strong>Required State</strong>: Field is marked as `aria-required="true"`</li>
+      <li><strong>Read-only State</strong>: Field is marked as `aria-readonly="true"`</li>
+    </ul>
+
+    ### Best Practices
+    <div>
+      Follow these accessibility best practices when using the component:
+    </div>
+    <ul>
+      <li><strong>Always provide descriptive labels</strong> that clearly indicate the field's purpose</li>
+      <li><strong>Use helper text</strong> for additional instructions or context</li>
+      <li><strong>Provide custom IDs</strong> for better form integration and accessibility testing</li>
+      <li><strong>Ensure validation messages</strong> are clear and actionable</li>
+      <li><strong>Test with screen readers</strong> to verify proper announcement of all states</li>
+      <li><strong>Use appropriate step values</strong> that make sense for the data being collected</li>
+    </ul>
 
     ## Properties
 
