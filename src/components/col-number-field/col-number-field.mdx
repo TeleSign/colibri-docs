@@ -22,6 +22,7 @@ import { Callout } from '../../_storybook/components';
     - [When to use it](#when-to-use-it)
     - [Component preview](#component-preview)
     - [Variants](#variants)
+    - [Number Formatting](#number-formatting)
     - [States and Features](#states-and-features)
     - [Form Integration](#form-integration)
     - [Accessibility](#accessibility)
@@ -128,6 +129,145 @@ import { Callout } from '../../_storybook/components';
     </div>
     <Canvas of={stories.WithDisplayType} />
 
+    ## Number Formatting
+
+    <div>
+      The `col-number-field` component provides advanced number formatting capabilities through integration with the number utilities and currency configuration system.
+    </div>
+
+    ### Format Types
+    <div>
+      The component supports three distinct format types, each with specific formatting rules and validation:
+    </div>
+
+    #### Number Format (Default)
+    <div>
+      Standard numeric formatting with locale-aware number representation and precision control.
+    </div>
+
+    #### Currency Format
+    <div>
+      Currency formatting with automatic symbol placement, locale-specific formatting, and currency code validation.
+    </div>
+
+    #### Percentage Format
+    <div>
+      Percentage formatting with automatic conversion (0-100 range) and proper decimal handling.
+    </div>
+
+    ### Currency Configuration
+    <div>
+      The component integrates with the `CurrencyConfig` class to provide extensible currency support:
+    </div>
+
+    #### Supported Currencies
+    <div>
+      By default, the component supports major world currencies including USD, EUR, GBP, JPY, CNY, and INR. Each currency has predefined precision settings.
+    </div>
+
+    #### Adding Custom Currencies
+    <div>
+      You can extend currency support at runtime using the `CurrencyConfig.addCurrency()` method:
+    </div>
+
+    ```typescript
+    import { CurrencyConfig, CURRENCY_PRECISION_VALUES } from '@telesign/colibri';
+
+    // Add a custom currency with 3 decimal places
+    CurrencyConfig.addCurrency('BTC', CURRENCY_PRECISION_VALUES.THREE);
+
+    // Add a custom currency with 4 decimal places
+    CurrencyConfig.addCurrency('ETH', 4);
+    ```
+
+    #### Currency Precision
+    <div>
+      Each currency has configurable precision that affects both display formatting and validation:
+    </div>
+
+    ```typescript
+    // Get precision for a specific currency
+    const usdPrecision = CurrencyConfig.getCurrencyPrecision('USD'); // Returns 2
+    const jpyPrecision = CurrencyConfig.getCurrencyPrecision('JPY'); // Returns 0
+    const btcPrecision = CurrencyConfig.getCurrencyPrecision('BTC'); // Returns 3
+    ```
+
+    ### Number Utilities Integration
+    <div>
+      The component leverages the number utilities for consistent formatting and parsing across all format types:
+    </div>
+
+    #### Formatting Functions
+    <div>
+      The component uses specialized formatting functions for each format type:
+    </div>
+
+    - **`formatNumber()`**: Locale-aware number formatting with precision control
+    - **`formatCurrency()`**: Currency-specific formatting with symbol placement
+    - **`formatPercentage()`**: Percentage formatting with range validation
+
+    #### Parsing and Validation
+    <div>
+      Input values are parsed using `parseFormattedValue()` which handles:
+    </div>
+
+    - Locale-specific number formats
+    - Currency symbol stripping
+    - Percentage sign removal
+    - Precision validation
+
+    #### Precision Management
+    <div>
+      The component automatically calculates effective precision based on:
+    </div>
+
+    - **Format-specific defaults**: Currency (2), Percentage (1), Number (0)
+    - **Step precision**: Derived from the step value
+    - **Custom precision**: User-defined precision override
+
+    ```typescript
+    // The component automatically determines the best precision
+    <col-number-field
+      format="currency"
+      currency-code="USD"
+      step="0.01"
+      precision="3"
+    ></col-number-field>
+    // Effective precision: 3 (highest of format default 2, step precision 2, custom 3)
+    ```
+
+    ### Validation and Constraints
+    <div>
+      Format-specific validation ensures data integrity:
+    </div>
+
+    #### Currency Validation
+    <div>
+      Currency format validates:
+    </div>
+
+    - Supported currency codes
+    - Currency-specific precision limits
+    - Proper symbol placement and formatting
+
+    #### Percentage Validation
+    <div>
+      Percentage format enforces:
+    </div>
+
+    - 0-100 range validation
+    - Proper decimal handling
+    - Form submission as decimal (0.25 for 25%)
+
+    #### Precision Enforcement
+    <div>
+      All formats respect precision constraints:
+    </div>
+
+    - Automatic decimal place limiting
+    - Step value adjustment to match precision
+    - Validation error for excessive decimal places
+
     ## States and Features
 
     <div>
@@ -218,6 +358,15 @@ import { Callout } from '../../_storybook/components';
     </div>
     <Canvas of={stories.WithValidationTiming} />
 
+    ### With Format Types
+    <div>
+      Configure the component for different data types using the format property. Each format type has specific formatting rules and validation behavior.
+    </div>
+    <Callout variant="info" icon="ℹ️">
+      To observe how formatting works, simply focus on the input field and then move focus away (blur). This action triggers the `blur` event, prompting the component to format and update the displayed value. You can customize when validation occurs by adjusting the `validation-timing` property; by default, validation is performed on the `blur` event.
+    </Callout>
+    <Canvas of={stories.WithFormatTypes} />
+
     ## Form Integration
 
     <div>
@@ -280,6 +429,15 @@ import { Callout } from '../../_storybook/components';
     <div>
       The component automatically validates currency codes and percentage ranges based on the selected format.
     </div>
+
+    #### Format-Specific Validation
+    <div>
+      Each format type has specialized validation rules:
+    </div>
+
+    - **Currency**: Validates currency codes and enforces currency-specific precision
+    - **Percentage**: Ensures values are within 0-100 range
+    - **Number**: Applies general numeric validation with precision constraints
 
     ### Interactive Form Example
     <div>

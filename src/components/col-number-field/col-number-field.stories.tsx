@@ -658,6 +658,46 @@ export const WithDisplayType: Story = {
   render: renderNumberField,
 };
 
+// Hidden individual stories for MDX Canvas usage
+export const WithFormatTypes: Story = {
+  name: 'With Format Types',
+  parameters: {
+    controls: { disable: true },
+    __sb: {
+      display: 'flex',
+      gap: '1rem',
+      flexDirection: 'column',
+      alignItems: 'stretch',
+    },
+  },
+  render: () => html`
+    <div style="display: flex; gap: 1rem; flex-direction: column;">
+      <col-number-field
+        label="Number Format"
+        value="1234.56"
+        format="number"
+        precision="2"
+        helper="Standard numeric formatting with precision control"
+      ></col-number-field>
+      <col-number-field
+        label="Currency Format (USD)"
+        value="1234.56"
+        format="currency"
+        currency-code="USD"
+        helper="Currency formatting with automatic symbol placement"
+      ></col-number-field>
+      <col-number-field
+        label="Percentage Format"
+        value="25.5"
+        format="percentage"
+        precision="1"
+        helper="Percentage formatting with range validation (0-100)"
+      ></col-number-field>
+    </div>
+  `,
+  tags: ['!dev'],
+};
+
 export const InteractiveFormExample: Story = {
   name: 'Interactive Form Example',
   parameters: {
