@@ -46,7 +46,7 @@ const meta = {
       description: 'Defines whether the dialog has no header, no footer or contains both',
       table: {
         category: 'Core',
-        type: { summary: 'string' },
+        type: { summary: "'default' | 'noheader' | 'nofooter'" },
         defaultValue: { summary: 'default' },
       },
     },
@@ -54,10 +54,10 @@ const meta = {
       control: 'select',
       options: ['small', 'medium', 'large', 'full'],
       description:
-        'Preset drawer width (small: 448px, medium: 640px, large: 960px, full: 1280px) and height (small, medium, large: 311px, full: 720px)',
+        'Preset dialog width (small: 448px, medium: 640px, large: 960px, full: 1280px) and height (small, medium, large: 311px, full: 720px)',
       table: {
         category: 'Core',
-        type: { summary: 'string' },
+        type: { summary: "'small' | 'medium' | 'large' | 'full'" },
         defaultValue: { summary: 'small' },
       },
     },
@@ -162,7 +162,9 @@ export const Default: Story = {
 
     return html`
       <div>
-        <col-button @click=${handleButtonClick}>Open Dialog</col-button>
+        <col-button color="primary" @click=${handleButtonClick}>
+          Click me to open a Dialog
+        </col-button>
 
         <col-dialog
           id=${ID}
@@ -207,7 +209,9 @@ export const CustomWidthHeight: Story = {
 
     return html`
       <div>
-        <col-button @click=${handleButtonClick}>Open Dialog</col-button>
+        <col-button color="primary" @click=${handleButtonClick}>
+          Click me to open a Dialog
+        </col-button>
 
         <col-dialog
           id=${ID}
@@ -249,7 +253,9 @@ export const SmallNoFooter: Story = {
 
     return html`
       <div>
-        <col-button @click=${handleButtonClick}>Open Dialog</col-button>
+        <col-button color="primary" @click=${handleButtonClick}>
+          Click me to open a Dialog
+        </col-button>
 
         <col-dialog
           id=${ID}
@@ -296,7 +302,9 @@ export const MediumPreventClose: Story = {
 
     return html`
       <div>
-        <col-button @click=${handleButtonClick}>Open Dialog</col-button>
+        <col-button color="primary" @click=${handleButtonClick}>
+          Click me to open a Dialog
+        </col-button>
 
         <col-dialog
           id=${ID}
@@ -341,7 +349,9 @@ export const LargeNoHeader: Story = {
 
     return html`
       <div>
-        <col-button @click=${handleButtonClick}>Open Dialog</col-button>
+        <col-button color="primary" @click=${handleButtonClick}>
+          Click me to open a Dialog
+        </col-button>
 
         <col-dialog
           id=${ID}
@@ -411,7 +421,9 @@ export const Multiple: Story = {
 
     return html`
       <div>
-        <col-button @click=${handleButtonClick}>Open Dialog</col-button>
+        <col-button color="primary" @click=${handleButtonClick}>
+          Click me to open a Dialog
+        </col-button>
 
         <col-dialog
           id=${ID1}
@@ -520,7 +532,9 @@ export const FullIntegration: Story = {
           <col-typography variant="subheading">Personal Data</col-typography>
           <div style="display: flex; justify-content: space-between;">
             <col-avatar id="user-avatar" name="John Doe" variant="full"></col-avatar>
-            <col-button @click=${handleButtonClick} color="primary">Change Username</col-button>
+            <col-button color="primary" @click=${handleButtonClick} color="primary"
+              >Change Username</col-button
+            >
           </div>
           <col-dialog
             id=${ID1}
