@@ -433,9 +433,6 @@ const renderNumberField: Story['render'] = args => html`
   </col-number-field>
 `;
 
-/**
- * Basic number field with default configuration
- */
 export const Default: Story = {
   args: {
     label: 'Quantity',
@@ -534,9 +531,6 @@ export const ReadOnly: Story = {
   render: renderNumberField,
 };
 
-/**
- * Size variants comparison - Large and small size variants
- */
 export const SizeVariants: Story = {
   parameters: {
     controls: { disable: true },
