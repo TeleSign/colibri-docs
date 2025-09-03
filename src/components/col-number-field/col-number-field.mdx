@@ -91,6 +91,44 @@ import { Callout } from '../../_storybook/components';
     </div>
     <Canvas of={stories.Default} />
 
+    ## Variants
+
+    <div>
+      The `col-number-field` component supports different size variants and display types to accommodate various design contexts and user preferences.
+    </div>
+
+    ### Size Variants
+    <div>
+      The component offers two size variants that affect the layout and positioning of increment/decrement buttons.
+    </div>
+
+    #### Large Size (Default)
+    <div>
+      The large size variant displays increment/decrement buttons on the left and right sides of the input, providing clear visual separation and easy access to controls.
+    </div>
+    #### Small Size
+    <div>
+      The small size variant uses a more compact layout with buttons positioned together, ideal for space-constrained interfaces while maintaining full functionality.
+    </div>
+
+    <Canvas of={stories.SizeVariants} />
+
+    ### Display Types
+    <div>
+      Control how the field displays its value using the `display-type` property.
+    </div>
+
+    #### Text Display (Default)
+    <div>
+      The text display type shows the current value directly in the input field, providing immediate visual feedback of the entered value.
+    </div>
+
+    #### Placeholder Display
+    <div>
+      The placeholder display type shows the default value as placeholder text when the field is empty, creating a cleaner appearance until the user interacts with the field.
+    </div>
+    <Canvas of={stories.WithDisplayType} />
+
     ## Properties
 
     <ArgTypes of={stories} />
