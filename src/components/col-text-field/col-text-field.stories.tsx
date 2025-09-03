@@ -37,6 +37,7 @@ type StoryArgs = {
   keyup: () => void;
   paste: () => void;
   invalid: () => void;
+  inputCleared: () => void;
   validationChange: () => void;
 };
 
@@ -255,6 +256,7 @@ const meta = {
       if: { arg: 'name', neq: '' },
     },
     validationChange: {
+      name: 'validation-change',
       action: 'validation-change',
       description: 'Fired when validation state changes.',
       table: {
@@ -263,6 +265,15 @@ const meta = {
           summary:
             'CustomEvent<{ valid: boolean, validationMessage: string, validity: ValidityState, value: string, touched: boolean, dirty: boolean }>',
         },
+      },
+    },
+    inputCleared: {
+      name: 'input-cleared',
+      action: 'input-cleared',
+      description: 'Fired when the input value is cleared.',
+      table: {
+        category: 'Events',
+        type: { summary: 'CustomEvent<{ value: string }>' },
       },
     },
     change: {
@@ -374,7 +385,6 @@ const meta = {
     pattern: '',
     minLength: 0,
     validationTiming: 'blur',
-    validationChange: action('validation-change'),
     change: action('change'),
     input: action('input'),
     focus: action('focus'),
@@ -383,6 +393,8 @@ const meta = {
     keyup: action('keyup'),
     paste: action('paste'),
     invalid: action('invalid'),
+    inputCleared: action('input-cleared'),
+    validationChange: action('validation-change'),
     iconVisible: false,
     iconName: 'search',
     iconSize: '16px',
@@ -421,6 +433,7 @@ const renderTextField: Story['render'] = args => html`
     @keyup=${args.keyup}
     @paste=${args.paste}
     @invalid=${args.invalid}
+    @input-cleared=${args.inputCleared}
     @validation-change=${args.validationChange}
   >
     ${args.iconVisible
