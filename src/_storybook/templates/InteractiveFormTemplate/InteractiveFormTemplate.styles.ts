@@ -1,5 +1,4 @@
 import { css } from 'lit';
-import 'highlight.js/styles/atom-one-dark.css';
 import { getThemeVar } from '@telesign/colibri';
 
 export const InteractiveFormTemplateStyles = css`
