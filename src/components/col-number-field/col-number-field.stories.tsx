@@ -227,6 +227,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
       if: { arg: 'required', neq: false },
     },
     readOnly: {
+      name: 'readonly',
       control: 'boolean',
       description: 'Whether the input is read-only and cannot be modified.',
       table: {
@@ -405,11 +406,6 @@ const renderNumberField: Story['render'] = args => html`
     placeholder=${args.placeholder || nothing}
     size=${args.size}
     variant=${args.variant}
-    ?disabled=${args.disabled}
-    ?error=${args.error}
-    ?required=${args.required}
-    ?readonly=${args.readOnly}
-    ?inactive=${args.inactive}
     error-message=${args.errorMessage || nothing}
     validation-timing=${args.validationTiming}
     min=${args.min || nothing}
@@ -420,6 +416,11 @@ const renderNumberField: Story['render'] = args => html`
     currency-code=${args.currencyCode || nothing}
     display-type=${args.displayType}
     default-value=${args.defaultValue || nothing}
+    ?disabled=${args.disabled}
+    ?error=${args.error}
+    ?required=${args.required}
+    ?readonly=${args.readOnly}
+    ?inactive=${args.inactive}
     @change=${args.change}
     @input=${args.input}
     @focus=${args.focus}
