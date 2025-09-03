@@ -4,7 +4,7 @@ import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils';
 import { icons } from '@telesign/colibri-icons/icons-list';
 import hljs from 'highlight.js/lib/core';
-import '@/_storybook/templates/InteractiveFormTemplate';
+import '@/_storybook/components/FormDemo';
 
 type StoryArgs = {
   id: string;
@@ -642,7 +642,7 @@ export const InteractiveFormExample: Story = {
     docs: {
       source: {
         transform: (code: string) => {
-          const formMatch = code.match(/<form[^>]*>[\s\S]*?<\/form>/);
+          const formMatch = code.match(/<form[^>]*slot="form"[^>]*>[\s\S]*?<\/form>/);
           return formatCodeString(formMatch?.[0] || '');
         },
       },
@@ -679,7 +679,7 @@ export const InteractiveFormExample: Story = {
     `).value;
 
     return html`
-      <interactive-form-template
+      <form-demo
         form-id="${formId}"
         output-id="${outputId}"
         title="User Preferences Form"
@@ -741,7 +741,7 @@ export const InteractiveFormExample: Story = {
             <col-button type="reset" ?disabled=${isInDocs}>Reset</col-button>
           </col-group>
         </form>
-      </interactive-form-template>
+      </form-demo>
     `;
   },
 };
