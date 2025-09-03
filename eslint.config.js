@@ -23,9 +23,12 @@ export default [
         HTMLStyleElement: true,
         HTMLInputElement: true,
         HTMLFormElement: true,
+        HTMLPreElement: true,
+        FormData: true,
         MediaQueryList: true,
         MediaQueryListEvent: true,
         CSSStyleSheet: true,
+        requestAnimationFrame: true,
       },
     },
     plugins: {
