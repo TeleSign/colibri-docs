@@ -1,12 +1,11 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, query, queryAssignedElements } from 'lit/decorators.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { InteractiveFormTemplateStyles } from './InteractiveFormTemplate.styles';
-import { highlightJsStyles } from '../styles/highlight-js.styles';
+import { FormDemoStyles } from './FormDemo.styles';
+import '@/_storybook/components/CodeBlock';
 
-@customElement('interactive-form-template')
-export class InteractiveFormTemplate extends LitElement {
-  static styles = [highlightJsStyles, InteractiveFormTemplateStyles];
+@customElement('form-demo')
+export class FormDemo extends LitElement {
+  static styles = [FormDemoStyles];
 
   @property({ type: String, attribute: 'form-id' })
   formId = '';
@@ -33,7 +32,7 @@ export class InteractiveFormTemplate extends LitElement {
   formDescription = '';
 
   @queryAssignedElements({ slot: 'form', flatten: true })
-  private formElements!: HTMLFormElement[];
+  private formElements!: HTMLElement[];
 
   @query(`[id$="-form-output"]`)
   private outputElement!: HTMLPreElement;
@@ -45,7 +44,7 @@ export class InteractiveFormTemplate extends LitElement {
   };
 
   private setupFormHandlers() {
-    const formElement = this.formElements?.[0];
+    const formElement = this.formElements?.[0] as HTMLFormElement;
 
     if (!formElement || !this.outputElement) return;
 
@@ -75,7 +74,6 @@ export class InteractiveFormTemplate extends LitElement {
 
   render() {
     const isInDocs = window.location.search.includes('viewMode=docs');
-    const codeClass = this.codeTheme === 'dark' ? 'storybook-code' : 'storybook-code light';
 
     return html`
       <div class="storybook-card">
@@ -101,12 +99,13 @@ Submit the form to see the data here
                     `
                   : ''}
               </div>
-              ${this.showCodeBlock
+              ${this.showCodeBlock && this.codeSnippet
                 ? html`
-                    <h3>Form Data Integration in JavaScript</h3>
-                    <div class="${codeClass}">
-                      <pre>${unsafeHTML(this.codeSnippet)}</pre>
-                    </div>
+                    <code-block
+                      code="${this.codeSnippet}"
+                      code-theme="${this.codeTheme}"
+                      title="Form Data Integration in JavaScript"
+                    ></code-block>
                   `
                 : ''}
             `
@@ -124,6 +123,6 @@ Submit the form to see the data here
 
 declare global {
   interface HTMLElementTagNameMap {
-    'interactive-form-template': InteractiveFormTemplate;
+    'form-demo': FormDemo;
   }
 }

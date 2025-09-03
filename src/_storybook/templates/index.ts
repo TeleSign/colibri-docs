@@ -1,1 +1,0 @@
-export { InteractiveFormTemplate } from './InteractiveFormTemplate';

@@ -1,7 +1,7 @@
 import { css } from 'lit';
 import { getThemeVar } from '@telesign/colibri';
 
-export const InteractiveFormTemplateStyles = css`
+export const FormDemoStyles = css`
   h1,
   h2,
   h3,
@@ -32,23 +32,6 @@ export const InteractiveFormTemplateStyles = css`
 
   .storybook-col {
     flex: 1 1 0;
-  }
-
-  .storybook-code {
-    background: #0e0e2c;
-    color: #fff;
-    border-radius: 8px;
-    padding: 1rem;
-    font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
-    font-size: 0.95rem;
-    font-weight: 400;
-    margin-bottom: 1rem;
-    white-space: pre-wrap;
-    overflow-x: auto;
-  }
-
-  .storybook-code.light {
-    background: #23272f;
   }
 
   .form-container {

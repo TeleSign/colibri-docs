@@ -1,3 +1,5 @@
+import { css } from 'lit';
+
 /*
 
 Atom One Dark by Daniel Gamage
@@ -21,9 +23,6 @@ hue-6:   #d19a66
 hue-6-2: #e6c07b
 
 */
-
-import { css } from 'lit';
-
 export const highlightJsStyles = css`
   :host {
     /* Base colors */
