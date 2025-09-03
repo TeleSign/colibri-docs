@@ -42,7 +42,7 @@ export const InteractiveFormTemplateStyles = css`
     padding: 1rem;
     font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
     font-size: 0.95rem;
-    font-weight: 600;
+    font-weight: 400;
     margin-bottom: 1rem;
     white-space: pre-wrap;
     overflow-x: auto;
