@@ -651,6 +651,7 @@ export const InteractiveFormExample: Story = {
   render: () => {
     const formId = 'select-form-example';
     const outputId = 'select-form-output';
+    const isInDocs = window.location.search.includes('viewMode=docs');
     const codeSnippet = hljs.highlightAuto(`
       // Handle form submit with FormValidationController
       form.addEventListener('submit', (event) => {
@@ -736,8 +737,8 @@ export const InteractiveFormExample: Story = {
             </col-list-menu>
           </col-select>
           <col-group>
-            <col-button type="submit">Submit</col-button>
-            <col-button type="reset">Reset</col-button>
+            <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
+            <col-button type="reset" ?disabled=${isInDocs}>Reset</col-button>
           </col-group>
         </form>
       </interactive-form-template>

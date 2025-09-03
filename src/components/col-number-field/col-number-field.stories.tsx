@@ -673,6 +673,7 @@ export const InteractiveFormExample: Story = {
   render: () => {
     const formId = 'number-field-form-example';
     const outputId = 'number-field-form-output';
+    const isInDocs = window.location.search.includes('viewMode=docs');
     const codeSnippet = hljs.highlightAuto(`
       // Handle form submit with FormValidationController
       form.addEventListener('submit', (event) => {
@@ -763,8 +764,8 @@ export const InteractiveFormExample: Story = {
             error-message="Weight must be between 0.1 and 50 kg"
           ></col-number-field>
           <col-group>
-            <col-button type="submit">Submit</col-button>
-            <col-button type="reset">Reset</col-button>
+            <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
+            <col-button type="reset" ?disabled=${isInDocs}>Reset</col-button>
           </col-group>
         </form>
       </interactive-form-template>
