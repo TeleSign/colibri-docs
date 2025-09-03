@@ -129,6 +129,96 @@ import { Callout } from '../../_storybook/components';
     </div>
     <Canvas of={stories.WithDisplayType} />
 
+    ## States and Features
+
+    <div>
+      The `col-number-field` component supports several states and features to reflect user interaction, validation feedback, and various configuration options.
+    </div>
+
+    ### With Label
+    <div>
+      Use the `label` property to provide a clear, accessible label for the number field. The label is automatically associated with the input for screen readers and form integration.
+    </div>
+    <Canvas of={stories.WithLabel} />
+
+    ### With Helper Text
+    <div>
+      Use the `helper` property to display helpful information below the number field. Helper text provides additional context without being part of the label structure.
+    </div>
+    <Canvas of={stories.WithHelper} />
+
+    ### With Icon
+    <div>
+      Add an icon to the number field using the `icon` slot. Icons can provide visual context and improve the overall user experience by making the field's purpose more apparent. Note that icons are only available in the `small` size variant.
+    </div>
+    <Canvas of={stories.WithIcon} />
+
+    ### With Initial Value
+    <div>
+      You can provide an initial value using the `default-value` property. This establishes the starting state and is used for form reset functionality.
+    </div>
+    <Callout variant="info" icon="ℹ️">
+      <p>
+        <strong>Initial Value Behavior</strong><br/>
+        The component automatically synchronizes the initial value with available constraints. If the provided value doesn't meet the min/max constraints, it will be clamped to the valid range. The `default-value` property is crucial for proper form integration.
+      </p>
+    </Callout>
+    <Canvas of={stories.WithInitialValue} />
+
+    ### Required Field
+    <div>
+      Add the `required` property to ensure the field must have a value before form submission. This triggers validation and prevents form submission when the field is empty.
+    </div>
+    <Canvas of={stories.Required} />
+
+    ### Disabled State
+    <div>
+      Use the `disabled` property to render the field non-interactive. This is useful for preventing user input when a field is not applicable or when the form is in a read-only state.
+    </div>
+    <Canvas of={stories.Disabled} />
+
+    ### Error State
+    <div>
+      The `error` property visually marks the field as invalid and displays an error message. This is typically set in response to failed validation or when a required field is empty.
+    </div>
+    <Canvas of={stories.Error} />
+
+    ### Read Only
+    <div>
+      The `readonly` property allows the field to display a value that cannot be edited by the user, but can still be selected and copied.
+    </div>
+    <Canvas of={stories.ReadOnly} />
+
+    ### With Custom Validation Message
+    <div>
+      You can provide custom error messages using the `error-message` property to give users specific feedback about validation failures.
+    </div>
+    <Canvas of={stories.WithCustomValidationMessage} />
+
+    ### With Constraints
+    <div>
+      Apply min/max constraints and step values to guide user input and ensure data quality. The component automatically enforces these constraints and provides visual feedback.
+    </div>
+    <Canvas of={stories.WithConstraints} />
+
+    ### With Step Values
+    <div>
+      Configure the increment/decrement step value to control how much the value changes with each button click. This provides fine-grained control over numeric input.
+    </div>
+    <Canvas of={stories.WithStepValues} />
+
+    ### With Precision
+    <div>
+      Control the number of decimal places allowed and displayed using the `precision` property. This ensures consistent formatting and validation of numeric values.
+    </div>
+    <Canvas of={stories.WithPrecision} />
+
+    ### With Validation Timing
+    <div>
+      Control when validation occurs by setting the `validation-timing` property to `blur` (default), `change`, `input`, or `submit`. This allows you to balance user experience with validation feedback.
+    </div>
+    <Canvas of={stories.WithValidationTiming} />
+
     ## Properties
 
     <ArgTypes of={stories} />
