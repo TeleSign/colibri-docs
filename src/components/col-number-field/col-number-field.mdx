@@ -1,0 +1,101 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as stories from './col-number-field.stories';
+import { Callout } from '../../_storybook/components';
+
+<Meta of={stories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Number Field</Title>
+
+    The Number Field component provides comprehensive numeric input functionality with integrated increment/decrement controls, validation, and accessibility features. It extends the standard HTML `<input type="number">` element with enhanced functionality, including built-in buttons for value adjustment, multiple format options (number, currency, percentage), and seamless form integration.
+
+    <Callout variant="info" icon="ℹ️">
+      <p>
+        <strong>Form Integration</strong><br/>
+        This component is built upon the `InputFormComponent` base, inheriting properties like `name` for native form participation and automatic integration with FormValidationController and FormResetController. For more details on form integration, see the [Form Integration](#form-integration) section.
+      </p>
+    </Callout>
+
+    ## Table of contents
+    - [How to use it](#how-to-use-it)
+    - [When to use it](#when-to-use-it)
+    - [Component preview](#component-preview)
+    - [Variants](#variants)
+    - [States and Features](#states-and-features)
+    - [Content and Layout](#content-and-layout)
+    - [Form Integration](#form-integration)
+    - [Accessibility](#accessibility)
+    - [Properties](#properties)
+    - [Interact with the component](#interact-with-the-component)
+
+    ## How to use it
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, registerAllComponents, ColNumberField } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+
+        <Callout variant="info" icon="ℹ️">
+          **Dependency Note:** The `col-number-field` component depends on the `col-icon` component for rendering increment/decrement buttons and optional leading icons. These component is registered automatically as a dependency of the `col-number-field`component, so there's no need to import them.
+        </Callout>
+
+    3. Register the web components:
+        ```typescript
+        // Option 1: Register specific components
+        registerColibriComponents([ColNumberField]);
+
+        // Option 2: Register all Colibri components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-number-field
+          id="quantity"
+          name="quantity"
+          label="Quantity"
+          value="5"
+          min="1"
+          max="100"
+          step="1"
+        ></col-number-field>
+        ```
+
+    ## When to use it
+
+    The `col-number-field` component is the standard choice for numeric inputs that require user-friendly controls and validation. Use it when you need to:
+
+    - **Collect Numeric Data**: Gather quantities, amounts, percentages, or any numeric values with constraints.
+    - **Provide Increment/Decrement Controls**: Offer intuitive buttons for adjusting values without manual typing.
+    - **Enforce Constraints**: Apply min/max limits, step values, and precision requirements.
+    - **Format Values**: Display numbers as currency, percentages, or formatted numbers with proper localization.
+    - **Build Forms**: Integrate seamlessly into HTML forms for data submission and validation.
+    - **Ensure Accessibility**: Provide proper ARIA attributes and keyboard navigation for all users.
+
+    ## Component preview
+
+    <div>
+      The following examples showcase the core features and visual options of the `col-number-field` component.
+    </div>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+
+    ### Basic Usage
+    <div>
+      The most fundamental number field requires only a `label` to identify its purpose, with optional constraints and helper text.
+    </div>
+    <Canvas of={stories.Default} />
+
+    ## Properties
+
+    <ArgTypes of={stories} />
+
+    ## Interact with the component
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/molecules-number-field--default) section.
+  </div>
+</div>
