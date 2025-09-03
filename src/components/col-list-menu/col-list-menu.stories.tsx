@@ -3,6 +3,8 @@ import { action } from '@storybook/addon-actions';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
 import { ColListMenu, ColListMenuItem, LIST_MENU_ITEM_VARIANTS } from '@telesign/colibri';
+import '@/_storybook/components/CodeBlock';
+import hljs from 'highlight.js/lib/core';
 
 type StoryArgs = {
   // col-list-menu
@@ -427,7 +429,7 @@ export const ListMenuCheckbox: Story = {
     const isInDocs = window.location.search.includes('viewMode=docs');
 
     const listMenuScript = (inPreCode: boolean) => `
-        // --- JAVASCRIPT CODE ---
+
         // State and Event management needed for ColListMenu
 
         // Helper to toggle selected state for item
@@ -491,10 +493,12 @@ export const ListMenuCheckbox: Story = {
                   <pre id="${outputId}">Select an item to see the event detail</pre>
                 </div>
               </div>
-              <h4>Required Javascript</h4>
-              <div class="storybook-code">
-                <pre>${listMenuScript(true)}</pre>
-              </div>
+              <code-block
+                code=${hljs.highlightAuto(listMenuScript(true)).value}
+                language="javascript"
+                title="Required Javascript"
+                code-theme="dark"
+              ></code-block>
               <script>
                 ${listMenuScript(false)};
               </script>
@@ -522,7 +526,6 @@ export const ListMenuCheckboxWithMultiSelect: Story = {
     const isInDocs = window.location.search.includes('viewMode=docs');
 
     const listMenuScript = (inPreCode: boolean) => `
-        // --- JAVASCRIPT CODE ---
         // State and Event management needed for ColListMenu
 
         // Helper for multiselectable (checkbox)
@@ -571,10 +574,12 @@ export const ListMenuCheckboxWithMultiSelect: Story = {
                   <pre id="${outputId}">Select an item to see the event detail</pre>
                 </div>
               </div>
-              <h4>Required Javascript</h4>
-              <div class="storybook-code">
-                <pre>${listMenuScript(true)}</pre>
-              </div>
+              <code-block
+                code=${hljs.highlightAuto(listMenuScript(true)).value}
+                language="javascript"
+                title="Required Javascript"
+                code-theme="dark"
+              ></code-block>
               <script>
                 ${listMenuScript(false)};
               </script>
@@ -621,7 +626,6 @@ export const ListMenuRadio: Story = {
     const isInDocs = window.location.search.includes('viewMode=docs');
 
     const radioScript = (inPreCode: boolean) => `
-        // --- JAVASCRIPT CODE ---
         // State and Event management needed for ColListMenu
 
         // Helper to handle radio selection
@@ -672,10 +676,12 @@ export const ListMenuRadio: Story = {
                   <pre id="${outputId}">Select an item to see the event detail</pre>
                 </div>
               </div>
-              <h4>Required Javascript</h4>
-              <div class="storybook-code">
-                <pre>${radioScript(true)}</pre>
-              </div>
+              <code-block
+                code=${hljs.highlightAuto(radioScript(true)).value}
+                language="javascript"
+                title="Required Javascript"
+                code-theme="dark"
+              ></code-block>
               <script>
                 ${radioScript(false)};
               </script>
@@ -751,7 +757,6 @@ export const ListMenuItemSlots: Story = {
     const isInDocs = window.location.search.includes('viewMode=docs');
 
     const listMenuScript = (inPreCode: boolean) => `
-      // --- JAVASCRIPT CODE ---
       // State and Event management needed for ColListMenu
       // Helper to toggle selected state for item
       function toggleSlotItem(clickedItem) {
@@ -882,10 +887,12 @@ export const ListMenuItemSlots: Story = {
                 <h4>Event Output</h4>
                 <pre id="${outputId}">Select an item to see the event detail</pre>
               </div>
-              <h4>Required Javascript</h4>
-              <div class="storybook-code">
-                <pre>${listMenuScript(true)}</pre>
-              </div>
+              <code-block
+                code=${hljs.highlightAuto(listMenuScript(true)).value}
+                language="javascript"
+                title="Required Javascript"
+                code-theme="dark"
+              ></code-block>
               <script>
                 ${listMenuScript(false)};
               </script>
