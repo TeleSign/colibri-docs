@@ -673,29 +673,29 @@ export const InteractiveFormExample: Story = {
     const outputId = 'number-field-form-output';
     const isInDocs = window.location.search.includes('viewMode=docs');
     const codeSnippet = hljs.highlightAuto(`
-// Handle form submit with FormValidationController
-form.addEventListener('submit', (event) => {
-  // Check if validation was already prevented
-  if (event.defaultPrevented) {
-    console.log('Form submission blocked by validation');
-    return;
-  }
+      // Handle form submit with FormValidationController
+      form.addEventListener('submit', (event) => {
+        // Check if validation was already prevented
+        if (event.defaultPrevented) {
+          console.log('Form submission blocked by validation');
+          return;
+        }
 
-  // Prevent page reload
-  event.preventDefault();
+        // Prevent page reload
+        event.preventDefault();
 
-  // Process form data only if validation passed
-  const formData = new FormData(form);
-  const formValues = Object.fromEntries(formData.entries());
-  console.log('Form submitted successfully:', formValues);
-});
+        // Process form data only if validation passed
+        const formData = new FormData(form);
+        const formValues = Object.fromEntries(formData.entries());
+        console.log('Form submitted successfully:', formValues);
+      });
 
-// Handle form reset - FormResetController handles component reset automatically
-form.addEventListener('reset', () => {
-  // Only handle UI cleanup - components reset automatically
-  // A custom message or action can be added here
-  console.log('Form reset completed');
-});
+      // Handle form reset - FormResetController handles component reset automatically
+      form.addEventListener('reset', () => {
+        // Only handle UI cleanup - components reset automatically
+        // A custom message or action can be added here
+        console.log('Form reset completed');
+      });
     `).value;
 
     const script = `
@@ -741,7 +741,6 @@ form.addEventListener('reset', () => {
         }
         .storybook-col {
           flex: 1 1 0;
-          width: 50%;
         }
         .storybook-code {
           background: #0e0e2c;
@@ -752,13 +751,7 @@ form.addEventListener('reset', () => {
           font-size: 0.95rem;
           font-weight: 600;
           margin-bottom: 1rem;
-          white-space: pre;
-          overflow-x: auto;
-          box-sizing: border-box;
-        }
-        .storybook-code pre {
-          margin: 0;
-          white-space: pre;
+          white-space: pre-wrap;
           overflow-x: auto;
         }
         #${outputId} {
@@ -781,9 +774,6 @@ form.addEventListener('reset', () => {
           }
           .storybook-card {
             padding: 1rem;
-          }
-          .storybook-col {
-            width: 100%;
           }
         }
       </style>
@@ -855,16 +845,16 @@ form.addEventListener('reset', () => {
                   </form>
                 </div>
                 <div class="storybook-col">
-                  <h3>Form Data Integration in JavaScript</h3>
-                  <div class="storybook-code">
-                    <pre>${unsafeHTML(codeSnippet)}</pre>
-                  </div>
                   <h3>Form Output</h3>
                   <pre id="${outputId}">Submit the form to see the data here</pre>
                   <script>
                     ${script};
                   </script>
                 </div>
+              </div>
+              <h3>Form Data Integration in JavaScript</h3>
+              <div class="storybook-code">
+                <pre>${unsafeHTML(codeSnippet)}</pre>
               </div>
             `
           : html`
