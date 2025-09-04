@@ -494,7 +494,7 @@ export const FormDrawer: Story = {
 
           <col-modal-footer slot="footer">
             <col-button slot="actions" color="secondary" @click=${handleClose}>Cancel</col-button>
-            <col-button slot="actions" color="primary" @click=${handleClose}></col-button>
+            <col-button slot="actions" color="primary" @click=${handleClose}>
               Save Changes
             </col-button>
           </col-modal-footer>
