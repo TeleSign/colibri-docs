@@ -80,6 +80,7 @@ const meta = {
       },
     },
     preventClose: {
+      name: 'preventclose',
       control: 'boolean',
       description:
         'Defines whether the dialog is allow to close by clicking or pressing Escape key on the overlay ',
@@ -90,6 +91,7 @@ const meta = {
       },
     },
     keepOpen: {
+      name: 'keepopen',
       control: 'boolean',
       description:
         'Defines whether the dialog closes at submit or waits for another action to be completed',
