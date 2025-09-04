@@ -27,7 +27,7 @@ const meta = {
     },
     __sb: {
       minHeight: '400px',
-    }
+    },
   },
   argTypes: {
     active: {
@@ -129,16 +129,16 @@ type Story = ColibriStory<StoryArgs>;
  * Basic drawer render function
  */
 const renderDrawer: Story['render'] = ({
-                                         active,
-                                         position,
-                                         size,
-                                         width,
-                                         nofocustrap,
-                                         headerContent,
-                                         footerContent,
-                                         mainContent,
-                                         onOverlayClickOutside,
-                                       }) => {
+  active,
+  position,
+  size,
+  width,
+  nofocustrap,
+  headerContent,
+  footerContent,
+  mainContent,
+  onOverlayClickOutside,
+}) => {
   const ID = `drawer-${new Date().getTime()}`;
   const handleButtonClick = () => {
     const drawer = document.getElementById(ID);
@@ -149,7 +149,7 @@ const renderDrawer: Story['render'] = ({
 
   return html`
     <div>
-      <col-button @click=${handleButtonClick}>Open Drawer</col-button>
+      <col-button color="primary" @click=${handleButtonClick}>Open Drawer</col-button>
 
       <col-drawer
         id=${ID}
@@ -160,19 +160,8 @@ const renderDrawer: Story['render'] = ({
         ?nofocustrap=${nofocustrap}
         @overlay-click-outside=${onOverlayClickOutside}
       >
-        ${headerContent ? html`
-          <div slot="header">
-            ${headerContent}
-          </div>
-        ` : ''}
-
-        ${mainContent}
-
-        ${footerContent ? html`
-          <div slot="footer">
-            ${footerContent}
-          </div>
-        ` : ''}
+        ${headerContent ? html` <div slot="header">${headerContent}</div> ` : ''} ${mainContent}
+        ${footerContent ? html` <div slot="footer">${footerContent}</div> ` : ''}
       </col-drawer>
     </div>
   `;
@@ -225,7 +214,8 @@ export const LargeSize: Story = {
     active: false,
     position: 'right',
     size: 'large',
-    mainContent: 'This is a large drawer (960px wide). Perfect for displaying forms or detailed content.',
+    mainContent:
+      'This is a large drawer (960px wide). Perfect for displaying forms or detailed content.',
   },
   render: renderDrawer,
 };
@@ -272,7 +262,9 @@ export const WithHeaderFooter: Story = {
 
     return html`
       <div>
-        <col-button @click=${handleButtonClick}>Open Drawer with Header & Footer</col-button>
+        <col-button color="primary" @click=${handleButtonClick}>
+          Open Drawer with Header & Footer
+        </col-button>
 
         <col-drawer
           id="drawer-header-footer"
@@ -283,7 +275,11 @@ export const WithHeaderFooter: Story = {
           ?nofocustrap=${nofocustrap}
           @overlay-click-outside=${onOverlayClickOutside}
         >
-          <col-modal-header slot="header" title="Drawer Title" @on-close=${handleClose}></col-modal-header>
+          <col-modal-header
+            slot="header"
+            title="Drawer Title"
+            @on-close=${handleClose}
+          ></col-modal-header>
 
           <div>
             <h3>Main Content Area</h3>
@@ -355,7 +351,7 @@ export const NavigationDrawer: Story = {
         ${navStylesExample}
       </style>
       <div>
-        <col-button @click=${handleButtonClick}>
+        <col-button color="primary" @click=${handleButtonClick}>
           <col-icon name="six-dots"></col-icon>
           Open Navigation
         </col-button>
@@ -368,7 +364,11 @@ export const NavigationDrawer: Story = {
           ?nofocustrap=${nofocustrap}
           @overlay-click-outside=${onOverlayClickOutside}
         >
-          <col-modal-header slot="header" title="Navigation" @on-close=${handleClose}></col-modal-header>
+          <col-modal-header
+            slot="header"
+            title="Navigation"
+            @on-close=${handleClose}
+          ></col-modal-header>
 
           <nav class="navExample">
             <ul class="listExample">
@@ -430,7 +430,7 @@ export const FormDrawer: Story = {
 
     return html`
       <div>
-        <col-button @click=${handleButtonClick}>Edit User Details</col-button>
+        <col-button color="primary" @click=${handleButtonClick}>Edit User Details</col-button>
 
         <col-drawer
           id="drawer-form-focus"
@@ -440,33 +440,63 @@ export const FormDrawer: Story = {
           ?nofocustrap=${nofocustrap}
           @overlay-click-outside=${onOverlayClickOutside}
         >
-          <col-modal-header slot="header" title="Edit User" @on-close=${handleClose}></col-modal-header>
+          <col-modal-header
+            slot="header"
+            title="Edit User"
+            @on-close=${handleClose}
+          ></col-modal-header>
 
           <form>
             <div>
-              <col-text-field label="With Label" input-type="text" variant="outline" placeholder="Enter text here..." validation-timing="blur">
+              <col-text-field
+                label="With Label"
+                input-type="text"
+                variant="outline"
+                placeholder="Enter text here..."
+                validation-timing="blur"
+              >
               </col-text-field>
             </div>
 
             <div>
-              <col-text-field label="With Label" input-type="text" variant="outline" placeholder="Enter text here..." validation-timing="blur">
+              <col-text-field
+                label="With Label"
+                input-type="text"
+                variant="outline"
+                placeholder="Enter text here..."
+                validation-timing="blur"
+              >
               </col-text-field>
             </div>
 
             <div>
-              <col-text-field label="With Label" input-type="text" variant="outline" placeholder="Enter text here..." validation-timing="blur">
+              <col-text-field
+                label="With Label"
+                input-type="text"
+                variant="outline"
+                placeholder="Enter text here..."
+                validation-timing="blur"
+              >
               </col-text-field>
             </div>
 
             <div>
-              <col-text-field label="With Label" input-type="text" variant="outline" placeholder="Enter text here..." validation-timing="blur">
+              <col-text-field
+                label="With Label"
+                input-type="text"
+                variant="outline"
+                placeholder="Enter text here..."
+                validation-timing="blur"
+              >
               </col-text-field>
             </div>
           </form>
 
           <col-modal-footer slot="footer">
             <col-button slot="actions" color="secondary" @click=${handleClose}>Cancel</col-button>
-            <col-button slot="actions" color="primary" @click=${handleClose}>Save Changes</col-button>
+            <col-button slot="actions" color="primary" @click=${handleClose}>
+              Save Changes
+            </col-button>
           </col-modal-footer>
         </col-drawer>
       </div>
@@ -482,7 +512,7 @@ export const MultipleDrawers: Story = {
     __sb: {
       display: 'flex',
       gap: '16px',
-    }
+    },
   },
   render: () => {
     const handleLeftClick = () => {
