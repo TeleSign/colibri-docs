@@ -1,0 +1,538 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as stories from './col-number-field.stories';
+import { Callout } from '../../_storybook/components';
+
+<Meta of={stories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Number Field</Title>
+
+    The Number Field component provides comprehensive numeric input functionality with integrated increment/decrement controls, validation, and accessibility features. It extends the standard HTML `<input type="number">` element with enhanced functionality, including built-in buttons for value adjustment, multiple format options (number, currency, percentage), and seamless form integration.
+
+    <Callout variant="info" icon="ℹ️">
+      This component seamlessly integrates with HTML forms, supporting properties like `name` for native form participation. For more details on form integration, see the [Form Integration](#form-integration) section.
+    </Callout>
+
+    ## Table of contents
+    - [How to use it](#how-to-use-it)
+    - [When to use it](#when-to-use-it)
+    - [Component preview](#component-preview)
+    - [Variants](#variants)
+    - [Number Formatting](#number-formatting)
+    - [States and Features](#states-and-features)
+    - [Form Integration](#form-integration)
+    - [Accessibility](#accessibility)
+    - [Properties](#properties)
+    - [Interact with the component](#interact-with-the-component)
+
+    ## How to use it
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import { registerColibriComponents, registerAllComponents, ColNumberField } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+
+        <Callout variant="info" icon="ℹ️">
+          **Dependency Note:** The `col-number-field` component depends on the `col-icon` component for rendering increment/decrement buttons and optional leading icons. These component is registered automatically as a dependency of the `col-number-field`component, so there's no need to import them.
+        </Callout>
+
+    3. Register the web components:
+        ```typescript
+        // Option 1: Register specific components
+        registerColibriComponents([ColNumberField]);
+
+        // Option 2: Register all Colibri components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-number-field
+          id="quantity"
+          name="quantity"
+          label="Quantity"
+          value="5"
+          min="1"
+          max="100"
+          step="1"
+        ></col-number-field>
+        ```
+
+    ## When to use it
+
+    The `col-number-field` component is the standard choice for numeric inputs that require user-friendly controls and validation. Use it when you need to:
+
+    - **Collect Numeric Data**: Gather quantities, amounts, percentages, or any numeric values with constraints.
+    - **Provide Increment/Decrement Controls**: Offer intuitive buttons for adjusting values without manual typing.
+    - **Enforce Constraints**: Apply min/max limits, step values, and precision requirements.
+    - **Format Values**: Display numbers as currency, percentages, or formatted numbers with proper localization.
+    - **Build Forms**: Integrate seamlessly into HTML forms for data submission and validation.
+    - **Ensure Accessibility**: Provide proper ARIA attributes and keyboard navigation for all users.
+
+    ## Component preview
+
+    <div>
+      The following examples showcase the core features and visual options of the `col-number-field` component.
+    </div>
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+
+    ### Basic Usage
+    <div>
+      The most fundamental number field requires only a `label` to identify its purpose, with optional constraints and helper text.
+    </div>
+    <Canvas of={stories.Default} />
+
+    ## Variants
+
+    <div>
+      The `col-number-field` component supports different size variants and display types to accommodate various design contexts and user preferences.
+    </div>
+
+    ### Size Variants
+    <div>
+      The component offers two size variants that affect the layout and positioning of increment/decrement buttons.
+    </div>
+
+    #### Large Size (Default)
+    <div>
+      The large size variant displays increment/decrement buttons on the left and right sides of the input, providing clear visual separation and easy access to controls.
+    </div>
+    #### Small Size
+    <div>
+      The small size variant uses a more compact layout with buttons positioned together, ideal for space-constrained interfaces while maintaining full functionality.
+    </div>
+
+    <Canvas of={stories.SizeVariants} />
+
+    ### Display Types
+    <div>
+      Control how the field displays its value using the `display-type` property.
+    </div>
+
+    #### Text Display (Default)
+    <div>
+      The text display type shows the current value directly in the input field, providing immediate visual feedback of the entered value.
+    </div>
+
+    #### Placeholder Display
+    <div>
+      The placeholder display type shows the default value as placeholder text when the field is empty, creating a cleaner appearance until the user interacts with the field.
+    </div>
+    <Canvas of={stories.WithDisplayType} />
+
+    ## Number Formatting
+
+    <div>
+      The `col-number-field` component provides advanced number formatting capabilities through integration with the number utilities and currency configuration system.
+    </div>
+
+    ### Format Types
+    <div>
+      The component supports three distinct format types, each with specific formatting rules and validation:
+    </div>
+
+    #### Number Format (Default)
+    <div>
+      Standard numeric formatting with locale-aware number representation and precision control.
+    </div>
+
+    #### Currency Format
+    <div>
+      Currency formatting with automatic symbol placement, locale-specific formatting, and currency code validation.
+    </div>
+
+    #### Percentage Format
+    <div>
+      Percentage formatting with automatic conversion (0-100 range) and proper decimal handling.
+    </div>
+
+    ### Currency Configuration
+    <div>
+      The component integrates with the `CurrencyConfig` class to provide extensible currency support:
+    </div>
+
+    #### Supported Currencies
+    <div>
+      By default, the component supports major world currencies including USD, EUR, GBP, JPY, CNY, and INR. Each currency has predefined precision settings.
+    </div>
+
+    #### Adding Custom Currencies
+    <div>
+      You can extend currency support at runtime using the `CurrencyConfig.addCurrency()` method:
+    </div>
+
+    ```typescript
+    import { CurrencyConfig, CURRENCY_PRECISION_VALUES } from '@telesign/colibri';
+
+    // Add a custom currency with 3 decimal places
+    CurrencyConfig.addCurrency('BTC', CURRENCY_PRECISION_VALUES.THREE);
+
+    // Add a custom currency with 4 decimal places
+    CurrencyConfig.addCurrency('ETH', 4);
+    ```
+
+    #### Currency Precision
+    <div>
+      Each currency has configurable precision that affects both display formatting and validation:
+    </div>
+
+    ```typescript
+    // Get precision for a specific currency
+    const usdPrecision = CurrencyConfig.getCurrencyPrecision('USD'); // Returns 2
+    const jpyPrecision = CurrencyConfig.getCurrencyPrecision('JPY'); // Returns 0
+    const btcPrecision = CurrencyConfig.getCurrencyPrecision('BTC'); // Returns 3
+    ```
+
+    ### Number Utilities Integration
+    <div>
+      The component leverages the number utilities for consistent formatting and parsing across all format types:
+    </div>
+
+    #### Formatting Functions
+    <div>
+      The component uses specialized formatting functions for each format type:
+    </div>
+
+    - **`formatNumber()`**: Locale-aware number formatting with precision control
+    - **`formatCurrency()`**: Currency-specific formatting with symbol placement
+    - **`formatPercentage()`**: Percentage formatting with range validation
+
+    #### Parsing and Validation
+    <div>
+      Input values are parsed using `parseFormattedValue()` which handles:
+    </div>
+
+    - Locale-specific number formats
+    - Currency symbol stripping
+    - Percentage sign removal
+    - Precision validation
+
+    #### Precision Management
+    <div>
+      The component automatically calculates effective precision based on:
+    </div>
+
+    - **Format-specific defaults**: Currency (2), Percentage (1), Number (0)
+    - **Step precision**: Derived from the step value
+    - **Custom precision**: User-defined precision override
+
+    ```typescript
+    // The component automatically determines the best precision
+    <col-number-field
+      format="currency"
+      currency-code="USD"
+      step="0.01"
+      precision="3"
+    ></col-number-field>
+    // Effective precision: 3 (highest of format default 2, step precision 2, custom 3)
+    ```
+
+    ### Validation and Constraints
+    <div>
+      Format-specific validation ensures data integrity:
+    </div>
+
+    #### Currency Validation
+    <div>
+      Currency format validates:
+    </div>
+
+    - Supported currency codes
+    - Currency-specific precision limits
+    - Proper symbol placement and formatting
+
+    #### Percentage Validation
+    <div>
+      Percentage format enforces:
+    </div>
+
+    - 0-100 range validation
+    - Proper decimal handling
+    - Form submission as decimal (0.25 for 25%)
+
+    #### Precision Enforcement
+    <div>
+      All formats respect precision constraints:
+    </div>
+
+    - Automatic decimal place limiting
+    - Step value adjustment to match precision
+    - Validation error for excessive decimal places
+
+    ## States and Features
+
+    <div>
+      The `col-number-field` component supports several states and features to reflect user interaction, validation feedback, and various configuration options.
+    </div>
+
+    ### With Label
+    <div>
+      Use the `label` property to provide a clear, accessible label for the number field. The label is automatically associated with the input for screen readers and form integration.
+    </div>
+    <Canvas of={stories.WithLabel} />
+
+    ### With Helper Text
+    <div>
+      Use the `helper` property to display helpful information below the number field. Helper text provides additional context without being part of the label structure.
+    </div>
+    <Canvas of={stories.WithHelper} />
+
+    ### With Icon
+    <div>
+      Add an icon to the number field using the `icon` slot. Icons can provide visual context and improve the overall user experience by making the field's purpose more apparent. Note that icons are only available in the `small` size variant.
+    </div>
+    <Canvas of={stories.WithIcon} />
+
+    ### With Initial Value
+    <div>
+      You can provide an initial value using the `default-value` property. This establishes the starting state and is used for form reset functionality.
+    </div>
+    <Callout variant="info" icon="ℹ️">
+      <p>
+        <strong>Initial Value Behavior</strong><br/>
+        The component automatically synchronizes the initial value with available constraints. If the provided value doesn't meet the min/max constraints, it will be clamped to the valid range. The `default-value` property is crucial for proper form integration.
+      </p>
+    </Callout>
+    <Canvas of={stories.WithInitialValue} />
+
+    ### Required Field
+    <div>
+      Add the `required` property to ensure the field must have a value before form submission. This triggers validation and prevents form submission when the field is empty.
+    </div>
+    <Canvas of={stories.Required} />
+
+    ### Disabled State
+    <div>
+      Use the `disabled` property to render the field non-interactive. This is useful for preventing user input when a field is not applicable or when the form is in a read-only state.
+    </div>
+    <Canvas of={stories.Disabled} />
+
+    ### Error State
+    <div>
+      The `error` property visually marks the field as invalid and displays an error message. This is typically set in response to failed validation or when a required field is empty.
+    </div>
+    <Canvas of={stories.Error} />
+
+    ### Read Only
+    <div>
+      The `readonly` property allows the field to display a value that cannot be edited by the user, but can still be selected and copied.
+    </div>
+    <Canvas of={stories.ReadOnly} />
+
+    ### With Custom Validation Message
+    <div>
+      You can provide custom error messages using the `error-message` property to give users specific feedback about validation failures.
+    </div>
+    <Canvas of={stories.WithCustomValidationMessage} />
+
+    ### With Constraints
+    <div>
+      Apply min/max constraints and step values to guide user input and ensure data quality. The component automatically enforces these constraints and provides visual feedback.
+    </div>
+    <Canvas of={stories.WithConstraints} />
+
+    ### With Step Values
+    <div>
+      Configure the increment/decrement step value to control how much the value changes with each button click. This provides fine-grained control over numeric input.
+    </div>
+    <Canvas of={stories.WithStepValues} />
+
+    ### With Precision
+    <div>
+      Control the number of decimal places allowed and displayed using the `precision` property. This ensures consistent formatting and validation of numeric values.
+    </div>
+    <Canvas of={stories.WithPrecision} />
+
+    ### With Validation Timing
+    <div>
+      Control when validation occurs by setting the `validation-timing` property to `blur` (default), `change`, `input`, or `submit`. This allows you to balance user experience with validation feedback.
+    </div>
+    <Canvas of={stories.WithValidationTiming} />
+
+    ### With Format Types
+    <div>
+      Configure the component for different data types using the format property. Each format type has specific formatting rules and validation behavior.
+    </div>
+    <Callout variant="info" icon="ℹ️">
+      To observe how formatting works, simply focus on the input field and then move focus away (blur). This action triggers the `blur` event, prompting the component to format and update the displayed value. You can customize when validation occurs by adjusting the `validation-timing` property; by default, validation is performed on the `blur` event.
+    </Callout>
+    <Canvas of={stories.WithFormatTypes} />
+
+    ## Form Integration
+
+    <div>
+      The `col-number-field` component integrates seamlessly with HTML forms, providing comprehensive validation, accessibility, and event handling for building robust user interfaces.
+    </div>
+
+    <Callout variant="tip" icon="💡">
+      **CRITICAL:** For proper form integration, always use the `default-value` attribute instead of just `value` to establish initial state. This ensures proper form data extraction, reset functionality, and validation state management.
+    </Callout>
+
+    <Callout variant="info" icon="ℹ️">
+      For best accessibility and form association, provide a unique `id` for each field. This ensures proper label-input association and makes targeting fields in tests or scripts easier.
+    </Callout>
+
+    ### Form Association
+    The component automatically associates with HTML forms using the `name` attribute and integrates with FormValidationController for validation and FormResetController for reset behavior. For enhanced form integration, consider using the `id` attribute:
+
+    ```html
+    <form id="product-config">
+      <col-number-field
+        id="quantity"
+        name="quantity"
+        label="Quantity"
+        default-value="5"
+        required
+        min="1"
+        max="100"
+      ></col-number-field>
+      <col-number-field
+        id="price"
+        name="price"
+        label="Unit Price"
+        default-value="29.99"
+        format="currency"
+        currency-code="USD"
+        required
+        min="0.01"
+      ></col-number-field>
+    </form>
+    ```
+
+    ### Validation
+
+    #### Required Fields
+    <div>
+      Add the `required` property to ensure the field must have a value before form submission. This triggers validation and prevents form submission when the field is empty.
+    </div>
+
+    #### Min/Max Constraints
+    <div>
+      Use the `min` and `max` properties to enforce value boundaries and provide immediate feedback when constraints are violated.
+    </div>
+
+    #### Step and Precision
+    <div>
+      Configure `step` values for increment/decrement behavior and `precision` for decimal place control.
+    </div>
+
+    #### Format Validation
+    <div>
+      The component automatically validates currency codes and percentage ranges based on the selected format.
+    </div>
+
+    #### Format-Specific Validation
+    <div>
+      Each format type has specialized validation rules:
+    </div>
+
+    - **Currency**: Validates currency codes and enforces currency-specific precision
+    - **Percentage**: Ensures values are within 0-100 range
+    - **Number**: Applies general numeric validation with precision constraints
+
+    ### Interactive Form Example
+    <div>
+      This example demonstrates how the `col-number-field` component works within a real HTML form, including validation, form submission, and data handling.
+    </div>
+    <Callout variant="info" icon="ℹ️">
+      This preview shows the form structure and styling excluding the form submission and reset functionality. For the **full interactive experience** with working form submission, reset, and validation, visit the [Canvas tab](/story/molecules-number-field--interactive-form-example).
+    </Callout>
+    <Canvas of={stories.InteractiveFormExample} />
+
+    ## Accessibility
+
+    <div>
+      The `col-number-field` component follows accessibility best practices and includes comprehensive features to ensure all users can interact with the component effectively.
+    </div>
+
+    ### Keyboard Navigation
+    <div>
+      The component supports full keyboard navigation for accessibility:
+    </div>
+    <ul>
+      <li><strong>Tab/Shift+Tab</strong>: Navigate to and from the number field</li>
+      <li><strong>Arrow Keys</strong>: Increment/decrement values (Up/Down arrows)</li>
+      <li><strong>Shift + Arrow Keys</strong>: Increment/decrement by 10x step value</li>
+      <li><strong>Page Up/Page Down</strong>: Increment/decrement by 10x step value</li>
+      <li><strong>Enter/Space</strong>: Activate increment/decrement buttons</li>
+      <li><strong>Escape</strong>: Clear focus from the field</li>
+    </ul>
+
+    ### Screen Reader Support
+    <div>
+      The component includes proper ARIA attributes and live regions for screen reader compatibility:
+    </div>
+    <ul>
+      <li><strong>ARIA Labels</strong>: Proper labeling for form integration</li>
+      <li><strong>Live Regions</strong>: Announce state changes and validation messages</li>
+      <li><strong>Role Attributes</strong>: Correct semantic roles for spinbutton pattern</li>
+      <li><strong>State Announcements</strong>: Clear feedback for value changes and validation</li>
+    </ul>
+
+    ### ARIA Implementation
+    <div>
+      The component implements the ARIA spinbutton pattern with appropriate attributes:
+    </div>
+    <ul>
+      <li><strong>role="spinbutton"</strong>: Indicates the component is a numeric input with increment/decrement controls</li>
+      <li><strong>aria-valuemin</strong>: Minimum allowed value</li>
+      <li><strong>aria-valuemax</strong>: Maximum allowed value</li>
+      <li><strong>aria-valuenow</strong>: Current value</li>
+      <li><strong>aria-valuetext</strong>: Human-readable description of the current value</li>
+      <li><strong>aria-live="polite"</strong>: Announces value changes without interrupting other announcements</li>
+    </ul>
+
+    ### Focus Management
+    <div>
+      The component implements proper focus management to ensure a logical tab order and return focus appropriately after interactions.
+    </div>
+
+    ### Label Association
+    <div>
+      The component ensures proper label-input association for screen readers:
+    </div>
+    <ul>
+      <li><strong>Visible Labels</strong>: Always associated with the input via `aria-labelledby`</li>
+      <li><strong>Helper Text</strong>: Linked to the input via `aria-describedby`</li>
+      <li><strong>Error Messages</strong>: Announced when validation fails</li>
+      <li><strong>Button Descriptions</strong>: Increment/decrement buttons include descriptive `aria-describedby` text</li>
+    </ul>
+
+    ### State Announcements
+    <div>
+      All component states are properly announced to assistive technologies:
+    </div>
+    <ul>
+      <li><strong>Disabled State</strong>: Field is marked as `aria-disabled="true"`</li>
+      <li><strong>Error State</strong>: Field is marked as `aria-invalid="true"`</li>
+      <li><strong>Required State</strong>: Field is marked as `aria-required="true"`</li>
+      <li><strong>Read-only State</strong>: Field is marked as `aria-readonly="true"`</li>
+    </ul>
+
+    ### Best Practices
+    <div>
+      Follow these accessibility best practices when using the component:
+    </div>
+    <ul>
+      <li><strong>Always provide descriptive labels</strong> that clearly indicate the field's purpose</li>
+      <li><strong>Use helper text</strong> for additional instructions or context</li>
+      <li><strong>Provide custom IDs</strong> for better form integration and accessibility testing</li>
+      <li><strong>Ensure validation messages</strong> are clear and actionable</li>
+      <li><strong>Test with screen readers</strong> to verify proper announcement of all states</li>
+      <li><strong>Use appropriate step values</strong> that make sense for the data being collected</li>
+    </ul>
+
+    ## Properties
+
+    <ArgTypes of={stories} />
+
+    ## Interact with the component
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/molecules-number-field--default) section.
+  </div>
+</div>

@@ -2,6 +2,8 @@ import { html, css } from 'lit';
 import { action } from '@storybook/addon-actions';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils';
+import '@/_storybook/components/CodeBlock';
+import hljs from 'highlight.js/lib/core';
 
 type BreadcrumbStoryArgs = {
   // col-breadcrumb properties
@@ -381,132 +383,7 @@ export const DownloadLink: Story = {
     const isInDocs = window.location.search.includes('viewMode=docs');
     const outputId = 'download-event-output';
 
-    const script = `
-      const downloadLink = document.querySelector('#download-breadcrumb-item');
-      const output = document.getElementById('${outputId}');
-
-      if (downloadLink) {
-        downloadLink.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-
-          // Generate CSV content
-          const csvContent = 'Name,Email\\nJohn,john@example.com\\nJane,jane@example.com';
-          const blob = new Blob([csvContent], { type: 'text/csv' });
-          const url = URL.createObjectURL(blob);
-
-          // Create download link
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'data.csv';
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-
-          // Create event detail
-          const detail = {
-            value: 'download',
-            label: 'Export Data',
-            index: 2,
-            href: '#',
-          };
-
-          // Update output if available
-          if (output && !${isInDocs}) {
-            output.textContent = JSON.stringify(detail, null, 2);
-          }
-
-          // Also dispatch the breadcrumb-click event for consistency
-          e.target?.dispatchEvent(
-            new CustomEvent('breadcrumb-click', {
-              detail,
-              bubbles: true,
-              composed: true,
-            })
-          );
-        });
-      }
-    `;
-
-    return html`
-      <style>
-        .storybook-card {
-          background: #f5f6fa;
-          border-radius: 12px;
-          box-shadow: 0 2px 8px rgba(16, 30, 54, 0.04);
-          padding: 2rem;
-          margin-bottom: 2rem;
-        }
-        .storybook-flex {
-          display: flex;
-          gap: 2rem;
-        }
-        .storybook-col {
-          flex: 1 1 0;
-        }
-        .storybook-code {
-          background: #23272f;
-          color: #fff;
-          border-radius: 8px;
-          padding: 1rem;
-          font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
-          font-size: 0.95rem;
-          margin-bottom: 1rem;
-          white-space: pre-wrap;
-          overflow-x: auto;
-        }
-        .breadcrumb-demo {
-          padding: 1rem;
-          border: 1px solid var(--col-theme-border-base);
-          border-radius: 4px;
-          background: var(--col-theme-background-primary);
-          font-family: var(--col-typography-font-family-primary);
-        }
-        #${outputId} {
-          margin-top: 1rem;
-          padding: 1rem;
-          background-color: #f0f0f0;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          overflow-x: auto;
-        }
-        @media (max-width: 900px) {
-          .storybook-flex {
-            flex-direction: column;
-            gap: 1.5rem;
-          }
-          .storybook-card {
-            padding: 1rem;
-          }
-        }
-      </style>
-
-      ${!isInDocs
-        ? html`
-            <div class="storybook-card">
-              <div class="storybook-flex">
-                <div class="storybook-col">
-                  <h3>Download Breadcrumb</h3>
-                  <div class="breadcrumb-demo">
-                    <col-breadcrumb>
-                      <col-breadcrumb-item>Home</col-breadcrumb-item>
-                      <col-breadcrumb-item>Reports</col-breadcrumb-item>
-                      <col-breadcrumb-item
-                        id="download-breadcrumb-item"
-                        href=${args.href}
-                        ?downloadable=${args.downloadable}
-                        filename=${args.filename}
-                      >
-                        Export Data ⬇
-                      </col-breadcrumb-item>
-                    </col-breadcrumb>
-                  </div>
-                </div>
-                <div class="storybook-col">
-                  <h3>JavaScript Integration</h3>
-                  <div class="storybook-code">
-                    <pre>
+    const codeSnippet = hljs.highlightAuto(`
 // Handle download click
 const downloadLink = document.querySelector('#download-breadcrumb-item');
 downloadLink.addEventListener('click', (e) => {
@@ -526,20 +403,139 @@ downloadLink.addEventListener('click', (e) => {
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+
+  // Create event detail
+  const detail = {
+    value: 'download',
+    label: 'Export Data',
+    index: 2,
+    href: '#',
+  };
+
+  // Update output if available
+  if (output && !isInDocs) {
+    output.textContent = JSON.stringify(detail, null, 2);
+  }
+
+  // Also dispatch the breadcrumb-click event for consistency
+  e.target?.dispatchEvent(
+    new CustomEvent('breadcrumb-click', {
+      detail,
+      bubbles: true,
+      composed: true,
+    })
+  );
 });
-                    </pre
+    `).value;
+
+    const styles = css`
+      .storybook-flex {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .storybook-col {
+        flex: 1 1 0;
+      }
+
+      @media (max-width: 900px) {
+        .storybook-flex {
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+      }
+    `;
+
+    return html`
+      ${!isInDocs
+        ? html`
+            <style>
+              ${styles}
+            </style>
+            <div class="storybook-flex">
+              <div class="storybook-col">
+                <h3>Download Breadcrumb</h3>
+                <div
+                  style="padding: 1rem; border: 1px solid var(--col-theme-border-base); border-radius: 4px; background: var(--col-theme-background-primary); font-family: var(--col-typography-font-family-primary);"
+                >
+                  <col-breadcrumb>
+                    <col-breadcrumb-item>Home</col-breadcrumb-item>
+                    <col-breadcrumb-item>Reports</col-breadcrumb-item>
+                    <col-breadcrumb-item
+                      id="download-breadcrumb-item"
+                      href=${args.href}
+                      ?downloadable=${args.downloadable}
+                      filename=${args.filename}
                     >
-                  </div>
-                  <h3>Event Details</h3>
-                  <pre id="${outputId}">
-Click the "Export Data" link to trigger the download and see event details here</pre
-                  >
-                  <script>
-                    ${script};
-                  </script>
+                      Export Data ⬇
+                    </col-breadcrumb-item>
+                  </col-breadcrumb>
                 </div>
               </div>
+              <div class="storybook-col">
+                <h3>Event Details</h3>
+                <pre
+                  id="${outputId}"
+                  style="margin-top: 1rem; padding: 1rem; background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 4px; overflow-x: auto;"
+                >
+Click the "Export Data" link to trigger the download and see event details here</pre
+                >
+                <script>
+                  const downloadLink = document.querySelector('#download-breadcrumb-item');
+                  const output = document.getElementById('${outputId}');
+
+                  if (downloadLink) {
+                    downloadLink.addEventListener('click', e => {
+                      e.preventDefault();
+                      e.stopPropagation();
+
+                      // Generate CSV content
+                      const csvContent =
+                        'Name,Email\\nJohn,john@example.com\\nJane,jane@example.com';
+                      const blob = new Blob([csvContent], { type: 'text/csv' });
+                      const url = URL.createObjectURL(blob);
+
+                      // Create download link
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = 'data.csv';
+                      document.body.appendChild(a);
+                      a.click();
+                      document.body.removeChild(a);
+                      URL.revokeObjectURL(url);
+
+                      // Create event detail
+                      const detail = {
+                        value: 'download',
+                        label: 'Export Data',
+                        index: 2,
+                        href: '#',
+                      };
+
+                      // Update output if available
+                      if (output && !${isInDocs}) {
+                        output.textContent = JSON.stringify(detail, null, 2);
+                      }
+
+                      // Also dispatch the breadcrumb-click event for consistency
+                      e.target?.dispatchEvent(
+                        new CustomEvent('breadcrumb-click', {
+                          detail,
+                          bubbles: true,
+                          composed: true,
+                        })
+                      );
+                    });
+                  }
+                </script>
+              </div>
             </div>
+            <code-block
+              code=${codeSnippet}
+              language="javascript"
+              title="Download Handler in JavaScript"
+              code-theme="dark"
+            ></code-block>
           `
         : html`
             <col-breadcrumb>
