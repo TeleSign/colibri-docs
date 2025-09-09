@@ -2,6 +2,8 @@ import { html, nothing } from 'lit-html';
 import { action } from '@storybook/addon-actions';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils';
+import hljs from 'highlight.js/lib/core';
+import '@/_storybook/components/FormDemo';
 
 type StoryArgs = {
   id: string;
@@ -436,179 +438,74 @@ export const InteractiveFormExample: Story = {
   name: 'Interactive Form Example',
   parameters: {
     controls: { disable: true },
+    docs: {
+      source: {
+        transform: (code: string) => {
+          const formMatch = code.match(/<form[^>]*slot="form"[^>]*>[\s\S]*?<\/form>/);
+          return formatCodeString(formMatch?.[0] || '');
+        },
+      },
+    },
   },
   render: () => {
-    const formId = 'interactive-form-example';
-    const outputId = 'form-output';
+    const formId = 'text-area-form-example';
+    const outputId = 'text-area-form-output';
     const isInDocs = window.location.search.includes('viewMode=docs');
+    const codeSnippet = hljs.highlightAuto(`
+      // Handle form submit with FormValidationController
+      form.addEventListener('submit', (event) => {
+        // Check if validation was already prevented
+        if (event.defaultPrevented) {
+          console.log('Form submission blocked by validation');
+          return;
+        }
 
-    const script = `
-      const form = document.getElementById('${formId}');
-      const output = document.getElementById('${outputId}');
-      const isInDocs = ${isInDocs};
+        // Prevent page reload
+        event.preventDefault();
 
-      if (!isInDocs) {
-        form.addEventListener('submit', (event) => {
-          // Check if the event was already prevented by the FormValidationController
-          if (event.defaultPrevented) {
-            output.textContent = 'Form submission blocked by validation';
-            return;
-          }
+        // Process form data only if validation passed
+        const formData = new FormData(form);
+        const formValues = Object.fromEntries(formData.entries());
+        console.log('Form submitted successfully:', formValues);
+      });
 
-          // Prevent the default form submission (page reload)
-          event.preventDefault();
-
-          // Only process if validation passed
-          const formData = new FormData(form);
-          const data = Object.fromEntries(formData.entries());
-          output.textContent = JSON.stringify(data, null, 2);
-        });
-
-        form.addEventListener('reset', () => {
-          output.textContent = 'Submit the form to see the data here';
-        });
-      }
-    `;
+      // Handle form reset - FormResetController handles component reset automatically
+      form.addEventListener('reset', () => {
+        // Only handle UI cleanup - components reset automatically
+        // A custom message or action can be added here
+        console.log('Form reset completed');
+      });
+    `).value;
 
     return html`
-      <style>
-        .storybook-card {
-          background: #f5f6fa;
-          border-radius: 12px;
-          box-shadow: 0 2px 8px rgba(16, 30, 54, 0.04);
-          padding: 2rem;
-          margin-bottom: 2rem;
-        }
-        .storybook-flex {
-          display: flex;
-          gap: 2rem;
-        }
-        .storybook-col {
-          flex: 1 1 0;
-        }
-        .storybook-code {
-          background: #23272f;
-          color: #fff;
-          border-radius: 8px;
-          padding: 1rem;
-          font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
-          font-size: 0.95rem;
-          margin-bottom: 1rem;
-          white-space: pre-wrap;
-          overflow-x: auto;
-        }
-        #${outputId} {
-          margin-top: 1rem;
-          padding: 1rem;
-          background-color: #f0f0f0;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          overflow-x: auto;
-        }
-        .form-container {
-          display: flex;
-          flex-direction: column;
-          gap: 1.5rem;
-        }
-        @media (max-width: 900px) {
-          .storybook-flex {
-            flex-direction: column;
-            gap: 1.5rem;
-          }
-          .storybook-card {
-            padding: 1rem;
-          }
-        }
-      </style>
-      <div class="storybook-card">
-        ${!isInDocs
-          ? html`
-              <div class="storybook-flex">
-                <div class="storybook-col">
-                  <h3>Feedback Form</h3>
-                  <form id="${formId}" class="form-container">
-                    <col-text-area
-                      name="comment"
-                      label="Comment"
-                      required
-                      min-length="10"
-                      helper="Please provide a comment of at least 10 characters."
-                      validation-timing="input"
-                    ></col-text-area>
-                    <col-text-area
-                      name="suggestions"
-                      label="Suggestions"
-                      char-count="200"
-                      helper="Any suggestions for improvement? (Max 200 chars)"
-                    ></col-text-area>
-                    <div style="display: flex; gap: 8px;">
-                      <button type="submit">Submit</button>
-                      <button type="reset">Reset</button>
-                    </div>
-                  </form>
-                </div>
-                <div class="storybook-col">
-                  <h3>Form Output</h3>
-                  <pre id="${outputId}">Submit the form to see the data here</pre>
-                  <script>
-                    ${script};
-                  </script>
-                </div>
-              </div>
-              <h3>Form Data</h3>
-              <div class="storybook-code">
-                <pre>
-// Handle form submit with FormValidationController
-form.addEventListener('submit', (event) => {
-  // Check if validation was already prevented
-  if (event.defaultPrevented) {
-    console.log('Form submission blocked by validation');
-    return;
-  }
-
-  // Prevent page reload
-  event.preventDefault();
-
-  // Process form data only if validation passed
-  const formData = new FormData(form);
-  const formValues = Object.fromEntries(formData.entries());
-  console.log('Form submitted successfully:', formValues);
-});
-
-// Handle form reset - FormResetController handles component reset automatically
-form.addEventListener('reset', () => {
-  // Only handle UI cleanup - components reset automatically
-  // A custom message or action can be added here
-  console.log('Form reset completed');
-});
-                    </pre
-                >
-              </div>
-            `
-          : html`
-              <h3>Feedback Form</h3>
-              <form id="${formId}" class="form-container">
-                <col-text-area
-                  name="comment"
-                  label="Comment"
-                  required
-                  min-length="10"
-                  helper="Please provide a comment of at least 10 characters."
-                  validation-timing="input"
-                ></col-text-area>
-                <col-text-area
-                  name="suggestions"
-                  label="Suggestions"
-                  char-count="200"
-                  helper="Any suggestions for improvement? (Max 200 chars)"
-                ></col-text-area>
-                <div style="display: flex; gap: 8px;">
-                  <button type="submit" ?disabled=${isInDocs}>Submit</button>
-                  <button type="reset" ?disabled=${isInDocs}>Reset</button>
-                </div>
-              </form>
-            `}
-      </div>
+      <form-demo
+        form-id="${formId}"
+        output-id="${outputId}"
+        title="Feedback Form"
+        code-snippet="${codeSnippet}"
+        code-theme="dark"
+      >
+        <form slot="form" id="${formId}" class="form-container">
+          <col-text-area
+            name="comment"
+            label="Comment"
+            required
+            min-length="10"
+            helper="Please provide a comment of at least 10 characters."
+            validation-timing="input"
+          ></col-text-area>
+          <col-text-area
+            name="suggestions"
+            label="Suggestions"
+            char-count="200"
+            helper="Any suggestions for improvement? (Max 200 chars)"
+          ></col-text-area>
+          <col-group>
+            <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
+            <col-button type="reset" ?disabled=${isInDocs}>Reset</col-button>
+          </col-group>
+        </form>
+      </form-demo>
     `;
   },
 };
