@@ -1,0 +1,296 @@
+import React from 'react';
+import { Canvas, Meta, Title, Subtitle, Unstyled } from '@storybook/blocks';
+import { Callout } from '../../_storybook/components';
+import * as stories from './col-filter-bar.stories';
+
+<Meta title="Patterns/Filter Bar" />
+
+<div className="col-doc__wrapper">
+	<div className="col-doc__container">
+		<Unstyled>
+			<Title>Filter Bar</Title>
+			<div className="col-intro-text">
+				A Filter Bar is a reusable composition pattern built from Colibri components (not a single component). It provides search and filtering controls within a view, allowing users to select and apply filters to refine the displayed results.
+			</div>
+
+      <Subtitle>Table of contents</Subtitle>
+      - [Overview](#overview)
+      - [Usage](#usage)
+      - [Example](#example)
+      - [Variants](#variants)
+      - [Accessibility](#accessibility)
+
+      ## Overview
+      <div>
+        The Filter Bar provides filtering and search controls within a view, allowing users to select and apply filters to narrow the displayed results.
+        It's commonly used above tables, lists, dashboards, and search results.
+
+        Place a Filter Bar above data-heavy content such as tables, lists, dashboards, and search results. Configure quick filters directly in the bar and move advanced options into a secondary surface (e.g., a drawer) when necessary. Keep the composition consistent across pages to build user familiarity.
+
+        <Callout variant="tip" icon="🧩">
+          This is a composition pattern using primitives such as `col-toolbar`, `col-search-bar`, `col-select`, `col-button`, `col-badge`, and (optionally) `col-drawer` for advanced filters.
+          Treat it as a recipe you can copy and adapt rather than a single drop-in component.
+        </Callout>
+      </div>
+
+      ## Usage
+      1. Install the library and styles:
+          ```bash
+          npm install @telesign/colibri
+          ```
+      2. Register components (all or the ones you use):
+          ```ts
+          import { registerAllComponents, registerColibriComponents } from '@telesign/colibri';
+          import '@telesign/colibri/styles/styles.css';
+
+          // Option A: everything
+          registerAllComponents();
+
+          // Option B: only what's needed
+          registerColibriComponents([ColToolbar, ColSearchBar, ColSelect, ColButton, ColBadge, ColDrawer, ColListMenu, ColListMenuItem]);
+          ```
+      3. Compose the Filter Bar using the building blocks below (see example):
+          - Search input: `col-search-bar`
+          - Filter controls: `col-select`, date range pickers, toggles, etc.
+          - Actions: primary button(s), filter button with counter `col-badge`
+          - Optional advanced filters panel: `col-drawer` with form fields
+
+      ## Examples
+
+      <Callout variant="info" icon="💡">
+        To help understand how to use this pattern, we provide helpful sample code, simply click `Show code` to copy/paste it and try it out.
+        The examples below use inline scripts for simplicity. In a real project, you would typically separate the JavaScript logic into its own file/module.
+      </Callout>
+
+      ### Basic Example
+
+      A simple Filter Bar with a search input and a few filter buttons:
+
+      <Canvas of={stories.BasicFilterBar} />
+
+      Using `<col-toolbar>` to arrange the elements horizontally, the needed input components, like `<col-search-bar>` and `<col-select>`, you can quickly build a functional filter bar.
+
+      In order to capture the submit event and associate the items to the form, you can use the `form` attribute on the inputs and buttons:
+
+      ```html
+      <!-- Create the form as a sibling component of the toolbar -->
+      <form id="basic-form"></form>
+
+      <!-- And then on each "input" add the form attribute passing the form's id -->
+      <col-seach-bar form="basic-form" ...></col-search-bar>
+      <col-select form="basic-form" ...></col-select>
+      <col-button form="basic-form" type="submit">Search</col-button>
+      ```
+
+      This way, we ensure the items are linked to the form without loosing the styles the toolbar provides.
+
+      Then you can listen to the form's `submit` event to capture the values and perform the search/filtering logic.
+
+      ```javascript
+      const basicForm = document.getElementById('basic-form');
+
+      basicForm.addEventListener('submit', event => {
+        event.preventDefault();
+        const formData = new FormData(basicForm);
+        const filters = Object.fromEntries(formData.entries());
+
+        console.log('[Basic Search] Search with filters:', filters);
+        // Perform search/filtering logic here
+      });
+      ```
+
+      ### Advanced Search Example - Filter Button with Drawer
+
+      Sometimes you may need more advanced filtering options that don't fit in the main bar. In this case, the Design System recommends using a "Filter Button":
+
+      <Canvas of={stories.FilterButton} />
+
+      <Callout variant="info" icon="ℹ️">
+        If you set values in any of the advanced filters in the ColDrawer component, you can see the ColBadge counter update, try it out!
+      </Callout>
+
+      The Filter Button includes a badge that shows the number of active filters. When clicked, it opens a Drawer with additional filtering options.
+
+      To create the filter button simply use a `col-button` with a `col-badge` inside, and add the logic to open the drawer when clicked:
+
+      ```html
+      <col-button id="filter-button" aria-label="Open filters" onclick="openDrawer()">
+        <col-icon name="filter" size="16"></col-icon>
+        <col-badge id="filter-counter" aria-label="Active filters count">0</col-badge>
+      </col-button>
+      ```
+
+      Then, implement the logic to open/close the drawer and update the badge count based on the selected filters:
+
+      ```javascript
+      const drawer = document.querySelector('#filter-drawer');
+      const openDrawer = () => (drawer.active = true);
+
+      // the closeDrawer can be called from the buttons inside the drawer
+      const closeDrawer = () => (drawer.active = false);
+      ```
+
+      An example of the JavaScript code needed to update the badge count when filters are applied:
+
+      ```javascript
+
+      // Grab drawer elements to monitor changes
+      const exampleDrawerElements = document
+        .querySelector('#example-drawer-content')
+        .querySelectorAll('col-text-field, col-select, col-number-field');
+
+      // Centralize badge update logic
+      const updateExampleBadge = () => {
+        let total = 0;
+        exampleDrawerElements.forEach(el => {
+          if (el && typeof el.value !== 'undefined' && String(el.value || '').trim()) total += 1;
+        });
+        const filterCounter = document.querySelector('#example-filter-counter');
+        if (filterCounter) filterCounter.textContent = String(total);
+      };
+
+      // Listen to changes on drawer elements to update badge
+      exampleDrawerElements.forEach(el => {
+        el?.addEventListener('change', updateExampleBadge);
+        el?.addEventListener('input', updateExampleBadge);
+      });
+
+      // Handle Drawer open/close logic
+      const exampleDrawer = document.querySelector('#example-filter-drawer');
+      const openExampleDrawer = () => (exampleDrawer.active = true);
+      const closeExampleDrawer = () => (exampleDrawer.active = false);
+      const closeAndClearExampleDrawer = () => {
+        exampleDrawerElements.forEach(el => {
+          if (el && typeof el.value !== 'undefined') el.value = '';
+        });
+        updateExampleBadge();
+        closeExampleDrawer();
+      };
+      exampleDrawer.addEventListener('overlay-click-outside', closeAndClearExampleDrawer);
+      exampleDrawer.addEventListener('on-close', closeAndClearExampleDrawer);
+
+      // Initialize
+      updateExampleBadge();
+      ```
+
+      ### Advanced Example - Full Filter Bar
+
+      Putting it all together we get an Advanced Filter Bar like this:
+
+      <Canvas of={stories.AdvancedFilterBar} />
+
+      ## Helpful Tips
+
+      You can customize the width of the search bar and select inputs using the `custom-width` attribute to better fit your layout:
+
+      ```html
+      <col-search-bar custom-width="150px" ...></col-search-bar>
+      <col-select custom-width="200px" ...></col-select>
+      ```
+
+      There are times when the Filter Bar is placed in a container with limited horizontal space. In these cases, you can use the `wrap` attribute on the `col-toolbar` to allow the items to wrap onto multiple lines:
+
+      ```html
+      <col-toolbar wrap ...>
+        ...
+      </col-toolbar>
+      ```
+
+      An example of the JavaScript needed to handle the form submission and capture the filter values:
+
+      ```javascript
+      // Handle Form logic
+        const form = document.getElementById('filter-form');
+        const toolbarElements = document
+          .querySelector('#toolbar')
+          .querySelectorAll('col-search-bar, col-select');
+        const drawerElements = document
+          .querySelector('#drawer-content')
+          .querySelectorAll('col-text-field, col-select, col-number-field');
+
+        const updateBadge = () => {
+          let total = 0;
+          toolbarElements.forEach(el => {
+            if (el && typeof el.value !== 'undefined' && String(el.value || '').trim()) total += 1;
+          });
+          drawerElements.forEach(el => {
+            if (el && typeof el.value !== 'undefined' && String(el.value || '').trim()) total += 1;
+          });
+          const filterCounter = document.querySelector('#filter-counter');
+          if (filterCounter) filterCounter.textContent = String(total);
+        };
+
+        // Add event listeners to update badge on input changes
+        [...toolbarElements, ...drawerElements].forEach(el => {
+          el?.addEventListener('change', updateBadge);
+          el?.addEventListener('input', updateBadge);
+        });
+
+        // Functions
+        const onSubmit = event => {
+          event.preventDefault();
+          const formData = new FormData(form);
+          const filters = Object.fromEntries(formData.entries());
+          console.log('[FilterBar] Search with filters:', filters);
+        };
+
+        const clearForm = () => {
+          toolbarElements.forEach(el => {
+            if (el && typeof el.value !== 'undefined') el.value = '';
+          });
+          drawerElements.forEach(el => {
+            if (el && typeof el.value !== 'undefined') el.value = '';
+          });
+          updateBadge();
+        };
+
+        const onReset = event => {
+          event.preventDefault();
+          form.reset();
+          clearForm();
+        };
+
+        form.addEventListener('submit', onSubmit);
+        form.addEventListener('reset', onReset);
+
+        // Handle Drawer open/close logic
+        const drawer = document.querySelector('#filter-drawer');
+        const openDrawer = () => (drawer.active = true);
+        const closeDrawer = () => (drawer.active = false);
+        const closeAndClearDrawer = () => {
+          drawerElements.forEach(el => {
+            if (el && typeof el.value !== 'undefined') el.value = '';
+          });
+          updateBadge();
+          closeDrawer();
+        };
+        drawer.addEventListener('overlay-click-outside', closeAndClearDrawer);
+        drawer.addEventListener('on-close', closeAndClearDrawer);
+
+        // Initialize
+        updateBadge();
+      ```
+
+    </Unstyled>
+
+    ## Variants
+    The Filter Bar can be adapted to multiple contexts and information densities. Common variations include:
+    - **Product Filtering:** Filter accounts, campaigns, users, and other entities.
+    - **Content Filtering in Lists or Tables:** Filter data by date, status, type, and other attributes.
+    - **Filters by Category:** Group filters into logical categories or sections.
+    - **Multi-Selection Filters:** Allow selecting multiple options within a single filter.
+    - **Search Filter:** Filter results based on user-entered terms.
+    - **Dynamic Filters:** Reveal additional filters based on a primary selection.
+    - **Range-Based Filters:** Set numeric or date ranges (e.g., date range selectors).
+    - **Sort Filter:** Sort results by different criteria.
+    - **Custom Filters:** Create domain-specific filters based on user needs.
+
+    ## Accessibility
+    - Ensure all controls have accessible names/labels (e.g., `sub-label`, `label`)
+    - Maintain logical tab order; make focus states clearly visible
+    - Use ARIA where appropriate for custom patterns; avoid redundant roles
+    - Announce state changes (e.g., update counter text content) without stealing focus
+    - Provide keyboard access to open/close drawers and operate menus
+
+  </div>
+</div>
