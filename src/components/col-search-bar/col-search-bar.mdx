@@ -1,0 +1,98 @@
+import { Meta, Title, Subtitle, Canvas, ArgTypes } from '@storybook/blocks';
+import * as stories from './col-search-bar.stories';
+import { Callout } from '../../_storybook/components';
+
+<Meta of={stories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+
+  <Title>Search Bar</Title>
+
+  The `col-search-bar` component provides a compact and accessible interface for searching text content.
+
+  <Subtitle>Table of contents</Subtitle>
+  - [How to use it](#how-to-use-it)
+  - [When to use it](#when-to-use-it)
+  - [Component preview](#component-preview)
+  - [Variants](#variants)
+  - [States](#states)
+  - [Properties](#properties)
+  - [Interact with the component](#interact-with-the-component)
+
+  ## How to use it
+
+  1. Install the package:
+      ```bash
+      npm install @colibri/colibri-components
+      ```
+
+  2. Import the dependencies:
+      ```ts
+      import { registerColibriComponents, ColSearchBar } from '@telesign/colibri';
+      import '@telesign/colibri/styles/styles.css';
+      ```
+
+  3. Register the components:
+      ```ts
+      registerColibriComponents([ColSearchBar]);
+      ```
+
+  4. Use it in your HTML:
+      ```html
+      <col-search-bar placeholder="Search..." variant="static"></col-search-bar>
+      ```
+
+  ## When to use it
+
+  Use the `col-search-bar` when you need a lightweight, interactive search input. Ideal use cases include:
+
+  - **Search functionality** in toolbars or filters.
+  - **Expandable search inputs** that save space by default.
+  - **Forms or modals** that require compact input for search.
+
+  ## Component preview
+
+  <Canvas of={stories.Default} />
+
+  ## Variants
+
+  ### Static Variant
+
+  <div>
+    This variant shows the text field inline and visible at all times.
+  </div>
+  <Canvas of={stories.Static} />
+
+  ### Expanded Variant
+
+  <div>
+    This variant starts collapsed and expands only when the user interacts with the toggle button.
+  </div>
+  <Canvas of={stories.Expanded} />
+
+  ## States
+
+  ### Disabled
+
+  <div>
+    Use the `disabled` attribute to disable user interaction.
+  </div>
+  <Canvas of={stories.Disabled} />
+
+  ### Loading
+
+  <div>
+    Use the `loading` attribute to show a loading spinner inside the input.
+  </div>
+  <Canvas of={stories.Loading} />
+
+  ## Properties
+
+  <ArgTypes of={stories} />
+
+  ## Interact with the component
+
+  You can test input behavior, variant switching, and event handling in the [Canvas](/story/molecules-search-bar--default) section.
+  </div>
+</div>
