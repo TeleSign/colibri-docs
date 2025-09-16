@@ -216,3 +216,62 @@ export const Loading: Story = {
   },
   render: renderSearchBar,
 };
+
+export const InForm: Story = {
+  render: () => {
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = `
+      <form id="searchForm">
+        <col-search-bar
+          id="searchBar"
+          placeholder="Search something..."
+          variant="expanded"
+          value=""
+        ></col-search-bar>
+
+        <input type="hidden" name="search" id="hiddenSearchInput" value="" />
+
+        <div style="margin-top: 1rem;">
+          <button type="submit">Submit</button>
+          <button type="button" id="resetButton" style="margin-left: 1rem;">Reset</button>
+        </div>
+      </form>
+    `;
+
+    const form = wrapper.querySelector('form')!;
+    const searchBar = wrapper.querySelector('#searchBar') as HTMLElement & {
+      value: string;
+      loading: boolean;
+      disabled: boolean;
+      variant: string;
+    };
+    const hiddenInput = wrapper.querySelector('#hiddenSearchInput') as HTMLInputElement;
+    const resetButton = wrapper.querySelector('#resetButton')!;
+
+    hiddenInput.value = searchBar.value || '';
+
+    searchBar.addEventListener('search-input', (e: CustomEvent) => {
+      hiddenInput.value = e.detail.value;
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const value = formData.get('search');
+
+      action('Form submitted with')(value);
+
+      searchBar.loading = true;
+      searchBar.disabled = true;
+    });
+
+    resetButton.addEventListener('click', () => {
+      searchBar.value = '';
+      searchBar.loading = false;
+      searchBar.disabled = false;
+      hiddenInput.value = '';
+    });
+
+    return wrapper;
+  },
+};
