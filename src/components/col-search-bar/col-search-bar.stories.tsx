@@ -224,12 +224,10 @@ export const InForm: Story = {
       <form id="searchForm">
         <col-search-bar
           id="searchBar"
+          name="search"
           placeholder="Search something..."
           variant="expanded"
-          value=""
         ></col-search-bar>
-
-        <input type="hidden" name="search" id="hiddenSearchInput" value="" />
 
         <div style="margin-top: 1rem;">
           <button type="submit">Submit</button>
@@ -239,20 +237,8 @@ export const InForm: Story = {
     `;
 
     const form = wrapper.querySelector('form')!;
-    const searchBar = wrapper.querySelector('#searchBar') as HTMLElement & {
-      value: string;
-      loading: boolean;
-      disabled: boolean;
-      variant: string;
-    };
-    const hiddenInput = wrapper.querySelector('#hiddenSearchInput') as HTMLInputElement;
+    const searchBar = wrapper.querySelector('#searchBar') as any;
     const resetButton = wrapper.querySelector('#resetButton')!;
-
-    hiddenInput.value = searchBar.value || '';
-
-    searchBar.addEventListener('search-input', (e: CustomEvent) => {
-      hiddenInput.value = e.detail.value;
-    });
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -269,7 +255,6 @@ export const InForm: Story = {
       searchBar.value = '';
       searchBar.loading = false;
       searchBar.disabled = false;
-      hiddenInput.value = '';
     });
 
     return wrapper;

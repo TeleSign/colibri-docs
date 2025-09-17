@@ -105,9 +105,9 @@ import { Callout } from '../../_storybook/components';
   ></col-search-bar>
   ```
   
-  ### Using it inside a form
+  ## Using it inside a form
 
-  Since `col-search-bar` is not form-associated, sync its value to a hidden input to include it in form submissions. This approach also allows handling loading, disabled states on submit, and resetting the input.
+  The col-search-bar supports native form integration. Just provide a `name` attribute to include its value in form submissions.
 
   <Canvas of={stories.InForm} />
 
