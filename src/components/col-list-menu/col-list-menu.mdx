@@ -1,0 +1,265 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as stories from './col-list-menu.stories';
+import { Callout } from '../../_storybook/components';
+
+<Meta of={stories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>ColListMenu</Title>
+    The `col-list-menu` is composed of items containing primary and supplemental actions, represented by icons and text.
+
+    <Callout variant="info" icon="ℹ️">
+      The `col-list-menu` must be used in conjunction with the `col-list-menu-item`. Both are outlined in this document, with examples demonstrating correct usage.
+    </Callout>
+
+    <Subtitle>Table of contents</Subtitle>
+    - [How to use it](#how-to-use-it)
+    - [When to use it](#when-to-use-it)
+    - [Component preview](#component-preview)
+      - [Default](#default)
+      - [Option Grouping](#option-grouping)
+      - [Navigation Lists](#navigation-lists)
+      - [Using ColIcon](#using-colicon)
+      - [Using ColCheckbox](#using-colcheckbox)
+      - [Using ColRadio](#using-colradio)
+    - [Slots](#slots)
+      - [ColListMenu Slots](#collistmenu-slots)
+      - [ColListMenuItem Slots](#collistmenuitem-slots)
+    - [Properties](#properties)
+    - [Accessibility](#accessibility)
+    - [Interact with the component](#interact-with-the-component)
+
+    ## How to use it
+    1. Install the packages:
+        ```bash
+        npm install @colibri/colibri-components
+        ```
+    2. Import the dependencies:
+        ```typescript
+        // include required ColListMenu and ColListMenuItem components
+        import { registerColibriComponents, registerAllComponents, ColListMenu, ColListMenuItem } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+
+        <Callout variant="info" icon="ℹ️">
+          **Dependency Note:** The `col-list-menu-item` component depends on `col-typography` component. It's registered automatically as a dependency of the `col-list-menu` component, so there's no need to import it separately.
+        </Callout>
+
+    3. Register the web components:
+        ```typescript
+        // Option 1: Register specific components
+        registerColibriComponents([ColListMenu, ColListMenuItem]);
+
+        // Option 2: Register all Colibri components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-list-menu>
+          <col-list-menu-item variant="label">Label</col-list-menu-item>
+          <col-list-menu-item value="option-0">
+            <col-icon name="check-circle"></col-icon>
+            Option
+          </col-list-menu-item>
+          <col-list-menu-item value="option-1" selected>
+            <col-icon name="check-circle"></col-icon>
+            Option
+          </col-list-menu-item>
+          <col-list-menu-item value="option-2" disabled>
+            <col-icon name="check-circle"></col-icon>
+            Option
+          </col-list-menu-item>
+        </col-list-menu>
+        ```
+
+    ## When to use it
+    Use the `<col-list-menu>` always accompanied by an input component (like dropdown, select, etc) to give the component a context.
+
+    Each `col-list-menu` variant has a particular function and its design signals that function to the user. It is therefore very important that the different variants are implemented consistently across products, so that they message the correct actions.
+
+    * **Default list**:	This list allows the user to select a single option from the list.
+    * **Multiple list select**:	This list allows the user to select one or more options from the list, remember that you can use the **checkbox** option to select several items from the list.
+    * **One option select list**:	This list allows the user to select an option from the list, remember to use the **radio** property if required.
+    * **List with icons**:	Use icons when you think necessary to give more context to each of the list copies, this as a visual aid for the user.
+
+    ## Component preview
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+
+    ### Basic Usage
+    The most basic usage of `col-list-menu` is to show a small group of options
+    <Canvas className="col-doc__canvas--with-background" of={stories.Default} />
+
+    <Callout variant="info" icon="ℹ️">
+      **Selection handling**:
+      * To get the `value` of the selected option, you need to add an event listener for the `list-menu-item-click` event on each `col-list-menu-item`. This event will provide you with the `value`, `index`, and `href` of the clicked item in the `event.detail` object.
+      * "Marking" an option as `selected` is left up to the developer at time of implementation since `col-list-menu`'s with "menu" role do not need it. Please see the code snippet for an example of how to handle it.
+    </Callout>
+
+    ```html
+    <col-list-menu>
+      <col-list-menu-item value="option-0">
+        Option
+      </col-list-menu-item>
+      <col-list-menu-item value="option-1">
+        Option 1
+      </col-list-menu-item>
+      <col-list-menu-item value="option-2">
+        Option 2
+      </col-list-menu-item>
+    </col-list-menu>
+
+    <script>
+      document.querySelectorAll('col-list-menu-item').forEach(item => {
+        item.addEventListener('list-menu-item-click', function (event) {
+          // Example: event.detail = { value: 'option-1', index: 1, href: '' }
+          console.log('Element clicked:', event.detail);
+
+          // IMPORTANT: Handle selection
+          if (item.hasAttribute('selected')) {
+            item.removeAttribute('selected');
+          } else {
+            item.setAttribute('selected', ' ');
+          }
+        });
+      });
+    </script>
+    ```
+
+    ### Option Grouping
+    `col-list-menu` may want to group options, for that purpose, the `col-list-menu-item` has a `variant` property which can be set to `label`
+    <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuWithLabelItems} />
+
+    ### Navigation Lists
+    `col-list-menu`s are also commonly used for navigation, linking to internal and external resources. We've used our standardized [navigation properties](#properties), but here's an example with links that open in new tabs.
+
+    <Callout variant="info" icon="ℹ️">
+      Remember, when using a `col-list-menu` for navigation, you **must** set the `role="menu"` on the `<col-list-menu>` element.
+    </Callout>
+
+    <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuWithNavigation} />
+
+    #### Using ColIcon
+    `col-list-menu-item`s may include ColIcons to visually aid with the option description
+    <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuItemsWithIcons} />
+
+    ### Using ColCheckbox
+    `col-list-menu-item`s may require additional selection input components like ColCheckbox
+
+    <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuCheckbox} />
+
+    If the `col-list-menu` has `multiselectable` attribute, then the list will allow for multiple items to be selected
+
+    <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuCheckboxWithMultiSelect} />
+
+    ### Using ColRadio
+    ColRadio can also be used with `col-list-menu-item`, be careful not to add `multiselectable` as this would be very confusing user experience since by default, radio components are meant to be used when only one option should be selected.
+
+    <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuRadio} />
+
+## Slots
+
+    ### ColListMenu Slots
+
+    The `col-list-menu` component has 4 different slots, 3 named and one default slot:
+
+    **Named Slots**
+
+    * `slot="banner"` is a Slot allocated above the entire list to show the ColBanner component when needed to provide additional important information.
+    * `slot="header"` and `slot="footer"` are meant to insert elements such as buttons, labels, value types, help text, or captions. These elements can reinforce and help the user understand the context of the list and its functionality.
+
+    **Default Slot**
+
+    * The `default` slot is where we want to make sure we add the `<col-list-menu-item>` to represent the options in the `col-list-menu`.
+
+    <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuSlots} />
+
+    ### ColListMenuItem Slots
+
+    The `col-list-menu-item` component has 2 slots, 1 named and 1 default slot:
+
+    **Named Slot**
+
+    * `slot="list-menu-item-slot"` is a right-aligned space meant to allow the insertion of one of the following options:
+      * buttons with only icon property intended to complement some action for each list item
+      * a tag in read-only state for categorized list items
+      * status for each list item
+
+    **Default Slot**
+
+    * The `default` slot is the content for the `col-list-menu-item` itself.
+
+    <Callout variant='info' icon='ℹ️'>
+      When using a ColButton in the `list-menu-item-slot`, make sure you add the necessary code to capture the events. To see sample code, please open the "Show code" option; or view <a href="http://localhost:6006/?path=/story/molecules-listmenu--list-menu-item-slots">the story</a> for an interactive example.
+    </Callout>
+
+    <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuItemSlots} />
+
+    ## Properties
+
+    <ArgTypes of={stories} />
+
+    ## Accessibility
+
+    <div>
+      The `col-list-menu` and `col-list-menu-item` components are designed to follow the <a href="https://www.w3.org/WAI/ARIA/apg/patterns/listbox/" target="_blank" rel="noopener">ARIA Listbox Pattern</a> and <a href="https://www.w3.org/WAI/ARIA/apg/patterns/menu/" target="_blank" rel="noopener">ARIA Menu Pattern</a>, ensuring robust accessibility for keyboard and assistive technology users.
+    </div>
+
+    ### Roles and Structure
+
+    - **Listbox Role:**
+      By default, `col-list-menu` uses `role="listbox"` and each `col-list-menu-item` uses `role="option"`. This enables single or multi-selection behavior (by adding `multiselectable` attribute to `<col-list-menu>`) and ensures screen readers announce the list and its items correctly.
+    - **Menu Role:**
+      When `role="menu"` is set on `col-list-menu`, each item uses `role="menuitem"`. This is ideal for action menus and navigation lists. By default this role does not allow, and should never use `multiselectable` attribute.
+
+    ### ARIA Attributes
+
+    - **Selection State:**
+      - In listbox mode, each item uses `aria-selected="true"` or `"false"` to indicate selection.
+      - In menu mode, selection is not announced, but disabled state is communicated.
+    - **Disabled State:**
+      - Items use `aria-disabled="true"` when disabled, ensuring they are skipped by keyboard navigation and announced as unavailable.
+    - **Multi-Select:**
+      - When `multiSelectable` is enabled and `role="listbox"`, the list uses `aria-multiselectable="true"`, and the `col-list-menu` component allows multiple items to be selected.
+
+    ### Keyboard Navigation
+
+    - **Arrow Keys:**
+      - Up/Down arrows move focus between items.
+    - **Enter/Space:**
+      - Activates or selects the focused item.
+    - **Tab:**
+      - Moves focus out of the menu/listbox.
+
+    All navigation is managed by the controller, ensuring correct focus and selection behavior.
+
+    ### Focus Management
+
+    - Only enabled items are focusable (`tabindex="0"`), while disabled items use `tabindex="-1"`.
+    - Focus is moved programmatically to the next/previous item on arrow key navigation.
+
+    ### Best Practices
+
+    - Always provide clear labels for each menu/list item.
+    - Use the appropriate role (`listbox` or `menu`) on the parent `<col-list-menu>` for your use case. Remember: `listbox` is the default value.
+    - For multi-select lists, set `multiSelectable` and ensure the role is default `listbox` not `menu`.
+
+    ### Screen Reader Support
+
+    - All states (selected, disabled) are announced.
+    - Keyboard navigation and activation are fully supported.
+
+    ---
+
+    <div>
+      By following ARIA listbox and menu patterns, `col-list-menu` and `col-list-menu-item` provide a highly accessible, keyboard-friendly, and screen reader-compatible experience for all users.
+    </div>
+
+    ## Interact with the component
+
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/molecules-list-menu--default) section.
+
+  </div>
+</div>

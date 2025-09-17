@@ -4,9 +4,14 @@ import type { DecoratorFunction, StoryContext } from '@storybook/types';
 import { DocsContainer } from '@storybook/blocks';
 import type { Preview, WebComponentsRenderer } from '@storybook/web-components';
 import { registerAllComponents } from '@telesign/colibri';
+import hljs from 'highlight.js/lib/core';
+import javascript from 'highlight.js/lib/languages/javascript';
+
 import '@telesign/colibri/styles/styles.css';
+import 'highlight.js/styles/atom-one-dark.css';
 
 registerAllComponents();
+hljs.registerLanguage('javascript', javascript);
 
 /**
  * Type definitions for style properties.

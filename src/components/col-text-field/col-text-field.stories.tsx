@@ -3,6 +3,8 @@ import { action } from '@storybook/addon-actions';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils';
 import { icons } from '@telesign/colibri-icons/icons-list';
+import hljs from 'highlight.js/lib/core';
+import '@/_storybook/components/FormDemo';
 
 type StoryArgs = {
   id: string;
@@ -35,6 +37,8 @@ type StoryArgs = {
   keyup: () => void;
   paste: () => void;
   invalid: () => void;
+  inputCleared: () => void;
+  validationChange: () => void;
 };
 
 const meta = {
@@ -251,6 +255,27 @@ const meta = {
       },
       if: { arg: 'name', neq: '' },
     },
+    validationChange: {
+      name: 'validation-change',
+      action: 'validation-change',
+      description: 'Fired when validation state changes.',
+      table: {
+        category: 'Events',
+        type: {
+          summary:
+            'CustomEvent<{ valid: boolean, validationMessage: string, validity: ValidityState, value: string, touched: boolean, dirty: boolean }>',
+        },
+      },
+    },
+    inputCleared: {
+      name: 'input-cleared',
+      action: 'input-cleared',
+      description: 'Fired when the input value is cleared.',
+      table: {
+        category: 'Events',
+        type: { summary: 'CustomEvent<{ value: string }>' },
+      },
+    },
     change: {
       action: 'change',
       description: 'Fired when the value is committed.',
@@ -368,6 +393,8 @@ const meta = {
     keyup: action('keyup'),
     paste: action('paste'),
     invalid: action('invalid'),
+    inputCleared: action('input-cleared'),
+    validationChange: action('validation-change'),
     iconVisible: false,
     iconName: 'search',
     iconSize: '16px',
@@ -406,6 +433,8 @@ const renderTextField: Story['render'] = args => html`
     @keyup=${args.keyup}
     @paste=${args.paste}
     @invalid=${args.invalid}
+    @input-cleared=${args.inputCleared}
+    @validation-change=${args.validationChange}
   >
     ${args.iconVisible
       ? html`<col-icon slot="icon" name=${args.iconName} size=${args.iconSize}></col-icon>`
@@ -587,192 +616,90 @@ export const InteractiveFormExample: Story = {
   name: 'Interactive Form Example',
   parameters: {
     controls: { disable: true },
+    docs: {
+      source: {
+        transform: (code: string) => {
+          const formMatch = code.match(/<form[^>]*slot="form"[^>]*>[\s\S]*?<\/form>/);
+          return formatCodeString(formMatch?.[0] || '');
+        },
+      },
+    },
   },
   render: () => {
-    const formId = 'interactive-form-example';
-    const outputId = 'form-output';
+    const formId = 'text-field-form-example';
+    const outputId = 'text-field-form-output';
     const isInDocs = window.location.search.includes('viewMode=docs');
+    const codeSnippet = hljs.highlightAuto(`
+      // Handle form submit with FormValidationController
+      form.addEventListener('submit', (event) => {
+        // Check if validation was already prevented
+        if (event.defaultPrevented) {
+          console.log('Form submission blocked by validation');
+          return;
+        }
 
-    const script = `
-      const form = document.getElementById('${formId}');
-      const output = document.getElementById('${outputId}');
-      const isInDocs = ${isInDocs};
+        // Prevent page reload
+        event.preventDefault();
 
-      if (!isInDocs) {
-        form.addEventListener('submit', (event) => {
-          event.preventDefault();
-          if (!form.checkValidity()) {
-            const firstInvalid = form.querySelector(':invalid');
-            if (firstInvalid) firstInvalid.focus();
-            return;
-          }
-          const formData = new FormData(form);
-          const data = Object.fromEntries(formData.entries());
-          output.textContent = JSON.stringify(data, null, 2);
-        });
+        // Process form data only if validation passed
+        const formData = new FormData(form);
+        const formValues = Object.fromEntries(formData.entries());
+        console.log('Form submitted successfully:', formValues);
+      });
 
-        form.addEventListener('reset', () => {
-          output.textContent = 'Submit the form to see the data here';
-        });
-      }
-    `;
+      // Handle form reset - FormResetController handles component reset automatically
+      form.addEventListener('reset', (event) => {
+        // Only handle UI cleanup - components reset automatically
+        // A custom message or action can be added here
+        console.log('Form reset completed');
+      });
+    `).value;
 
     return html`
-      <style>
-        .storybook-card {
-          background: #f5f6fa;
-          border-radius: 12px;
-          box-shadow: 0 2px 8px rgba(16, 30, 54, 0.04);
-          padding: 2rem;
-          margin-bottom: 2rem;
-        }
-        .storybook-flex {
-          display: flex;
-          gap: 2rem;
-        }
-        .storybook-col {
-          flex: 1 1 0;
-        }
-        .storybook-code {
-          background: #23272f;
-          color: #fff;
-          border-radius: 8px;
-          padding: 1rem;
-          font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
-          font-size: 0.95rem;
-          margin-bottom: 1rem;
-          white-space: pre-wrap;
-          overflow-x: auto;
-        }
-        #${outputId} {
-          margin-top: 1rem;
-          padding: 1rem;
-          background-color: #f0f0f0;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          overflow-x: auto;
-        }
-        .form-container {
-          display: flex;
-          flex-direction: column;
-          gap: 1.5rem;
-        }
-        @media (max-width: 900px) {
-          .storybook-flex {
-            flex-direction: column;
-            gap: 1.5rem;
-          }
-          .storybook-card {
-            padding: 1rem;
-          }
-        }
-      </style>
-      <div class="storybook-card">
-        ${!isInDocs
-          ? html`
-              <div class="storybook-flex">
-                <div class="storybook-col">
-                  <h3>Login Form</h3>
-                  <form id="${formId}" class="form-container">
-                    <col-text-field
-                      id="username"
-                      name="username"
-                      label="Username"
-                      value="John Doe"
-                      helper="Your public display name."
-                      required
-                      min-length="3"
-                    ></col-text-field>
-                    <col-text-field
-                      id="password"
-                      name="password"
-                      label="Password"
-                      input-type="password"
-                      value="password123"
-                      required
-                      min-length="8"
-                      helper="Must be at least 8 characters long."
-                    ></col-text-field>
-                    <col-text-field
-                      id="email"
-                      name="email"
-                      label="Email (Optional)"
-                      input-type="text"
-                      value="john.doe@example.com"
-                      pattern="^\\S+@\\S+\\.\\S+$"
-                      error-message="Please enter a valid email address."
-                      validation-timing="input"
-                      helper="We will use this to contact you."
-                    ></col-text-field>
-                    <col-group>
-                      <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
-                      <col-button type="reset" variant="secondary" ?disabled=${isInDocs}
-                        >Reset</col-button
-                      >
-                    </col-group>
-                  </form>
-                </div>
-                <div class="storybook-col">
-                  <h3>Form Data</h3>
-                  <div class="storybook-code">
-                    <pre>
-// Handle form submit
-const form = event.target as HTMLFormElement;
-const formData = new FormData(form);
-const formValues = Object.fromEntries(formData.entries());
-                    </pre
-                    >
-                  </div>
-                  <h3>Form Output</h3>
-                  <pre id="${outputId}">Submit the form to see the data here</pre>
-                  <script>
-                    ${script};
-                  </script>
-                </div>
-              </div>
-            `
-          : html`
-              <h3>Login Form</h3>
-              <form id="${formId}" class="form-container">
-                <col-text-field
-                  id="username"
-                  name="username"
-                  label="Username"
-                  value="John Doe"
-                  helper="Your public display name."
-                  required
-                  min-length="3"
-                ></col-text-field>
-                <col-text-field
-                  id="password"
-                  name="password"
-                  label="Password"
-                  input-type="password"
-                  value="password123"
-                  required
-                  min-length="8"
-                  helper="Must be at least 8 characters long."
-                ></col-text-field>
-                <col-text-field
-                  id="email"
-                  name="email"
-                  label="Email (Optional)"
-                  input-type="text"
-                  value="john.doe@example.com"
-                  pattern="^\\S+@\\S+\\.\\S+$"
-                  error-message="Please enter a valid email address."
-                  validation-timing="input"
-                  helper="We will use this to contact you."
-                ></col-text-field>
-                <col-group>
-                  <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
-                  <col-button type="reset" variant="secondary" ?disabled=${isInDocs}
-                    >Reset</col-button
-                  >
-                </col-group>
-              </form>
-            `}
-      </div>
+      <form-demo
+        form-id="${formId}"
+        output-id="${outputId}"
+        title="Login Form"
+        code-snippet="${codeSnippet}"
+        code-theme="dark"
+      >
+        <form slot="form" id="${formId}" class="form-container">
+          <col-text-field
+            id="username"
+            name="username"
+            label="Username"
+            value="John Doe"
+            helper="Your public display name."
+            required
+            min-length="3"
+          ></col-text-field>
+          <col-text-field
+            id="password"
+            name="password"
+            label="Password"
+            input-type="password"
+            value="password123"
+            required
+            min-length="8"
+            helper="Must be at least 8 characters long."
+          ></col-text-field>
+          <col-text-field
+            id="email"
+            name="email"
+            label="Email (Optional)"
+            input-type="text"
+            value="john.doe@example.com"
+            pattern="^\\S+@\\S+\\.\\S+$"
+            error-message="Please enter a valid email address."
+            validation-timing="input"
+            helper="We will use this to contact you."
+          ></col-text-field>
+          <col-group>
+            <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
+            <col-button type="reset" ?disabled=${isInDocs}>Reset</col-button>
+          </col-group>
+        </form>
+      </form-demo>
     `;
   },
 };
