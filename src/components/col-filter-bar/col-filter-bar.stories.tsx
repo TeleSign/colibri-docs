@@ -7,7 +7,15 @@ type StoryArgs = {};
 const meta = {
   title: 'Patterns/Filter Bar',
   parameters: {
+    backgrounds: {
+      default: 'Light',
+    },
     docs: {
+      story: {
+        // Renders the story in an iframe within the docs
+        inline: false,
+        height: '400px',
+      },
       source: {
         excludeDecorators: true,
         transform: formatCodeString,
@@ -25,11 +33,6 @@ type Story = ColibriStory<StoryArgs>;
  */
 export const BasicFilterBar: Story = {
   name: 'Basic Filter Bar',
-  parameters: {
-    __sb: {
-      height: '150px',
-    },
-  },
   render: () => {
     return html`
       <form id="basic-form"></form>
@@ -85,11 +88,6 @@ export const BasicFilterBar: Story = {
 
 export const FilterButton: Story = {
   name: 'Filter Button',
-  parameters: {
-    __sb: {
-      height: '400px',
-    },
-  },
   render: () => html`
     <!-- Advanced filters trigger with active count badge -->
     <col-button id="example-filter-button" aria-label="Open filters" onclick="openExampleDrawer()">
@@ -144,7 +142,7 @@ export const FilterButton: Story = {
           slot="actions"
           variant="outlined"
           onclick="closeAndClearExampleDrawer()"
-          >Cancel</col-button
+          >Clear</col-button
         >
         <col-button
           id="example-drawer-apply"
@@ -181,7 +179,14 @@ export const FilterButton: Story = {
       // Handle Drawer open/close logic
       const exampleDrawer = document.querySelector('#example-filter-drawer');
       const openExampleDrawer = () => (exampleDrawer.active = true);
-      const closeExampleDrawer = () => (exampleDrawer.active = false);
+      const closeExampleDrawer = () => {
+        const formData = { transactionName: '', status: '', amount: '' };
+        formData.transactionName = document.querySelector('#example-transaction-name').value;
+        formData.status = document.querySelector('#example-status').value;
+        formData.amount = document.querySelector('#example-amount').value;
+        console.log('[Filter Button] Search with filters:', formData);
+        exampleDrawer.active = false;
+      };
       const closeAndClearExampleDrawer = () => {
         exampleDrawerElements.forEach(el => {
           if (el && typeof el.value !== 'undefined') el.value = '';
@@ -200,11 +205,6 @@ export const FilterButton: Story = {
 
 export const AdvancedFilterBar: Story = {
   name: 'Advanced Filter Bar',
-  parameters: {
-    __sb: {
-      height: '400px',
-    },
-  },
   render: () => {
     return html`
       <!-- Top-level form owner for toolbar and drawer inputs -->
@@ -267,7 +267,7 @@ export const AdvancedFilterBar: Story = {
             custom-width="100%"></col-number-field>
         </div>
         <col-modal-footer slot="footer">
-          <col-button id="drawer-cancel" slot="actions" variant="outlined" onclick="closeAndClearDrawer()">Cancel</col-button>
+          <col-button id="drawer-cancel" slot="actions" variant="outlined" onclick="closeAndClearDrawer()">Clear</col-button>
           <col-button id="drawer-apply" slot="actions" color="primary" onclick="closeDrawer()">Apply</col-button>
         </col-modal-footer>
       </col-drawer>
