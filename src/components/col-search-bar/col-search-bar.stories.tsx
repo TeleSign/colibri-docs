@@ -1,5 +1,4 @@
 import { html } from 'lit';
-import { action } from '@storybook/addon-actions';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 
 type StoryArgs = {
@@ -7,6 +6,7 @@ type StoryArgs = {
   placeholder: string;
   variant: 'static' | 'expanded';
   disabled: boolean;
+  customWidth: string;
   loading: boolean;
   searchInput: () => void;
   input: () => void;
@@ -164,6 +164,7 @@ const renderSearchBar: Story['render'] = args => html`
     variant=${args.variant}
     ?disabled=${args.disabled}
     ?loading=${args.loading}
+    custom-width="100%"
     @input=${args.input}
     @change=${args.change}
     @search-input=${args['search-input']}
@@ -217,44 +218,97 @@ export const Loading: Story = {
   render: renderSearchBar,
 };
 
-export const InForm: Story = {
+export const InteractiveForm: Story = {
   render: () => {
     const wrapper = document.createElement('div');
     wrapper.innerHTML = `
-      <form id="searchForm">
+      <form id="interactiveForm">
+        <div style="margin-bottom: 0.5rem;">
+          <label>
+            Variant:
+            <select id="variantSelect">
+              <option value="expanded">expanded</option>
+              <option value="static">static</option>
+            </select>
+          </label>
+          <label style="margin-left: 1rem;">
+            <input type="checkbox" id="disabledToggle" />
+            Disabled
+          </label>
+          <label style="margin-left: 1rem;">
+            <input type="checkbox" id="loadingToggle" />
+            Loading
+          </label>
+        </div>
+
         <col-search-bar
           id="searchBar"
           name="search"
-          placeholder="Search something..."
+          custom-width="100%"
           variant="expanded"
+          placeholder="Search something..."
         ></col-search-bar>
 
         <div style="margin-top: 1rem;">
           <button type="submit">Submit</button>
           <button type="button" id="resetButton" style="margin-left: 1rem;">Reset</button>
         </div>
+
+        <pre id="formOutput" style="
+          margin-top: 1rem;
+          padding: 0.75rem;
+          border: 1px solid #ddd;
+          background: #f9f9f9;
+          font-size: 0.9rem;
+        "></pre>
       </form>
     `;
 
     const form = wrapper.querySelector('form')!;
     const searchBar = wrapper.querySelector('#searchBar') as any;
+    const output = wrapper.querySelector('#formOutput')!;
     const resetButton = wrapper.querySelector('#resetButton')!;
+    const variantSelect = wrapper.querySelector('#variantSelect') as HTMLSelectElement;
+    const disabledToggle = wrapper.querySelector('#disabledToggle') as HTMLInputElement;
+    const loadingToggle = wrapper.querySelector('#loadingToggle') as HTMLInputElement;
+
+    variantSelect.addEventListener('change', () => {
+      searchBar.variant = variantSelect.value;
+    });
+
+    disabledToggle.addEventListener('change', () => {
+      searchBar.disabled = disabledToggle.checked;
+    });
+
+    loadingToggle.addEventListener('change', () => {
+      searchBar.loading = loadingToggle.checked;
+    });
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const formData = new FormData(form);
       const value = formData.get('search');
 
-      action('Form submitted with')(value);
+      output.textContent = `Form submitted with value: "${value}"`;
 
       searchBar.loading = true;
       searchBar.disabled = true;
+
+      setTimeout(() => {
+        searchBar.loading = false;
+        searchBar.disabled = false;
+      }, 1200);
     });
 
     resetButton.addEventListener('click', () => {
       searchBar.value = '';
-      searchBar.loading = false;
+      output.textContent = '';
       searchBar.disabled = false;
+      searchBar.loading = false;
+      disabledToggle.checked = false;
+      loadingToggle.checked = false;
+      variantSelect.value = 'expanded';
+      searchBar.variant = 'expanded';
     });
 
     return wrapper;

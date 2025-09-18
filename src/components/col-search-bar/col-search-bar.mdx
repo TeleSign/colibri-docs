@@ -18,7 +18,7 @@ import { Callout } from '../../_storybook/components';
   - [Variants](#variants)
   - [States](#states)
   - [Event handling](#event-handling)
-  - [Using it inside a form](#using-it-inside-a-form)
+  - [Live demo with form integration](#live-demo-with-form-integration)
   - [Accessibility](#accessibility)
   - [Properties](#properties)
   - [Interact with the component](#interact-with-the-component)
@@ -105,18 +105,20 @@ import { Callout } from '../../_storybook/components';
   ></col-search-bar>
   ```
   
-  ## Using it inside a form
+  ## Live demo with form integration
 
-  The col-search-bar supports native form integration. Just provide a `name` attribute to include its value in form submissions.
+  The `col-search-bar` supports native form integration by simply assigning a `name` attribute.  
+  When used inside a `<form>`, its value is included in `FormData` on submission.
 
-  <Canvas of={stories.InForm} />
+  The interactive example below demonstrates:
 
-  This example demonstrates:
+  - Dynamic control of all component states.
+  - Real-time value submission.
+  - Visual feedback for `disabled`, `loading`, and variant switching.
+  - Integration with native form behavior.
 
-  - Providing `name="search"` to associate it with a native form.
-  - Submitting the form and accessing the value via `FormData`.
-  - Handling `loading` and `disabled` states on submit.
-  - Resetting the component via a button.
+  <Canvas of={stories.InteractiveForm} />
+
 
   ## Accessibility
 
