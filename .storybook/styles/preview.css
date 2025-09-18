@@ -751,6 +751,16 @@ div.token-item__code-container {
   word-break: break-all;
 }
 
+.slot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 124px;
+  height: 32px;
+  border: 1px dashed var(--col-colors-stroke-default-light);
+  background-color: var(--col-colors-ui-disabled);
+}
+
 @media (max-width: 768px) {
   .theme-preview-container {
     grid-template-columns: 1fr;
