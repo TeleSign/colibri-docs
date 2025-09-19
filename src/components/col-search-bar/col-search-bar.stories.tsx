@@ -1,5 +1,7 @@
 import { html } from 'lit';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
+import { formatCodeString } from '@/utils';
+import hljs from 'highlight.js/lib/core';
 
 type StoryArgs = {
   value: string;
@@ -28,6 +30,7 @@ const meta = {
     docs: {
       source: {
         excludeDecorators: true,
+        transform: formatCodeString,
       },
     },
   },
@@ -58,7 +61,7 @@ const meta = {
       table: {
         category: 'State',
         type: { summary: 'boolean' },
-        defaultValue: { summary: false },
+        defaultValue: { summary: 'false' },
       },
     },
     loading: {
@@ -67,7 +70,7 @@ const meta = {
       table: {
         category: 'State',
         type: { summary: 'boolean' },
-        defaultValue: { summary: false },
+        defaultValue: { summary: 'false' },
       },
     },
     searchInput: {
@@ -167,11 +170,12 @@ const renderSearchBar: Story['render'] = args => html`
     custom-width="100%"
     @input=${args.input}
     @change=${args.change}
-    @search-input=${args['search-input']}
-    @input-cleared=${args['input-cleared']}
+    @search-input=${args.searchInput}
+    @input-cleared=${args.inputCleared}
     @focus=${args.focus}
     @blur=${args.blur}
     @keydown=${args.keydown}
+    @keyup=${args.keyup}
     @paste=${args.paste}
   ></col-search-bar>
 `;
@@ -218,99 +222,116 @@ export const Loading: Story = {
   render: renderSearchBar,
 };
 
-export const InteractiveForm: Story = {
+export const InteractiveFormExample: Story = {
+  name: 'Interactive Form Example',
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      source: {
+        transform: (code: string) => {
+          const formMatch = code.match(/<form[^>]*slot="form"[^>]*>[\s\S]*?<\/form>/);
+          return formatCodeString(formMatch?.[0] || '');
+        },
+      },
+    },
+  },
   render: () => {
-    const wrapper = document.createElement('div');
-    wrapper.innerHTML = `
-      <form id="interactiveForm">
-        <div style="margin-bottom: 0.5rem;">
-          <label>
-            Variant:
-            <select id="variantSelect">
-              <option value="expanded">expanded</option>
-              <option value="static">static</option>
-            </select>
-          </label>
-          <label style="margin-left: 1rem;">
-            <input type="checkbox" id="disabledToggle" />
-            Disabled
-          </label>
-          <label style="margin-left: 1rem;">
-            <input type="checkbox" id="loadingToggle" />
-            Loading
-          </label>
-        </div>
+    const formId = 'search-bar-form-example';
+    const outputId = 'search-bar-form-output';
+    const isInDocs = window.location.search.includes('viewMode=docs');
 
-        <col-search-bar
-          id="searchBar"
-          name="search"
-          custom-width="100%"
-          variant="expanded"
-          placeholder="Search something..."
-        ></col-search-bar>
+    const codeSnippet = hljs.highlightAuto(`
+      // Handle form submit with FormValidationController
+      form.addEventListener('submit', (event) => {
+        // Check if validation was already prevented
+        if (event.defaultPrevented) {
+          console.log('Form submission blocked by validation');
+          return;
+        }
 
-        <div style="margin-top: 1rem;">
-          <button type="submit">Submit</button>
-          <button type="button" id="resetButton" style="margin-left: 1rem;">Reset</button>
-        </div>
+        // Prevent page reload
+        event.preventDefault();
 
-        <pre id="formOutput" style="
-          margin-top: 1rem;
-          padding: 0.75rem;
-          border: 1px solid #ddd;
-          background: #f9f9f9;
-          font-size: 0.9rem;
-        "></pre>
-      </form>
-    `;
+        // Process form data only if validation passed
+        const formData = new FormData(form);
+        const formValues = Object.fromEntries(formData.entries());
+        console.log('Form submitted successfully:', formValues);
+      });
 
-    const form = wrapper.querySelector('form')!;
-    const searchBar = wrapper.querySelector('#searchBar') as any;
-    const output = wrapper.querySelector('#formOutput')!;
-    const resetButton = wrapper.querySelector('#resetButton')!;
-    const variantSelect = wrapper.querySelector('#variantSelect') as HTMLSelectElement;
-    const disabledToggle = wrapper.querySelector('#disabledToggle') as HTMLInputElement;
-    const loadingToggle = wrapper.querySelector('#loadingToggle') as HTMLInputElement;
+      // Handle form reset - FormResetController handles component reset automatically
+      form.addEventListener('reset', (event) => {
+        // Only handle UI cleanup - components reset automatically
+        // A custom message or action can be added here
+        console.log('Form reset completed');
+      });
+    `).value;
 
-    variantSelect.addEventListener('change', () => {
-      searchBar.variant = variantSelect.value;
-    });
+    return html`
+        <form-demo
+          form-id="${formId}"
+          output-id="${outputId}"
+          title="Search Bar Configuration"
+          code-snippet="${codeSnippet}"
+          code-theme="dark"
+        >
+          <form slot="form" id="${formId}" class="form-container">
+            <div style="margin-bottom: 0.5rem;">
+              <label>
+                Variant:
+                <select id="variantSelect">
+                  <option value="expanded">expanded</option>
+                  <option value="static">static</option>
+                </select>
+              </label>
+              <label style="margin-left: 1rem;">
+                <input type="checkbox" id="disabledToggle" />
+                Disabled
+              </label>
+              <label style="margin-left: 1rem;">
+                <input type="checkbox" id="loadingToggle" />
+                Loading
+              </label>
+            </div>
 
-    disabledToggle.addEventListener('change', () => {
-      searchBar.disabled = disabledToggle.checked;
-    });
+            <col-search-bar
+              id="searchBar"
+              name="search"
+              custom-width="100%"
+              variant="expanded"
+              placeholder="Search something..."
+            ></col-search-bar>
 
-    loadingToggle.addEventListener('change', () => {
-      searchBar.loading = loadingToggle.checked;
-    });
+            <col-group>
+              <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
+              <col-button type="reset" ?disabled=${isInDocs}>Reset</col-button>
+            </col-group>
+          </form>
+        </form-demo>
+        <script>
+        (() => {
+          const searchBar = document.getElementById('searchBar');
+          const variantSelect = document.getElementById('variantSelect');
+          const disabledToggle = document.getElementById('disabledToggle');
+          const loadingToggle = document.getElementById('loadingToggle');
+          const formDemo = document.querySelector('form-demo');
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const value = formData.get('search');
+          formDemo.addEventListener('form-reset', () => {
+            searchBar.value = "";
+          });
 
-      output.textContent = `Form submitted with value: "${value}"`;
+          variantSelect.addEventListener('change', () => {
+            searchBar.variant = variantSelect.value;
+          });
 
-      searchBar.loading = true;
-      searchBar.disabled = true;
+          disabledToggle.addEventListener('change', () => {
+            searchBar.disabled = disabledToggle.checked;
+          });
 
-      setTimeout(() => {
-        searchBar.loading = false;
-        searchBar.disabled = false;
-      }, 1200);
-    });
-
-    resetButton.addEventListener('click', () => {
-      searchBar.value = '';
-      output.textContent = '';
-      searchBar.disabled = false;
-      searchBar.loading = false;
-      disabledToggle.checked = false;
-      loadingToggle.checked = false;
-      variantSelect.value = 'expanded';
-      searchBar.variant = 'expanded';
-    });
-
-    return wrapper;
+          loadingToggle.addEventListener('change', () => {
+            searchBar.loading = loadingToggle.checked;
+          });
+        })();
+      </script>
+      `;
   },
 };

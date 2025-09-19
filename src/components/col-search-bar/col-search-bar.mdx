@@ -18,7 +18,7 @@ import { Callout } from '../../_storybook/components';
   - [Variants](#variants)
   - [States](#states)
   - [Event handling](#event-handling)
-  - [Live demo with form integration](#live-demo-with-form-integration)
+  - [Interactive Form Example](#interactive-form-example)
   - [Accessibility](#accessibility)
   - [Properties](#properties)
   - [Interact with the component](#interact-with-the-component)
@@ -105,19 +105,22 @@ import { Callout } from '../../_storybook/components';
   ></col-search-bar>
   ```
   
-  ## Live demo with form integration
+  ## Interactive Form Example
 
-  The `col-search-bar` supports native form integration by simply assigning a `name` attribute.  
-  When used inside a `<form>`, its value is included in `FormData` on submission.
+  The `col-search-bar` component integrates seamlessly with native HTML forms through the use of the `name` attribute, enabling its value to be included automatically in form submissions.
 
-  The interactive example below demonstrates:
+  This interactive example demonstrates how the component behaves within a real form context, showcasing:
 
-  - Dynamic control of all component states.
-  - Real-time value submission.
-  - Visual feedback for `disabled`, `loading`, and variant switching.
-  - Integration with native form behavior.
+  - Dynamic control of all component states including `disabled`, `loading`, and variant toggling.
+  - Real-time value submission and updates.
+  - Visual feedback reflecting the current state of the component.
+  - Full integration with native HTML form behaviors such as submission and reset.
 
-  <Canvas of={stories.InteractiveForm} />
+  <Callout variant="info" icon="ℹ️">
+    For a fully interactive experience with working form submission, reset, and validation, visit the [Canvas tab](/story/molecules-search-bar--interactive-form-example).
+  </Callout>
+
+  <Canvas of={stories.InteractiveFormExample} />
 
 
   ## Accessibility
