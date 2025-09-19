@@ -70,6 +70,11 @@ export class FormDemo extends LitElement {
 
   private _handleReset = () => {
     this.outputElement.textContent = 'Submit the form to see the data here';
+
+    this.dispatchEvent(new CustomEvent('form-reset', {
+      bubbles: true,
+      composed: true,
+    }));
   };
 
   render() {
@@ -78,7 +83,7 @@ export class FormDemo extends LitElement {
     return html`
       <div class="storybook-card">
         ${!isInDocs
-          ? html`
+        ? html`
               <div class="storybook-flex">
                 <div class="storybook-col">
                   <h3>${this.title}</h3>
@@ -88,7 +93,7 @@ export class FormDemo extends LitElement {
                   </div>
                 </div>
                 ${this.showOutput
-                  ? html`
+            ? html`
                       <div class="storybook-col">
                         <h3>Form Output</h3>
                         <pre class="form-output" id="${this.outputId}">
@@ -97,19 +102,19 @@ Submit the form to see the data here
                         >
                       </div>
                     `
-                  : ''}
+            : ''}
               </div>
               ${this.showCodeBlock && this.codeSnippet
-                ? html`
+            ? html`
                     <code-block
                       code="${this.codeSnippet}"
                       code-theme="${this.codeTheme}"
                       title="Form Data Integration in JavaScript"
                     ></code-block>
                   `
-                : ''}
+            : ''}
             `
-          : html`
+        : html`
               <h3>${this.title}</h3>
               ${this.formDescription ? html`<p>${this.formDescription}</p>` : ''}
               <div>
