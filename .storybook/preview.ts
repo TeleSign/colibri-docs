@@ -177,7 +177,7 @@ const preview: Preview = {
     controls: { expanded: true, hideNoControlsWarning: true },
     options: {
       storySort: {
-        order: ['Welcome', 'Atoms', 'Molecules', 'Organisms', 'Tokens'],
+        order: ['Welcome', 'Atoms', 'Molecules', 'Organisms', 'Patterns', 'Tokens'],
       },
     },
     docs: {
