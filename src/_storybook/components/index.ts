@@ -3,4 +3,5 @@ export { Card } from './Card';
 export { Container } from './Container';
 export { Component } from './Component';
 export { FormDemo } from './FormDemo';
+export { LayoutDemo } from './LayoutDemo';
 export { CodeBlock, highlightJsStyles } from './CodeBlock';

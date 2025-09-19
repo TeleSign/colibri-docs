@@ -3,6 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { SITE_MENU_COLOR_VARIANTS } from '@telesign/colibri';
 import { ColibriStory, ColibriStoryMeta } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
+import '@/_storybook/components/LayoutDemo';
 
 type SiteMenuProps = {
   color: string;
@@ -41,6 +42,14 @@ const meta = {
         excludeDecorators: true,
         transform: formatCodeString,
       },
+    },
+    layout: 'fullscreen',
+    __sb: {
+      display: 'flex',
+      gap: '1rem',
+      height: '100dvh',
+      margin: '0 0 0 56px',
+      padding: '0 1rem',
     },
   },
   argTypes: {
@@ -340,6 +349,7 @@ const renderSiteMenuWithSwitching = (args: SiteMenuStoryArgs) => {
       </col-site-menu-toolbar>
       <col-site-menu-submenu slot="submenu"></col-site-menu-submenu>
     </col-site-menu>
+    <layout-demo title="Page Title" show-placeholder></layout-demo>
   `;
 };
 

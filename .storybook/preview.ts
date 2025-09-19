@@ -59,6 +59,7 @@ export type Styles = {
   height?: string;
   width?: string;
   margin?: string;
+  padding?: string;
   minHeight?: MinHeight;
   position?: Position;
 };
@@ -115,6 +116,7 @@ const getStyles = (options?: StylesOptions): string => {
     height: 'height',
     width: 'width',
     margin: 'margin',
+    padding: 'padding',
     minHeight: 'min-height',
     position: 'position',
   };
