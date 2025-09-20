@@ -429,7 +429,7 @@ const renderSiteMenuWithSwitching = (args: SiteMenuStoryArgs) => {
       </col-site-menu-toolbar>
       <col-site-menu-submenu slot="submenu"></col-site-menu-submenu>
     </col-site-menu>
-    <layout-demo title="Page Title" show-placeholder></layout-demo>
+    <layout-demo title="Page Title" showplaceholder> </layout-demo>
   `;
 };
 
@@ -494,7 +494,7 @@ export const ToolbarExample: Story = {
         <col-icon name="trending-up-square" size="20"></col-icon>
       </col-site-menu-button>
     </col-site-menu-toolbar>
-    <layout-demo title="Page Title" show-placeholder></layout-demo>
+    <layout-demo title="Page Title" showplaceholder></layout-demo>
   `,
 };
 

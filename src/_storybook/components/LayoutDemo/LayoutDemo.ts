@@ -11,10 +11,10 @@ export class LayoutDemo extends LitElement {
   title = 'Page Title';
 
   @property({ type: Boolean })
-  showPlaceholder = true;
+  showPlaceholder = false;
 
   @property({ type: String, attribute: 'placeholder-text' }) placeholderText =
-    'You can add your main content here';
+    'Main page content goes here';
 
   render() {
     const contentClasses = {
@@ -27,7 +27,9 @@ export class LayoutDemo extends LitElement {
       <div class="layout-wrapper">
         <h3 class="page-title">${this.title}</h3>
         <div class=${classMap(contentClasses)}>
-          ${this.showPlaceholder ? html`<!-- ${this.placeholderText} -->` : html`<slot></slot>`}
+          ${this.showPlaceholder
+            ? html`<div class="page-content">${this.placeholderText}</div>`
+            : html`<slot></slot>`}
         </div>
       </div>
     `;

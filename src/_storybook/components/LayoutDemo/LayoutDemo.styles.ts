@@ -34,6 +34,10 @@ export const LayoutDemoStyles = css`
     color: ${getThemeVar('colors.text.default')};
   }
 
+  .page-content {
+    text-align: center;
+  }
+
   .content-area {
     flex-grow: 1;
     min-height: 200px;
