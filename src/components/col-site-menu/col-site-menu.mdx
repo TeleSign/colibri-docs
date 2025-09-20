@@ -27,6 +27,7 @@ import * as ColSiteMenuStories from './col-site-menu.stories';
     - [Events](#events)
     - [Accessibility](#accessibility)
     - [Context architecture](#context-architecture)
+    - [Dynamic Content Integration](#dynamic-content-integration)
     - [Interact with the component](#interact-with-the-component)
 
     ## How to use it
@@ -490,6 +491,73 @@ import * as ColSiteMenuStories from './col-site-menu.stories';
     ### Single-Open Enforcement
 
     The context ensures only one subcategory can be open at a time, providing a consistent accordion experience across the entire navigation structure.
+
+    ## Dynamic Content Integration
+
+    The Site Menu supports dynamic content switching through JavaScript event handlers. This is particularly useful for applications that need to show different submenu content based on user selections.
+
+    ### Event-Driven Content Updates
+
+    When a toolbar action is selected, you can listen for the `site-menu-action-selected` event and dynamically update the submenu content:
+
+    ```javascript
+    const handleActionSelected = (e) => {
+      const { actionId } = e.detail;
+      const submenuElement = e.target?.querySelector('col-site-menu-submenu');
+
+      if (submenuElement) {
+        submenuElement.innerHTML = '';
+
+        if (actionId === 'dashboard') {
+          submenuElement.innerHTML = `
+            <col-site-menu-category category-name="dashboard">
+              <col-icon name="dash-board" size="20"></col-icon>
+              Dashboard
+            </col-site-menu-category>
+            <!-- Add subcategories and items here -->
+          `;
+        }
+      }
+    };
+
+    document.querySelector('col-site-menu')
+      ?.addEventListener('site-menu-action-selected', handleActionSelected);
+    ```
+
+    ### Integration with Frameworks
+
+    For framework integration (React, Vue, Angular), you can manage the submenu content through component state:
+
+    **React Example:**
+    ```jsx
+    const [submenuContent, setSubmenuContent] = useState('');
+
+    const handleActionSelected = (e) => {
+      const { actionId } = e.detail;
+
+      if (actionId === 'dashboard') {
+        setSubmenuContent(dashboardMenuHTML);
+      } else if (actionId === 'analytics') {
+        setSubmenuContent(analyticsMenuHTML);
+      }
+    };
+
+    return (
+      <col-site-menu onSite-menu-action-selected={handleActionSelected}>
+        <col-site-menu-submenu
+          slot="submenu"
+          dangerouslySetInnerHTML={{ __html: submenuContent }}
+        />
+      </col-site-menu>
+    );
+    ```
+
+    ### Best Practices
+
+    - **Performance**: Cache submenu content templates to avoid repeated string generation
+    - **Accessibility**: Ensure dynamic content maintains proper ARIA labels and structure
+    - **State Management**: Use your application's state management system for complex navigation scenarios
+    - **Loading States**: Consider showing loading indicators during content transitions
 
     ## Interact with the component
 
