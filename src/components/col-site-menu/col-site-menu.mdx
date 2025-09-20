@@ -1,0 +1,498 @@
+import { ArgTypes, Canvas, Meta, Title, Subtitle, Source, Unstyled } from '@storybook/blocks';
+import { Callout, Container } from '../../_storybook/components';
+import * as ColSiteMenuStories from './col-site-menu.stories';
+
+<Meta of={ColSiteMenuStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Site Menu</Title>
+    A comprehensive navigation organism that orchestrates toolbar and submenu interactions for complex application navigation.
+    The Site Menu provides context-driven state management, single-open accordion behavior, and flexible slot-based composition.
+    This organism component manages all child component state through Lit Context and enforces single-open accordion behavior for subcategories.
+
+    <Subtitle>Table of Contents</Subtitle>
+    - [How to use it](#how-to-use-it)
+    - [When to use it](#when-to-use-it)
+    - [Component preview](#component-preview)
+    - [Child Components](#child-components)
+      - [col-site-menu-toolbar](#col-site-menu-toolbar)
+      - [col-site-menu-button](#col-site-menu-button)
+      - [col-site-menu-submenu](#col-site-menu-submenu)
+      - [col-site-menu-category](#col-site-menu-category)
+      - [col-site-menu-subcategory](#col-site-menu-subcategory)
+      - [col-site-menu-item](#col-site-menu-item)
+    - [Advanced Features](#advanced-features)
+    - [Properties](#properties)
+    - [Events](#events)
+    - [Accessibility](#accessibility)
+    - [Context architecture](#context-architecture)
+    - [Interact with the component](#interact-with-the-component)
+
+    ## How to use it
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        // Option 1: For registering specific components
+        import {
+          registerColibriComponents,
+          ColSiteMenu,
+          ColSiteMenuSubmenu,
+          ColSiteMenuToolbar,
+        } from '@telesign/colibri';
+
+        // Option 2: For registering all Colibri components
+        import { registerAllComponents } from '@telesign/colibri';
+        ```
+    3. Register the web components:
+        ```typescript
+        // Option 1: Register specific components
+        registerColibriComponents([ColSiteMenu, ColSiteMenuSubmenu, ColSiteMenuToolbar])
+
+        // Option 2: Register all Colibri components
+        registerAllComponents();
+        ```
+
+    4. Use it in your HTML:
+          <Callout variant="info" icon="ℹ️">
+            **Dependency Note**
+
+            When registering specific components, you only need to register `ColSiteMenu`, `ColSiteMenuSubmenu`, and `ColSiteMenuToolbar`.
+            All other Site Menu components are registered automatically as dependencies.
+          </Callout>
+        ```html
+        <col-site-menu color="primary">
+          <col-site-menu-toolbar slot="toolbar">
+            <col-icon slot="logo" name="home" size="24"></col-icon>
+            <col-site-menu-button slot="actions" action-id="dashboard">
+              <col-icon name="dash-board" size="20"></col-icon>
+            </col-site-menu-button>
+          </col-site-menu-toolbar>
+          <col-site-menu-submenu slot="submenu">
+            <col-site-menu-category category-name="dashboard">
+              <col-icon name="stats" size="20"></col-icon>
+              Dashboard
+            </col-site-menu-category>
+            <col-site-menu-subcategory subcategory-id="overview">
+              <col-icon slot="icon" name="sight-on" size="18"></col-icon>
+              Overview
+              <col-site-menu-item slot="items" href="/dashboard/home" router>
+                Home
+              </col-site-menu-item>
+            </col-site-menu-subcategory>
+          </col-site-menu-submenu>
+        </col-site-menu>
+        ```
+    ## When to use it
+    Use the Site Menu organism when you need sophisticated navigation capabilities that go beyond simple menu components.
+    This component is designed for complex applications that require multi-level navigation with coordinated state management.
+
+    **Ideal Use Cases:**
+    - **Complex Navigation** - Multi-level navigation with categories, subcategories, and items
+    - **Context-Driven State** - Centralized state management across multiple child components
+    - **Single-Open Accordion** - Enforce single-open behavior for subcategories
+    - **Flexible Composition** - Slot-based API for maximum customization
+    - **Accessibility Features** - Proper ARIA attributes, keyboard navigation, and focus management
+
+    ## Component preview
+
+    The Site Menu provides two interactive demonstrations showcasing its navigation capabilities:
+
+    ### Basic site menu
+
+    The default configuration demonstrates core functionality with dashboard and analytics navigation, featuring multi-level content organization and single-open accordion behavior.
+
+    <Callout variant="info" icon="ℹ️">
+     To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/organisms-site-menu--default) section.
+    </Callout>
+
+    ### Interactive example
+
+    Explore all configuration options including color variants, state management, and responsive behavior. Use the controls panel to test different combinations.
+
+    <Callout variant="info" icon="ℹ️">
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Interactive Example](/story/organisms-site-menu--interactive-example) section.
+    </Callout>
+
+    ## Child Components
+    The Site Menu includes six child components that work together through shared context to provide complete navigation functionality. Each component has a specific role in building the overall navigation experience.
+
+    We'll describe each component following a top-down approach, starting with the main container components and moving to the individual navigation elements. For detailed implementation examples, see the HTML code snippet in the [How to use it](#how-to-use-it) section.
+
+    <Callout variant="info" icon="ℹ️">
+      The following component examples are displayed individually for documentation purposes and are not interactive.
+      They demonstrate the structure and appearance of each child component within the Site Menu ecosystem.
+    </Callout>
+
+    ### `col-site-menu-toolbar`
+
+    The primary navigation toolbar that serves as the header component for the Site Menu. It provides dedicated slots for branding elements (logo) and interactive action buttons that control submenu content. The toolbar acts as the main interaction point for users to switch between different navigation contexts and maintains visual consistency across the application.
+
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+
+    <Canvas of={ColSiteMenuStories.ToolbarExample} />
+
+    #### Key Implementation Details
+
+    **Required Configuration:**
+    - **`slot="toolbar"`** - Must be placed in the Site Menu as the toolbar slot
+    - **`slot="actions"`** - Each `col-site-menu-button` requires this slot within the toolbar (see [col-site-menu-button](#col-site-menu-button) section for details)
+
+    **Essential Components:**
+    - **General Slot** - Located at the top of the toolbar. Accepts any content (typically an `svg` file) for branding
+    - **Action Buttons** - Uses `col-site-menu-button` components for navigation triggers
+    - **Context Integration** - Automatically receives color themes and manages selection state
+
+    **Accessibility features:**
+    - **`aria-label`** - Required on both toolbar and each button for screen reader support
+    - **Semantic Structure** - Toolbar uses proper navigation landmarks
+    - **Keyboard Navigation** - Full tab and arrow key support for all interactive elements
+
+    ### `col-site-menu-button`
+
+    Individual action buttons within the toolbar that trigger submenu content changes. These buttons are context-aware and automatically synchronize their selection state with the Site Menu's current navigation context. Each button represents a distinct navigation section and communicates with the parent Site Menu through the shared context system.
+
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+
+    #### Enabled State
+
+    <Canvas of={ColSiteMenuStories.ButtonExampleEnabled} />
+
+    #### Selected State
+
+    <Canvas className='col-doc__canvas--with-background' of={ColSiteMenuStories.ButtonExampleSelected} />
+
+    #### Disabled State
+
+    <Canvas of={ColSiteMenuStories.ButtonExampleDisabled} />
+
+
+    #### Key Implementation Details
+    **Required Configuration:**
+    - **`action-id`** - Unique identifier to link the button to submenu content
+
+    **Essential Components:**
+    - **General Slot** - Typically contains a `col-icon` for visual representation
+    - **Context Integration** - Automatically updates selection state based on Site Menu context
+
+    **Accessibility features:**
+    - **`aria-label`** - Descriptive label for screen readers. Defaults to "Navigation action" if not provided
+    - **`aria-pressed`** - Automatically managed to reflect selection state
+    - **Keyboard Focus** - Fully focusable and operable via keyboard inputs
+
+    ### `col-site-menu-submenu`
+
+    Container for submenu content that appears when an action is selected. This component serves as the content area that displays navigation categories, subcategories, and items based on the currently selected toolbar action. The submenu automatically manages its visibility through the Site Menu context and provides a structured layout for organizing complex navigation hierarchies.
+
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+
+    <Canvas of={ColSiteMenuStories.SubmenuExample} />
+
+    #### Key Implementation Details
+
+    **Required Configuration:**
+    - **`slot="submenu"`** - Must be placed in the Site Menu as the submenu slot
+    - **Proper nesting structure** - Contains `col-site-menu-category`, `col-site-menu-subcategory`, and `col-site-menu-item` components
+
+    **Essential Components:**
+    - **Category Components** - Header sections that group related navigation content
+    - **Subcategory Components** - Collapsible sections containing menu items (only one can be opened at a time)
+    - **Menu Item Components** - Individual navigation links and actions
+    - **Context Integration** - Automatically receives visibility state and color themes
+
+    **Accessibility features:**
+    - **`aria-label`** - Descriptive label for screen readers. Defaults to "Site navigation submenu" if not provided
+    - **`aria-hidden`** - Automatically managed based on visibility state
+    - **`inert` attribute** - Applied when hidden to prevent interaction with hidden content
+    - **Focus management** - Automatically focuses appropriate elements when opened
+
+    **Keyboard Navigation:**
+    - **Escape key** - Closes open subcategories first, then closes the entire submenu
+    - **Automatic focus** - Focuses first category or focusable element when submenu opens
+    - **Tab navigation** - Standard tab order through all interactive elements
+
+    ### `col-site-menu-category`
+    The category header component that organizes related subcategories within the submenu. Each category serves as a visual and semantic grouping for navigation items, providing clear separation between different sections of the menu. Categories enhance the overall structure and usability of the navigation experience.
+
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippet to see how to use the component.
+    </Callout>
+
+    <Canvas of={ColSiteMenuStories.CategoryExample} />
+
+    #### Key Implementation Details
+    **Required Configuration:**
+    - **`category-name`** - Unique identifier for the category (used for event tracking via the `site-menu-category-close` event)
+    - **Proper nesting structure** - Should contain `col-icon` and text content
+
+    **Essential Components:**
+    - **General Slot** - Typically contains a `col-icon` for visual representation and text for the category name
+    - **Semantic Structure** - Renders as a heading element for proper document structure
+    - **Context Integration** - Receives color themes from Site Menu context
+
+    **Accessibility features:**
+    - **`aria-label`** - Descriptive label for screen readers.
+    - **Focus management** - Automatically focuses first category or focusable element when submenu opens
+
+    **Keyboard Navigation**
+    - Fully focusable and operable via keyboard inputs
+
+    ### `col-site-menu-subcategory`
+    The subcategory header component that provides collapsible sections within a category. Each subcategory can be expanded or collapsed to show or hide its associated menu items. The component enforces single-open accordion behavior, ensuring that only one subcategory can be open at a time. This enhances usability by reducing visual clutter and focusing user attention.
+
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippet to see how to use the component.
+    </Callout>
+
+    #### Default (Closed) State
+
+    <Canvas of={ColSiteMenuStories.SubcategoryExampleDefault} />
+
+    #### Open State
+
+    <Canvas of={ColSiteMenuStories.SubcategoryExampleOpen} />
+
+    ### Disabled State
+
+    <Canvas of={ColSiteMenuStories.SubcategoryExampleDisabled} />
+
+    #### Key Implementation Details
+    **Required Configuration:**
+    - **`subcategory-id`** - Unique identifier to manage open/close state
+    - **`open` attribute** - Optional boolean to set initial open state (default is closed)
+    - **`disabled` attribute** - Optional boolean to disable interaction
+    - **Proper nesting structure** - Should contain `col-icon`, text content, and `col-site-menu-item` components
+
+    **Essential Components:**
+    - **Icon Slot** - Dedicated slot for the icon element
+    - **General Slot** - Typically contains the text for the subcategory name
+    - **Item Container Slot** - Contains `col-site-menu-item` components
+    - **Context Integration** - Manages open/close state through Site Menu context
+
+    **Accessibility features:**
+    - **`aria-label`** - Descriptive label for screen readers. Default to "Toggle subcategory" if not provided
+    - **`aria-expanded`** - Automatically managed to reflect open/close state
+    - **`role="button"`** - Applied to the header for proper semantics
+
+    **Focus management**
+    - Focuses header when toggled and manages focus within item container
+
+    **Keyboard Navigation:**
+    - **Enter/Space** - Toggles open/close state
+    - **Tab key** - Navigate within item container when open. **No arrow key navigation in the current implementation**.
+    - **Escape key** - Closes subcategory and returns focus to header
+
+    ### `col-site-menu-item`
+    The individual navigation item component that represents a single link or action within a subcategory. Each item can function as a router link, external link, or action button. The component is designed to be flexible and accessible, providing clear navigation options for users.
+
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+
+    #### Default State
+
+    <Canvas of={ColSiteMenuStories.ItemExample} />
+
+    ### Selected State
+
+    <Canvas of={ColSiteMenuStories.ItemExampleSelected} />
+
+    ### Disabled State
+
+    <Canvas of={ColSiteMenuStories.ItemExampleDisabled} />
+
+    ### Router Navigation
+    This example demonstrates a router link item that integrates with client-side routing libraries. It uses the `router` attribute to indicate that it should be treated as a router link. The `href` attribute specifies the target route. The item automatically manages its selected state based on the current route.
+
+    <Canvas of={ColSiteMenuStories.RouterItemExample} />
+
+    ### External Links
+    This example demonstrates an external link item that opens a new browser tab. It uses the `href` attribute to specify the URL and the `target="_blank"` attribute to open the link in a new tab. The `rel="noopener noreferrer"` attribute is included for security best practices.
+
+    <Canvas of={ColSiteMenuStories.ExternalItemExample} />
+
+    #### Key Implementation Details
+    **Required Configuration:**
+    - **`item-name`** - Unique identifier for the item (used for event tracking via the `site-menu-item-selected` event)
+    - **`parent-subcategory-id`** - Identifier of the parent subcategory (used for single-open behavior coordination and focus management. Must match the `subcategory-id` of the parent subcategory).
+    - **`href` attribute** - URL or route for navigation
+    - **`slot="items"`** - Must be placed in a `col-site-menu-subcategory` as an item slot
+    - **Optional `router` attribute** - Indicates a router link (integrates with client-side routing libraries)
+    - **Optional `target` attribute** - Specifies where to open the link (e.g., `_blank` for new tab)
+    - **Optional `rel` attribute** - Security attributes for external links (e.g., `noopener noreferrer`)
+    - **Proper nesting structure** - Should contain text content and optionally a `col-icon`
+
+    **Essential Components:**
+    - **General Slot** - Typically contains text content
+    - **Context Integration** - Automatically manages selected state based on current route (for router links)
+    - **Link Behavior** - Renders as an anchor tag for navigation
+
+    **Accessibility features:**
+    - **`aria-label`** - Descriptive label for screen readers. Defaults to link
+    - **`role="link"`** - Applied for proper semantics
+    - **Focus management** - Fully focusable and operable via keyboard inputs
+
+    **Keyboard Navigation:**
+    - **Enter/Space** - Activates the link
+    - **Tab key** - Navigate through all interactive elements
+    - **Standard link behavior** - Follows platform conventions for links
+
+    ## Advanced Features
+
+    ### Keyboard Navigation
+
+    The Site Menu provides comprehensive keyboard navigation support:
+
+    - **Tab Navigation**: Navigate between interactive elements
+    - **Enter/Space**: Activate buttons and toggle subcategories
+    - **Escape**: Close submenu and return focus to toolbar
+
+    ### Responsive Behavior
+
+    The Site Menu adapts to different screen sizes:
+
+    - **Desktop**: Full sidebar layout with persistent toolbar
+    - **Mobile**: Overlay behavior with optimized touch targets
+    - **Flexible Width**: Configurable toolbar and submenu widths
+
+    ### Focus Management
+
+    Sophisticated focus management ensures accessibility:
+
+    - **Focus Restoration**: Returns focus to toolbar when submenu closes
+    - **Focus Trap**: Manages focus within open subcategories
+    - **Visible Focus Indicators**: Clear focus states for all interactive elements
+
+    ### Single-Open Accordion
+
+    Enforces single-open behavior for subcategories:
+
+    - **Automatic Closing**: Opening one subcategory closes others
+    - **Context Coordination**: State managed through Site Menu context
+    - **Event Propagation**: Proper event handling for state changes
+
+    ## Properties
+
+    ### `col-site-menu` properties
+
+    <ArgTypes of={ColSiteMenuStories} include="^(color|selected-action-id|open|open-subcategory-id|aria-label)$" />
+
+    ### `col-site-menu-toolbar` properties
+
+    <ArgTypes of={ColSiteMenuStories} include="^(aria-label)$" />
+
+    ### `col-site-menu-button` properties
+
+    <ArgTypes of={ColSiteMenuStories} include="^(action-id|selected|aria-label|disabled)$" />
+
+    ### `col-site-menu-submenu` properties
+
+    <ArgTypes of={ColSiteMenuStories} include="^(aria-label)$" />
+
+    ### `col-site-menu-category` properties
+
+    <ArgTypes of={ColSiteMenuStories} include="^(category-name|aria-label)$" />
+
+    ### `col-site-menu-subcategory` properties
+
+    <ArgTypes of={ColSiteMenuStories} include="^(subcategory-id|open|disabled|aria-label)$" />
+
+    ### `col-site-menu-item` properties
+
+    <ArgTypes of={ColSiteMenuStories} include="^(item-name|parent-subcategory-id|href|router|aria-label|disabled|selected)$" />
+
+    ## Events
+
+    The Site Menu emits several custom events for integration:
+
+    ### `site-menu-action-selected`
+
+    Fired when a toolbar action is selected.
+
+    ```typescript
+    interface SiteMenuActionSelectedDetail {
+      actionId: string;
+      selected: boolean;
+    }
+    ```
+
+    ### `site-menu-submenu-toggle`
+
+    Fired when submenu visibility changes.
+
+    ```typescript
+    interface SiteMenuSubmenuToggleDetail {
+      visible: boolean;
+      actionId?: string;
+    }
+    ```
+
+    ### `site-menu-subcategory-toggle`
+
+    Fired when subcategory open/close state changes.
+
+    ```typescript
+    interface SiteMenuSubcategoryToggleDetail {
+      subcategoryId: string;
+      open: boolean;
+      openSubcategoryId?: string;
+    }
+    ```
+
+    ## Accessibility
+
+    The Site Menu is designed with accessibility as a core principle:
+
+    ### ARIA Support
+
+    - **Navigation Role**: Main container uses `role="navigation"`
+    - **Button Semantics**: Proper button roles and states
+    - **Expanded States**: `aria-expanded` for collapsible elements
+    - **Labeling**: Comprehensive `aria-label` attributes
+
+    ### Screen Reader Support
+
+    - **Semantic Structure**: Proper heading hierarchy
+    - **State Announcements**: Clear state changes
+    - **Content Relationships**: Parent-child relationships
+
+    ### Keyboard Accessibility
+
+    - **Full Keyboard Navigation**: All functionality accessible via keyboard
+    - **Focus Management**: Logical focus order and restoration
+    - **Standard Shortcuts**: Follows platform conventions
+
+    ## Context Architecture
+
+    ### Context-Driven State Management
+
+    The Site Menu uses Lit Context for centralized state management:
+
+    ```typescript
+    interface SiteMenuContextValue {
+      color: SITE_MENU_COLOR_VARIANTS;
+      selectedActionId?: string;
+      open: boolean;
+      openSubcategoryId?: string;
+      // Context methods for state manipulation
+    }
+    ```
+
+    ### Single-Open Enforcement
+
+    The context ensures only one subcategory can be open at a time, providing a consistent accordion experience across the entire navigation structure.
+
+    ## Interact with the component
+
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/organisms-site-menu--default) section.
+  </div>
+</div>
