@@ -5,6 +5,7 @@ import { SITE_MENU_COLOR_VARIANTS } from '@telesign/colibri';
 import { ColibriStory, ColibriStoryMeta } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
 import '@/_storybook/components/LayoutDemo';
+import '@/_storybook/components/MainLogo';
 
 type SiteMenuProps = {
   color: string;
@@ -418,7 +419,7 @@ const renderSiteMenuWithSwitching = (args: SiteMenuStoryArgs) => {
       @site-menu-subcategory-toggle=${action('site-menu-subcategory-toggle')}
     >
       <col-site-menu-toolbar slot="toolbar">
-        <col-icon slot="logo" name="home" size="24" style="color: white"></col-icon>
+        <main-logo slot="logo" color="${args.color || 'primary'}" size="36"></main-logo>
         <col-site-menu-button slot="actions" action-id="dashboard" aria-label="Dashboard">
           <col-icon name="dash-board" size="20"></col-icon>
         </col-site-menu-button>
@@ -485,7 +486,7 @@ export const ToolbarExample: Story = {
   },
   render: (args: SiteMenuStoryArgs) => html`
     <col-site-menu-toolbar slot="toolbar" aria-label="${args.ariaLabel}">
-      <col-icon slot="logo" name="home" size="24" style="color: white"></col-icon>
+      <main-logo slot="logo" color="primary" size="36"></main-logo>
       <col-site-menu-button slot="actions" action-id="dashboard" aria-label="Dashboard">
         <col-icon name="dash-board" size="20"></col-icon>
       </col-site-menu-button>
