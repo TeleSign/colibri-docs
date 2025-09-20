@@ -1,4 +1,5 @@
-import { html, nothing } from 'lit';
+import { html, nothing, LitElement, css } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { action } from '@storybook/addon-actions';
 import { SITE_MENU_COLOR_VARIANTS } from '@telesign/colibri';
@@ -67,7 +68,8 @@ const meta = {
     },
     open: {
       control: { type: 'boolean' },
-      description: 'Whether the submenu panel is visible. Use `open` attribute in HTML.',
+      description:
+        'Whether the submenu panel is visible. Handled by the site menu context when user clicks on a menu item. **Manually switch for demonstration purposes**.',
       table: {
         category: 'core',
         type: { summary: 'boolean' },
@@ -392,44 +394,12 @@ const renderItem = (args: SiteMenuStoryArgs) => html`
 `;
 
 const renderSiteMenuWithSwitching = (args: SiteMenuStoryArgs) => {
-  const handleActionSelected = (e: CustomEvent) => {
-    action('site-menu-action-selected')(e);
-
-    const { actionId } = e.detail;
-    const submenuElement = (e.target as HTMLElement)?.querySelector('col-site-menu-submenu');
-
-    if (submenuElement) {
-      submenuElement.innerHTML = '';
-
-      if (actionId === 'dashboard') {
-        submenuElement.innerHTML = SubmenuContentTemplates.dashboardContent();
-      } else if (actionId === 'analytics') {
-        submenuElement.innerHTML = SubmenuContentTemplates.analyticsContent();
-      }
-    }
-  };
-
   return html`
-    <col-site-menu
+    <site-menu-story-wrapper
       color="${args.color}"
       ?open=${args.open}
-      aria-label="${args.ariaLabel || nothing}"
-      @site-menu-action-selected=${handleActionSelected}
-      @site-menu-submenu-toggle=${action('site-menu-submenu-toggle')}
-      @site-menu-subcategory-toggle=${action('site-menu-subcategory-toggle')}
-    >
-      <col-site-menu-toolbar slot="toolbar">
-        <main-logo slot="logo" color="${args.color || 'primary'}" size="36"></main-logo>
-        <col-site-menu-button slot="actions" action-id="dashboard" aria-label="Dashboard">
-          <col-icon name="dash-board" size="20"></col-icon>
-        </col-site-menu-button>
-        <col-site-menu-button slot="actions" action-id="analytics" aria-label="Analytics">
-          <col-icon name="trending-up-square" size="20"></col-icon>
-        </col-site-menu-button>
-      </col-site-menu-toolbar>
-      <col-site-menu-submenu slot="submenu"></col-site-menu-submenu>
-    </col-site-menu>
-    <layout-demo title="Page Title" showplaceholder> </layout-demo>
+      aria-label="${args.ariaLabel}"
+    ></site-menu-story-wrapper>
   `;
 };
 
@@ -988,3 +958,105 @@ export const ExternalItemExample: Story = {
     </div>
   `,
 };
+
+// Wrapper component to manage state for the interactive examples
+@customElement('site-menu-story-wrapper')
+class SiteMenuStoryWrapper extends LitElement {
+  static styles = css`
+    :host {
+      display: flex;
+      width: 100%;
+    }
+  `;
+
+  @property()
+  color = 'primary';
+
+  @property({ type: Boolean })
+  open = false;
+
+  @property()
+  ariaLabel = '';
+
+  @state()
+  private submenuContent = '';
+
+  @state()
+  private selectedActionId = '';
+
+  connectedCallback() {
+    super.connectedCallback();
+    if (this.open) {
+      this.selectedActionId = 'dashboard';
+      this.submenuContent = SubmenuContentTemplates.dashboardContent();
+    }
+  }
+
+  updated(changedProperties: Map<string, unknown>) {
+    if (changedProperties.has('open')) {
+      if (this.open && !this.submenuContent) {
+        this.selectedActionId = 'dashboard';
+        this.submenuContent = SubmenuContentTemplates.dashboardContent();
+      } else if (!this.open) {
+        this.selectedActionId = '';
+        this.submenuContent = '';
+      }
+    }
+  }
+
+  private handleActionSelected = (e: CustomEvent) => {
+    action('site-menu-action-selected')(e);
+
+    const { actionId } = e.detail;
+    this.selectedActionId = actionId;
+
+    if (actionId === 'dashboard') {
+      this.submenuContent = SubmenuContentTemplates.dashboardContent();
+    } else if (actionId === 'analytics') {
+      this.submenuContent = SubmenuContentTemplates.analyticsContent();
+    }
+  };
+
+  render() {
+    return html`
+      <col-site-menu
+        color="${this.color}"
+        ?open=${this.open}
+        aria-label="${this.ariaLabel || nothing}"
+        @site-menu-action-selected=${this.handleActionSelected}
+        @site-menu-submenu-toggle=${action('site-menu-submenu-toggle')}
+        @site-menu-subcategory-toggle=${action('site-menu-subcategory-toggle')}
+      >
+        <col-site-menu-toolbar slot="toolbar">
+          <main-logo slot="logo" color="${this.color || 'primary'}" size="36"></main-logo>
+          <col-site-menu-button
+            slot="actions"
+            action-id="dashboard"
+            aria-label="Dashboard"
+            ?selected=${this.selectedActionId === 'dashboard'}
+          >
+            <col-icon name="dash-board" size="20"></col-icon>
+          </col-site-menu-button>
+          <col-site-menu-button
+            slot="actions"
+            action-id="analytics"
+            aria-label="Analytics"
+            ?selected=${this.selectedActionId === 'analytics'}
+          >
+            <col-icon name="trending-up-square" size="20"></col-icon>
+          </col-site-menu-button>
+        </col-site-menu-toolbar>
+        <col-site-menu-submenu slot="submenu">
+          ${unsafeHTML(this.submenuContent)}
+        </col-site-menu-submenu>
+      </col-site-menu>
+      <layout-demo title="Page Title" showplaceholder></layout-demo>
+    `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'site-menu-story-wrapper': SiteMenuStoryWrapper;
+  }
+}
