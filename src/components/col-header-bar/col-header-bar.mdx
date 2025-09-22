@@ -1,0 +1,141 @@
+import React from 'react';
+import { Canvas, Meta, Title, Subtitle, Unstyled } from '@storybook/blocks';
+import { Callout } from '../../_storybook/components';
+import * as stories from './col-header-bar.stories';
+
+<Meta of={stories} />
+
+<div className="col-doc__wrapper">
+	<div className="col-doc__container">
+    <Title>Header Bar</Title>
+    <div className="col-intro-text">
+      The Header Bar is a reusable composition pattern built from Colibri components. It sits at the top of a page and provides navigation context, a title, status, quick actions, and access to filters or secondary actions.
+    </div>
+
+      <Subtitle>Table of contents</Subtitle>
+      - [Overview](#overview)
+      - [Usage](#usage)
+      - [Example](#example)
+      - [Variants](#variants)
+      - [Accessibility](#accessibility)
+
+      ## Overview
+      The Header Bar is a fundamental component in the user interface of web and mobile applications. It is located at the top of the page and performs several essential functions to enhance the user experience and the brand identity.
+
+      Use it to:
+      - Give users clear, straightforward navigation with relevant, accessible links.
+      - Offer quick access to key actions like settings, notifications, or the user profile.
+
+      Core parts:
+      - **Button icon** — Represents the main page action or a quick shortcut. Keep it recognizable and aligned with your UI theme.
+      - **Heading** — A descriptive title that tells users where they are. It can be static or update dynamically with navigation.
+      - **Status** — Shows contextual info like success, warnings, or errors so users can scan quickly.
+      - **Filter bar** — Provides search and filtering controls to refine content. See <a href="../col-filter-bar/col-filter-bar?path=/docs/patterns-filter-bar--docs" target="_blank" rel="noreferrer">Filter Bar</a>.
+      - **Slot** — Space for custom content or context-specific actions when you need them.
+
+      ## Usage
+      1. Install the library and styles:
+          ```bash
+          npm install @telesign/colibri
+          ```
+      2. Register components (all or the ones you use):
+          ```javascript
+          import { registerAllComponents, registerColibriComponents } from '@telesign/colibri';
+          import '@telesign/colibri/styles/styles.css';
+
+          // Option A: everything
+          registerAllComponents();
+
+          // Option B: only what's needed
+          registerColibriComponents([
+            ColToolbar,
+            ColTypography,
+            ColIcon,
+            ColStatus,
+            ColSelect,
+            ColButton,
+            ColBadge,
+            ColDivider,
+            ColDrawer,
+            ColTextField,
+            ColNumberField,
+            ColListMenu,
+            ColListMenuItem,
+            ColModalHeader,
+            ColModalFooter,
+          ]);
+          ```
+      3. Compose the Header Bar using the building blocks below (see example):
+          - Leading icon and page title: `col-icon` + `col-typography`
+          - Context/status indicator: `col-status`
+          - Quick filters and actions: `col-select`, primary `col-button`
+          - Optional advanced filters panel: `col-drawer` opened from a button with `col-badge`
+          - Optional right-side slot area for contextual actions
+
+      ## Example
+
+      <Callout variant="info" icon="💡">
+        Click Show code to copy/paste the sample. In real projects, keep the JavaScript in a separate module.
+      </Callout>
+
+      ### All Functions Header Bar
+
+      In this example we show a Header Bar with all the common features: title with icon and status, quick filters, advanced filter drawer, and primary action button.
+
+      <Canvas of={stories.AllFunctionsHeader} />
+
+      ### With Quick Filters Only
+
+      In this example we show a Header Bar with quick filters only, without the advanced filter drawer or primary action button.
+
+      <Canvas of={stories.QuickFiltersOnly} />
+
+      ### With Advanced Filters Only
+
+      In this example we show a Header Bar with only title, advanced filter with drawer and primary action button.
+
+      <Canvas of={stories.AdvancedFiltersHeaderBar} />
+
+      ### Without Filters
+
+      In this example we show a Header Bar with only title and slot for custom content, but no filtering.
+
+      <Canvas of={stories.TitleAndSlotHeaderBar} />
+
+    	## Variants
+    	Variations often include:
+    	- Page titles with different statuses or icons
+    	- With/without quick filters
+    	- With advanced filters drawer and counter
+    	- With custom right-side slot actions
+
+      ## Accessibility
+      The Header Bar is a composition of multiple components. Here’s a quick checklist so it’s friendly for keyboards and screen readers.
+
+      ### Semantics & landmarks
+      - Use `col-typography` with `element="h1"` for the page title (one `h1` per page). Use `h2`/`h3` for nested sections.
+      - Give the header area a clear label. Since `col-toolbar`’s inner node sets `aria-label="Toolbar"`, wrap the bar in a landmark like `<section aria-label="Header Bar">…</section>` or place a visible heading immediately before it.
+
+      ### Keyboard navigation
+      - Tab/Shift+Tab moves through all interactive controls (buttons, selects, fields).
+      - Enter/Space activates buttons. Arrow keys navigate listbox options inside `col-list-menu`.
+      - Press `Escape` to close the drawer.
+
+      ### Screen reader support
+      - Filter trigger:
+        - Add `aria-controls="filter-drawer"` to the button and toggle `aria-expanded` when opening/closing.
+        - Expose the count with `aria-describedby` that points to a short sentence (e.g., “3 filters applied”). Put that sentence in a node with `aria-live="polite"` and `aria-atomic="true"` and update text only.
+      - Status messages: `col-status` uses `role="status"`, so keep messages short. Keep decorative dots `aria-hidden`.
+      - Icons: if an icon is decorative, set `aria-hidden="true"`. For icon-only buttons, provide a clear `aria-label`.
+
+      ### Focus management (drawer as dialog)
+      - Treat the drawer like a dialog: ensure dialog semantics (`role="dialog"`, `aria-modal="true"`).
+      - On open: move focus to the first interactive control and keep it trapped (default `col-drawer` behavior).
+      - On close: return focus back to the filter button.
+
+      ### Labels on form controls
+      - Prefer `label` on `col-select`, `col-text-field`, and `col-number-field`. If only `sub-label` is shown, add an `aria-label`.
+
+    </div>
+
+</div>
