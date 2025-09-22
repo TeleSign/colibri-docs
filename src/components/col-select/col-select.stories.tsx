@@ -209,6 +209,17 @@ const meta = {
       },
       if: { arg: 'counter', neq: false },
     },
+    clearable: {
+      control: 'boolean',
+      description:
+        'Shows a clear (reset) button when a value is selected. Opt-in; default is false.',
+      table: {
+        category: 'Features',
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
+      if: { arg: 'clearable', neq: false },
+    },
     errorMessage: {
       name: 'error-message',
       control: 'text',
@@ -359,6 +370,7 @@ const meta = {
     required: false,
     badge: false,
     counter: false,
+    clearable: false,
     errorMessage: '',
     iconVisible: false,
     iconName: 'search',
