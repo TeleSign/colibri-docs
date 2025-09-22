@@ -74,19 +74,7 @@ export const AllFunctionsHeader: Story = {
         >
       </col-toolbar>
       <col-divider orientation="vertical" style="height: 20px"></col-divider>
-      <div
-        style="
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 124px;
-          height: 32px;
-          border: 1px dashed var(--col-colors-stroke-default-light);
-          background-color: var(--col-colors-ui-disabled);
-        "
-      >
-        Slot
-      </div>
+      <div class="slot">Slot</div>
     </col-toolbar>
 
     <!-- Advanced filters drawer -->
