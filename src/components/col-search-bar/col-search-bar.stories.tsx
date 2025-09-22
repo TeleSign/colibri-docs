@@ -275,32 +275,45 @@ export const InteractiveFormExample: Story = {
         code-theme="dark"
       >
         <form slot="form" id="${formId}" class="form-container">
-          <div style="margin-bottom: 0.5rem;">
-            <col-select id="modeSelect" name="mode" value="expanded" label="Display Mode">
+          <div style="display: flex; gap: 1.5rem; align-items: center; margin-bottom: 1rem;">
+            <col-select id="modeSelect" name="mode" value="expanded">
               <col-list-menu role="menuitem">
                 <col-list-menu-item value="expanded">Expanded</col-list-menu-item>
                 <col-list-menu-item value="static">Static</col-list-menu-item>
               </col-list-menu>
             </col-select>
-            <col-group role="group">
-              <col-checkbox name="disabled checkbox" id="disabledToggle"> Disabled </col-checkbox>
-              <col-checkbox name="loading checkbox" id="loadingToggle"> Loading </col-checkbox>
-            </col-group>
+            <col-checkbox name="disabled checkbox" id="disabledToggle"> Disabled </col-checkbox>
+            <col-checkbox name="loading checkbox" id="loadingToggle"> Loading </col-checkbox>
           </div>
-          <col-search-bar
-            id="searchBar"
-            name="search"
-            custom-width="100%"
-            mode="expanded"
-            placeholder="Search something..."
-          ></col-search-bar>
-
-          <col-group>
+          <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+            <col-search-bar
+              id="searchBar"
+              name="search"
+              mode="expanded"
+              placeholder="Search something..."
+            ></col-search-bar>
             <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
             <col-button type="reset" ?disabled=${isInDocs}>Reset</col-button>
-          </col-group>
+          </div>
         </form>
       </form-demo>
+      <script>
+        (() => {
+          const modeSelect = document.getElementById('modeSelect');
+          const disabledToggle = document.getElementById('disabledToggle');
+          const loadingToggle = document.getElementById('loadingToggle');
+          const searchBar = document.getElementById('searchBar');
+          function updateSearchBar() {
+            searchBar.mode = modeSelect.value;
+            searchBar.disabled = disabledToggle.checked;
+            searchBar.loading = loadingToggle.checked;
+          }
+
+          modeSelect.addEventListener('change', updateSearchBar);
+          disabledToggle.addEventListener('change', updateSearchBar);
+          loadingToggle.addEventListener('change', updateSearchBar);
+        })();
+      </script>     
     `;
-  },
+  }
 };

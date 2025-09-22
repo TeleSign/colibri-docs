@@ -15,7 +15,7 @@ import { Callout } from '../../_storybook/components';
   - [How to use it](#how-to-use-it)
   - [When to use it](#when-to-use-it)
   - [Component preview](#component-preview)
-  - [Variants](#variants)
+  - [Modes](#modes)
   - [States](#states)
   - [Event handling](#event-handling)
   - [Interactive Form Example](#interactive-form-example)
@@ -47,7 +47,7 @@ import { Callout } from '../../_storybook/components';
 
   4. Use it in your HTML:
       ```html
-      <col-search-bar placeholder="Search..." variant="static"></col-search-bar>
+      <col-search-bar placeholder="Search..." mode="static"></col-search-bar>
       ```
 
   ## When to use it
@@ -62,19 +62,19 @@ import { Callout } from '../../_storybook/components';
 
   <Canvas of={stories.Default} />
 
-  ## Variants
+  ## Modes
 
-  ### Static Variant
+  ### Static mode
 
   <div>
-    This variant shows the text field inline and visible at all times.
+    This mode shows the text field inline and visible at all times.
   </div>
   <Canvas of={stories.Static} />
 
-  ### Expanded Variant
+  ### Expanded mode
 
   <div>
-    This variant starts collapsed and expands only when the user interacts with the toggle button.
+    This mode starts collapsed and expands only when the user interacts with the toggle button.
   </div>
   <Canvas of={stories.Expanded} />
 
@@ -111,7 +111,7 @@ import { Callout } from '../../_storybook/components';
 
   This interactive example demonstrates how the component behaves within a real form context, showcasing:
 
-  - Dynamic control of all component states including `disabled`, `loading`, and variant toggling.
+  - Dynamic control of all component states including `disabled`, `loading`, and mode toggling.
   - Real-time value submission and updates.
   - Visual feedback reflecting the current state of the component.
   - Full integration with native HTML form behaviors such as submission and reset.
@@ -152,6 +152,6 @@ import { Callout } from '../../_storybook/components';
 
   ## Interact with the component
 
-  You can test input behavior, variant switching, and event handling in the [Canvas](/story/molecules-search-bar--default) section.
+  You can test input behavior, mode switching, and event handling in the [Canvas](/story/molecules-search-bar--default) section.
   </div>
 </div>
