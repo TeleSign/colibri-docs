@@ -1,0 +1,345 @@
+import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as ColTableStories from './col-table.stories';
+import { Callout } from '../../_storybook/components';
+
+<Meta of={ColTableStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Table</Title>
+    The `col-table` component provides a structured layout for displaying tabular data with support for selection, scrolling, and custom content.
+
+    <Subtitle>Table of contents</Subtitle>
+    - [How to use it](#how-to-use-it)
+      - [Installation](#installation)
+      - [Table Structure](#table-structure)
+    - [When to use it](#when-to-use-it)
+      - [Best Practices](#best-practices)
+    - [Component preview](#component-preview)
+      - [Basic Table](#basic-table)
+      - [Selectable Rows](#selectable-rows)
+      - [Scrollable Table](#scrollable-table)
+      - [Empty State](#empty-state)
+      - [Complex Cell Content](#complex-cell-content)
+      - [Custom Column Widths](#custom-column-widths)
+      - [Full Featured Example](#full-featured-example)
+    - [Table Components](#table-components)
+      - [col-table-head](#col-table-head)
+      - [col-table-body](#col-table-body)
+      - [col-table-row](#col-table-row)
+      - [col-table-cell](#col-table-cell)
+    - [Properties](#properties)
+    - [Events](#events)
+    - [CSS Custom Properties](#css-custom-properties)
+    - [Accessibility](#accessibility)
+    - [Interact with the component](#interact-with-the-component)
+
+    ## How to use it
+
+    ### Installation
+    1. Install the packages:
+        ```bash
+        npm install @telesign/colibri
+        ```
+    2. Import the dependencies:
+        ```typescript
+        import {
+          registerColibriComponents,
+          ColTable,
+          ColTableHead,
+          ColTableBody,
+          ColTableRow,
+          ColTableCell
+        } from '@telesign/colibri';
+        import '@telesign/colibri/styles/styles.css';
+        ```
+    3. Register the web components:
+        ```typescript
+        // Register specific components
+        registerColibriComponents([ColTable, ColTableHead, ColTableBody, ColTableRow, ColTableCell]);
+
+        // Or register all components
+        registerAllComponents();
+        ```
+    4. Use it in your HTML:
+        ```html
+        <col-table>
+          <col-table-head>
+            <col-table-row>
+              <col-table-cell header>Name</col-table-cell>
+              <col-table-cell header>Email</col-table-cell>
+              <col-table-cell header>Status</col-table-cell>
+            </col-table-row>
+          </col-table-head>
+          <col-table-body>
+            <col-table-row>
+              <col-table-cell>John Doe</col-table-cell>
+              <col-table-cell>john@example.com</col-table-cell>
+              <col-table-cell>Active</col-table-cell>
+            </col-table-row>
+          </col-table-body>
+        </col-table>
+        ```
+
+    ### Table Structure
+
+    The table component system consists of five main components that work together:
+
+    | Component | Purpose | Parent | Children |
+    |-----------|---------|--------|----------|
+    | `col-table` | Main container | - | `col-table-head`, `col-table-body` |
+    | `col-table-head` | Header section | `col-table` | `col-table-row` |
+    | `col-table-body` | Data section | `col-table` | `col-table-row` |
+    | `col-table-row` | Table row | `col-table-head`, `col-table-body` | `col-table-cell` |
+    | `col-table-cell` | Individual cell | `col-table-row` | Any content |
+
+    ## When to use it
+
+    The table component is ideal for displaying structured data that needs to be:
+
+    * **Compared** - Side-by-side comparison of multiple data points
+    * **Sorted** - Organizing data by different criteria (visual indicators shown, sorting logic not built-in)
+    * **Filtered** - Finding specific records in large datasets
+    * **Selected** - Performing bulk actions on multiple rows
+    * **Scanned** - Quick visual scanning of tabular information
+
+    Common use cases include:
+
+    * **User Management** - Lists of users with roles and permissions
+    * **Order Processing** - E-commerce orders with status tracking
+    * **Data Reports** - Financial or analytical data presentation
+    * **Inventory Systems** - Product listings with stock information
+    * **Task Lists** - Project management with assignees and deadlines
+    * **Log Viewers** - System logs and audit trails
+
+    ### Best Practices
+
+    * **Keep headers concise** - Use short, descriptive column headers
+    * **Align data appropriately** - Left-align text, right-align numbers
+    * **Provide visual feedback** - Use hover states and selection indicators
+    * **Consider mobile** - Use horizontal scrolling for wide tables on small screens
+    * **Limit columns** - Show only essential columns, provide details in expandable rows or modals
+    * **Use semantic markup** - Proper table structure helps with accessibility
+    * **Add loading states** - Show skeletons or spinners while data loads
+    * **Handle empty states** - Provide helpful messages when no data is available
+
+    ## Component preview
+    <Callout variant="tip" icon="💡">
+      You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
+    </Callout>
+
+    ### Basic Table
+    A simple table with headers and data rows.
+
+    <Canvas of={ColTableStories.Default} />
+
+    ### Selectable Rows
+    Enable row selection with checkboxes for bulk actions.
+
+    <Canvas of={ColTableStories.SelectableRows} />
+
+    - When `selectable` is true, checkboxes are automatically added to each row
+    - The header checkbox selects/deselects all rows
+    - Individual rows can be selected by clicking anywhere on the row
+
+    ### Scrollable Table
+    Set a maximum height to enable vertical scrolling for long tables.
+
+    <Canvas of={ColTableStories.ScrollableTable} />
+
+    - Set `max-height` to define the scrollable area height
+    - Set `scroller` to true to enable the scroll behavior
+    - The header remains sticky while scrolling
+
+    ### Empty State
+    The table automatically displays a "No data" message when the body is empty.
+
+    <Canvas of={ColTableStories.EmptyTable} />
+
+    ### Complex Cell Content
+    Table cells can contain any content including multiple components.
+
+    <Canvas of={ColTableStories.ComplexCellContent} />
+
+    ### Custom Column Widths
+    Control column widths using the `--cell-flex` CSS variable.
+
+    <Canvas of={ColTableStories.CustomColumnWidths} />
+
+    ```css
+    /* Fixed width column */
+    col-table-cell {
+      --cell-flex: 0 0 150px;
+    }
+
+    /* Flexible column with proportional sizing */
+    col-table-cell {
+      --cell-flex: 2 1 0%; /* Takes 2x space compared to flex: 1 */
+    }
+    ```
+
+    ### Full Featured Example
+    Complete example combining selection, scrolling, headers, footers, and pagination.
+
+    <Canvas of={ColTableStories.FullFeaturedExample} />
+
+    ## Table Components
+
+    ### col-table-head
+
+    The table header component contains the column headers.
+
+    **Properties:**
+    - None (container component)
+
+    **Slots:**
+    - Default slot: Accepts `col-table-row` containing header cells
+
+    **Usage:**
+    ```html
+    <col-table-head>
+      <col-table-row>
+        <col-table-cell header>Column 1</col-table-cell>
+        <col-table-cell header>Column 2</col-table-cell>
+      </col-table-row>
+    </col-table-head>
+    ```
+
+    ### col-table-body
+
+    The table body component contains the data rows.
+
+    **Properties:**
+    - None (container component)
+
+    **Slots:**
+    - Default slot: Accepts `col-table-row` elements
+
+    **Features:**
+    - Automatically shows "No data to be displayed" when empty
+    - Scrollable when parent table has `max-height` set
+
+    **Usage:**
+    ```html
+    <col-table-body>
+      <col-table-row>
+        <col-table-cell>Data 1</col-table-cell>
+        <col-table-cell>Data 2</col-table-cell>
+      </col-table-row>
+    </col-table-body>
+    ```
+
+    ### col-table-row
+
+    Individual table row component that can be selectable.
+
+    **Properties:**
+    | Property | Type | Default | Description |
+    |----------|------|---------|-------------|
+    | `row-index` | `number` | - | The index of this row in the table |
+    | `selectable` | `boolean` | `false` | Whether the row can be selected |
+    | `selected` | `boolean` | `false` | Whether the row is currently selected |
+
+    **Events:**
+    - `row-selected`: Fired when a row is clicked/selected
+
+    **Usage:**
+    ```html
+    <col-table-row row-index="1" selectable>
+      <col-table-cell>Cell content</col-table-cell>
+    </col-table-row>
+    ```
+
+    ### col-table-cell
+
+    Individual table cell component for data or headers.
+
+    **Properties:**
+    | Property | Type | Default | Description |
+    |----------|------|---------|-------------|
+    | `header` | `boolean` | `false` | Whether the cell is a header cell |
+
+    **CSS Custom Properties:**
+    - `--cell-flex`: Controls the flex properties of the cell (default: `1 1 0%`)
+
+    **Usage:**
+    ```html
+    <!-- Header cell -->
+    <col-table-cell header>Column Name</col-table-cell>
+
+    <!-- Data cell -->
+    <col-table-cell>Cell Data</col-table-cell>
+
+    <!-- Cell with custom width -->
+    <col-table-cell style="--cell-flex: 0 0 200px;">Fixed Width</col-table-cell>
+    ```
+
+    ## Properties
+    <ArgTypes of={ColTableStories} />
+
+    ## Events
+
+    ### col-table Events
+
+    | Event | Description | Detail |
+    |-------|-------------|--------|
+    | `all-rows-selected` | Fired when the header checkbox is toggled | `{ rows: ColTableRow[], element: ColTable, selectable: boolean }` |
+
+    ### col-table-row Events
+
+    | Event | Description | Detail |
+    |-------|-------------|--------|
+    | `row-selected` | Fired when a row is clicked/selected | `{ rowIndex: number, selectable: boolean, selected: boolean, element: ColTableRow }` |
+
+    ## CSS Custom Properties
+
+    The table components expose several CSS custom properties for customization:
+
+    ### col-table
+    - `--col-table-min-height`: Minimum height for the table content area
+    - `--col-table-max-height`: Maximum height for the table content area (enables scrolling)
+
+    ### col-table-cell
+    - `--cell-flex`: Controls the flex properties of the cell (e.g., `1 1 0%`, `0 0 200px`)
+
+    Example:
+    ```css
+    col-table {
+      --col-table-max-height: 500px;
+      --col-table-min-height: 200px;
+    }
+
+    col-table-cell {
+      --cell-flex: 2 1 0%; /* Cell takes 2x space */
+    }
+    ```
+
+    ## Accessibility
+
+    The Table component is built with accessibility in mind:
+
+    * **Semantic Structure**: Uses proper ARIA roles (`table`, `rowgroup`, `row`, `cell`)
+    * **Keyboard Navigation**:
+      - Rows are focusable with `tabindex="0"`
+      - Selection can be triggered via keyboard
+    * **ARIA Attributes**:
+      - `aria-label` for describing table sections
+      - `aria-selected` for indicating selected rows
+      - `aria-rowindex` for row position
+      - `aria-rowcount` and `aria-colcount` for table dimensions
+    * **Screen Reader Support**: Proper heading structure and descriptive labels
+    * **Focus Management**: Clear focus indicators on interactive elements
+
+    ### Keyboard Support
+
+    | Key | Action |
+    |-----|--------|
+    | `Tab` | Move focus between interactive elements |
+    | `Space` | Select/deselect focused row (when selectable) |
+    | `Enter` | Activate buttons or links within cells |
+
+    <Subtitle>Interact with the component</Subtitle>
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/organisms-table--default) section.
+
+  </div>
+</div>
