@@ -275,17 +275,19 @@ export const InteractiveFormExample: Story = {
         code-theme="dark"
       >
         <form slot="form" id="${formId}" class="form-container">
-          <div style="display: flex; gap: 1.5rem; align-items: center; margin-bottom: 1rem;">
-            <col-select id="modeSelect" name="mode" value="expanded">
-              <col-list-menu role="menuitem">
-                <col-list-menu-item value="expanded">Expanded</col-list-menu-item>
-                <col-list-menu-item value="static">Static</col-list-menu-item>
-              </col-list-menu>
-            </col-select>
-            <col-checkbox name="disabled checkbox" id="disabledToggle"> Disabled </col-checkbox>
+          <div style="margin-bottom: 1rem;">
+            <col-group>
+              <col-select id="modeSelect" name="mode" value="expanded">
+                <col-list-menu role="menuitem">
+                  <col-list-menu-item value="expanded">Expanded</col-list-menu-item>
+                  <col-list-menu-item value="static">Static</col-list-menu-item>
+                </col-list-menu>
+              </col-select>
+              <col-checkbox name="disabled checkbox" id="disabledToggle"> Disabled </col-checkbox>
             <col-checkbox name="loading checkbox" id="loadingToggle"> Loading </col-checkbox>
+            </col-group>
           </div>
-          <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+          <col-group>
             <col-search-bar
               id="searchBar"
               name="search"
@@ -294,7 +296,7 @@ export const InteractiveFormExample: Story = {
             ></col-search-bar>
             <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
             <col-button type="reset" ?disabled=${isInDocs}>Reset</col-button>
-          </div>
+          </col-group>
         </form>
       </form-demo>
       <script>
