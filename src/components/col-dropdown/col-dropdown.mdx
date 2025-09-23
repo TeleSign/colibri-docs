@@ -19,6 +19,10 @@ import { Callout } from '../../_storybook/components';
       - [Dropdown with only Colibri Components](#dropdown-with-only-colibri-components)
       - [Medium List Items Dropdown](#medium-list-items-dropdown)
       - [Disabled Dropdown](#disabled-dropdown)
+    - [Auto-close behavior](#auto-close-behavior)
+      - [Default Auto-close](#default-auto-close)
+      - [Keep Open Mode](#keep-open-mode)
+      - [Colibri Components Auto-close](#colibri-components-auto-close)
     - [Properties](#properties)
     - [Interact with the component](#interact-with-the-component)
 
@@ -137,6 +141,52 @@ import { Callout } from '../../_storybook/components';
     ### Disabled Dropdown
     Cannot trigger any content because the `disabled` prop is enabled. You can hover, focus and click de trigger but no action will be executed.
     <Canvas of={ColDropdownStories.Disabled} />
+
+    ## Auto-close behavior
+
+    The dropdown component includes intelligent auto-close functionality that can automatically close the dropdown when users interact with specific content elements. This behavior can be controlled using the `keepopen` property.
+
+    <Callout variant="info" icon="ℹ️">
+      The auto-close feature works in two ways: **selector-based closing** for HTML elements and **event-driven closing** for Colibri components. Both approaches ensure a consistent user experience across different content types.
+    </Callout>
+
+    ### Default Auto-close
+    By default, the dropdown automatically closes when users click on specific interactive elements:
+    - `<li>` elements (list items)
+    - Elements with `role="menuitem"`
+    - Elements with `data-dropdown-close` attribute
+    - Colibri components that dispatch `list-menu-item-click` events
+
+    <Canvas of={ColDropdownStories.AutoCloseDefault} />
+
+    **Auto-close behavior:**
+    - **List items (`<li>`)**: Clicking any list item will close the dropdown
+    - **Menu items (`role="menuitem"`)**: Elements with this role will trigger auto-close
+    - **Close buttons (`data-dropdown-close`)**: Any element with this attribute will close the dropdown
+    - **Regular text**: Clicking on `<p>` or other non-interactive elements won't close the dropdown
+
+    ### Keep Open Mode
+    When `keepopen` is set to `true`, the dropdown will remain open regardless of user interactions with the content. This is useful for scenarios where you want manual control over when the dropdown closes.
+
+    <Canvas of={ColDropdownStories.KeepOpenDemo} />
+
+    **Keep open behavior:**
+    - All auto-close triggers are disabled
+    - Dropdown stays open when clicking on list items, menu items, or close buttons
+    - Only manual closing (clicking outside, pressing Escape, or programmatically setting `open=false`) will close the dropdown
+    - Useful for multi-step interactions or forms within dropdowns
+
+    ### Colibri Components Auto-close
+    When using Colibri components like `col-list-menu-item`, the auto-close functionality works through custom events for a more seamless integration:
+
+    <Canvas of={ColDropdownStories.ColibriAutoClose} />
+
+    **Event-driven closing:**
+    - Colibri components dispatch `list-menu-item-click` events when selected
+    - The dropdown listens for these events and automatically closes
+    - Provides better integration with the design system
+    - Works alongside the selector-based approach for hybrid content
+
 
     ## Properties
     <ArgTypes of={ColDropdownStories}/>
