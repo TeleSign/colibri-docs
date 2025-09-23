@@ -57,9 +57,10 @@ export const AllFunctionsNavBar: Story = {
           id="timezones"
           name="timezones"
           sub-label="Time Zone"
-          placeholder="Choose an option"
-          loading
+          placeholder="Choose one"
+          custom-width="220px"
           clearable
+          loading
         >
           <col-icon slot="icon" name="timer" size="16px"></col-icon>
           <col-list-menu id="timezones-menu"></col-list-menu>
