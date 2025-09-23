@@ -231,3 +231,84 @@ export const Disabled: Story = {
     </col-dropdown>
   `,
 };
+
+export const AutoCloseDefault: Story = {
+  tags: ['!dev'],
+  args: {
+    open: true,
+    keepopen: false,
+    placement: 'start',
+  },
+  parameters: {
+    __sb: {
+      height: '200px',
+    },
+  },
+  render: args => html`
+    <col-dropdown placement=${args.placement} ?open=${args.open} ?keepopen=${args.keepopen}>
+      <col-button color="primary" slot="trigger">
+        Auto-close Demo
+        <col-icon name="chevron-down"></col-icon>
+      </col-button>
+      <ul>
+        <li>Click me - will close dropdown</li>
+        <li>Click me too - will also close</li>
+        <p>Regular text - won't close dropdown</p>
+      </ul>
+    </col-dropdown>
+  `,
+};
+
+export const KeepOpenDemo: Story = {
+  tags: ['!dev'],
+  args: {
+    open: true,
+    keepopen: true,
+    placement: 'start',
+  },
+  parameters: {
+    __sb: {
+      height: '200px',
+    },
+  },
+  render: args => html`
+    <col-dropdown placement=${args.placement} ?open=${args.open} ?keepopen=${args.keepopen}>
+      <col-button color="primary" slot="trigger">
+        Keep Open Demo
+        <col-icon name="chevron-down"></col-icon>
+      </col-button>
+      <ul>
+        <li>Click me - stays open!</li>
+        <li>Click me too - still open!</li>
+        <p>Regular text - won't close either</p>
+      </ul>
+    </col-dropdown>
+  `,
+};
+
+export const ColibriAutoClose: Story = {
+  tags: ['!dev'],
+  args: {
+    open: true,
+    keepopen: false,
+    placement: 'start',
+  },
+  parameters: {
+    __sb: {
+      height: '200px',
+    },
+  },
+  render: args => html`
+    <col-dropdown placement=${args.placement} ?open=${args.open} ?keepopen=${args.keepopen}>
+      <col-button color="primary" slot="trigger">
+        Colibri Components
+        <col-icon name="chevron-down"></col-icon>
+      </col-button>
+      <col-list-menu>
+        <col-list-menu-item value="option1">Option 1 - closes via event</col-list-menu-item>
+        <col-list-menu-item value="option2">Option 2 - closes via event</col-list-menu-item>
+        <col-list-menu-item value="option3">Option 3 - closes via event</col-list-menu-item>
+      </col-list-menu>
+    </col-dropdown>
+  `,
+};
