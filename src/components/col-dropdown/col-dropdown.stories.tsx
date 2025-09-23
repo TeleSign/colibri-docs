@@ -6,6 +6,7 @@ type StoryArgs = {
   open: Boolean;
   disabled: Boolean;
   placement: 'start' | 'end';
+  keepopen: Boolean;
 };
 
 const meta = {
@@ -51,11 +52,21 @@ const meta = {
         category: 'Core',
       },
     },
+    keepopen: {
+      control: 'boolean',
+      description: 'Whether the dropdown should stay open when an item is selected',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+        category: 'Core',
+      },
+    },
   },
   args: {
     placement: 'start',
     disabled: false,
     open: false,
+    keepopen: false,
   },
 } satisfies ColibriStoryMeta<StoryArgs>;
 
@@ -69,10 +80,10 @@ export const Default: Story = {
       height: '150px',
     },
   },
-  render: ({ disabled, open, placement }) => html`
-    <col-dropdown placement=${placement} ?open=${open} ?disabled=${disabled}>
+  render: ({ disabled, open, placement, keepopen }) => html`
+    <col-dropdown placement=${placement} ?open=${open} ?disabled=${disabled} ?keepopen=${keepopen}>
       <col-button color="primary" slot="trigger">Toggle</col-button>
-      <div>
+      <div role="menuitem">
         <div>Option 1</div>
         <div>Option 2</div>
         <div>Option 3</div>
@@ -127,7 +138,12 @@ export const SmallListItems: Story = {
     },
   },
   render: args => html`
-    <col-dropdown placement=${args.placement} ?open=${args.open} ?disabled=${args.disabled}>
+    <col-dropdown
+      placement=${args.placement}
+      ?open=${args.open}
+      ?disabled=${args.disabled}
+      ?keepopen=${args.keepopen}
+    >
       <col-button color="primary" slot="trigger">
         Click me
         <col-icon name="chevron-down"></col-icon>
@@ -154,7 +170,12 @@ export const ColibriComponents: Story = {
     },
   },
   render: args => html`
-    <col-dropdown placement=${args.placement} ?open=${args.open} ?disabled=${args.disabled}>
+    <col-dropdown
+      placement=${args.placement}
+      ?open=${args.open}
+      ?disabled=${args.disabled}
+      ?keepopen=${args.keepopen}
+    >
       <col-button color="primary" slot="trigger">
         Hello! Click me
         <col-icon name="chevron-down"></col-icon>
@@ -179,7 +200,12 @@ export const MediumListItems: Story = {
     },
   },
   render: args => html`
-    <col-dropdown placement=${args.placement} ?open=${args.open} ?disabled=${args.disabled}>
+    <col-dropdown
+      placement=${args.placement}
+      ?open=${args.open}
+      ?disabled=${args.disabled}
+      ?keepopen=${args.keepopen}
+    >
       <col-button color="primary" slot="trigger"> Button with large text and no Icon </col-button>
       <ul role="menuitem">
         <p>Lorem ipsum dolor sit amet</p>
