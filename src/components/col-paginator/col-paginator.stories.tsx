@@ -217,3 +217,71 @@ export const CustomSizeConfig: Story = {
     },
   },
 };
+
+export const FullPagination: Story = {
+  name: 'Full Pagination',
+  render: () => {
+    return html`
+      <col-toolbar gap="none">
+        <col-toolbar gap="small">
+          <span class="text-xs">Items per page</span>
+          <col-select id="items-per-page" value="10" custom-width="60px">
+            <col-list-menu>
+              <col-list-menu-item value="5">5</col-list-menu-item>
+              <col-list-menu-item value="10">10</col-list-menu-item>
+              <col-list-menu-item value="20">20</col-list-menu-item>
+              <col-list-menu-item value="50">50</col-list-menu-item>
+              <col-list-menu-item value="100">100</col-list-menu-item>
+            </col-list-menu>
+          </col-select>
+          <col-divider orientation="vertical" style="height: 32px"></col-divider>
+          <span id="items-info" class="text-xs" role="status" aria-live="polite"></span>
+        </col-toolbar>
+        <col-paginator id="paginator" length="4" value="1" align="end"></col-paginator>
+      </col-toolbar>
+
+      <script>
+        (async () => {
+          await customElements.whenDefined('col-paginator');
+
+          const totalItems = 57;
+          const itemsPerPageSelect = document.getElementById('items-per-page');
+          const itemsInfo = document.getElementById('items-info');
+          const paginator = document.getElementById('paginator');
+
+          const updatePaginatorLength = perPage => {
+            const numberOfPages = Math.ceil(totalItems / perPage);
+            paginator.length = Math.max(1, numberOfPages);
+          };
+
+          const updateItemsInfo = (page, perPage) => {
+            const start = (page - 1) * perPage + 1;
+            const end = Math.min(page * perPage, totalItems);
+            itemsInfo.textContent = start + '-' + end + ' of ' + totalItems + ' Items';
+          };
+
+          // Initialize
+          const initialPerPage = 10;
+          paginator.value = 1;
+          updatePaginatorLength(initialPerPage);
+          updateItemsInfo(paginator.value, initialPerPage);
+
+          // React to col-paginator changes
+          paginator.addEventListener('page-change', event => {
+            const selectedPage = event.detail.newValue;
+            const perPage = parseInt(itemsPerPageSelect.value) || 10;
+            updateItemsInfo(selectedPage, perPage);
+          });
+
+          // React to col-select changes
+          itemsPerPageSelect.addEventListener('change', () => {
+            const perPage = parseInt(itemsPerPageSelect.value) || 10;
+            updatePaginatorLength(perPage);
+            paginator.value = 1;
+            updateItemsInfo(1, perPage);
+          });
+        })();
+      </script>
+    `;
+  },
+};
