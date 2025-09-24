@@ -1,0 +1,157 @@
+import { Meta, Title, Subtitle, Canvas, ArgTypes } from '@storybook/blocks';
+import * as stories from './col-search-bar.stories';
+import { Callout } from '../../_storybook/components';
+
+<Meta of={stories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+
+  <Title>Search Bar</Title>
+
+  The `col-search-bar` component provides a compact and accessible interface for searching text content.
+
+  <Subtitle>Table of contents</Subtitle>
+  - [How to use it](#how-to-use-it)
+  - [When to use it](#when-to-use-it)
+  - [Component preview](#component-preview)
+  - [Modes](#modes)
+  - [States](#states)
+  - [Event handling](#event-handling)
+  - [Interactive Form Example](#interactive-form-example)
+  - [Accessibility](#accessibility)
+  - [Properties](#properties)
+  - [Interact with the component](#interact-with-the-component)
+
+  ## How to use it
+
+  1. Install the package:
+      ```bash
+      npm install @colibri/colibri-components
+      ```
+
+  2. Import the dependencies:
+      ```ts
+      import { registerColibriComponents, registerColibriComponents, ColSearchBar } from '@telesign/colibri';
+      import '@telesign/colibri/styles/styles.css';
+      ```
+
+  3. Register the components:
+      ```typescript
+      // Option 1: Register specific components
+      registerColibriComponents([ColSearchBar]);
+
+      // Option 2: Register all Colibri components
+      registerAllComponents();
+      ```    
+
+  4. Use it in your HTML:
+      ```html
+      <col-search-bar placeholder="Search..." mode="static"></col-search-bar>
+      ```
+
+  ## When to use it
+
+  Use the `col-search-bar` when you need a lightweight, interactive search input. Ideal use cases include:
+
+  - **Search functionality** in toolbars or filters.
+  - **Expandable search inputs** that save space by default.
+  - **Forms or modals** that require compact input for search.
+
+  ## Component preview
+
+  <Canvas of={stories.Default} />
+
+  ## Modes
+
+  ### Static mode
+
+  <div>
+    This mode shows the text field inline and visible at all times.
+  </div>
+  <Canvas of={stories.Static} />
+
+  ### Expanded mode
+
+  <div>
+    This mode starts collapsed and expands only when the user interacts with the toggle button.
+  </div>
+  <Canvas of={stories.Expanded} />
+
+  ## States
+
+  ### Disabled
+
+  <div>
+    Use the `disabled` attribute to disable user interaction.
+  </div>
+  <Canvas of={stories.Disabled} />
+
+  ### Loading
+
+  <div>
+    Use the `loading` attribute to show a loading spinner inside the input.
+  </div>
+  <Canvas of={stories.Loading} />
+
+  ## Event handling
+
+  The `col-search-bar` component emits a custom event named `search-input` instead of the native `input` event. This allows you to listen specifically for search-related input.
+
+  ```ts
+  <col-search-bar
+    placeholder="Search..."
+    @search-input=${(e) => console.log('Search value:', e.detail.value)}
+  ></col-search-bar>
+  ```
+  
+  ## Interactive Form Example
+
+  The `col-search-bar` component integrates seamlessly with native HTML forms through the use of the `name` attribute, enabling its value to be included automatically in form submissions.
+
+  This interactive example demonstrates how the component behaves within a real form context, showcasing:
+
+  - Dynamic control of all component states including `disabled`, `loading`, and mode toggling.
+  - Real-time value submission and updates.
+  - Visual feedback reflecting the current state of the component.
+  - Full integration with native HTML form behaviors such as submission and reset.
+
+  <Callout variant="info" icon="ℹ️">
+    For a fully interactive experience with working form submission, reset, and validation, visit the [Canvas tab](/story/molecules-search-bar--interactive-form-example).
+  </Callout>
+
+  <Canvas of={stories.InteractiveFormExample} />
+
+
+  ## Accessibility
+
+  <div>
+    The `col-search-bar` component is built with accessibility in mind, ensuring a seamless experience for all users, including those using screen readers and other assistive technologies.
+  </div>
+
+  - **Labeling:** You can pass a visible label or use `aria-label` to ensure the input is correctly announced by screen readers.
+  - **Unique IDs:** Each instance automatically generates unique internal IDs, or you can provide a custom `id` for better control and accessibility.
+  - **ID Mapping:**
+    - Custom `id` values are used as the base for internal elements like labels, error messages, and helpers (e.g., `search-id-label`, `search-id-helper`).
+  - **Keyboard Support:** Fully keyboard-navigable using `Tab`, `Shift+Tab`, and other standard keys.
+  - **ARIA Attributes:**
+    - Supports `aria-label`, `aria-labelledby`, `aria-describedby`, `aria-required`, and `aria-invalid`.
+    - `aria-describedby` links the input to helper or error text when applicable.
+    - The clear button is accessible and includes `aria-controls` when needed.
+  - **Announced States:** States like `disabled`, `readonly`, and `error` are properly conveyed to assistive technologies.
+  - **Best Practices:**
+    - Always provide a descriptive label or `aria-label`.
+    - Use `helper` text to guide users when needed.
+    - Assign a meaningful `id` if integrating with forms or testing frameworks.
+    - Keep error messages clear and concise for screen reader users.
+
+
+  ## Properties
+
+  <ArgTypes of={stories} />
+
+  ## Interact with the component
+
+  You can test input behavior, mode switching, and event handling in the [Canvas](/story/molecules-search-bar--default) section.
+  </div>
+</div>
