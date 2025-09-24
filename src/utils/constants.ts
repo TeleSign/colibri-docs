@@ -46,4 +46,6 @@ export const HTML_BOOLEAN_ATTRIBUTES = [
   'keepopen',
   'preventclose',
   'clearable',
+  'selectable',
+  'scroller',
 ];
