@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
 import { fn } from '@storybook/test';
@@ -113,22 +113,20 @@ const renderTable: Story['render'] = ({
                                         onRowSelected,
                                       }) => html`
   <col-table
-    max-height=${maxHeight || ''}
-    min-height=${minHeight || ''}
-    checkbox-cell-width=${checkboxCellWidth || ''}
+    max-height=${maxHeight || nothing}
+    min-height=${minHeight || nothing}
+    checkbox-cell-width=${checkboxCellWidth || nothing}
     ?selectable=${selectable}
     ?scroller=${scroller}
     @all-rows-selected=${onAllRowsSelected}
     @row-selected=${onRowSelected}
   >
     <col-table-head>
-      <col-table-row>
-        <col-table-cell header>Name</col-table-cell>
-        <col-table-cell header>Email</col-table-cell>
-        <col-table-cell header>Status</col-table-cell>
-        <col-table-cell header>Role</col-table-cell>
-        <col-table-cell header>Actions</col-table-cell>
-      </col-table-row>
+      <col-table-cell header>Name</col-table-cell>
+      <col-table-cell header>Email</col-table-cell>
+      <col-table-cell header>Status</col-table-cell>
+      <col-table-cell header>Role</col-table-cell>
+      <col-table-cell header>Actions</col-table-cell>
     </col-table-head>
     <col-table-body>
       <col-table-row row-index="1">
@@ -195,22 +193,20 @@ export const ScrollableTable: Story = {
   },
   render: args => html`
     <col-table
-      max-height=${args.maxHeight || ''}
-      min-height=${args.minHeight || ''}
-      checkbox-cell-width=${args.checkboxCellWidth || ''}
+      max-height=${args.maxHeight || nothing}
+      min-height=${args.minHeight || nothing}
+      checkbox-cell-width=${args.checkboxCellWidth || nothing}
       ?selectable=${args.selectable}
       ?scroller=${args.scroller}
       @all-rows-selected=${args.onAllRowsSelected}
       @row-selected=${args.onRowSelected}
     >
       <col-table-head>
-        <col-table-row>
-          <col-table-cell header>Name</col-table-cell>
-          <col-table-cell header>Email</col-table-cell>
-          <col-table-cell header>Department</col-table-cell>
-          <col-table-cell header>Status</col-table-cell>
-          <col-table-cell header>Actions</col-table-cell>
-        </col-table-row>
+        <col-table-cell header>Name</col-table-cell>
+        <col-table-cell header>Email</col-table-cell>
+        <col-table-cell header>Department</col-table-cell>
+        <col-table-cell header>Status</col-table-cell>
+        <col-table-cell header>Actions</col-table-cell>
       </col-table-head>
       <col-table-body>
         ${[...Array(10)].map(
@@ -252,17 +248,15 @@ export const CustomCheckboxWidth: Story = {
 export const EmptyTable: Story = {
   render: args => html`
     <col-table
-      max-height=${args.maxHeight || ''}
-      min-height=${args.minHeight || ''}
+      max-height=${args.maxHeight || nothing}
+      min-height=${args.minHeight || nothing}
       ?selectable=${args.selectable}
       ?scroller=${args.scroller}
     >
       <col-table-head>
-        <col-table-row>
-          <col-table-cell header>Name</col-table-cell>
-          <col-table-cell header>Email</col-table-cell>
-          <col-table-cell header>Status</col-table-cell>
-        </col-table-row>
+        <col-table-cell header>Name</col-table-cell>
+        <col-table-cell header>Email</col-table-cell>
+        <col-table-cell header>Status</col-table-cell>
       </col-table-head>
       <col-table-body></col-table-body>
     </col-table>
@@ -278,17 +272,15 @@ export const WithMinHeight: Story = {
   },
   render: args => html`
     <col-table
-      max-height=${args.maxHeight || ''}
-      min-height=${args.minHeight || ''}
+      max-height=${args.maxHeight || nothing}
+      min-height=${args.minHeight || nothing}
       ?selectable=${args.selectable}
       ?scroller=${args.scroller}
     >
       <col-table-head>
-        <col-table-row>
-          <col-table-cell header>Product</col-table-cell>
-          <col-table-cell header>Price</col-table-cell>
-          <col-table-cell header>Stock</col-table-cell>
-        </col-table-row>
+        <col-table-cell header>Product</col-table-cell>
+        <col-table-cell header>Price</col-table-cell>
+        <col-table-cell header>Stock</col-table-cell>
       </col-table-head>
       <col-table-body>
         <col-table-row row-index="1">
@@ -312,8 +304,8 @@ export const WithMinHeight: Story = {
 export const WithHeaderAndFooter: Story = {
   render: args => html`
     <col-table
-      max-height=${args.maxHeight || ''}
-      min-height=${args.minHeight || ''}
+      max-height=${args.maxHeight || nothing}
+      min-height=${args.minHeight || nothing}
       ?selectable=${args.selectable}
       ?scroller=${args.scroller}
     >
@@ -323,12 +315,10 @@ export const WithHeaderAndFooter: Story = {
       </div>
 
       <col-table-head>
-        <col-table-row>
-          <col-table-cell header>Username</col-table-cell>
-          <col-table-cell header>Email</col-table-cell>
-          <col-table-cell header>Last Login</col-table-cell>
-          <col-table-cell header>Status</col-table-cell>
-        </col-table-row>
+        <col-table-cell header>Username</col-table-cell>
+        <col-table-cell header>Email</col-table-cell>
+        <col-table-cell header>Last Login</col-table-cell>
+        <col-table-cell header>Status</col-table-cell>
       </col-table-head>
       <col-table-body>
         <col-table-row row-index="1">
@@ -363,18 +353,16 @@ export const WithHeaderAndFooter: Story = {
 export const ComplexCellContent: Story = {
   render: args => html`
     <col-table
-      max-height=${args.maxHeight || ''}
-      min-height=${args.minHeight || ''}
+      max-height=${args.maxHeight || nothing}
+      min-height=${args.minHeight || nothing}
       ?selectable=${args.selectable}
       ?scroller=${args.scroller}
     >
       <col-table-head>
-        <col-table-row>
-          <col-table-cell header>User</col-table-cell>
-          <col-table-cell header>Details</col-table-cell>
-          <col-table-cell header>Permissions</col-table-cell>
-          <col-table-cell header>Actions</col-table-cell>
-        </col-table-row>
+        <col-table-cell header>User</col-table-cell>
+        <col-table-cell header>Details</col-table-cell>
+        <col-table-cell header>Permissions</col-table-cell>
+        <col-table-cell header>Actions</col-table-cell>
       </col-table-head>
       <col-table-body>
         <col-table-row row-index="1">
@@ -450,21 +438,19 @@ export const ResponsiveTable: Story = {
   render: args => html`
     <div style="max-width: 600px; overflow-x: auto;">
       <col-table
-        max-height=${args.maxHeight || ''}
-        min-height=${args.minHeight || ''}
+        max-height=${args.maxHeight || nothing}
+        min-height=${args.minHeight || nothing}
         ?selectable=${args.selectable}
         ?scroller=${args.scroller}
       >
         <col-table-head>
-          <col-table-row>
-            <col-table-cell header style="min-width: 150px;">Transaction ID</col-table-cell>
-            <col-table-cell header style="min-width: 120px;">Date</col-table-cell>
-            <col-table-cell header style="min-width: 150px;">Customer</col-table-cell>
-            <col-table-cell header style="min-width: 100px;">Amount</col-table-cell>
-            <col-table-cell header style="min-width: 100px;">Status</col-table-cell>
-            <col-table-cell header style="min-width: 200px;">Description</col-table-cell>
-            <col-table-cell header style="min-width: 100px;">Actions</col-table-cell>
-          </col-table-row>
+          <col-table-cell header style="min-width: 150px;">Transaction ID</col-table-cell>
+          <col-table-cell header style="min-width: 120px;">Date</col-table-cell>
+          <col-table-cell header style="min-width: 150px;">Customer</col-table-cell>
+          <col-table-cell header style="min-width: 100px;">Amount</col-table-cell>
+          <col-table-cell header style="min-width: 100px;">Status</col-table-cell>
+          <col-table-cell header style="min-width: 200px;">Description</col-table-cell>
+          <col-table-cell header style="min-width: 100px;">Actions</col-table-cell>
         </col-table-head>
         <col-table-body>
           <col-table-row row-index="1">
@@ -505,33 +491,31 @@ export const ResponsiveTable: Story = {
 export const SortableColumns: Story = {
   render: args => html`
     <col-table
-      max-height=${args.maxHeight || ''}
-      min-height=${args.minHeight || ''}
+      max-height=${args.maxHeight || nothing}
+      min-height=${args.minHeight || nothing}
       ?selectable=${args.selectable}
       ?scroller=${args.scroller}
     >
       <col-table-head>
-        <col-table-row>
-          <col-table-cell header>
-            <div style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
-              Name
-              <col-icon name="chevron-down" size="12"></col-icon>
-            </div>
-          </col-table-cell>
-          <col-table-cell header>
-            <div style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
-              Date
-              <col-icon name="chevron-up" size="12"></col-icon>
-            </div>
-          </col-table-cell>
-          <col-table-cell header>
-            <div style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
-              Amount
-              <col-icon name="arrows-up-down" size="12"></col-icon>
-            </div>
-          </col-table-cell>
-          <col-table-cell header>Status</col-table-cell>
-        </col-table-row>
+        <col-table-cell header>
+          <div style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+            Name
+            <col-icon name="chevron-down" size="12"></col-icon>
+          </div>
+        </col-table-cell>
+        <col-table-cell header>
+          <div style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+            Date
+            <col-icon name="chevron-up" size="12"></col-icon>
+          </div>
+        </col-table-cell>
+        <col-table-cell header>
+          <div style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+            Amount
+            <col-icon name="arrows-up-down" size="12"></col-icon>
+          </div>
+        </col-table-cell>
+        <col-table-cell header>Status</col-table-cell>
       </col-table-head>
       <col-table-body>
         <col-table-row row-index="1">
@@ -569,19 +553,17 @@ export const SortableColumns: Story = {
 export const CustomColumnWidths: Story = {
   render: args => html`
     <col-table
-      max-height=${args.maxHeight || ''}
-      min-height=${args.minHeight || ''}
+      max-height=${args.maxHeight || nothing}
+      min-height=${args.minHeight || nothing}
       ?selectable=${args.selectable}
       ?scroller=${args.scroller}
     >
       <col-table-head>
-        <col-table-row>
-          <col-table-cell header style="--cell-flex: 0 0 80px;">ID</col-table-cell>
-          <col-table-cell header style="--cell-flex: 2 1 0%;">Name</col-table-cell>
-          <col-table-cell header style="--cell-flex: 3 1 0%;">Description</col-table-cell>
-          <col-table-cell header style="--cell-flex: 1 1 0%;">Status</col-table-cell>
-          <col-table-cell header style="--cell-flex: 0 0 120px;">Actions</col-table-cell>
-        </col-table-row>
+        <col-table-cell header style="--cell-flex: 0 0 80px;">ID</col-table-cell>
+        <col-table-cell header style="--cell-flex: 2 1 0%;">Name</col-table-cell>
+        <col-table-cell header style="--cell-flex: 3 1 0%;">Description</col-table-cell>
+        <col-table-cell header style="--cell-flex: 1 1 0%;">Status</col-table-cell>
+        <col-table-cell header style="--cell-flex: 0 0 120px;">Actions</col-table-cell>
       </col-table-head>
       <col-table-body>
         <col-table-row row-index="1">
@@ -659,15 +641,13 @@ export const FullFeaturedExample: Story = {
         </div>
 
         <col-table-head>
-          <col-table-row>
-            <col-table-cell header>Order #</col-table-cell>
-            <col-table-cell header>Customer</col-table-cell>
-            <col-table-cell header>Date</col-table-cell>
-            <col-table-cell header>Items</col-table-cell>
-            <col-table-cell header>Total</col-table-cell>
-            <col-table-cell header>Status</col-table-cell>
-            <col-table-cell header>Actions</col-table-cell>
-          </col-table-row>
+          <col-table-cell header>Order #</col-table-cell>
+          <col-table-cell header>Customer</col-table-cell>
+          <col-table-cell header>Date</col-table-cell>
+          <col-table-cell header>Items</col-table-cell>
+          <col-table-cell header>Total</col-table-cell>
+          <col-table-cell header>Status</col-table-cell>
+          <col-table-cell header>Actions</col-table-cell>
         </col-table-head>
         <col-table-body>
           ${[...Array(15)].map(

@@ -65,11 +65,9 @@ import { Callout } from '../../_storybook/components';
         ```html
         <col-table>
           <col-table-head>
-            <col-table-row>
-              <col-table-cell header>Name</col-table-cell>
-              <col-table-cell header>Email</col-table-cell>
-              <col-table-cell header>Status</col-table-cell>
-            </col-table-row>
+            <col-table-cell header>Name</col-table-cell>
+            <col-table-cell header>Email</col-table-cell>
+            <col-table-cell header>Status</col-table-cell>
           </col-table-head>
           <col-table-body>
             <col-table-row>
@@ -88,7 +86,7 @@ import { Callout } from '../../_storybook/components';
     | Component | Purpose | Parent | Children |
     |-----------|---------|--------|----------|
     | `col-table` | Main container | - | `col-table-head`, `col-table-body` |
-    | `col-table-head` | Header section | `col-table` | `col-table-row` |
+    | `col-table-head` | Header section | `col-table` | `col-table-cell` |
     | `col-table-body` | Data section | `col-table` | `col-table-row` |
     | `col-table-row` | Table row | `col-table-head`, `col-table-body` | `col-table-cell` |
     | `col-table-cell` | Individual cell | `col-table-row` | Any content |
@@ -198,10 +196,8 @@ import { Callout } from '../../_storybook/components';
     **Usage:**
     ```html
     <col-table-head>
-      <col-table-row>
-        <col-table-cell header>Column 1</col-table-cell>
-        <col-table-cell header>Column 2</col-table-cell>
-      </col-table-row>
+       <col-table-cell header>Column 1</col-table-cell>
+       <col-table-cell header>Column 2</col-table-cell>
     </col-table-head>
     ```
 
