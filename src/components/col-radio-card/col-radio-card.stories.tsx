@@ -17,7 +17,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Atoms/Radio Card',
+  title: 'Forms/Radio Card',
   component: 'col-radio-card',
   parameters: {
     docs: {

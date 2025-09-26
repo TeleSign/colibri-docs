@@ -17,7 +17,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Organisms/Dialog',
+  title: 'Overlays/Dialog',
   component: 'col-dialog',
   parameters: {
     docs: {

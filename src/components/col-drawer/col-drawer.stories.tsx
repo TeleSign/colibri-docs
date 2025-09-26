@@ -16,7 +16,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Organisms/Drawer',
+  title: 'Overlays/Drawer',
   component: 'col-drawer',
   parameters: {
     docs: {

@@ -16,7 +16,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Atoms/Button',
+  title: 'Actions/Button',
   component: 'col-button',
   parameters: {
     docs: {

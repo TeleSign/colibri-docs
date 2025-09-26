@@ -13,7 +13,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Atoms/Radio Button',
+  title: 'Forms/Radio Button',
   component: 'col-radio-button',
   parameters: {
     docs: {

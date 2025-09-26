@@ -16,7 +16,7 @@ const variantSummary = Object.values(ALERT_VARIANTS)
   .join(' | ');
 
 const meta = {
-  title: 'Molecules/Banner',
+  title: 'Feedback/Banner',
   component: 'col-banner',
   parameters: {
     docs: {

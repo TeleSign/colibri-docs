@@ -4,7 +4,7 @@ import { formatCodeString } from '@/utils/formatters';
 import { createStoryCollection } from '@/utils/helpers';
 
 const meta = {
-  title: 'Atoms/Spacer',
+  title: 'Helpers/Spacer',
   component: 'col-spacer',
   parameters: {
     docs: {

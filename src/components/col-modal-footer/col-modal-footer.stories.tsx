@@ -13,7 +13,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Molecules/Modal Footer',
+  title: 'Layouts/Modal Footer',
   component: 'col-modal-footer',
   parameters: {
     docs: {
@@ -105,13 +105,13 @@ const styles = css`
 `;
 
 const renderModalFooter: Story['render'] = ({
-                                              description,
-                                              customDescription,
-                                              primaryButtonText,
-                                              secondaryButtonText,
-                                              onPrimaryClick,
-                                              onSecondaryClick,
-                                            }) => html`
+  description,
+  customDescription,
+  primaryButtonText,
+  secondaryButtonText,
+  onPrimaryClick,
+  onSecondaryClick,
+}) => html`
   <style>
     ${styles}
   </style>

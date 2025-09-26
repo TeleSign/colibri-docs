@@ -14,7 +14,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Atoms/Toggle',
+  title: 'Actions/Toggle',
   component: 'col-toggle',
   parameters: {
     docs: {

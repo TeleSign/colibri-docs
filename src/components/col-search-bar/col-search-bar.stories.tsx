@@ -24,7 +24,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Molecules/Search Bar',
+  title: 'Forms/Search Bar',
   component: 'col-search-bar',
   parameters: {
     docs: {

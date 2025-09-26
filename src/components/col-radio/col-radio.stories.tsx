@@ -12,7 +12,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Atoms/Radio',
+  title: 'Forms/Radio',
   component: 'col-radio',
   parameters: {
     docs: {

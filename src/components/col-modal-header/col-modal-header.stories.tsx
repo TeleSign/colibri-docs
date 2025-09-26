@@ -15,7 +15,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Molecules/Modal Header',
+  title: 'Layouts/Modal Header',
   component: 'col-modal-header',
   parameters: {
     docs: {
@@ -127,15 +127,15 @@ const styles = css`
 `;
 
 const renderModalHeader: Story['render'] = ({
-                                              title,
-                                              customheader,
-                                              noclosebutton,
-                                              iconName,
-                                              badgeText,
-                                              badgeVariant,
-                                              actionText,
-                                              onClose,
-                                            }) => html`
+  title,
+  customheader,
+  noclosebutton,
+  iconName,
+  badgeText,
+  badgeVariant,
+  actionText,
+  onClose,
+}) => html`
   <style>
     ${styles}
   </style>
