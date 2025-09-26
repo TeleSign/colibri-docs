@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils';
 import hljs from 'highlight.js/lib/core';
@@ -147,6 +147,18 @@ const meta = {
         type: { summary: 'ClipboardEvent' },
       },
     },
+    customWidth: {
+      name: 'custom-width',
+      control: 'text',
+      description:
+        'Sets a custom width for the component host (e.g., "320px", "50%", "min(280px, 100%)"). Applied via the `--input-width` CSS variable; defaults to `auto` when omitted.',
+      table: {
+        category: 'Layout',
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' },
+      },
+      if: { arg: 'customWidth', neq: '' },
+    },
   },
   args: {
     value: '',
@@ -154,6 +166,7 @@ const meta = {
     mode: 'static',
     disabled: false,
     loading: false,
+    customWidth: '100%',
   },
 } satisfies ColibriStoryMeta<StoryArgs>;
 
@@ -165,9 +178,9 @@ const renderSearchBar: Story['render'] = args => html`
     .value=${args.value}
     placeholder=${args.placeholder}
     mode=${args.mode}
+    custom-width=${args.customWidth || nothing}
     ?disabled=${args.disabled}
     ?loading=${args.loading}
-    custom-width="100%"
     @input=${args.input}
     @change=${args.change}
     @search-input=${args.searchInput}
@@ -284,7 +297,7 @@ export const InteractiveFormExample: Story = {
                 </col-list-menu>
               </col-select>
               <col-checkbox name="disabled checkbox" id="disabledToggle"> Disabled </col-checkbox>
-            <col-checkbox name="loading checkbox" id="loadingToggle"> Loading </col-checkbox>
+              <col-checkbox name="loading checkbox" id="loadingToggle"> Loading </col-checkbox>
             </col-group>
           </div>
           <col-group>
@@ -293,6 +306,7 @@ export const InteractiveFormExample: Story = {
               name="search"
               mode="expanded"
               placeholder="Search something..."
+              custom-width="100%"
             ></col-search-bar>
             <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
             <col-button type="reset" ?disabled=${isInDocs}>Reset</col-button>
@@ -315,7 +329,7 @@ export const InteractiveFormExample: Story = {
           disabledToggle.addEventListener('change', updateSearchBar);
           loadingToggle.addEventListener('change', updateSearchBar);
         })();
-      </script>     
+      </script>
     `;
-  }
+  },
 };
