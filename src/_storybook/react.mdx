@@ -28,6 +28,18 @@ Install the packages:
 ```bash
 npm install @telesign/colibri @telesign/colibri-icons
 ```
+<div className="sb-section">
+  <Subtitle>Table of Contents</Subtitle>
+
+  <ul>
+    <li>Registering Components</li>
+    <li>Theme Management</li>
+    <li>Using with Forms</li>
+    <li>Autocompletion</li>
+    <li>Using Slots</li>
+  </ul>
+</div>
+
 
 <div className="sb-section">
   <Subtitle>Registering Components</Subtitle>
@@ -51,7 +63,13 @@ npm install @telesign/colibri @telesign/colibri-icons
 </div>
 
 <div className="sb-section">
-  <Subtitle>Theme Provide </Subtitle>
+  <Subtitle>Theme Management </Subtitle>
+  
+  <p>
+    Our theme system provides a powerful and flexible way to customize the visual appearance of components across different contexts, brands, and user preferences. Built on a foundation of design tokens and CSS custom properties, themes enable consistent styling while maintaining the flexibility to adapt to diverse design requirements. For more information, please read our <a href="http://localhost:6006/?path=/docs/foundation-themes--overview">Themes page</a>.
+  </p>
+
+  To get it set working with one of our "out-of-the-box" themes, here we show you how to set it up:
   
   ```typescript
     import React from 'react';
@@ -66,7 +84,7 @@ npm install @telesign/colibri @telesign/colibri-icons
     };
 
   ```
-  Use Colibri components directly in JSX:
+  Integrating Colibrí components into your React JSX is very straightforward, please take a look at the following sample code snippet to use ColTextField:
 
   ```typescript
     import React, { useState } from 'react';
@@ -124,33 +142,69 @@ npm install @telesign/colibri @telesign/colibri-icons
   <p>
     To enable autocompletion, type checking, and a seamless developer experience when using Lit components in React, wrap them with <code>createComponent</code> from <code>@lit/react</code>. This generates React-friendly components with proper typings.
   </p>
-
+  
   <p>
     <strong>Note:</strong> React 18/19 have limited native support for custom elements props and events in JSX. Using wrappers is recommended to get full typing benefits and avoid issues with autocompletion or type inference when using raw web components. Some custom events may still require manual type handling or event listeners via refs.
   </p>
 
-  <p>Example of wrapping a Colibri component:</p>
+  - Install the package by running:
+  ```bash
+    npm install @lit/react
+  ```
 
-  ```tsx
-  import React from 'react';
-  import { createComponent } from '@lit/react';
-  import { ColButton } from '@telesign/colibri';
+  - Create a new React component file, import the <code>createComponent</code> helper and wrap the component using the required options:
+  ```ts
+    import React from 'react';
+    import { createComponent } from '@lit/react';
+    import { ColButton } from '@telesign/colibri';
 
-  export const Button = createComponent({
-    tagName: 'col-button',
-    elementClass: ColButton,
-    react: React,
-  });
+    export const Button = createComponent({
+      tagName: 'col-button',
+      elementClass: ColButton,
+      react: React,
+      events: {
+        onClick: 'click',
+        onSubmit: 'submit',
+        onReset: 'reset',
+      },
+    });
   ```
   
-  Example usage:
-  ```tsx
-  import React from 'react';
-  import { Button } from './components/Button';
+  - Use the new component in your JSX:
+  ```ts
+    import React from 'react';
+    import { Button } from './components/Button';
 
-  function Example() {
-    return <Button disabled={true} type="button" />;
-  }
+    function Example() {
+      return <Button disabled={true} type="button" />;
+    }
+  ```
+  For more details, visit the official documentation: <a href="https://lit.dev/docs/frameworks/react/#createcomponent" target="_blank" rel="noopener noreferrer">Lit + React Integration Guide</a>
+</div>
+
+<div className="sb-section">
+  <Subtitle>Using Slots</Subtitle>
+  <p>
+    Lit components use the <code>&lt;slot&gt;</code> element to enable content projection. When using Colibri components inside React, you can pass children normally to take advantage of this feature.
+  </p>
+  <strong>Example using a slot:</strong>
+  ```ts
+    import React from 'react';
+
+    function BadgeExample() {
+      return (
+        <col-badge variant="default">
+          {/* Icon slot */}
+          <div slot="icon" style={{ display: 'contents' }}>
+            <Icon name="emoji-circle" size="12" />
+          </div>
+
+          Default Badge
+        </col-badge>
+      );
+    }
+
+    export default BadgeExample;
   ```
 </div>
 
