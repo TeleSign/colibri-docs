@@ -1,50 +1,39 @@
-import { Meta, Title, Subtitle } from '@storybook/blocks';
+import { Meta } from '@storybook/blocks';
 import packageJson from '../../package.json';
 
 <Meta title="React" />
 
-<div className={`main-header`}>
-  <Title>Colibri Design System</Title>
-</div>
+# Colibri Design System
 
-<div className="sb-section">
-  <Subtitle>Welcome</Subtitle>
-  Colibri is a themeable Web Components library built with Lit, designed to provide a
-  consistent and customizable design system for your web applications. This guide shows you how to integrate Colibri into a React project.
-</div>
+## Welcome
 
-<div className="sb-section">
-  <Subtitle>Current Versions</Subtitle>
-  <ul>
-    <li><strong>Colibri:</strong> {packageJson.dependencies['@telesign/colibri']}</li>
-    <li><strong>Colibri-icons:</strong> {packageJson.dependencies['@telesign/colibri-icons']}</li>
-  </ul>
-</div>
+Colibri is a themeable Web Components library built with Lit, designed to provide a consistent and customizable design system for your web applications. This guide shows you how to integrate Colibri into a React project.
 
-<Subtitle>Quick Start</Subtitle>
+## Current Versions
+
+- **Colibri:** {packageJson.dependencies['@telesign/colibri']}
+- **Colibri-icons:** {packageJson.dependencies['@telesign/colibri-icons']}
+
+## Quick Start
 
 Install the packages:
 
 ```bash
 npm install @telesign/colibri @telesign/colibri-icons
 ```
-<div className="sb-section">
-  <Subtitle>Table of Contents</Subtitle>
 
-  <ul>
-    <li>Registering Components</li>
-    <li>Theme Management</li>
-    <li>Using with Forms</li>
-    <li>Autocompletion</li>
-    <li>Using Slots</li>
-  </ul>
-</div>
+## Table of contents
+
+- [Registering Components](#registering-components)
+- [Theme Management](#theme-management)
+- [Using with Forms](#using-with-forms)
+- [Autocompletion](#autocompletion)
+- [Using Slots](#using-slots)
 
 
-<div className="sb-section">
-  <Subtitle>Registering Components</Subtitle>
-  
-  ```typescript
+## Registering Components
+
+```typescript
   import {
     registerColibriComponents,
     registerAllComponents,
@@ -59,156 +48,146 @@ npm install @telesign/colibri @telesign/colibri-icons
 
   // Option 2: Register all Colibri components
   registerAllComponents();
-  ```
-</div>
+```
 
-<div className="sb-section">
-  <Subtitle>Theme Management </Subtitle>
-  
-  <p>
-    Our theme system provides a powerful and flexible way to customize the visual appearance of components across different contexts, brands, and user preferences. Built on a foundation of design tokens and CSS custom properties, themes enable consistent styling while maintaining the flexibility to adapt to diverse design requirements. For more information, please read our <a href="http://localhost:6006/?path=/docs/foundation-themes--overview">Themes page</a>.
-  </p>
+## Theme Management
 
-  To get it set working with one of our "out-of-the-box" themes, here we show you how to set it up:
-  
-  ```typescript
-    import React from 'react';
+Our theme system provides a powerful and flexible way to customize the visual appearance of components across different contexts, brands, and user preferences. Built on a foundation of design tokens and CSS custom properties, themes enable consistent styling while maintaining the flexibility to adapt to diverse design requirements. For more information, please read our [Themes page](http://localhost:6006/?path=/docs/foundation-themes--overview).
 
-    export interface ThemeProviderProps {
-      theme?: 'default' | 'massive';
-      children: React.ReactNode;
-    }
+To get it set working with one of our "out-of-the-box" themes, here we show you how to set it up:
 
-    export const ThemeProvider: React.FC<ThemeProviderProps> = ({ theme = 'default', children }) => {
-      return <div data-theme={theme}>{children}</div>;
-    };
+```typescript
+  import React from 'react';
 
-  ```
-  Integrating Colibrí components into your React JSX is very straightforward, please take a look at the following sample code snippet to use ColTextField:
+  export interface ThemeProviderProps {
+    theme?: 'default' | 'massive';
+    children: React.ReactNode;
+  }
 
-  ```typescript
-    import React, { useState } from 'react';
+  export const ThemeProvider: React.FC<ThemeProviderProps> = ({ theme = 'default', children }) => {
+    return <div data-theme={theme}>{children}</div>;
+  };
+```
 
-    function MyComponent() {
-      const [username, setUsername] = useState('');
+Integrating Colibrí components into your React JSX is very straightforward, please take a look at the following sample code snippet to use ColTextField:
 
-      const handleInput = (event: Event) => {
-        const target = event.target as HTMLInputElement;
-        setUsername(target.value);
-      };
+```typescript
+import React, { useState } from 'react';
 
-      return (
-        <div>
-          <col-text-field
-            label="Username"
-            name="username"
-            value={username}
-            onInput={handleInput}
-            placeholder="Enter your username"
-          >
-          </col-text-field>
+function MyComponent() {
+  const [username, setUsername] = useState('');
+
+  const handleInput = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    setUsername(target.value);
+  };
+
+  return (
+    <div>
+      <col-text-field
+        label="Username"
+        name="username"
+        value={username}
+        onInput={handleInput}
+        placeholder="Enter your username"
+      >
+      </col-text-field>
+    </div>
+  );
+}
+```
+
+
+## Using with Forms
+
+```typescript
+function LoginForm() {
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    const formData = new FormData(event.target as HTMLFormElement);
+    console.log(Object.fromEntries(formData));
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <col-text-field name="username" label="Username"/>
+      <col-text-field input-type="password" name="password" label="Password"/>
+      <col-button type="submit">Login</col-button>
+    </form>
+  );
+}
+```
+
+## Autocompletion
+
+To enable autocompletion, type checking, and a seamless developer experience when using Lit components in React, wrap them with `createComponent` from `@lit/react`. This generates React-friendly components with proper typings.
+
+**Note:** React 18/19 have limited native support for custom elements props and events in JSX. Using wrappers is recommended to get full typing benefits and avoid issues with autocompletion or type inference when using raw web components. Some custom events may still require manual type handling or event listeners via refs.
+
+- Install the package by running:
+
+```bash
+npm install @lit/react
+```
+
+- Create a new React component file, import the createComponent helper and wrap the component using the required options:
+
+```ts
+  import React from 'react';
+  import { createComponent } from '@lit/react';
+  import { ColButton } from '@telesign/colibri';
+
+  export const Button = createComponent({
+    tagName: 'col-button',
+    elementClass: ColButton,
+    react: React,
+    events: {
+      onClick: 'click',
+      onSubmit: 'submit',
+      onReset: 'reset',
+    },
+  });
+```
+
+- Use the new component in your JSX:
+
+```ts
+  import React from 'react';
+  import { Button } from './components/Button';
+
+  function Example() {
+    return <Button disabled={true} type="button" />;
+  }
+```
+
+For more details, visit the official documentation: [Lit + React Integration Guide](https://lit.dev/docs/frameworks/react/#createcomponent)
+
+## Using Slots
+
+Lit components use the `<slot>` element to enable content projection. When using Colibri components inside React, you can pass children normally to take advantage of this feature.
+
+**Example using a slot:**
+
+```ts
+  import React from 'react';
+
+  function BadgeExample() {
+    return (
+      <col-badge variant="default">
+        {/* Icon slot */}
+        <div slot="icon" style={{ display: 'contents' }}>
+          <Icon name="emoji-circle" size="12" />
         </div>
-      );
-    }
-  ```
-</div>
 
-<div className="sb-section">
-  <Subtitle>Using with Forms</Subtitle>
-  
-  ```typescript
-    function LoginForm() {
-      const handleSubmit = (event: React.FormEvent) => {
-        event.preventDefault();
-        const formData = new FormData(event.target as HTMLFormElement);
-        console.log(Object.fromEntries(formData));
-      };
+        Default Badge
+      </col-badge>
+    );
+  }
 
-      return (
-        <form onSubmit={handleSubmit}>
-          <col-text-field name="username" label="Username"/>
-          <col-text-field input-type="password" name="password" label="Password"/>
-          <col-button type="submit">Login</col-button>
-        </form>
-      );
-    }
-  ```
-</div>
+  export default BadgeExample;
+```
 
-
-<div className="sb-section">
-  <Subtitle>Autocompletion</Subtitle>
-
-  <p>
-    To enable autocompletion, type checking, and a seamless developer experience when using Lit components in React, wrap them with <code>createComponent</code> from <code>@lit/react</code>. This generates React-friendly components with proper typings.
-  </p>
-  
-  <p>
-    <strong>Note:</strong> React 18/19 have limited native support for custom elements props and events in JSX. Using wrappers is recommended to get full typing benefits and avoid issues with autocompletion or type inference when using raw web components. Some custom events may still require manual type handling or event listeners via refs.
-  </p>
-
-  - Install the package by running:
-  ```bash
-    npm install @lit/react
-  ```
-
-  - Create a new React component file, import the <code>createComponent</code> helper and wrap the component using the required options:
-  ```ts
-    import React from 'react';
-    import { createComponent } from '@lit/react';
-    import { ColButton } from '@telesign/colibri';
-
-    export const Button = createComponent({
-      tagName: 'col-button',
-      elementClass: ColButton,
-      react: React,
-      events: {
-        onClick: 'click',
-        onSubmit: 'submit',
-        onReset: 'reset',
-      },
-    });
-  ```
-  
-  - Use the new component in your JSX:
-  ```ts
-    import React from 'react';
-    import { Button } from './components/Button';
-
-    function Example() {
-      return <Button disabled={true} type="button" />;
-    }
-  ```
-  For more details, visit the official documentation: <a href="https://lit.dev/docs/frameworks/react/#createcomponent" target="_blank" rel="noopener noreferrer">Lit + React Integration Guide</a>
-</div>
-
-<div className="sb-section">
-  <Subtitle>Using Slots</Subtitle>
-  <p>
-    Lit components use the <code>&lt;slot&gt;</code> element to enable content projection. When using Colibri components inside React, you can pass children normally to take advantage of this feature.
-  </p>
-  <strong>Example using a slot:</strong>
-  ```ts
-    import React from 'react';
-
-    function BadgeExample() {
-      return (
-        <col-badge variant="default">
-          {/* Icon slot */}
-          <div slot="icon" style={{ display: 'contents' }}>
-            <Icon name="emoji-circle" size="12" />
-          </div>
-
-          Default Badge
-        </col-badge>
-      );
-    }
-
-    export default BadgeExample;
-  ```
-</div>
-
-<Subtitle>Core Features</Subtitle>
+## Core Features
 
 - 🎨 **Themeable**: Light, dark, and custom themes supported
 - 🔧 **Customizable**: Style tokens and CSS custom properties
@@ -217,7 +196,7 @@ npm install @telesign/colibri @telesign/colibri-icons
 - ⚡ **Performant**: Lightweight and fast
 - 🛠️ **Web Components**: Framework agnostic
 
-<Subtitle>Browser Support</Subtitle>
+## Browser Support
 
 Colibri components work in all modern browsers:
 
