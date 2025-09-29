@@ -37,7 +37,7 @@ type SiteMenuStoryArgs = SiteMenuProps &
   };
 
 const meta = {
-  title: 'Organisms/Site Menu',
+  title: 'Patterns/Site Menu',
   component: 'col-site-menu',
   excludeStories: ['SubmenuContentTemplates'],
   parameters: {

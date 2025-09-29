@@ -14,7 +14,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Organisms/Table',
+  title: 'Data Visualization/Table',
   component: 'col-table',
   parameters: {
     docs: {
@@ -28,7 +28,8 @@ const meta = {
     maxHeight: {
       name: 'max-height',
       control: 'text',
-      description: 'Maximum height CSS value for the table content area. When exceeded, enables vertical scrolling.',
+      description:
+        'Maximum height CSS value for the table content area. When exceeded, enables vertical scrolling.',
       table: {
         category: 'Core',
         type: { summary: 'string' },
@@ -48,7 +49,8 @@ const meta = {
     checkboxCellWidth: {
       name: 'checkbox-cell-width',
       control: 'text',
-      description: 'Defines the column width for the checkbox in each row when selectable is enabled.',
+      description:
+        'Defines the column width for the checkbox in each row when selectable is enabled.',
       table: {
         category: 'Core',
         type: { summary: 'string' },
@@ -57,7 +59,8 @@ const meta = {
     },
     selectable: {
       control: 'boolean',
-      description: 'Whether the table rows are allowed to be selected. Automatically adds checkboxes to rows.',
+      description:
+        'Whether the table rows are allowed to be selected. Automatically adds checkboxes to rows.',
       table: {
         category: 'Core',
         type: { summary: 'boolean' },
@@ -75,7 +78,8 @@ const meta = {
     },
     onAllRowsSelected: {
       action: 'all-rows-selected',
-      description: 'Fired when the header checkbox is checked/unchecked, selecting or deselecting all rows.',
+      description:
+        'Fired when the header checkbox is checked/unchecked, selecting or deselecting all rows.',
       table: {
         category: 'Events',
       },
@@ -104,14 +108,14 @@ export default meta;
 type Story = ColibriStory<StoryArgs>;
 
 const renderTable: Story['render'] = ({
-                                        maxHeight,
-                                        minHeight,
-                                        checkboxCellWidth,
-                                        selectable,
-                                        scroller,
-                                        onAllRowsSelected,
-                                        onRowSelected,
-                                      }) => html`
+  maxHeight,
+  minHeight,
+  checkboxCellWidth,
+  selectable,
+  scroller,
+  onAllRowsSelected,
+  onRowSelected,
+}) => html`
   <col-table
     max-height=${maxHeight || nothing}
     min-height=${minHeight || nothing}
@@ -210,7 +214,7 @@ export const ScrollableTable: Story = {
       </col-table-head>
       <col-table-body>
         ${[...Array(10)].map(
-    (_, i) => html`
+          (_, i) => html`
             <col-table-row row-index="${i + 1}">
               <col-table-cell>Employee ${i + 1}</col-table-cell>
               <col-table-cell>employee${i + 1}@example.com</col-table-cell>
@@ -225,7 +229,7 @@ export const ScrollableTable: Story = {
               </col-table-cell>
             </col-table-row>
           `
-  )}
+        )}
       </col-table-body>
     </col-table>
   `,
@@ -651,27 +655,21 @@ export const FullFeaturedExample: Story = {
         </col-table-head>
         <col-table-body>
           ${[...Array(15)].map(
-      (_, i) => html`
+            (_, i) => html`
               <col-table-row row-index="${i + 1}" ?selectable=${true}>
                 <col-table-cell>ORD-${String(1001 + i).padStart(4, '0')}</col-table-cell>
                 <col-table-cell>
                   <div>
                     <div>Customer ${i + 1}</div>
-                    <div style="font-size: 12px; color: #666;">
-                      customer${i + 1}@example.com
-                    </div>
+                    <div style="font-size: 12px; color: #666;">customer${i + 1}@example.com</div>
                   </div>
                 </col-table-cell>
                 <col-table-cell>Jan ${15 - i}, 2024</col-table-cell>
                 <col-table-cell>${Math.floor(Math.random() * 10) + 1} items</col-table-cell>
-                <col-table-cell>
-                  $${((Math.random() * 1000) + 100).toFixed(2)}
-                </col-table-cell>
+                <col-table-cell> $${(Math.random() * 1000 + 100).toFixed(2)} </col-table-cell>
                 <col-table-cell>
                   <col-badge
-                    variant="${
-        i % 3 === 0 ? 'success' : i % 3 === 1 ? 'warning' : 'default'
-      }"
+                    variant="${i % 3 === 0 ? 'success' : i % 3 === 1 ? 'warning' : 'default'}"
                   >
                     ${i % 3 === 0 ? 'Shipped' : i % 3 === 1 ? 'Processing' : 'Pending'}
                   </col-badge>
@@ -692,7 +690,7 @@ export const FullFeaturedExample: Story = {
                 </col-table-cell>
               </col-table-row>
             `
-    )}
+          )}
         </col-table-body>
 
         <div slot="table-footer" style="padding: 16px; background: #f5f5f5;">
