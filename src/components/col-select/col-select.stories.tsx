@@ -46,7 +46,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Molecules/Select',
+  title: 'Forms/Select',
   component: 'col-select',
   parameters: {
     docs: {
@@ -464,8 +464,8 @@ const renderColSelect: Story['render'] = args => {
       @invalid=${args.invalid}
     >
       ${args.iconVisible
-        ? html`<col-icon slot="icon" name=${args.iconName} size=${args.iconSize}></col-icon>`
-        : nothing}
+      ? html`<col-icon slot="icon" name=${args.iconName} size=${args.iconSize}></col-icon>`
+      : nothing}
       ${renderOptions()}
     </col-select>
   `;

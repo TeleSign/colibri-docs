@@ -32,7 +32,7 @@ type StoryArgs = {
 const SampleText = 'Lorem ipsum dolor sit amet';
 
 const meta = {
-  title: 'Atoms/Typography',
+  title: 'Titles & Texts/Typography',
   component: 'col-typography',
   parameters: {
     docs: {

@@ -10,7 +10,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Atoms/Dropdown',
+  title: 'Actions/Dropdown',
   component: 'col-dropdown',
   parameters: {
     docs: {
@@ -108,12 +108,12 @@ export const DefaultWithComponents: Story = {
           <col-icon name="chevron-down"></col-icon>
         </col-button>
         ${isInDocs
-          ? html`<ul role="menuitem">
+        ? html`<ul role="menuitem">
               <li>Content 1</li>
               <li>Content 2</li>
               <li>Content 3</li>
             </ul>`
-          : html`<ul role="menuitem" style="padding-left: 30px;">
+        : html`<ul role="menuitem" style="padding-left: 30px;">
               <li>Content 1</li>
               <li>Content 2</li>
               <li>Content 3</li>

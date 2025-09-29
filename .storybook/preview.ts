@@ -198,7 +198,22 @@ const preview: Preview = {
     controls: { expanded: true, hideNoControlsWarning: true },
     options: {
       storySort: {
-        order: ['Welcome', 'Atoms', 'Molecules', 'Organisms', 'Patterns', 'Tokens'],
+        order: [
+          'Welcome',
+          'Frameworks',
+          'Foundation',
+          'Actions',
+          'Feedback',
+          'Images & Icons',
+          'Forms',
+          'Layouts',
+          'Navigation',
+          'Overlays',
+          'Titles & Texts',
+          'Data Visualization',
+          'Helpers',
+          'Patterns',
+        ],
       },
     },
     docs: {

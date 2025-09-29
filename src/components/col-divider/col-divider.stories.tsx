@@ -8,7 +8,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Atoms/Divider',
+  title: 'Helpers/Divider',
   component: 'col-divider',
   parameters: {
     docs: {

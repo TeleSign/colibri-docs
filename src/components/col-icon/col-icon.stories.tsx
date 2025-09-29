@@ -12,7 +12,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Atoms/Icons',
+  title: 'Images & Icons/Icons',
   component: 'col-icon',
   parameters: {
     docs: {
@@ -172,13 +172,13 @@ export const AllIcons: Story = {
       </div>
       <div class="icons-grid">
         ${filteredIcons.map(
-          (icon: string) => html`
+      (icon: string) => html`
             <div class="icon-item">
               <col-icon name=${icon} size=${args.size} color=${args.color}></col-icon>
               <span class="icon-name">${icon}</span>
             </div>
           `
-        )}
+    )}
       </div>
     `;
   },

@@ -18,7 +18,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Molecules/Overlay',
+  title: 'Overlays/Overlay',
   component: 'col-overlay',
   parameters: {
     docs: {
@@ -174,18 +174,18 @@ const styles = css`
 `;
 
 const renderOverlay: Story['render'] = ({
-                                          active,
-                                          absolute,
-                                          contained,
-                                          persistent,
-                                          nobackdrop,
-                                          nocentered,
-                                          nofocustrap,
-                                          zIndex,
-                                          content,
-                                          onOverlayClickOutside,
-                                          onOverlayEscape,
-                                        }) => {
+  active,
+  absolute,
+  contained,
+  persistent,
+  nobackdrop,
+  nocentered,
+  nofocustrap,
+  zIndex,
+  content,
+  onOverlayClickOutside,
+  onOverlayEscape,
+}) => {
   const ID = `overlay-${new Date().getTime()}`;
   const handleButtonClick = () => {
     const overlay = document.getElementById(ID);
@@ -283,17 +283,17 @@ export const CustomPosition: Story = {
     content: 'This overlay is not centered. Custom positioning can be applied.',
   },
   render: ({
-             active,
-             absolute,
-             contained,
-             persistent,
-             nobackdrop,
-             nocentered,
-             nofocustrap,
-             zIndex,
-             onOverlayClickOutside,
-             onOverlayEscape,
-           }) => {
+    active,
+    absolute,
+    contained,
+    persistent,
+    nobackdrop,
+    nocentered,
+    nofocustrap,
+    zIndex,
+    onOverlayClickOutside,
+    onOverlayEscape,
+  }) => {
     const handleButtonClick = () => {
       const overlay = document.getElementById('overlay-custom-position');
       if (overlay) {

@@ -28,7 +28,7 @@ type StoryArgs = {
 const withWhiteBackground = (Story: any) => html` <div style="background: #fff;">${Story()}</div> `;
 
 const meta = {
-  title: 'Molecules/ListMenu',
+  title: 'Actions/ListMenu',
   component: 'col-list-menu',
   parameters: {
     docs: {
@@ -309,13 +309,13 @@ export const ListMenuItemsWithIcons: Story = {
     return html`
       <col-list-menu id="icon-items">
         ${options.map(
-          ({ title, value, icon }) => html`
+      ({ title, value, icon }) => html`
             <col-list-menu-item value=${value}>
               <col-icon name=${icon} size="16"></col-icon>
               ${title}
             </col-list-menu-item>
           `
-        )}
+    )}
       </col-list-menu>
     `;
   },
@@ -464,11 +464,10 @@ export const ListMenuCheckbox: Story = {
           checkboxListMenu.querySelectorAll('col-list-menu-item').forEach(item => {
             // Listen for our CustomEvent: 'list-menu-item-click'
             item.addEventListener('list-menu-item-click', event => {
-              ${
-                inPreCode
-                  ? `console.log("Get the information of the selected item: ", event.detail);`
-                  : `checkboxOutput.textContent = JSON.stringify(event.detail);`
-              };
+              ${inPreCode
+        ? `console.log("Get the information of the selected item: ", event.detail);`
+        : `checkboxOutput.textContent = JSON.stringify(event.detail);`
+      };
 
               // since 'multiselectable' is not present we only allow 1 item to be selected at a time
               selectCheckboxItem(checkboxListMenu, item);
@@ -481,7 +480,7 @@ export const ListMenuCheckbox: Story = {
       ${interactiveStoryStyles(outputId)}
       <div class="storybook-card">
         ${!isInDocs
-          ? html`
+        ? html`
               <h3>ColListMenu with single select ColCheckbox</h3>
               <div class="storybook-flex">
                 <div class="storybook-col">
@@ -503,7 +502,7 @@ export const ListMenuCheckbox: Story = {
                 ${listMenuScript(false)};
               </script>
             `
-          : html`
+        : html`
               <h3>ColListMenu with single select ColCheckbox</h3>
               <div class="list-menu-container">${checkboxList(listMenuId)}</div>
               <script>
@@ -547,11 +546,10 @@ export const ListMenuCheckboxWithMultiSelect: Story = {
         if (multiList) {
           multiList.querySelectorAll('col-list-menu-item').forEach(item => {
             item.addEventListener('list-menu-item-click', (event) => {
-              ${
-                inPreCode
-                  ? `console.log("Get the information of the selected item: ", event.detail);`
-                  : `multipleOutput.textContent = JSON.stringify(event.detail);`
-              };
+              ${inPreCode
+        ? `console.log("Get the information of the selected item: ", event.detail);`
+        : `multipleOutput.textContent = JSON.stringify(event.detail);`
+      };
               toggleCheckbox(item);
             });
           });
@@ -562,7 +560,7 @@ export const ListMenuCheckboxWithMultiSelect: Story = {
       ${interactiveStoryStyles(outputId)}
       <div class="storybook-card">
         ${!isInDocs
-          ? html`
+        ? html`
               <h3>ColListMenu with multiple select ColCheckbox</h3>
               <div class="storybook-flex">
                 <div class="storybook-col">
@@ -584,7 +582,7 @@ export const ListMenuCheckboxWithMultiSelect: Story = {
                 ${listMenuScript(false)};
               </script>
             `
-          : html`
+        : html`
               <h3>ColListMenu with multiple select ColCheckbox</h3>
               <div class="list-menu-container">${checkboxList(listMenuId, true)}</div>
               <script>
@@ -649,11 +647,10 @@ export const ListMenuRadio: Story = {
         if (radioList) {
           radioList.querySelectorAll('col-list-menu-item').forEach(item => {
             item.addEventListener('list-menu-item-click', (event) => {
-              ${
-                inPreCode
-                  ? `console.log("Get the information of the selected item: ", event.detail);`
-                  : `radioOutput.textContent = JSON.stringify(event.detail);`
-              };
+              ${inPreCode
+        ? `console.log("Get the information of the selected item: ", event.detail);`
+        : `radioOutput.textContent = JSON.stringify(event.detail);`
+      };
               selectRadio(radioList, item);
             });
           });
@@ -664,7 +661,7 @@ export const ListMenuRadio: Story = {
       ${interactiveStoryStyles(outputId)}
       <div class="storybook-card">
         ${!isInDocs
-          ? html`
+        ? html`
               <h3>ColListMenu with ColRadio</h3>
               <div class="storybook-flex">
                 <div class="storybook-col">
@@ -686,7 +683,7 @@ export const ListMenuRadio: Story = {
                 ${radioScript(false)};
               </script>
             `
-          : html`
+        : html`
               <h3>ColListMenu with ColRadio</h3>
               <div class="list-menu-container">${radioList}</div>
               <script>
@@ -781,11 +778,10 @@ export const ListMenuItemSlots: Story = {
       document.querySelectorAll('.list-menu-slot-example').forEach(listMenu => {
         listMenu.querySelectorAll('col-list-menu-item').forEach(item => {
           item.addEventListener('list-menu-item-click', event => {
-            ${
-              inPreCode
-                ? `console.log("Get the information of the selected item: ", event.detail);`
-                : `slotOutput.textContent = JSON.stringify(event.detail);`
-            };
+            ${inPreCode
+        ? `console.log("Get the information of the selected item: ", event.detail);`
+        : `slotOutput.textContent = JSON.stringify(event.detail);`
+      };
             slotSelectSingle(listMenu, item);
           });
 
@@ -794,15 +790,14 @@ export const ListMenuItemSlots: Story = {
             button.addEventListener('click', () => {
               // You can distinguish buttons by index, text, or a custom attribute
               // Example: log which button was clicked and its parent item
-              ${
-                inPreCode
-                  ? `console.log('ColButton was clicked', {
+              ${inPreCode
+        ? `console.log('ColButton was clicked', {
                 button,
                 parentItem: item,
                 value: item.getAttribute('value'),
               });`
-                  : `slotOutput.textContent = 'ColButton from item with value: ' + item.getAttribute('value') + ' was clicked';`
-              };
+        : `slotOutput.textContent = 'ColButton from item with value: ' + item.getAttribute('value') + ' was clicked';`
+      };
 
 
               // Example: perform different actions based on button or parent item
@@ -877,7 +872,7 @@ export const ListMenuItemSlots: Story = {
       ${interactiveStoryStyles(outputId)}
       <div class="storybook-card">
         ${!isInDocs
-          ? html`
+        ? html`
               <h3>ColListMenuItem with Slots</h3>
               <div>
                 <h4>ColListMenu</h4>
@@ -897,7 +892,7 @@ export const ListMenuItemSlots: Story = {
                 ${listMenuScript(false)};
               </script>
             `
-          : html`
+        : html`
               <h3>ColListMenuItem with Slots</h3>
               <div class="list-menu-container">${listMenuItemSlots}</div>
               <script>

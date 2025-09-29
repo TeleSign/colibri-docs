@@ -11,7 +11,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Atoms/Group',
+  title: 'Layouts/Group',
   component: 'col-group',
   parameters: {
     docs: {

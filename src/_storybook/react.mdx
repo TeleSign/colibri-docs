@@ -1,0 +1,530 @@
+import { Meta } from '@storybook/blocks';
+import { Callout } from './components';
+
+<Meta title="Frameworks/React" />
+
+# React Integration
+
+This guide shows you how to integrate Colibri Web Components into React applications using two proven approaches: direct usage for simple cases, and React wrappers for enhanced developer experience.
+
+## Table of Contents
+
+- [Integration Overview](#integration-overview)
+- [Setup and Configuration](#setup-and-configuration)
+- [Components Usage](#components-usage)
+- [Components with Slots](#components-with-slots)
+- [Property Mapping](#property-mapping)
+- [Component Composition Example](#component-composition-example)
+- [Form Integration Example with Validation](#form-integration-example-with-validation)
+
+## Integration Overview
+
+Colibri components work in React out of the box, but React's architecture requires specific patterns for optimal integration. We'll cover both approaches so you can choose what works best for your project needs.
+
+## Setup and Configuration
+
+### Prerequisites
+- React 18+ application
+- TypeScript (recommended)
+
+### Installation
+Install the required packages:
+
+- `@telesign/colibri` - Core Colibri components
+- `@telesign/colibri-icons` - Colibri icon components
+- `@lit/react` - React integration for Lit-based web components. For more details, see the <a href="https://lit.dev/docs/frameworks/react" target="_blank" rel="noopener noreferrer">Lit React integration docs</a>
+
+```bash
+npm install @telesign/colibri @telesign/colibri-icons @lit/react
+```
+
+### Components Registration
+
+To register Colibri components in your React app, you have two options:
+
+#### Option A: Register All Components (Recommended for most apps)
+    ```typescript
+    // src/main.tsx
+    import { registerAllComponents } from '@telesign/colibri';
+    import '@telesign/colibri/styles/styles.css';
+    import { StrictMode } from 'react';
+    import { createRoot } from 'react-dom/client';
+    import App from './App';
+
+    registerAllComponents();
+
+    createRoot(document.getElementById('root')!).render(
+      <StrictMode>
+        <App />
+      </StrictMode>
+    );
+    ```
+
+    **Benefits:**
+    - Simplest setup - one function call
+    - All components available throughout your app
+    - No need to track which components you're using
+    - Best for apps that will use multiple Colibri components
+
+#### Option B: Register Specific Components (For smaller bundles)
+
+<Callout variant='info' icon="ℹ️">
+  Remember that Colibri components have peer dependencies on each other. However, registering a component automatically registers its dependencies. For more details, please refer to the component overview documentation pages.
+</Callout>
+
+    ```typescript
+    // src/main.tsx
+    import { registerColibriComponents, ColButton, ColTextField } from '@telesign/colibri';
+    import { ColIcon } from '@telesign/colibri-icons';
+    import '@telesign/colibri/styles/styles.css';
+    import { StrictMode } from 'react';
+    import { createRoot } from 'react-dom/client';
+    import App from './App';
+
+    registerColibriComponents([ColButton, ColTextField, ColIcon]);
+
+    createRoot(document.getElementById('root')!).render(
+      <StrictMode>
+        <App />
+      </StrictMode>
+    );
+    ```
+
+    **Benefits:**
+    - Smaller bundle size - only includes components you use
+    - More explicit about dependencies
+    - Better for apps with strict performance requirements
+    - Allows for gradual adoption
+
+### Theme Management
+Colibri supports theming through the `data-theme` attribute. To enable theming in your application:
+
+1. Include the Colibri styles in your app:
+
+    ```typescript
+    // src/main.tsx
+    import '@telesign/colibri/styles/styles.css';
+    ```
+
+2. Create a `ThemeProvider` component to manage themes in your app:
+
+    ```typescript
+      import React from 'react';
+
+      export interface ThemeProviderProps {
+        theme?: 'default' | 'massive';
+        children: React.ReactNode;
+      }
+
+      export const ThemeProvider: React.FC<ThemeProviderProps> = ({ theme = 'default', children }) => {
+        return <div data-theme={theme}>{children}</div>;
+      };
+    ```
+
+3. Wrap your application with the `ThemeProvider`:
+
+    ```typescript
+      // src/App.tsx
+      import React from 'react';
+      import { ThemeProvider } from './components/ThemeProvider';
+      import { YourAppComponents } from './YourAppComponents';
+
+      const App: React.FC = () => {
+        return (
+          <ThemeProvider theme="default">
+            <YourAppComponents />
+          </ThemeProvider>
+        );
+      };
+
+      export default App;
+      ```
+
+## Components Usage
+In order to use Colibri components in your React application, you have two main approaches:
+
+### 1. Direct Usage (Simplest)
+You can use Colibri web components directly in React JSX. This approach works but has limitations with TypeScript integration and event handling:
+
+```typescript
+import React, { useState } from 'react';
+
+function MyComponent() {
+  const [username, setUsername] = useState('');
+
+  const handleInput = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    setUsername(target.value);
+  };
+
+  return (
+    <div>
+      <col-text-field
+        label="Username"
+        name="username"
+        value={username}
+        onInput={handleInput}
+        placeholder="Enter your username"
+      />
+    </div>
+  );
+}
+```
+
+**Limitations of Direct Usage:**
+- Limited TypeScript autocomplete and type checking
+- Manual event handling with refs for complex components
+- Property vs attribute handling issues
+- No camelCase prop support
+
+### 2. React Wrappers (Recommended)
+For a better developer experience, create React wrapper components using `@lit/react`. This approach provides full TypeScript support, React-style event handling, and camelCase props.
+
+<Callout variant='info' icon="ℹ️">
+  For more details, see the <a href="https://lit.dev/docs/frameworks/react" target="_blank" rel="noopener noreferrer">Lit React integration docs</a>.
+</Callout>
+
+<Callout variant='tip' icon="💡">
+  For the remainder of this documentation, we will use this approach as the basis for all further examples and explanations.
+</Callout>
+
+For components without custom events:
+
+```tsx
+import React from 'react';
+import { createComponent } from '@lit/react';
+import { ColAvatar } from '@telesign/colibri';
+
+export const Avatar = createComponent({
+  tagName: 'col-avatar',
+  elementClass: ColAvatar,
+  react: React,
+});
+```
+
+For components that emit custom events:
+<Callout variant='info' icon="ℹ️">
+  For more details on event handling, see the <a href="https://lit.dev/docs/frameworks/react/#events" target="_blank" rel="noopener noreferrer">Lit React events docs</a>.
+</Callout>
+
+```tsx
+import React from 'react';
+import { createComponent } from '@lit/react';
+import { ColDialog } from '@telesign/colibri';
+
+export const Dialog = createComponent({
+  tagName: 'col-dialog',
+  elementClass: ColDialog,
+  react: React,
+  events: {
+    onOpen: 'open',
+    onClose: 'close',
+    onCancel: 'cancel'
+  },
+});
+```
+
+## Components with Slots
+Colibri components often use slots for flexible content insertion. For using slots in React you have two options depending on the type of slot you need to fill:
+
+### Default Slots
+For components with a single default slot, you can pass children directly. In the example below, the `col-button` component uses its default slot for the button label:
+
+```tsx
+import React from 'react';
+import { Button } from './components/Button';
+import { BUTTON_VARIANTS, COLORS } from '@telesign/colibri';
+
+<Button
+  variant={BUTTON_VARIANTS.DEFAULT}
+  color={COLORS.PRIMARY}
+  onClick={onClick}
+>
+  Default Button
+</Button>
+```
+
+**How to know if a component has a default slot?**
+
+Check the component overview documentation page for slot details. Typically, if a component has a single unnamed slot, it can be filled by passing children. In the code snippet from the documentation you could see something like this (**Lit HTML version**):
+
+```html
+<col-button>
+  Text <!-- This text goes into the default slot -->
+</col-button>
+```
+
+### Named Slots
+For components with named slots, use the `slot` attribute on child elements to specify which slot they should fill. In the example below, the `col-badge` component has an "icon" named slot:
+
+```tsx
+import React, { useState } from 'react';
+import { Badge } from './components/Badge';
+import { BADGE_VARIANTS } from '@telesign/colibri';
+
+<Badge variant={BADGE_VARIANTS.DEFAULT}>
+  <div slot="icon" style={{ display: 'contents' }}>
+    <Icon name="emoji-circle" size="12" />
+  </div>
+  Default Badge
+</Badge>
+```
+
+**How to know if a component has a named slot?**
+
+Check the component overview documentation page for slot details. Named slots will be indicated with a `slot` attribute in the code snippet from the documentation, like this (**Lit HTML version**):
+
+```html
+<col-badge variant="default">
+  <col-icon
+    slot="icon"
+    size="12px"
+    name="emoji-circle"
+  > <!-- This icon goes into the "icon" named slot -->
+  </col-icon>
+  Text <!-- This text goes into the default slot -->
+</col-badge>
+```
+
+**Key points:**
+- Create a wrapper and use the `slot` attribute to target the named slot.
+- The wrapper can be any HTML element, but a `div` is commonly used.
+- For better layout control, especially with inline elements, consider wrapping the slotted content in a `div` with `display: contents` style.
+- For more details, see the <a href="https://lit.dev/docs/frameworks/react/#using-slots" target="_blank" rel="noopener noreferrer">Lit slotted content docs</a>.
+
+## Property Mapping
+
+A key advantage of React wrappers is that they allow you to use familiar React conventions instead of the standard HTML patterns.
+
+### Component Documentation vs React Usage
+
+**Storybook/Documentation Examples (Lit HTML)**:
+```html
+<!-- kebab-case attributes in HTML -->
+<col-text-field
+  input-type="password"
+  max-length="20"
+  error-message="Invalid input">
+</col-text-field>
+```
+
+**React Wrapper Usage (JavaScript Properties)**:
+```jsx
+{/* camelCase props in React */}
+<TextField
+  inputType="password"
+  maxLength={20}
+  errorMessage="Invalid input"
+/>
+```
+
+### Why This Works
+
+React wrappers set properties directly on the web component's JavaScript object, bypassing HTML attributes:
+
+- **Documentation**: Shows HTML attributes (`input-type`) that map to properties
+- **React Wrappers**: Set JavaScript properties directly (`inputType`)
+- **Result**: Same functionality, different syntax conventions
+
+This allows React developers to follow React conventions while maintaining full compatibility with Colibri components.
+
+## Component Composition Example
+Colibri's flexible component architecture allows you to compose complex UIs by combining simple building blocks. For example, you can easily create a custom select component by composing Colibri components together:
+
+
+### `Select` Component with `ListMenu`
+
+Here's how to use Select components with React wrappers in your application:
+
+```tsx
+import React, { useState } from 'react';
+import { Select, ListMenu, ListMenuItem } from './components';
+
+function SelectExample() {
+  const [selectedValue, setSelectedValue] = useState('');
+
+  const handleChange = (event: CustomEvent) => {
+    setSelectedValue(event.detail.value);
+    console.log('Selected:', event.detail.value);
+  };
+
+  return (
+    <div>
+      <Select
+        label="Choose an option"
+        placeholder="Select an option"
+        value={selectedValue}
+        onChange={handleChange}
+        onFocus={(e) => console.log('Select focused')}
+        onBlur={(e) => console.log('Select blurred')}
+      >
+        <ListMenu>
+          <ListMenuItem value="option1">Option 1</ListMenuItem>
+          <ListMenuItem value="option2">Option 2</ListMenuItem>
+          <ListMenuItem value="option3">Option 3</ListMenuItem>
+        </ListMenu>
+      </Select>
+
+      {/* Disabled state example */}
+      <Select
+        label="Disabled Select"
+        disabled
+        onChange={handleChange}
+      >
+        <ListMenu>
+          <ListMenuItem value="disabled">This is disabled</ListMenuItem>
+        </ListMenu>
+      </Select>
+    </div>
+  );
+}
+```
+
+## Form Integration Example with Validation
+Colibri Web Components are designed to work seamlessly with React forms, supporting both controlled and uncontrolled patterns. Here's how to create a complete form with validation in React:
+
+```tsx
+import React, { useState } from 'react';
+import { TextField, TextArea, Select, Button, ListMenu, ListMenuItem } from './components';
+import { BUTTON_VARIANTS } from '@telesign/colibri';
+
+function InteractiveFormExample() {
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    country: '',
+    bio: ''
+  });
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+
+    // Colibri's form-based components automatically handle validation
+    // If validation passes, this code will execute
+    console.log('Form submitted successfully:', formData);
+
+    // You can access form data using FormData API
+    const formDataObj = new FormData(event.target as HTMLFormElement);
+    const formValues = Object.fromEntries(formDataObj);
+    console.log('Form values:', formValues);
+  };
+
+  const updateField = (field: string) => (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    setFormData(prev => ({
+      ...prev,
+      [field]: target.value
+    }));
+  };
+
+  return (
+    <form onSubmit={handleSubmit} style={{ maxWidth: '500px', margin: '0 auto' }}>
+      <h3>Registration Form</h3>
+
+      {/* Required text field with validation */}
+      <TextField
+        label="Username"
+        name="username"
+        value={formData.username}
+        onInput={updateField('username')}
+        placeholder="Enter your username"
+        required
+        minLength={3}
+        maxLength={20}
+      />
+
+      {/* Email field with validation */}
+      <TextField
+        label="Email"
+        name="email"
+        inputType="email"
+        value={formData.email}
+        onInput={updateField('email')}
+        placeholder="Enter your email"
+        required
+      />
+
+      {/* Password field */}
+      <TextField
+        label="Password"
+        name="password"
+        inputType="password"
+        value={formData.password}
+        onInput={updateField('password')}
+        placeholder="Enter your password"
+        required
+        minLength={8}
+        subLabel="Minimum 8 characters"
+      />
+
+      {/* Confirm password with custom validation */}
+      <TextField
+        label="Confirm Password"
+        name="confirmPassword"
+        inputType="password"
+        value={formData.confirmPassword}
+        onInput={updateField('confirmPassword')}
+        placeholder="Confirm your password"
+        required
+        error={formData.confirmPassword !== '' && formData.password !== formData.confirmPassword}
+        errorMessage={formData.password !== formData.confirmPassword ? "Passwords don't match" : ""}
+      />
+
+      {/* Select dropdown */}
+      <Select
+        label="Country"
+        name="country"
+        placeholder="Select your country"
+        required
+        onChange={(event: CustomEvent) => {
+          setFormData(prev => ({ ...prev, country: event.detail.value }));
+        }}
+      >
+        <ListMenu>
+          <ListMenuItem value="us">United States</ListMenuItem>
+          <ListMenuItem value="ca">Canada</ListMenuItem>
+          <ListMenuItem value="uk">United Kingdom</ListMenuItem>
+          <ListMenuItem value="au">Australia</ListMenuItem>
+        </ListMenu>
+      </Select>
+
+      {/* Text area */}
+      <TextArea
+        label="Bio"
+        name="bio"
+        value={formData.bio}
+        onInput={updateField('bio')}
+        placeholder="Tell us about yourself"
+        maxLength={500}
+        charCount={500}
+      />
+
+      {/* Submit button */}
+      <Button
+        type="submit"
+        variant={BUTTON_VARIANTS.DEFAULT}
+        style={{ marginTop: '20px', width: '100%' }}
+      >
+        Register
+      </Button>
+    </form>
+  );
+}
+```
+
+### Key Form Integration Points
+
+**Automatic Validation**: Colibri components use a custom form validation logic which automatically handles validation failures:
+- Validates all form components when the form is submitted
+- **Prevents submission** if any component is invalid (calls `event.preventDefault()`)
+- **Focuses the first invalid field** to guide user attention
+- Works with HTML5 validation attributes (`required`, `minLength`, `maxLength`, `pattern`)
+- Only intervenes on validation failures - successful validation allows normal form submission
+
+**Event Handling**: Form components emit both standard HTML events (`input`, `change`) and custom events with additional data in `event.detail`.
+
+**Controlled Components**: Use React state to control component values while letting Colibri handle validation failure scenarios and form submission behavior.
+
+**FormData Integration**: Colibri components work seamlessly with the FormData API for form submission handling when validation passes.

@@ -43,7 +43,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Molecules/Text Field',
+  title: 'Forms/Text Field',
   component: 'col-text-field',
   parameters: {
     docs: {
@@ -452,8 +452,8 @@ const renderTextField: Story['render'] = args => html`
     @validation-change=${args.validationChange}
   >
     ${args.iconVisible
-      ? html`<col-icon slot="icon" name=${args.iconName} size=${args.iconSize}></col-icon>`
-      : nothing}
+    ? html`<col-icon slot="icon" name=${args.iconName} size=${args.iconSize}></col-icon>`
+    : nothing}
   </col-text-field>
 `;
 

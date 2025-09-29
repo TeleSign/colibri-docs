@@ -9,7 +9,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Atoms/Avatar',
+  title: 'Images & Icons/Avatar',
   component: 'col-avatar',
   parameters: {
     docs: {

@@ -12,7 +12,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Atoms/Badge',
+  title: 'Feedback/Badge',
   component: 'col-badge',
   parameters: {
     docs: {

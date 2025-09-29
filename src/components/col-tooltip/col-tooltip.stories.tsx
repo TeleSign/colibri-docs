@@ -10,7 +10,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Atoms/Tooltip',
+  title: 'Overlays/Tooltip',
   component: 'col-tooltip',
   parameters: {
     docs: {

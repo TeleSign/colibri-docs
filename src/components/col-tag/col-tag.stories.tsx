@@ -22,7 +22,7 @@ const variantSummary = Object.values(TAG_VARIANTS)
   .join(' | ');
 
 const meta = {
-  title: 'Atoms/Tag',
+  title: 'Feedback/Tag',
   component: 'col-tag',
   parameters: {
     docs: {

@@ -34,7 +34,7 @@ type StoryArgs = {
 };
 
 const meta: ColibriStoryMeta<StoryArgs> = {
-  title: 'Molecules/Text Area',
+  title: 'Forms/Text Area',
   component: 'col-text-area',
   parameters: {
     docs: {

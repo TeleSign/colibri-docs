@@ -11,7 +11,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Atoms/Status',
+  title: 'Feedback/Status',
   component: 'col-status',
   parameters: {
     docs: {

@@ -9,7 +9,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Atoms/Spinner',
+  title: 'Feedback/Spinner',
   component: 'col-spinner',
   parameters: {
     docs: {
