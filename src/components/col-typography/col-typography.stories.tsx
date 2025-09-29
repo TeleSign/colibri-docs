@@ -32,7 +32,7 @@ type StoryArgs = {
 const SampleText = 'Lorem ipsum dolor sit amet';
 
 const meta = {
-  title: 'Title & Text/Typography',
+  title: 'Titles & Texts/Typography',
   component: 'col-typography',
   parameters: {
     docs: {
@@ -269,8 +269,8 @@ const renderTypography: Story['render'] = args => html`
   >
     ${args.text}
     ${args.iconVisible
-    ? html` <col-icon slot="icon" name=${args.iconName} size=${args.iconSize}></col-icon>`
-    : nothing}
+      ? html` <col-icon slot="icon" name=${args.iconName} size=${args.iconSize}></col-icon>`
+      : nothing}
   </col-typography>
 `;
 

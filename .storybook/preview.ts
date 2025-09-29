@@ -209,7 +209,7 @@ const preview: Preview = {
           'Layouts',
           'Navigation',
           'Overlays',
-          'Title & Text',
+          'Titles & Texts',
           'Data Visualization',
           'Helpers',
           'Patterns',
