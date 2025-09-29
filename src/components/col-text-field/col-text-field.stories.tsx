@@ -24,6 +24,7 @@ type StoryArgs = {
   inputMode?: string;
   errorMessage?: string;
   validationTiming?: 'blur' | 'change' | 'input' | 'submit';
+  customWidth?: string;
   name: string;
   variant: 'outline' | 'plain';
   iconVisible: boolean;
@@ -364,6 +365,18 @@ const meta = {
       if: { arg: 'iconVisible' },
       table: { category: 'Storybook' },
     },
+    customWidth: {
+      name: 'custom-width',
+      control: 'text',
+      description:
+        'Sets a custom width for the component host (e.g., "320px", "50%", "min(280px, 100%)"). Applied via the `--input-width` CSS variable; defaults to `auto` when omitted.',
+      table: {
+        category: 'Layout',
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' },
+      },
+      if: { arg: 'customWidth', neq: '' },
+    },
   },
   args: {
     label: '',
@@ -385,6 +398,7 @@ const meta = {
     pattern: '',
     minLength: 0,
     validationTiming: 'blur',
+    customWidth: '100%',
     change: action('change'),
     input: action('input'),
     focus: action('focus'),
@@ -421,6 +435,7 @@ const renderTextField: Story['render'] = args => html`
     input-mode=${args.inputMode || nothing}
     error-message=${args.errorMessage || nothing}
     validation-timing=${args.validationTiming || nothing}
+    custom-width=${args.customWidth || nothing}
     ?disabled=${args.disabled}
     ?readonly=${args.readOnly}
     ?error=${args.error}
@@ -672,6 +687,7 @@ export const InteractiveFormExample: Story = {
             helper="Your public display name."
             required
             min-length="3"
+            custom-width="100%"
           ></col-text-field>
           <col-text-field
             id="password"
@@ -682,6 +698,7 @@ export const InteractiveFormExample: Story = {
             required
             min-length="8"
             helper="Must be at least 8 characters long."
+            custom-width="100%"
           ></col-text-field>
           <col-text-field
             id="email"
@@ -693,6 +710,7 @@ export const InteractiveFormExample: Story = {
             error-message="Please enter a valid email address."
             validation-timing="input"
             helper="We will use this to contact you."
+            custom-width="100%"
           ></col-text-field>
           <col-group>
             <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>

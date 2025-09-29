@@ -1,0 +1,118 @@
+import React from 'react';
+import { Canvas, Meta, Title, Subtitle, Unstyled } from '@storybook/blocks';
+import { Callout } from '../../_storybook/components';
+import * as stories from './col-nav-bar.stories';
+
+<Meta of={stories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+    <Title>Nav Bar</Title>
+    <div className="col-intro-text">
+      The Nav Bar is a reusable composition pattern built from Colibri components. It sits at the top of a page and provides global navigation, quick access to time zone and language preferences, helpful resource links, and a user profile menu.
+    </div>
+
+    <Subtitle>Table of contents</Subtitle>
+    - [Overview](#overview)
+    - [Usage](#usage)
+    - [Examples](#examples)
+    - [Variants](#variants)
+    - [Accessibility](#accessibility)
+
+    ## Overview
+    The Navbar component is used to provide clear and accessible navigation to different sections, pages or functionalities within an application or website. Its main purpose is:
+
+    **Navigation:** Facilitates navigation between different parts of the application or website, such as main pages, specific sections, important functionalities, etc.
+
+    Navigation bars should be used for:
+
+    - Top-level destinations that need to be accessible from anywhere in the app
+    - Three to five destinations
+    - Compact window sizes
+
+    The Nav Bar typically includes:
+
+    - **Breadcrumb**: Shows the user's current navigation path within the application.
+    - **Time Zone**: Allows the user to select a preferred time zone.
+    - **Language Change**: Toggle/select the language of the application interface for multilingual support.
+    - **Buttons**: Quick access to policy pages, privacy notice, support center, and other resources.
+    - **Avatar**: Opens a profile menu with actions such as View Profile or Logout.
+
+    ## Usage
+    1. Install the library and styles:
+      ```bash
+      npm install @telesign/colibri
+      ```
+    2. Register components (all or the ones you use):
+      ```javascript
+      import { registerAllComponents, registerColibriComponents } from '@telesign/colibri';
+      import '@telesign/colibri/styles/styles.css';
+
+      // Option A: everything
+      registerAllComponents();
+
+      // Option B: only what's needed
+      registerColibriComponents([
+        ColToolbar,
+        ColBreadcrumb,
+        ColBreadcrumbItem,
+        ColSelect,
+        ColIcon,
+        ColButton,
+        ColDivider,
+        ColDropdown,
+        ColListMenu,
+        ColListMenuItem,
+        ColAvatar,
+      ]);
+      ```
+    3. Compose the Nav Bar using the building blocks below:
+      - Breadcrumb trail (`col-breadcrumb` + `col-breadcrumb-item`)
+      - Time zone select (`col-select`)
+      - Language select (`col-select`)
+      - Resource / policy menus (`col-dropdown` + `col-list-menu`)
+      - User profile menu (`col-avatar` + `col-dropdown` + `col-list-menu`)
+
+    ## Examples
+
+    <Callout variant="info" icon="💡">Click Show code in each example to copy the composition template. In production isolate JavaScript in separate modules.</Callout>
+
+    ### All Functions Nav Bar
+    Full navigation bar with all common features—breadcrumb, time zone selector, language selector, resource / policy dropdowns, and user profile menu.
+    <Canvas of={stories.AllFunctionsNavBar} />
+
+    In this example, we wanted to show how the asynchronous loading behavior can be implemented. We did so with the Timezones select, here is a sample script that populates the options after a delay (simulating an API call):
+
+    ```javascript
+    const select = document.getElementById('timezones');
+    const menu = document.getElementById('timezones-menu');
+    if (!select || !menu) return;
+
+    const timezoneOffsets = ['-12','-11','-10','-8','-7','-6','-5','-4','-3','-2','-1','0','1','2','3','4','5','6','7','8','9','10','11','12','13'];
+
+    setTimeout(() => {
+      timezoneOffsets.forEach(offsetString => {
+        const option = document.createElement('col-list-menu-item');
+        option.value = offsetString;
+        option.textContent = `UTC ${offsetString}`;
+        menu.appendChild(option);
+      });
+      select.removeAttribute('loading');
+    }, 2000);
+    ```
+
+    ### Without Time Zone
+    Variation without the time zone selector.
+    <Canvas of={stories.NoTimezoneNavBar} />
+
+    ### Language + Avatar Only
+    Minimal navigation with language and profile only.
+    <Canvas of={stories.LanguageAndAvatarNavBar} />
+
+    ## Accessibility
+    - Breadcrumb: ensure `current` item reflects the active page; the final item should not be a link.
+    - Buttons and dropdown triggers must have clear `aria-label` text when icon-only.
+    - Menus (`col-list-menu`) should expose proper roles; use `role="menu"` when presenting navigation options like links.
+
+  </div>
+</div>

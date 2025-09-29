@@ -28,7 +28,8 @@ type JustifyContent =
   | 'space-evenly';
 type AlignItems = 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'stretch';
 type FlexWrap = 'nowrap' | 'wrap' | 'wrap-reverse';
-type MinHeight = '200px' | '300px' | '400px' | '500px';
+type MinHeight = `${number}px` | `${number}rem` | `${number}%` | `${number}vh` | `${number}vw`;
+type MinWidth = `${number}px` | `${number}rem` | `${number}%` | `${number}vh` | `${number}vw`;
 type Position = 'relative' | 'absolute';
 
 /**
@@ -42,6 +43,14 @@ type Position = 'relative' | 'absolute';
  * - flexDirection: Controls flex container direction
  * - justifyContent: Defines main axis alignment
  * - flexWrap: Controls wrapping behavior
+ * - alignItems: Defines cross axis alignment
+ * - height: Sets the height of the container
+ * - width: Sets the width of the container
+ * - margin: Sets the outer spacing of the container
+ * - padding: Sets the inner spacing of the container
+ * - minHeight: Sets the minimum height of the container
+ * - minWidth: Sets the minimum width of the container
+ * - position: Sets the positioning scheme (relative or absolute)
  *
  * To extend:
  * 1. Add new property to this type
@@ -59,7 +68,9 @@ export type Styles = {
   height?: string;
   width?: string;
   margin?: string;
+  padding?: string;
   minHeight?: MinHeight;
+  minWidth?: MinWidth;
   position?: Position;
 };
 
@@ -72,6 +83,14 @@ export interface StylesOptions {
    * 4. flexDirection - 'flex-direction'
    * 5. justifyContent - 'justify-content'
    * 6. flexWrap - 'flex-wrap'
+   * 7. alignItems - 'align-items'
+   * 8. height - 'height'
+   * 9. width - 'width'
+   * 10. margin - 'margin'
+   * 11. padding - 'padding'
+   * 12. minHeight - 'min-height'
+   * 13. minWidth - 'min-width'
+   * 14. position - 'position'
    *
    * To incorporate additional CSS attributes, navigate to the '.storybook/preview.tsx' file and append them within the 'Styles' type.
    */
@@ -115,7 +134,9 @@ const getStyles = (options?: StylesOptions): string => {
     height: 'height',
     width: 'width',
     margin: 'margin',
+    padding: 'padding',
     minHeight: 'min-height',
+    minWidth: 'min-width',
     position: 'position',
   };
 

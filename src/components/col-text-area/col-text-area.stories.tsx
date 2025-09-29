@@ -20,6 +20,7 @@ type StoryArgs = {
   minLength?: number;
   errorMessage?: string;
   validationTiming?: 'blur' | 'change' | 'input' | 'submit';
+  customWidth?: string;
   name: string;
   change: () => void;
   input: () => void;
@@ -232,6 +233,18 @@ const meta: ColibriStoryMeta<StoryArgs> = {
       description: 'Fired when the component fails validation.',
       table: { category: 'Events' },
     },
+    customWidth: {
+      name: 'custom-width',
+      control: 'text',
+      description:
+        'Sets a custom width for the component host (e.g., "320px", "50%", "min(280px, 100%)"). Applied via the `--input-width` CSS variable; defaults to `auto` when omitted.',
+      table: {
+        category: 'Layout',
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' },
+      },
+      if: { arg: 'customWidth', neq: '' },
+    },
   },
   args: {
     label: 'Label',
@@ -249,6 +262,7 @@ const meta: ColibriStoryMeta<StoryArgs> = {
     errorMessage: '',
     minLength: 0,
     validationTiming: 'blur',
+    customWidth: '100%',
     validationChange: action('validation-change'),
     change: action('change'),
     input: action('input'),
@@ -305,6 +319,7 @@ const renderTextArea: Story['render'] = args => {
       min-length=${minLength || nothing}
       error-message=${errorMessage || nothing}
       validation-timing=${validationTiming || nothing}
+      custom-width=${args.customWidth || nothing}
       ?disabled=${disabled}
       ?readonly=${readOnly}
       ?error=${error}
@@ -493,12 +508,14 @@ export const InteractiveFormExample: Story = {
             min-length="10"
             helper="Please provide a comment of at least 10 characters."
             validation-timing="input"
+            custom-width="100%"
           ></col-text-area>
           <col-text-area
             name="suggestions"
             label="Suggestions"
             char-count="200"
             helper="Any suggestions for improvement? (Max 200 chars)"
+            custom-width="100%"
           ></col-text-area>
           <col-group>
             <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>

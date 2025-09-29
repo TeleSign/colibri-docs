@@ -20,6 +20,7 @@ import { Callout } from '../../_storybook/components';
       - [Custom Alignment Paginator](#custom-alignment-paginator)
       - [Custom Size Configs Paginator](#custom-size-configs-paginator)
       - [Custom Responsive Configs Paginator](#custom-responsive-configs-paginator)
+      - [Full Pagination](#full-pagination)
     - [Properties](#properties)
     - [Accessibility](#accessibility)
     - [Interact with the component](#interact-with-the-component)
@@ -76,6 +77,51 @@ import { Callout } from '../../_storybook/components';
 
     ### Custom Size Configs Paginator
     <Canvas of={ColPaginatorStories.CustomSizeConfig} />
+
+    ### Full Pagination
+    In this example you can get the code snippet needed to show the full pagination functionality, with items per page `col-select`, information text and the `col-paginator` component.
+    <Canvas of={ColPaginatorStories.FullPagination} />
+
+    The following is a snippet of JavaScript code showing how to handle the pagination logic:
+
+    ```javascript
+    const totalItems = 103;
+    const itemsPerPageSelect = document.getElementById('items-per-page');
+    const itemsInfo = document.getElementById('items-info');
+    const paginator = document.getElementById('paginator');
+
+    const updatePaginatorLength = perPage => {
+      const numberOfPages = Math.ceil(totalItems / perPage);
+      paginator.length = Math.max(1, numberOfPages);
+    };
+
+    const updateItemsInfo = (page, perPage) => {
+      const start = (page - 1) * perPage + 1;
+      const end = Math.min(page * perPage, totalItems);
+      itemsInfo.textContent = `${start}-${end} of ${totalItems} Items`;
+    };
+
+    // Initialize
+    const initialPerPage = 10;
+    paginator.value = 1;
+    updatePaginatorLength(initialPerPage);
+    updateItemsInfo(paginator.value, initialPerPage);
+
+    // React to col-paginator changes
+    paginator.addEventListener('page-change', event => {
+      const selectedPage = event.detail.newValue;
+      const perPage = parseInt(itemsPerPageSelect.value) || 10;
+      updateItemsInfo(selectedPage, perPage);
+    });
+
+    // React to col-select changes
+    itemsPerPageSelect.addEventListener('change', () => {
+      const perPage = parseInt(itemsPerPageSelect.value) || 10;
+      updatePaginatorLength(perPage);
+      paginator.value = 1;
+      updateItemsInfo(1, perPage);
+    });
+    ```
 
     ### Properties
     <ArgTypes of={ColPaginatorStories}/>

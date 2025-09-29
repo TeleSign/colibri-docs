@@ -32,6 +32,8 @@ type StoryArgs = {
   iconSize: string;
   optionType: 'col-list-menu' | 'custom-data';
   showOptions: boolean;
+  clearable: boolean;
+  customWidth?: string;
   input: () => void;
   change: () => void;
   focus: () => void;
@@ -209,6 +211,17 @@ const meta = {
       },
       if: { arg: 'counter', neq: false },
     },
+    clearable: {
+      control: 'boolean',
+      description:
+        'Shows a clear (reset) button when a value is selected. Opt-in; default is false.',
+      table: {
+        category: 'Features',
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
+      if: { arg: 'clearable', neq: false },
+    },
     errorMessage: {
       name: 'error-message',
       control: 'text',
@@ -342,6 +355,18 @@ const meta = {
         category: 'Storybook',
       },
     },
+    customWidth: {
+      name: 'custom-width',
+      control: 'text',
+      description:
+        'Sets a custom width for the component host (e.g., "320px", "50%", "min(280px, 100%)"). Applied via the `--input-width` CSS variable; defaults to `auto` when omitted.',
+      table: {
+        category: 'Layout',
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' },
+      },
+      if: { arg: 'customWidth', neq: '' },
+    },
   },
   args: {
     label: '',
@@ -359,12 +384,14 @@ const meta = {
     required: false,
     badge: false,
     counter: false,
+    clearable: false,
     errorMessage: '',
     iconVisible: false,
     iconName: 'search',
     iconSize: '16px',
     showOptions: true,
     optionType: 'col-list-menu',
+    customWidth: '100%',
     input: action('input'),
     change: action('change'),
     focus: action('focus'),
@@ -418,6 +445,8 @@ const renderColSelect: Story['render'] = args => {
       variant=${args.variant}
       placement=${args.placement}
       error-message=${args.errorMessage || nothing}
+      custom-width=${args.customWidth || nothing}
+      ?clearable=${args.clearable}
       ?loading=${args.loading}
       ?disabled=${args.disabled}
       ?error=${args.error}
@@ -696,6 +725,7 @@ export const InteractiveFormExample: Story = {
             required
             helper="This will be used for shipping."
             error-message="Please select a country"
+            custom-width="100%"
           >
             <col-list-menu role="menuitem">
               <col-list-menu-item value="us">United States</col-list-menu-item>
@@ -716,6 +746,7 @@ export const InteractiveFormExample: Story = {
             counter
             helper="This determines your access level."
             error-message="Please select a role"
+            custom-width="100%"
           >
             <col-list-menu role="menuitem">
               <col-list-menu-item value="admin">Administrator</col-list-menu-item>
@@ -729,6 +760,7 @@ export const InteractiveFormExample: Story = {
             label="Theme Preference"
             value="light"
             helper="Choose your preferred theme."
+            custom-width="100%"
           >
             <col-list-menu role="menuitem">
               <col-list-menu-item value="light">Light Theme</col-list-menu-item>
