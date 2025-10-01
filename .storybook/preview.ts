@@ -245,6 +245,7 @@ const preview: Preview = {
         items: [
           { value: 'default', title: 'Theme: default' },
           { value: 'massive', title: 'Theme: Massive' },
+          { value: 'bics', title: 'Theme: BICS' },
         ],
         dynamicTitle: true,
       },
