@@ -9,7 +9,7 @@ Our documentation system is built using Storybook, providing an interactive envi
 - [Overview](#overview)
 - [Getting Started](#getting-started)
 - [Documentation Structure](#documentation-structure)
-- [Writing Documentation](#writing-documentation) 
+- [Writing Documentation](#writing-documentation)
 - [Development](#development)
 - [Customization](#customization)
 - [Best Practices](#best-practices)
@@ -276,7 +276,7 @@ The system supports theme switching through the `data-theme` attribute:
 
 ```typescript
 decorators: [
-  (story, context) => html` <div data-theme=${context.args.mode || 'default'}>${story()}</div> `,
+  (story, context) => html` <div data-theme=${context.args.mode || 'telesign'}>${story()}</div> `,
 ];
 ```
 

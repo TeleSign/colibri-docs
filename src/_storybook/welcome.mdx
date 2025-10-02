@@ -9,15 +9,19 @@ import packageJson from './../../package.json';
 
 <div className="sb-section">
   <Subtitle>Welcome</Subtitle>
-  Colibri is a themeable Web Components library built with Lit, designed to provide a
-  consistent and customizable design system for your web applications.
+  Colibri is a themeable Web Components library built with Lit, designed to provide a consistent and
+  customizable design system for your web applications.
 </div>
 
 <div className="sb-section">
   <Subtitle>Current Versions</Subtitle>
   <ul>
-    <li><strong>Colibri:</strong> {packageJson.dependencies['@telesign/colibri']}</li>
-    <li><strong>Colibri-icons:</strong> {packageJson.dependencies['@telesign/colibri-icons']}</li>
+    <li>
+      <strong>Colibri:</strong> {packageJson.dependencies['@telesign/colibri']}
+    </li>
+    <li>
+      <strong>Colibri-icons:</strong> {packageJson.dependencies['@telesign/colibri-icons']}
+    </li>
   </ul>
 </div>
 
@@ -45,7 +49,7 @@ registerAllComponents();
 registerColibriComponents([ColIcon]);
 
 // Add data-theme attribute on root - parent element
-<div data-theme="default">
+<div data-theme="telesign">
 
 // Use components
 <col-icon name="home"></col-icon>
@@ -54,7 +58,7 @@ registerColibriComponents([ColIcon]);
 Now you're ready to use the ColButton component:
 
 ```html
-<div data-theme="default">
+<div data-theme="telesign">
   <col-button color="primary">
     Send
     <col-icon name="send"></col-icon>

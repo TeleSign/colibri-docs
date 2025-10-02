@@ -171,7 +171,7 @@ export const withThemeProvider: DecoratorFunction<WebComponentsRenderer> = (
   const body = document.querySelector('body.sb-show-main');
   if (!(body instanceof HTMLElement)) return story();
 
-  body.setAttribute('data-theme', theme || 'default');
+  body.setAttribute('data-theme', theme || 'telesign');
   return story();
 };
 
@@ -200,19 +200,19 @@ const preview: Preview = {
       storySort: {
         order: [
           'Welcome',
-          'Frameworks',
+          'Framework Integration',
           'Foundation',
           'Actions',
+          'Data Visualization',
           'Feedback',
-          'Images & Icons',
           'Forms',
+          'Helpers',
+          'Images & Icons',
           'Layouts',
           'Navigation',
           'Overlays',
-          'Titles & Texts',
-          'Data Visualization',
-          'Helpers',
           'Patterns',
+          'Titles & Texts',
         ],
       },
     },
@@ -220,7 +220,7 @@ const preview: Preview = {
       container: (props: any) => {
         const { theme } = props.context.store.userGlobals.globals;
         const body = document.querySelector('body');
-        body!.setAttribute('data-theme', theme.toLowerCase() ?? 'default');
+        body!.setAttribute('data-theme', theme.toLowerCase() ?? 'telesign');
 
         return createElement(DocsContainer, props);
       },
@@ -239,12 +239,13 @@ const preview: Preview = {
     theme: {
       name: 'Theme',
       description: 'Theme for Colibri components',
-      defaultValue: 'default',
+      defaultValue: 'telesign',
       toolbar: {
         icon: 'globe',
         items: [
-          { value: 'default', title: 'Theme: default' },
+          { value: 'telesign', title: 'Theme: Telesign' },
           { value: 'massive', title: 'Theme: Massive' },
+          { value: 'bics', title: 'Theme: BICS' },
         ],
         dynamicTitle: true,
       },

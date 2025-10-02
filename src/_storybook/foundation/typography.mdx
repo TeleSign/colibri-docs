@@ -1,5 +1,5 @@
 import { Meta, Title, Subtitle, Typeset, Source } from '@storybook/blocks';
-import { TYPOGRAPHY } from './utils'
+import { TYPOGRAPHY } from './utils';
 
 <Meta title="Foundation/Typography" />
 
@@ -9,30 +9,34 @@ export const baseSegoeUIFont = {
   name: 'Segoe UI',
   url: null,
   description: 'Primary font for the Colibri Design System, locally hosted',
-  fallbacks: '"Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif'
+  fallbacks: '"Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif',
 };
 
 export const baseCourierFont = {
   name: 'Courier Monospace',
   url: null,
   description: 'Monospace font for code blocks and technical content',
-  fallbacks: 'monospace'
+  fallbacks: 'monospace',
 };
 
 export const fontFamilies = {
-  default: {
+  telesign: {
     primary: baseSegoeUIFont,
-    secondary: baseCourierFont
+    secondary: baseCourierFont,
   },
   massive: {
     primary: baseSegoeUIFont,
-    secondary: baseCourierFont
-  }
+    secondary: baseCourierFont,
+  },
+  bics: {
+    primary: baseSegoeUIFont,
+    secondary: baseCourierFont,
+  },
 };
 
 export const getCurrentFont = (type = 'primary') => {
-  const currentTheme = theme() || 'default';
-  const themeFamily = fontFamilies[currentTheme] || fontFamilies.default;
+  const currentTheme = theme() || 'telesign';
+  const themeFamily = fontFamilies[currentTheme] || fontFamilies.telesign;
   return themeFamily[type] || themeFamily.primary;
 };
 
@@ -474,5 +478,6 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
         style={{ textDecoration: "underline" }}
       />
     </div>
+
   </div>
 </div>

@@ -54,7 +54,7 @@ export class MainLogo extends LitElement {
         return 'massive';
       case 'bics':
         return 'bics';
-      case 'default':
+      case 'telesign':
       default:
         return 'telesign';
     }
@@ -63,14 +63,14 @@ export class MainLogo extends LitElement {
   private _getThemeFromContext(): string {
     const storybook = document.querySelector('[data-theme]');
     if (storybook) {
-      return storybook.getAttribute('data-theme') || 'default';
+      return storybook.getAttribute('data-theme') || 'telesign';
     }
 
     const body = document.body;
     if (body.classList.contains('theme-massive')) return 'massive';
     if (body.classList.contains('theme-bics')) return 'bics';
 
-    return 'default';
+    return 'telesign';
   }
 
   private async _loadLogo(): Promise<void> {
@@ -158,7 +158,7 @@ export class MainLogo extends LitElement {
 
   private _getCurrentTheme(): string {
     const body = document.querySelector('body.sb-show-main');
-    return body?.getAttribute('data-theme') || 'default';
+    return body?.getAttribute('data-theme') || 'telesign';
   }
 
   private _observeThemeChanges(): void {

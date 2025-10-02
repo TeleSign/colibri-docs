@@ -83,7 +83,7 @@ function createPrefixFilter(...prefixes: string[]): (key: string) => boolean {
 }
 
 // Theme color extractors (from themes, not tokens)
-const defaultTheme = themes.default || {};
+const defaultTheme = themes.telesign || {};
 const themeKeys = Object.keys(defaultTheme);
 const isFontToken = (key: string) => key.includes('font');
 
