@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
  * theme changes and provides the current theme value to consuming components.
  *
  * @returns {string} The current theme name from the body's `data-theme` attribute,
- *                   or 'default' if no theme is set
+ *                   or 'telesign' if no theme is set
  *
  * @example
  * ```tsx
@@ -42,7 +42,7 @@ import { useState, useEffect } from 'react';
  * ```
  */
 export const useStorybookTheme = (): string => {
-  const [currentTheme, setCurrentTheme] = useState('default');
+  const [currentTheme, setCurrentTheme] = useState('telesign');
 
   useEffect(() => {
     /**
@@ -50,7 +50,7 @@ export const useStorybookTheme = (): string => {
      */
     const updateTheme = () => {
       const body = document.querySelector('body');
-      const theme = body?.getAttribute('data-theme') || 'default';
+      const theme = body?.getAttribute('data-theme') || 'telesign';
       setCurrentTheme(theme);
     };
 

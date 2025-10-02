@@ -20,7 +20,7 @@ export const baseCourierFont = {
 };
 
 export const fontFamilies = {
-  default: {
+  telesign: {
     primary: baseSegoeUIFont,
     secondary: baseCourierFont,
   },
@@ -35,8 +35,8 @@ export const fontFamilies = {
 };
 
 export const getCurrentFont = (type = 'primary') => {
-  const currentTheme = theme() || 'default';
-  const themeFamily = fontFamilies[currentTheme] || fontFamilies.default;
+  const currentTheme = theme() || 'telesign';
+  const themeFamily = fontFamilies[currentTheme] || fontFamilies.telesign;
   return themeFamily[type] || themeFamily.primary;
 };
 

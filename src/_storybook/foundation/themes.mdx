@@ -107,7 +107,7 @@ import { useStorybookTheme } from '../hooks/useStorybookTheme';
 
       ```html
       <!-- Apply theme to entire application -->
-      <div data-theme="default">
+      <div data-theme="telesign">
         <header>
           <h1>My Application</h1>
           <nav>Navigation items inherit theme</nav>
@@ -137,7 +137,7 @@ import { useStorybookTheme } from '../hooks/useStorybookTheme';
 
       ```css
       /* Theme tokens are automatically available as CSS custom properties */
-      :root [data-theme="default"] {
+      :root [data-theme="telesign"] {
         --col-theme-primary-base: #011ac2;
         --col-theme-accent-base: #1f5bff;
         --col-theme-neutral-500: #8c8ca1;
@@ -186,7 +186,7 @@ import { useStorybookTheme } from '../hooks/useStorybookTheme';
 
       ```html
       <!-- Parent theme applies to entire application -->
-      <div data-theme="default">
+      <div data-theme="telesign">
         <header>Header uses default theme</header>
 
         <!-- Child theme overrides parent for this section -->
@@ -625,13 +625,14 @@ import { useStorybookTheme } from '../hooks/useStorybookTheme';
         </ul>
       </Callout>
     </Unstyled>
+
   </div>
 </div>
 
 export const DataThemeInheritanceDemo = () => {
   return (
     <div className="inheritance-demo-container">
-      {Object.keys(themes).map((themeName) => (
+      {Object.keys(themes).map(themeName => (
         <div key={themeName} className="inheritance-demo-section" data-theme={themeName}>
           <div className="inheritance-demo-header">
             <h4>{themeName.charAt(0).toUpperCase() + themeName.slice(1)} Theme Container</h4>
@@ -672,7 +673,9 @@ export const ThemePreview = ({ themeName, themeConfig, colors }) => {
           style={{
             color: themeConfig['accent-base'],
           }}
-        >{themeName.charAt(0).toUpperCase() + themeName.slice(1)} Theme</h4>
+        >
+          {themeName.charAt(0).toUpperCase() + themeName.slice(1)} Theme
+        </h4>
         <div
           className="theme-preview-badge"
           style={{
@@ -689,8 +692,9 @@ export const ThemePreview = ({ themeName, themeConfig, colors }) => {
             key={`${themeName}-${color}-${index}`}
             className="theme-color-row"
             style={{
-            backgroundColor: themeConfig['neutral-50'],
-          }}>
+              backgroundColor: themeConfig['neutral-50'],
+            }}
+          >
             <div
               className="theme-color-swatch-circle"
               style={{
@@ -703,14 +707,18 @@ export const ThemePreview = ({ themeName, themeConfig, colors }) => {
               style={{
                 color: themeConfig['primary-base'],
               }}
-            >--col-theme-{color}</div>
+            >
+              --col-theme-{color}
+            </div>
             <div
               className="theme-color-hex-value"
               style={{
                 backgroundColor: themeConfig['base-light'],
                 color: themeConfig['base-alt'],
               }}
-            >{themeConfig[color]}</div>
+            >
+              {themeConfig[color]}
+            </div>
           </div>
         ))}
       </div>
@@ -722,7 +730,7 @@ export const NestedThemesDemo = () => {
   return (
     <div className="nested-themes-container">
       {Object.keys(themes)
-        .filter(parentTheme => parentTheme !== 'default')
+        .filter(parentTheme => parentTheme !== 'telesign')
         .map((parentTheme) => (
         <div key={parentTheme} className="nested-themes-example" data-theme={parentTheme}>
           <div className="nested-themes-parent">
@@ -758,7 +766,8 @@ export const NestedThemesDemo = () => {
         </div>
       ))}
     </div>
-  );
+
+);
 };
 
 export const TokenOverrideDemo = () => {
@@ -766,111 +775,92 @@ export const TokenOverrideDemo = () => {
   const themeConfig = themes[currentTheme];
   const primaryColor = themeConfig?.['primary-base'] || '#011ac2';
 
-  return (
-    <Container
-      title="Before and After Token Override"
-      variant="showcase"
-      className="token-override-showcase"
-    >
-      <div className="token-override-comparison">
-        <div className="token-override-before">
-          <h5>Before ({currentTheme.charAt(0).toUpperCase() + currentTheme.slice(1)} Theme)</h5>
-          <Component
-            text="Default Button"
-            variant="default"
-          />
-          <p>Uses active theme tokens</p>
-          <div className="token-override-tokens">
-            <span className="token-override-token">--col-colors-ui-primary: {primaryColor}</span>
-          </div>
-        </div>
-        <div className="token-override-after">
-          <h5>After (Custom Tokens)</h5>
-          <Component
-            text="Custom Themed Button"
-            variant="custom"
-          />
-          <p>Uses custom token overrides</p>
-          <div className="token-override-tokens">
-            <span className="token-override-token">--col-colors-ui-primary: #ff6b35</span>
-          </div>
-        </div>
+return (
+
+<Container
+  title="Before and After Token Override"
+  variant="showcase"
+  className="token-override-showcase"
+>
+  <div className="token-override-comparison">
+    <div className="token-override-before">
+      <h5>Before ({currentTheme.charAt(0).toUpperCase() + currentTheme.slice(1)} Theme)</h5>
+      <Component text="Default Button" variant="default" />
+      <p>Uses active theme tokens</p>
+      <div className="token-override-tokens">
+        <span className="token-override-token">--col-colors-ui-primary: {primaryColor}</span>
       </div>
-    </Container>
-  );
-};
+    </div>
+    <div className="token-override-after">
+      <h5>After (Custom Tokens)</h5>
+      <Component text="Custom Themed Button" variant="custom" />
+      <p>Uses custom token overrides</p>
+      <div className="token-override-tokens">
+        <span className="token-override-token">--col-colors-ui-primary: #ff6b35</span>
+      </div>
+    </div>
+  </div>
+</Container>
+); };
 
 export const CustomThemeDemo = () => {
   const [isRegistered, setIsRegistered] = React.useState(false);
 
-  const registerNeonTheme = () => {
-    // Import registerTheme dynamically to avoid issues in Storybook
-    import('@telesign/colibri').then(({ registerTheme }) => {
-      registerTheme('neon', {
-        'primary-base': '#ff00ff',
-        'primary-dark': '#cc00cc',
-        'accent-base': '#00ffff',
-        'accent-dark': '#00cccc',
-        'neutral-900': '#1a1a1a',
-        'white': '#ffffff'
-      });
-      setIsRegistered(true);
-    });
-  };
-
-  const applyNeonTheme = () => {
-    const Container = document.querySelector('.custom-theme-demo-container');
-    if (Container) {
-      Container.setAttribute('data-theme', 'neon');
-    }
-  };
-
-  const resetTheme = () => {
-    const Container = document.querySelector('.custom-theme-demo-container');
-    if (Container) {
-      Container.setAttribute('data-theme', 'default');
-    }
-  };
-
-  return (
-    <Container
-      title="Custom Theme Registration Demo"
-      className="custom-theme-demo-wrapper"
-    >
-      <div className="custom-theme-demo-controls">
-        <button
-          onClick={registerNeonTheme}
-          disabled={isRegistered}
-          className="custom-theme-demo-button"
-        >
-          {isRegistered ? '✅ Neon Theme Registered' : 'Register Neon Theme'}
-        </button>
-        <button
-          onClick={applyNeonTheme}
-          disabled={!isRegistered}
-          className="custom-theme-demo-button"
-        >
-          Apply Neon Theme
-        </button>
-        <button
-          onClick={resetTheme}
-          className="custom-theme-demo-button"
-        >
-          Reset to Default
-        </button>
-      </div>
-      <div className="custom-theme-demo-container" data-theme="default">
-        <Component
-          text="Custom Themed Component"
-          variant="default"
-        />
-        <p className="custom-theme-demo-description">
-          This component will change appearance when the custom neon theme is applied.
-        </p>
-      </div>
-    </Container>
-  );
+const registerNeonTheme = () => {
+// Import registerTheme dynamically to avoid issues in Storybook
+import('@telesign/colibri').then(({ registerTheme }) => {
+registerTheme('neon', {
+'primary-base': '#ff00ff',
+'primary-dark': '#cc00cc',
+'accent-base': '#00ffff',
+'accent-dark': '#00cccc',
+'neutral-900': '#1a1a1a',
+'white': '#ffffff'
+});
+setIsRegistered(true);
+});
 };
+
+const applyNeonTheme = () => {
+const Container = document.querySelector('.custom-theme-demo-container');
+if (Container) {
+Container.setAttribute('data-theme', 'neon');
+}
+};
+
+const resetTheme = () => {
+const Container = document.querySelector('.custom-theme-demo-container');
+if (Container) {
+Container.setAttribute('data-theme', 'telesign');
+}
+};
+
+return (
+
+<Container title="Custom Theme Registration Demo" className="custom-theme-demo-wrapper">
+  <div className="custom-theme-demo-controls">
+    <button
+      onClick={registerNeonTheme}
+      disabled={isRegistered}
+      className="custom-theme-demo-button"
+    >
+      {isRegistered ? '✅ Neon Theme Registered' : 'Register Neon Theme'}
+    </button>
+    <button onClick={applyNeonTheme} disabled={!isRegistered} className="custom-theme-demo-button">
+      Apply Neon Theme
+    </button>
+    <button onClick={resetTheme} className="custom-theme-demo-button">
+      Reset to Default
+    </button>
+  </div>
+  <div className="custom-theme-demo-container" data-theme="telesign">
+    <Component text="Custom Themed Component" variant="default" />
+    <p className="custom-theme-demo-description">
+      This component will change appearance when the custom neon theme is applied.
+    </p>
+  </div>
+</Container>
+); };
 
 export const TokenDemo = ({
   type,
@@ -880,43 +870,43 @@ export const TokenDemo = ({
 }) => {
   const [isDisabled, setIsDisabled] = React.useState(false);
 
-  const getButtonText = () => {
-    switch (type) {
-      case 'tokens':
-        return 'Token-styled Button';
-      case 'inline':
-        return 'Inline-styled Button';
-      case 'invalid':
-        return 'Conflicting tokens + inline styles';
-      case 'conditional':
-        return isDisabled ? 'Disabled State' : 'Active State (Click to toggle)';
-      case 'responsive':
-        return 'Responsive padding, font-size, and border-radius using clamp() and max()';
-      case 'composite':
-        return 'Complex styling with multiple coordinated tokens';
-      default:
-        return 'Demo button';
-    }
-  };
-
-  const handleClick = () => {
-    if (type === 'conditional') {
-      setIsDisabled(!isDisabled);
-    }
-  };
-
-  const componentClassName = type === 'conditional' && isDisabled ? 'disabled' : '';
-  const isInteractive = type === 'conditional';
-
-  return (
-    <Container title={title} description={description} className={className}>
-      <Component
-        text={getButtonText()}
-        variant={type}
-        onClick={isInteractive ? handleClick : undefined}
-        disabled={isDisabled}
-        className={componentClassName}
-      />
-    </Container>
-  );
+const getButtonText = () => {
+switch (type) {
+case 'tokens':
+return 'Token-styled Button';
+case 'inline':
+return 'Inline-styled Button';
+case 'invalid':
+return 'Conflicting tokens + inline styles';
+case 'conditional':
+return isDisabled ? 'Disabled State' : 'Active State (Click to toggle)';
+case 'responsive':
+return 'Responsive padding, font-size, and border-radius using clamp() and max()';
+case 'composite':
+return 'Complex styling with multiple coordinated tokens';
+default:
+return 'Demo button';
+}
 };
+
+const handleClick = () => {
+if (type === 'conditional') {
+setIsDisabled(!isDisabled);
+}
+};
+
+const componentClassName = type === 'conditional' && isDisabled ? 'disabled' : '';
+const isInteractive = type === 'conditional';
+
+return (
+
+<Container title={title} description={description} className={className}>
+  <Component
+    text={getButtonText()}
+    variant={type}
+    onClick={isInteractive ? handleClick : undefined}
+    disabled={isDisabled}
+    className={componentClassName}
+  />
+</Container>
+); };
