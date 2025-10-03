@@ -1,6 +1,7 @@
 import { html, nothing, LitElement, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { action } from '@storybook/addon-actions';
 import { SITE_MENU_COLOR_VARIANTS } from '@telesign/colibri';
 import { ColibriStory, ColibriStoryMeta } from '@/types/storybook';
@@ -17,6 +18,7 @@ type SiteMenuProps = {
 type SiteMenuChildProps = {
   disabled: boolean;
   ariaLabel: string;
+  label: string;
   categoryName: string;
   subcategoryId: string;
   itemName: string;
@@ -109,6 +111,17 @@ const meta = {
         defaultValue: { summary: '""' },
       },
       if: { arg: 'ariaLabel', neq: '' },
+    },
+    label: {
+      control: { type: 'text' },
+      description:
+        'Button: Optional label that displays as a tooltip on hover when the site menu is collapsed. The tooltip is automatically disabled when the menu is open. Use `label="Dashboard"` in HTML.',
+      table: {
+        category: 'core',
+        type: { summary: 'string' },
+        defaultValue: { summary: '""' },
+      },
+      if: { arg: 'label', neq: '' },
     },
     categoryName: {
       name: 'category-name',
@@ -235,6 +248,7 @@ const meta = {
     disabled: false,
     selected: false,
     ariaLabel: '',
+    label: '',
     categoryName: '',
     subcategoryId: '',
     itemName: '',
@@ -370,6 +384,7 @@ const renderButton = (args: SiteMenuStoryArgs) => html`
   <col-site-menu-button
     slot="actions"
     action-id="dashboard"
+    label="${ifDefined(args.label)}"
     aria-label="${args.ariaLabel}"
     ?disabled=${args.disabled}
     ?selected=${args.selected}
@@ -567,6 +582,33 @@ export const ButtonExampleSelected: Story = {
       }, 0);
     </script>
   `,
+};
+
+// Hidden individual stories for MDX Canvas usage
+export const ButtonExampleWithTooltip: Story = {
+  tags: ['!dev'],
+  parameters: {
+    docs: {
+      source: {
+        transform: (code: string) => {
+          const buttonMatch = code.match(
+            /<col-site-menu-button[^>]*>[\s\S]*?<\/col-site-menu-button>/
+          );
+          return formatCodeString(buttonMatch?.[0] || '');
+        },
+      },
+    },
+    __sb: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '150px',
+    },
+  },
+  args: {
+    ariaLabel: 'Dashboard',
+    label: 'Dashboard',
+  },
+  render: (args: SiteMenuStoryArgs) => html` <div>${renderButton(args)}</div> `,
 };
 
 // Hidden individual stories for MDX Canvas usage
@@ -1031,6 +1073,7 @@ class SiteMenuStoryWrapper extends LitElement {
           <main-logo slot="logo" color="${this.color || 'primary'}" size="36"></main-logo>
           <col-site-menu-button
             slot="actions"
+            label="Dashboard"
             action-id="dashboard"
             aria-label="Dashboard"
             ?selected=${this.selectedActionId === 'dashboard'}
@@ -1039,6 +1082,7 @@ class SiteMenuStoryWrapper extends LitElement {
           </col-site-menu-button>
           <col-site-menu-button
             slot="actions"
+            label="Analytics"
             action-id="analytics"
             aria-label="Analytics"
             ?selected=${this.selectedActionId === 'analytics'}
