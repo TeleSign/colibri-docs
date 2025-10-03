@@ -269,7 +269,12 @@ const renderTypography: Story['render'] = args => html`
   >
     ${args.text}
     ${args.iconVisible
-      ? html` <col-icon slot="icon" name=${args.iconName} size=${args.iconSize}></col-icon>`
+      ? html`
+          <col-tooltip slot="icon" position="top">
+            <col-icon name=${args.iconName} size=${args.iconSize}></col-icon>
+            <span slot="tooltip-content">Tooltip text</span>
+          </col-tooltip>
+        `
       : nothing}
   </col-typography>
 `;

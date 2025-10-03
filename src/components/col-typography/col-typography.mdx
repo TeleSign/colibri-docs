@@ -84,6 +84,24 @@ export const SampleText = 'Lorem ipsum dolor sit amet';
     **With icon:**
     <Canvas of={ColTypographyStories.HeadingWithIcon} />
 
+    <Callout variant="info" icon="ℹ️">
+      **Icon with Tooltip Integration**
+
+      Icons slotted into typography components can be wrapped with `col-tooltip` to provide additional context on hover. This pattern is useful for providing explanatory information without cluttering the UI.
+
+      ```html
+      <col-typography variant="heading" element="h1">
+        Page Title
+        <col-tooltip slot="icon" position="top">
+          <col-icon name="info-circle" size="30"></col-icon>
+          <span slot="tooltip-content">Additional information about this heading</span>
+        </col-tooltip>
+      </col-typography>
+      ```
+
+      For more details on tooltip configuration, see the [Tooltip documentation](./?path=/docs/overlays-tooltip--overview).
+    </Callout>
+
     The `element` attribute can be set to a different HTML tag to **change the size of the text** (see next section for more information).
 
     <h4>Sizes</h4>
@@ -129,6 +147,10 @@ export const SampleText = 'Lorem ipsum dolor sit amet';
 
     **With icon:**
     <Canvas of={ColTypographyStories.SubheadingWithIcon} />
+
+    <Callout variant="info" icon="ℹ️">
+      Icons can be wrapped with `col-tooltip` to provide contextual information. See the [Heading section](#heading) above for implementation details and the [Tooltip documentation](./?path=/docs/overlays-tooltip--overview) for more configuration options.
+    </Callout>
 
     Alternatively, you can set the `element` attribute to an specific HTML tag:
 
@@ -205,6 +227,10 @@ export const SampleText = 'Lorem ipsum dolor sit amet';
 
     **With icon:**
     <Canvas of={ColTypographyStories.LabelWithIcon} />
+
+    <Callout variant="info" icon="ℹ️">
+      Icons in labels can be wrapped with `col-tooltip` to provide helpful explanations or guidance for form fields. This is particularly useful for complex fields that benefit from additional context. See the [Heading section](#heading) above for implementation details.
+    </Callout>
 
     **With required indicator:**
     <Canvas of={ColTypographyStories.LabelWithRequiredIndicator} />
