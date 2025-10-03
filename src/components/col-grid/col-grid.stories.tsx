@@ -1206,26 +1206,26 @@ export const ComplexLayout: Story = {
         🔄 <em>Resize browser to see responsive behavior</em>
       </div>
       ${renderGrid({ cols: '1', sm: '2', md: '3', lg: '4', gap: 'l' } as ColGridProps, [
-    createGridItem('Hero Banner<br />Featured Products & Offers', 1, {
-      colSpan: '1',
-      sm: '2',
-      md: '2',
-      lg: '3',
-    }),
-    createGridItem('Featured<br />Categories', 2, { colSpan: '1', md: '1', lg: '1' }),
-    createGridItem('Product 1', 3, { colSpan: '1' }),
-    createGridItem('Product 2', 4, { colSpan: '1' }),
-    createGridItem('Product 3', 5, { colSpan: '1' }),
-    createGridItem('Product 4', 6, { colSpan: '1' }),
-    createGridItem('Product 5', 7, { colSpan: '1' }),
-    createGridItem('Product 6', 8, { colSpan: '1' }),
-    createGridItem('Newsletter Signup', 9, {
-      colSpan: '1',
-      sm: '2',
-      md: '3',
-      lg: '4',
-    }),
-  ])}
+        createGridItem('Hero Banner<br />Featured Products & Offers', 1, {
+          colSpan: '1',
+          sm: '2',
+          md: '2',
+          lg: '3',
+        }),
+        createGridItem('Featured<br />Categories', 2, { colSpan: '1', md: '1', lg: '1' }),
+        createGridItem('Product 1', 3, { colSpan: '1' }),
+        createGridItem('Product 2', 4, { colSpan: '1' }),
+        createGridItem('Product 3', 5, { colSpan: '1' }),
+        createGridItem('Product 4', 6, { colSpan: '1' }),
+        createGridItem('Product 5', 7, { colSpan: '1' }),
+        createGridItem('Product 6', 8, { colSpan: '1' }),
+        createGridItem('Newsletter Signup', 9, {
+          colSpan: '1',
+          sm: '2',
+          md: '3',
+          lg: '4',
+        }),
+      ])}
     </div>
 
     <div class="story-section">
@@ -1239,22 +1239,22 @@ export const ComplexLayout: Story = {
         • Activity feed (sidebar on large screens)
       </div>
       ${renderGrid({ cols: '1', md: '4', lg: '6', rows: '4', gap: 'm' } as ColGridProps, [
-    createGridItem('Navigation<br />Menu', 1, { colSpan: '1', md: '1', lg: '1', rowSpan: '4' }),
-    createGridItem('Dashboard Header & User Info', 2, { colSpan: '1', md: '3', lg: '4' }),
-    createGridItem('Activity<br />Feed', 3, { colSpan: '1', lg: '1', rowSpan: '3' }),
-    createGridItem('Main Chart<br />Analytics', 4, {
-      colSpan: '1',
-      md: '2',
-      lg: '2',
-      rowSpan: '2',
-    }),
-    createGridItem('KPI 1<br />Revenue', 5, { colSpan: '1', md: '1', lg: '2' }),
-    createGridItem('KPI 2<br />Users', 6, { colSpan: '1', md: '1', lg: '1' }),
-    createGridItem('KPI 3<br />Orders', 7, { colSpan: '1', md: '1', lg: '1' }),
-    createGridItem('Recent<br />Activity', 8, { colSpan: '1', md: '2', lg: '2' }),
-    createGridItem('System<br />Status', 9, { colSpan: '1', md: '1', lg: '1' }),
-    createGridItem('Notifications', 10, { colSpan: '1', md: '1', lg: '1' }),
-  ])}
+        createGridItem('Navigation<br />Menu', 1, { colSpan: '1', md: '1', lg: '1', rowSpan: '4' }),
+        createGridItem('Dashboard Header & User Info', 2, { colSpan: '1', md: '3', lg: '4' }),
+        createGridItem('Activity<br />Feed', 3, { colSpan: '1', lg: '1', rowSpan: '3' }),
+        createGridItem('Main Chart<br />Analytics', 4, {
+          colSpan: '1',
+          md: '2',
+          lg: '2',
+          rowSpan: '2',
+        }),
+        createGridItem('KPI 1<br />Revenue', 5, { colSpan: '1', md: '1', lg: '2' }),
+        createGridItem('KPI 2<br />Users', 6, { colSpan: '1', md: '1', lg: '1' }),
+        createGridItem('KPI 3<br />Orders', 7, { colSpan: '1', md: '1', lg: '1' }),
+        createGridItem('Recent<br />Activity', 8, { colSpan: '1', md: '2', lg: '2' }),
+        createGridItem('System<br />Status', 9, { colSpan: '1', md: '1', lg: '1' }),
+        createGridItem('Notifications', 10, { colSpan: '1', md: '1', lg: '1' }),
+      ])}
     </div>
 
     <div class="story-section">
@@ -1268,22 +1268,22 @@ export const ComplexLayout: Story = {
         📰 <em>Mimics traditional newspaper/magazine grid systems</em>
       </div>
       ${renderGrid({ cols: '2', md: '4', lg: '6', rows: '3', gap: 's' } as ColGridProps, [
-    createGridItem('Breaking News<br />Lead Story with Image', 1, {
-      colSpan: '2',
-      md: '3',
-      lg: '4',
-      rowSpan: '2',
-    }),
-    createGridItem('Advertisement<br />Space', 2, { colSpan: '2', md: '1', lg: '2' }),
-    createGridItem('Politics<br />Story', 3),
-    createGridItem('Weather<br />Widget', 4, { colSpan: '1', md: '1', lg: '1' }),
-    createGridItem('Sports<br />News', 5),
-    createGridItem('Tech<br />Update', 6),
-    createGridItem('Business<br />Report', 7),
-    createGridItem('Culture<br />Review', 8),
-    createGridItem('Opinion & Editorial Section', 9, { colSpan: '2', md: '2', lg: '3' }),
-    createGridItem('Classified Ads & Subscriptions', 10, { colSpan: '2', md: '2', lg: '3' }),
-  ])}
+        createGridItem('Breaking News<br />Lead Story with Image', 1, {
+          colSpan: '2',
+          md: '3',
+          lg: '4',
+          rowSpan: '2',
+        }),
+        createGridItem('Advertisement<br />Space', 2, { colSpan: '2', md: '1', lg: '2' }),
+        createGridItem('Politics<br />Story', 3),
+        createGridItem('Weather<br />Widget', 4, { colSpan: '1', md: '1', lg: '1' }),
+        createGridItem('Sports<br />News', 5),
+        createGridItem('Tech<br />Update', 6),
+        createGridItem('Business<br />Report', 7),
+        createGridItem('Culture<br />Review', 8),
+        createGridItem('Opinion & Editorial Section', 9, { colSpan: '2', md: '2', lg: '3' }),
+        createGridItem('Classified Ads & Subscriptions', 10, { colSpan: '2', md: '2', lg: '3' }),
+      ])}
     </div>
 
     <div class="story-section">
@@ -1297,29 +1297,29 @@ export const ComplexLayout: Story = {
         📱 <em>Adapts from single column to multi-column layout</em>
       </div>
       ${renderGrid({ cols: '1', sm: '2', lg: '3', gap: 'm' } as ColGridProps, [
-    createGridItem('📌 Pinned Post: Important Announcement', 1, {
-      colSpan: '1',
-      sm: '2',
-      lg: '3',
-    }),
-    createGridItem('📝 Text Post<br />Quick update...', 2),
-    createGridItem('📷 Photo Post<br />Large image content', 3, {
-      colSpan: '1',
-      sm: '2',
-      lg: '1',
-    }),
-    createGridItem('💬 Status<br />Feeling good!', 4),
-    createGridItem('📺 Sponsored<br />Video Ad', 5, { colSpan: '1', sm: '2', lg: '1' }),
-    createGridItem('🔗 Link Share<br />Interesting article', 6),
-    createGridItem('📊 Poll<br />What do you think?', 7),
-    createGridItem('🎥 Video Post<br />Live stream recap', 8, {
-      colSpan: '1',
-      sm: '1',
-      lg: '2',
-    }),
-    createGridItem('📝 Long Post<br />Detailed story...', 9),
-    createGridItem('🎵 Music<br />Now playing...', 10),
-  ])}
+        createGridItem('📌 Pinned Post: Important Announcement', 1, {
+          colSpan: '1',
+          sm: '2',
+          lg: '3',
+        }),
+        createGridItem('📝 Text Post<br />Quick update...', 2),
+        createGridItem('📷 Photo Post<br />Large image content', 3, {
+          colSpan: '1',
+          sm: '2',
+          lg: '1',
+        }),
+        createGridItem('💬 Status<br />Feeling good!', 4),
+        createGridItem('📺 Sponsored<br />Video Ad', 5, { colSpan: '1', sm: '2', lg: '1' }),
+        createGridItem('🔗 Link Share<br />Interesting article', 6),
+        createGridItem('📊 Poll<br />What do you think?', 7),
+        createGridItem('🎥 Video Post<br />Live stream recap', 8, {
+          colSpan: '1',
+          sm: '1',
+          lg: '2',
+        }),
+        createGridItem('📝 Long Post<br />Detailed story...', 9),
+        createGridItem('🎵 Music<br />Now playing...', 10),
+      ])}
     </div>
   `,
 };

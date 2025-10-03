@@ -108,7 +108,8 @@ const meta = {
     },
     content: {
       control: 'text',
-      description: 'Content to display in the overlay. **Storybook control only, not a component prop.**',
+      description:
+        'Content to display in the overlay. **Storybook control only, not a component prop.**',
       table: {
         category: 'Storybook',
         type: { summary: 'string' },
@@ -265,7 +266,8 @@ export const Persistent: Story = {
   args: {
     active: false,
     persistent: true,
-    content: 'This overlay is persistent. It won\'t close when clicking outside or Esc key. Please click on close button before to continue',
+    content:
+      "This overlay is persistent. It won't close when clicking outside or Esc key. Please click on close button before to continue",
   },
   render: renderOverlay,
 };
@@ -320,9 +322,7 @@ export const CustomPosition: Story = {
         @overlay-click-outside=${onOverlayClickOutside}
         @overlay-escape=${onOverlayEscape}
       >
-        <div class="example-custom-position">
-          Custom positioned content (top-right corner)
-        </div>
+        <div class="example-custom-position">Custom positioned content (top-right corner)</div>
       </col-overlay>
     `;
   },

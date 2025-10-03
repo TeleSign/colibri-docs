@@ -429,8 +429,8 @@ const renderNumberField: Story['render'] = args => html`
     @validation-change=${args.validationChange}
   >
     ${args.iconVisible && args.size === 'small'
-    ? html`<col-icon slot="icon" name=${args.iconName} size=${args.iconSize}></col-icon>`
-    : ''}
+      ? html`<col-icon slot="icon" name=${args.iconName} size=${args.iconSize}></col-icon>`
+      : ''}
   </col-number-field>
 `;
 
