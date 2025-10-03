@@ -44,7 +44,7 @@ const meta = {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      height: '100vh',
+      minHeight: '150px',
     },
   },
   argTypes: {
@@ -95,6 +95,7 @@ const meta = {
       if: { arg: 'multiline', neq: false },
     },
     hideArrow: {
+      name: 'hidearrow',
       control: 'boolean',
       description: 'Whether to hide the tooltip arrow.',
       table: {
