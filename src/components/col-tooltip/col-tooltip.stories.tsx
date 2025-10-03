@@ -1,12 +1,33 @@
 import { html } from 'lit';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils/formatters';
-import { TOOLTIP_POSITIONS } from '@telesign/colibri';
+
+type TooltipPosition =
+  | 'top'
+  | 'top-start'
+  | 'top-end'
+  | 'bottom'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left'
+  | 'left-start'
+  | 'left-end'
+  | 'right'
+  | 'right-start'
+  | 'right-end';
 
 type StoryArgs = {
-  multiline: Boolean;
-  width: Number;
-  position: TOOLTIP_POSITIONS;
+  multiline: boolean;
+  width: number;
+  position: TooltipPosition;
+  hideArrow: boolean;
+  distance: number;
+  disabled: boolean;
+  showOnClick: boolean;
+  triggerText: string;
+  tooltipText: string;
+  showIcon: boolean;
+  iconName: string;
 };
 
 const meta = {
@@ -19,44 +40,130 @@ const meta = {
         transform: formatCodeString,
       },
     },
+    __sb: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh',
+    },
   },
   argTypes: {
+    position: {
+      control: 'select',
+      options: [
+        'top',
+        'top-start',
+        'top-end',
+        'bottom',
+        'bottom-start',
+        'bottom-end',
+        'left',
+        'left-start',
+        'left-end',
+        'right',
+        'right-start',
+        'right-end',
+      ],
+      description:
+        'The preferred position of the tooltip. Supports 12 placements from FloatingUI with automatic flip/shift at viewport edges.',
+      table: {
+        type: {
+          summary:
+            'top | top-start | top-end | bottom | bottom-start | bottom-end | left | left-start | left-end | right | right-start | right-end',
+        },
+        defaultValue: { summary: 'bottom' },
+        category: 'Core',
+      },
+    },
+    width: {
+      control: 'number',
+      description: 'The width of the tooltip in pixels. Works with multiline content.',
+      table: {
+        type: { summary: 'number' },
+        defaultValue: { summary: '300' },
+        category: 'Core',
+      },
+    },
     multiline: {
       control: 'boolean',
-      description: 'Determines if the text of the tooltip will fit in one or more lines',
+      description: 'Whether the tooltip supports multiline content.',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'true' },
+        category: 'Core',
+      },
+      if: { arg: 'multiline', neq: false },
+    },
+    hideArrow: {
+      control: 'boolean',
+      description: 'Whether to hide the tooltip arrow.',
       table: {
         type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
         category: 'Core',
       },
-      if: { arg: 'multiline', neq: false },
+      if: { arg: 'hideArrow', neq: false },
     },
-    width: {
+    distance: {
       control: 'number',
-      description: 'If **multiline** property is true, defines the container width',
+      description: 'Distance in pixels between the tooltip and trigger element (offset).',
       table: {
         type: { summary: 'number' },
-        defaultValue: { summary: '200' },
+        defaultValue: { summary: '8' },
         category: 'Core',
       },
     },
-    position: {
-      control: 'select',
-      options: Object.values(TOOLTIP_POSITIONS),
-      description: 'Determines the position where the tooltip would be displayed',
+    disabled: {
+      control: 'boolean',
+      description: 'Whether the tooltip is disabled (prevents showing).',
       table: {
-        type: {
-          summary: Object.values(TOOLTIP_POSITIONS).join(' | '),
-        },
-        defaultValue: { summary: 'top' },
-        category: 'Core',
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
       },
+      if: { arg: 'disabled', neq: false },
+    },
+    showOnClick: {
+      name: 'showonclick',
+      control: 'boolean',
+      description:
+        'Whether to enable click-to-toggle behavior. Useful for touch devices or when trigger has no other click action.',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+        category: 'Behavior',
+      },
+      if: { arg: 'showOnClick', neq: false },
+    },
+    triggerText: {
+      control: 'text',
+      description: 'The trigger button text. **Storybook control only, not a component prop.**',
+      table: {
+        category: 'Storybook',
+        disable: true,
+      },
+      if: { arg: 'triggerText', neq: '' },
+    },
+    tooltipText: {
+      control: 'text',
+      description: 'The tooltip content text. **Storybook control only, not a component prop.**',
+      table: {
+        category: 'Storybook',
+        disable: true,
+      },
+      if: { arg: 'tooltipText', neq: '' },
     },
   },
   args: {
+    position: 'bottom',
+    width: 300,
     multiline: true,
-    width: 200,
-    position: TOOLTIP_POSITIONS.Top,
+    hideArrow: false,
+    distance: 8,
+    disabled: false,
+    showOnClick: false,
+    triggerText: 'Hover Me',
+    tooltipText: '',
   },
 } satisfies ColibriStoryMeta<StoryArgs>;
 
@@ -64,105 +171,146 @@ export default meta;
 
 type Story = ColibriStory<StoryArgs>;
 
+const renderTooltip: Story['render'] = args => html`
+  <col-tooltip
+    width=${args.width}
+    position=${args.position}
+    distance=${args.distance}
+    ?multiline=${args.multiline}
+    ?hideArrow=${args.hideArrow}
+    ?disabled=${args.disabled}
+    ?showOnClick=${args.showOnClick}
+  >
+    <col-button variant="default" color="primary">
+      ${html`<col-icon name="info-circle"></col-icon>`} ${args.triggerText}
+    </col-button>
+    <div slot="tooltip-content">${args.tooltipText}</div>
+  </col-tooltip>
+`;
+
 /**
- * Default story showing a default tooltip. Use the controls panel to experiment with different values.
+ * Default story showing a tooltip with all controls.
  */
 export const Default: Story = {
-  parameters: {
-    __sb: {
-      margin: '50px 0 0 400px',
-    },
+  args: {
+    tooltipText: 'Tooltip message very very large in order to see multiline',
   },
-  render: ({ multiline, position, width }) => html`
-    <col-tooltip width=${width} position=${position} ?multiline=${multiline}>
-      <col-button variant="outlined">
-        <col-icon name="trash"></col-icon>
-        Delete Item
-      </col-button>
-      <div slot="tooltip-content">Tooltip message very very large in order to see multiline</div>
-    </col-tooltip>
-  `,
+  render: renderTooltip,
 };
 
+/**
+ * Single-line tooltip triggered on hover
+ */
 export const SinglelineTooltipHover: Story = {
   args: {
-    position: TOOLTIP_POSITIONS.Bottom,
+    position: 'bottom',
     multiline: false,
+    tooltipText: 'Tooltip message',
   },
-  parameters: {
-    __sb: {
-      margin: '0 0 0 45%',
-    },
-  },
-  render: args => html`
-    <col-tooltip width=${args.width} position=${args.position} ?multiline=${args.multiline}>
-      Hover me
-      <div slot="tooltip-content">Tooltip message</div>
-    </col-tooltip>
-  `,
+  render: renderTooltip,
 };
 
-export const MultilineTooltipClick: Story = {
+/**
+ * Tooltip with keyboard accessibility (focus/blur)
+ */
+export const KeyboardAccessibility: Story = {
   args: {
-    position: TOOLTIP_POSITIONS.Right,
-    multiline: true,
-    width: 200,
+    position: 'left',
+    multiline: false,
+    triggerText: 'Press Tab to focus',
+    tooltipText: 'Tooltip shows on focus, hides on blur',
   },
-  parameters: {
-    __sb: {
-      margin: '0 0 0 45%',
-    },
-  },
-  render: args => html`
-    <col-tooltip width=${args.width} position=${args.position} ?multiline=${args.multiline}>
-      <col-button variant="outlined"> Click Me </col-button>
-      <div slot="tooltip-content">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua.
-      </div>
-    </col-tooltip>
-  `,
+  render: renderTooltip,
 };
 
-export const SinglelineTooltipKeyboard: Story = {
-  args: {
-    position: TOOLTIP_POSITIONS.Left,
-    multiline: true,
-    width: 200,
-  },
-  parameters: {
-    __sb: {
-      margin: '0 0 0 45%',
-    },
-  },
-  render: args => html`
-    <col-tooltip width=${args.width} position=${args.position} ?multiline=${args.multiline}>
-      <col-button variant="outlined">
-        <col-icon name="info-circle"></col-icon>
-      </col-button>
-      <div slot="tooltip-content">Tooltip message very very large in order to see multiline</div>
-    </col-tooltip>
-  `,
-};
-
+/**
+ * Large tooltip with extended width
+ */
 export const MultilineTooltipLargeText: Story = {
   args: {
-    position: TOOLTIP_POSITIONS.Top,
+    position: 'top',
     multiline: true,
     width: 500,
+    tooltipText:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   },
-  parameters: {
-    __sb: {
-      margin: '30px 0 0 40%',
-    },
+  render: renderTooltip,
+};
+
+/**
+ * Tooltip with extended placement options (top-start)
+ */
+export const ExtendedPosition: Story = {
+  args: {
+    position: 'top-start',
+    multiline: true,
   },
   render: args => html`
-    <col-tooltip width=${args.width} position=${args.position} ?multiline=${args.multiline}>
-      <col-button variant="outlined"> Click or Hover Me </col-button>
+    <col-tooltip
+      width=${args.width}
+      position=${args.position}
+      distance=${args.distance}
+      ?multiline=${args.multiline}
+      ?hideArrow=${args.hideArrow}
+      ?disabled=${args.disabled}
+      ?showOnClick=${args.showOnClick}
+    >
+      <col-button variant="default" color="primary">
+        ${html`<col-icon name="info-circle"></col-icon>`} ${args.triggerText}
+      </col-button>
       <div slot="tooltip-content">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua.
+        ${`This tooltip uses ${args.position} position. Try other extended positions like "bottom-end", "left-start", etc.`}
       </div>
     </col-tooltip>
   `,
+};
+
+/**
+ * Tooltip without arrow
+ */
+export const WithoutArrow: Story = {
+  args: {
+    position: 'bottom',
+    hideArrow: true,
+    tooltipText: 'This tooltip has no arrow',
+  },
+  render: renderTooltip,
+};
+
+/**
+ * Tooltip with custom distance from trigger
+ */
+export const CustomDistance: Story = {
+  args: {
+    position: 'right',
+    distance: 20,
+    tooltipText: 'This tooltip is 20px away from the trigger',
+  },
+  render: renderTooltip,
+};
+
+/**
+ * Disabled tooltip (won't show on hover/click/focus)
+ */
+export const DisabledTooltip: Story = {
+  args: {
+    position: 'bottom',
+    disabled: true,
+    triggerText: 'Disabled Tooltip',
+    tooltipText: "This tooltip is disabled and won't show",
+  },
+  render: renderTooltip,
+};
+
+/**
+ * Click-to-toggle tooltip (useful for touch devices or when trigger has no other click action)
+ */
+export const ClickToToggle: Story = {
+  args: {
+    position: 'bottom',
+    showOnClick: true,
+    triggerText: 'Click to Toggle',
+    tooltipText: 'Click the button to show/hide this tooltip',
+  },
+  render: renderTooltip,
 };
