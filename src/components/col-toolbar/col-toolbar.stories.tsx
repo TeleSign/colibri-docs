@@ -436,10 +436,10 @@ export const PositioningTemplates = {
   staticToolbar: () => html`
     <div class="demo-container">
       ${renderToolbar({ sticky: 'none', border: 'all' } as ColToolbarProps, [
-    createButton('Static Toolbar'),
-    createButton('Action 1'),
-    createButton('Action 2'),
-  ])}
+        createButton('Static Toolbar'),
+        createButton('Action 1'),
+        createButton('Action 2'),
+      ])}
       <div class="demo-content">
         <p>This is regular content below the toolbar.</p>
         <p>Scroll to see how the toolbar behaves...</p>
@@ -450,10 +450,10 @@ export const PositioningTemplates = {
   stickyTop: () => html`
     <div class="demo-container" style="height: 400px; overflow-y: auto;">
       ${renderToolbar({ sticky: 'top', border: 'bottom', elevation: true } as ColToolbarProps, [
-    createButton('Sticky Top'),
-    createButton('Action 1'),
-    createButton('Action 2'),
-  ])}
+        createButton('Sticky Top'),
+        createButton('Action 1'),
+        createButton('Action 2'),
+      ])}
       <div class="demo-content" style="height: 600px;">
         <p>Scroll down to see the toolbar stick to the top of its container.</p>
         <p>Content continues below...</p>
@@ -472,20 +472,20 @@ export const PositioningTemplates = {
         <div style="margin-top: 200px;">Even more content...</div>
       </div>
       ${renderToolbar({ sticky: 'bottom', border: 'top', elevation: true } as ColToolbarProps, [
-    createButton('Sticky Bottom'),
-    createButton('Action 1'),
-    createButton('Action 2'),
-  ])}
+        createButton('Sticky Bottom'),
+        createButton('Action 1'),
+        createButton('Action 2'),
+      ])}
     </div>
   `,
 
   fixedTop: () => html`
     <div style="position: relative; min-height: 200px;">
       ${renderToolbar({ fixed: 'top', border: 'bottom', elevation: true } as ColToolbarProps, [
-    createButton('Fixed Top'),
-    createButton('Global Action'),
-    createSearchInput('Global search...'),
-  ])}
+        createButton('Fixed Top'),
+        createButton('Global Action'),
+        createSearchInput('Global search...'),
+      ])}
       <div class="demo-content" style="padding-top: 60px; padding: 60px 16px 16px;">
         <p>This toolbar is fixed to the top of the viewport.</p>
         <p>It will stay in place even when scrolling the page.</p>
@@ -500,9 +500,9 @@ export const PositioningTemplates = {
         <p>It provides persistent access to actions.</p>
       </div>
       ${renderToolbar({ fixed: 'bottom', border: 'top', elevation: true } as ColToolbarProps, [
-    createButton('Save Draft', 'outline'),
-    createButton('Publish', 'primary'),
-  ])}
+        createButton('Save Draft', 'outline'),
+        createButton('Publish', 'primary'),
+      ])}
     </div>
   `,
 };

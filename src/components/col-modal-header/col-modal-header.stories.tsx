@@ -64,7 +64,8 @@ const meta = {
     },
     badgeText: {
       control: 'text',
-      description: 'Badge text for the badge slot. **Storybook control only, not a component prop.**',
+      description:
+        'Badge text for the badge slot. **Storybook control only, not a component prop.**',
       table: {
         category: 'Storybook',
         type: { summary: 'string' },
@@ -115,11 +116,11 @@ export default meta;
 type Story = ColibriStory<StoryArgs>;
 
 const styles = css`
-    .example-container {
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      overflow: hidden;
-    }
+  .example-container {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
   .example-content {
     padding: 20px;
     background: #f5f5f5;
@@ -148,10 +149,9 @@ const renderModalHeader: Story['render'] = ({
     >
       ${iconName && html`<col-icon slot="icon" name=${iconName}></col-icon>`}
       ${badgeText && html`<col-badge slot="badge" variant=${badgeVariant}>${badgeText}</col-badge>`}
-      ${actionText && html`
-        <col-button slot="actions" size="small" color="secondary">
-          ${actionText}
-        </col-button>
+      ${actionText &&
+      html`
+        <col-button slot="actions" size="small" color="secondary"> ${actionText} </col-button>
       `}
     </col-modal-header>
     <div class="example-content">

@@ -194,8 +194,8 @@ const RenderCheckboxCard: Story['render'] = ({
     ?indeterminate=${indeterminate}
   >
     ${withIcon
-    ? html`<col-icon name=${iconName} slot="checked-icon" size="12" color="white"></col-icon>`
-    : nothing}
+      ? html`<col-icon name=${iconName} slot="checked-icon" size="12" color="white"></col-icon>`
+      : nothing}
   </col-checkbox-card>
 `;
 

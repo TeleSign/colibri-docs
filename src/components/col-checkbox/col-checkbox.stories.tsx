@@ -152,8 +152,8 @@ const renderCheckbox: Story['render'] = args => html`
     ?customLabel=${args.customLabel}
   >
     ${args.customLabel
-    ? html`<div slot="label">${args.label || nothing}</div>`
-    : args.default || nothing}
+      ? html`<div slot="label">${args.label || nothing}</div>`
+      : args.default || nothing}
   </col-checkbox>
 `;
 

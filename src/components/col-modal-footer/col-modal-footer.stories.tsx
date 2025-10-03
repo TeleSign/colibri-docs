@@ -52,7 +52,8 @@ const meta = {
     },
     secondaryButtonText: {
       control: 'text',
-      description: 'Secondary action button text. **Storybook control only, not a component prop.**',
+      description:
+        'Secondary action button text. **Storybook control only, not a component prop.**',
       table: {
         category: 'Storybook',
         type: { summary: 'string' },
@@ -88,11 +89,11 @@ export default meta;
 type Story = ColibriStory<StoryArgs>;
 
 const styles = css`
-    .example-main {
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      overflow: hidden;
-    }
+  .example-main {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
   .example-content {
     padding: 20px;
     background: #f5f5f5;
@@ -119,10 +120,7 @@ const renderModalFooter: Story['render'] = ({
     <div class="example-content">
       <p>Modal content goes here...</p>
     </div>
-    <col-modal-footer
-      description=${description}
-      ?custom-description=${customDescription}
-    >
+    <col-modal-footer description=${description} ?custom-description=${customDescription}>
       <col-button slot="actions" color="secondary" @click=${onSecondaryClick}>
         ${secondaryButtonText}
       </col-button>
@@ -172,10 +170,7 @@ export const SingleAction: Story = {
       <div class="example-content">
         <p>Modal content goes here...</p>
       </div>
-      <col-modal-footer
-        description=${description}
-        ?custom-description=${customDescription}
-      >
+      <col-modal-footer description=${description} ?custom-description=${customDescription}>
         <col-button slot="actions" color="primary" @click=${onPrimaryClick}>
           ${primaryButtonText || 'Close'}
         </col-button>
@@ -202,16 +197,12 @@ export const CustomDescription: Story = {
       <col-modal-footer ?custom-description=${customDescription}>
         <div class="example-description">
           <col-icon name="info-circle" style="color: #2196F3;"></col-icon>
-          <span>
-            Your changes will be saved automatically
-          </span>
+          <span> Your changes will be saved automatically </span>
         </div>
         <col-button slot="actions" color="secondary" @click=${onSecondaryClick}>
           Cancel
         </col-button>
-        <col-button slot="actions" color="primary" @click=${onPrimaryClick}>
-          Continue
-        </col-button>
+        <col-button slot="actions" color="primary" @click=${onPrimaryClick}> Continue </col-button>
       </col-modal-footer>
     </div>
   `,
@@ -232,10 +223,7 @@ export const DescriptionOnly: Story = {
       <div class="example-content">
         <p>Modal content goes here...</p>
       </div>
-      <col-modal-footer
-        description=${description}
-        ?custom-description=${customDescription}
-      >
+      <col-modal-footer description=${description} ?custom-description=${customDescription}>
       </col-modal-footer>
     </div>
   `,

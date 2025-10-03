@@ -78,7 +78,9 @@ const styles = css`
  */
 export const Default: Story = {
   render: () => html`
-    <style>${styles}</style>
+    <style>
+      ${styles}
+    </style>
     <div class="demo-container">
       <div class="flex-container">
         <div class="demo-item">Left Item</div>
@@ -97,7 +99,9 @@ export const ToolbarLayouts: Story = {
     controls: { disable: true },
   },
   render: () => html`
-    <style>${styles}</style>
+    <style>
+      ${styles}
+    </style>
 
     <div class="demo-container">
       <div class="story-title">Basic Toolbar Layout</div>
@@ -143,7 +147,9 @@ export const NavigationExamples: Story = {
     controls: { disable: true },
   },
   render: () => html`
-    <style>${styles}</style>
+    <style>
+      ${styles}
+    </style>
 
     <div class="demo-container">
       <div class="story-title">App Header</div>
@@ -200,7 +206,9 @@ export const BasicUsage: Story = {
 export const ToolbarLayout: Story = {
   parameters: { controls: { disable: true } },
   render: () => html`
-    <style>${styles}</style>
+    <style>
+      ${styles}
+    </style>
     <div class="demo-container">
       <div class="flex-container">
         <div class="demo-item">Logo</div>
@@ -216,7 +224,9 @@ export const ToolbarLayout: Story = {
 export const MultipleSpacers: Story = {
   parameters: { controls: { disable: true } },
   render: () => html`
-    <style>${styles}</style>
+    <style>
+      ${styles}
+    </style>
     <div class="demo-container">
       <div class="flex-container">
         <div class="demo-item">Left</div>
