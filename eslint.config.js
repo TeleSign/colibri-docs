@@ -1,3 +1,4 @@
+import globals from 'globals';
 import eslint from '@eslint/js';
 import tseslint from '@typescript-eslint/eslint-plugin';
 import typescript from '@typescript-eslint/parser';
@@ -12,23 +13,20 @@ export default [
       ecmaVersion: 2020,
       sourceType: 'module',
       globals: {
-        window: true,
-        document: true,
-        setTimeout: true,
-        Event: true,
-        CustomEvent: true,
-        Blob: true,
-        URL: true,
-        HTMLElement: true,
-        HTMLStyleElement: true,
-        HTMLInputElement: true,
-        HTMLFormElement: true,
-        HTMLPreElement: true,
-        FormData: true,
-        MediaQueryList: true,
-        MediaQueryListEvent: true,
-        CSSStyleSheet: true,
-        requestAnimationFrame: true,
+        ...globals.browser,
+        HTMLElement: 'readonly',
+        HTMLStyleElement: 'readonly',
+        HTMLInputElement: 'readonly',
+        HTMLFormElement: 'readonly',
+        HTMLPreElement: 'readonly',
+        FormData: 'readonly',
+        MediaQueryList: 'readonly',
+        MediaQueryListEvent: 'readonly',
+        CSSStyleSheet: 'readonly',
+        FocusOptions: 'readonly',
+        EventListener: 'readonly',
+        ElementInternals: 'readonly',
+        requestAnimationFrame: 'readonly',
       },
     },
     plugins: {
@@ -39,7 +37,8 @@ export default [
       'prettier/prettier': 'error',
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+      'no-unused-vars': 'off',
     },
   },
 ];
