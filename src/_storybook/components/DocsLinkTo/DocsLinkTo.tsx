@@ -22,6 +22,30 @@ interface DocsLinkToProps {
   [key: string]: any;
 }
 
+/**
+ * A React component for creating dynamic navigation links to Storybook docs pages
+ *
+ * This component generates links to documentation pages based on story titles,
+ * ensuring links remain valid even when story titles change. It uses Storybook's
+ * internal navigation system for smooth client-side transitions.
+ *
+ * Note: This is a React-based documentation component, not a Lit-based Colibri web component.
+ * Can be used in: MDX files only (not compatible with TSX files configured for Lit template rendering)
+ *
+ * @example
+ * ```mdx
+ * import { DocsLinkTo } from '@/_storybook/components';
+ * import * as ComponentStories from './component.stories';
+ *
+ * <DocsLinkTo title="Foundation/Colors">See Colors Documentation</DocsLinkTo>
+ *
+ * <DocsLinkTo title={ComponentStories.default.title}>Component Docs</DocsLinkTo>
+ *
+ * <DocsLinkTo title="Components/Button" className="custom-link">
+ *   Button Documentation
+ * </DocsLinkTo>
+ * ```
+ */
 export const DocsLinkTo: React.FC<DocsLinkToProps> = ({ title, children, ...rest }) => {
   const [href, setHref] = useState('/');
 

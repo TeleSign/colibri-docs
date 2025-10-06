@@ -3,6 +3,33 @@ import { customElement, property, query, queryAssignedElements } from 'lit/decor
 import { FormDemoStyles } from './FormDemo.styles';
 import '@/_storybook/components/CodeBlock';
 
+/**
+ * A Lit-based web component for demonstrating form components with live output preview and code snippets
+ *
+ * Note: This is a Lit-based web component for use in story files (.stories.tsx), not a React component.
+ * Can be used in: TSX story files (Lit template rendering)
+ *
+ * @example
+ * ```typescript
+ * import { html } from 'lit';
+ * import '@/_storybook/components/FormDemo';
+ *
+ * export const FormExample = () => html`
+ *   <form-demo
+ *     form-id="example-form"
+ *     output-id="example-output"
+ *     title="Contact Form"
+ *     form-description="A simple contact form example"
+ *     code-snippet="const formData = new FormData(form);"
+ *   >
+ *     <form slot="form">
+ *       <input type="text" name="name" placeholder="Name" />
+ *       <button type="submit">Submit</button>
+ *     </form>
+ *   </form-demo>
+ * `;
+ * ```
+ */
 @customElement('form-demo')
 export class FormDemo extends LitElement {
   static styles = [FormDemoStyles];
