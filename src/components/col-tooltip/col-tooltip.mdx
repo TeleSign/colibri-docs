@@ -8,20 +8,20 @@ import * as ColTooltipStories from './col-tooltip.stories';
 <div className="col-doc__wrapper">
   <div className="col-doc__container">
     <Title>Tooltip</Title>
-    Tooltips display additional information upon hover or focus. The information included should be contextual, helpful, and nonessential while providing that extra ability to communicate and give clarity to a user.
+    Tooltips display additional information upon hover, focus, or optionally click. The information included should be contextual, helpful, and nonessential while providing that extra ability to communicate and give clarity to a user.
 
     <Subtitle>Table of contents</Subtitle>
     - [How to use it](#how-to-use-it)
       - [Installation](#installation)
       - [Content](#content)
-      - [Alignment](#alignment)
+      - [Interaction Modes](#interaction-modes)
     - [When to use it](#when-to-use-it)
     - [Component preview](#component-preview)
       - [Basic Tooltip](#basic-tooltip)
-      - [Singleline Tooltip with Hover action](#singleline-tooltip-with-hover-action)
-      - [Multiline Tooltip with Click action](#multiline-tooltip-with-click-action)
-      - [Singleline Tooltip with Keyboard actions](#singleline-tooltip-with-keyboard-actions)
-      - [Multiline Tooltip with large paragraph to show](#multiline-tooltip-with-large-paragraph-to-show)
+      - [Singleline Tooltip](#singleline-tooltip)
+      - [Keyboard Accessibility](#keyboard-accessibility)
+      - [Multiline Tooltip with large text](#multiline-tooltip-with-large-text)
+      - [Click-to-Toggle Tooltip](#click-to-toggle-tooltip)
     - [Properties](#properties)
     - [Accessibility](#accessibility)
     - [Interact with the component](#interact-with-the-component)
@@ -58,15 +58,28 @@ import * as ColTooltipStories from './col-tooltip.stories';
     - Keep tooltips short and concise, no longer than a sentence or two.
     - Should not contain required information essential for a user to complete their task since a tooltip is not persistent.
 
-    ### Alignment
+    ### Interaction Modes
 
-    **Mouse**
+    The tooltip component supports three interaction modes that can work together:
 
-    Tooltips are triggered when the mouse hovers over or focuses on the UI trigger. The tooltip persists as long as the mouse remains over the active container or the UI trigger. The tooltip is dismissed by hovering away or moving focus to another element. Definition tooltip can additionally be activated on click or enter and dismissed by clicking outside of active container or UI element.
+    **Hover (Mouse)**
 
-    **Keyboard**
+    Tooltips are triggered when the mouse hovers over the UI trigger. The tooltip persists as long as the mouse remains over the active container or the UI trigger. The tooltip is dismissed by hovering away from the element.
 
-    Users can trigger a tooltip by focusing on element. Additionally, a definition tooltip can be triggered by using the `enter` key. A tooltip dismissible by use of the `escape` key.
+    **Focus (Keyboard)**
+
+    Users can trigger a tooltip by focusing on the trigger element (using Tab key). The tooltip can also be triggered by pressing the `Enter` key when focused. A tooltip is dismissible by use of the `Escape` key or by moving focus to another element (blur).
+
+    **Click (Optional)**
+
+    When the `showonclick` property is set to `true`, the tooltip can be toggled by clicking the trigger element. This is particularly useful for:
+    - Touch devices where hover is not available
+    - When the trigger element has no other primary click action
+    - Providing an alternative interaction method for users who prefer clicking
+
+    <Callout variant="warning" icon="⚠️">
+      When using `showonclick`, ensure the trigger element does not have a conflicting primary click action. By default, tooltips use hover and focus only (`showonclick="false"`)
+    </Callout>
 
 
     ## When to use it
@@ -103,17 +116,17 @@ import * as ColTooltipStories from './col-tooltip.stories';
 
     <Canvas of={ColTooltipStories.SinglelineTooltipHover} />
 
-    ### Multiline Tooltip with Click action
-
-    <Canvas of={ColTooltipStories.MultilineTooltipClick} />
-
     ### Singleline Tooltip with Keyboard actions
 
-    <Canvas of={ColTooltipStories.SinglelineTooltipKeyboard} />
+    <Canvas of={ColTooltipStories.KeyboardAccessibility} />
 
     ### Multiline Tooltip with large paragraph to show
 
     <Canvas of={ColTooltipStories.MultilineTooltipLargeText} />
+
+    ### Click-to-Toggle Tooltip
+
+    <Canvas of={ColTooltipStories.ClickToToggle} />
 
     ## Properties
 
@@ -123,8 +136,9 @@ import * as ColTooltipStories from './col-tooltip.stories';
 
     Considerations of the tooltip:
     - The position will change automatically when the size of the tooltip does not fit in the window.
-    - By default the width will be 200px when the multiline property is true.
-    - The positions are case sensitive, it will only render `top`, `right`, `left` or `bottom`.
+    - By default the width will be 300px when the multiline property is true.
+    - The component supports 12 positions from FloatingUI: `top`, `top-start`, `top-end`, `bottom`, `bottom-start`, `bottom-end`, `left`, `left-start`, `left-end`, `right`, `right-start`, `right-end`.
+    - Click-to-toggle behavior can be enabled via the `showonclick` property for touch devices or when the trigger has no other primary click action.
 
     ## Interact with the component
     To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ColTooltipStories.default.title} story="default">Default</LinkTo> section.

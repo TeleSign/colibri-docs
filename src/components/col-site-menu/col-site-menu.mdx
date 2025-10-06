@@ -171,9 +171,18 @@ import * as ColSiteMenuStories from './col-site-menu.stories';
 
     <Canvas className='col-doc__canvas--with-background' of={ColSiteMenuStories.ButtonExampleSelected} />
 
+
     #### Disabled State
 
     <Canvas of={ColSiteMenuStories.ButtonExampleDisabled} />
+
+    #### With Tooltip
+
+    <Callout variant="info" icon="ℹ️">
+      The `label` property provides an optional way to display button labels as tooltips when the site menu is collapsed. When provided, the button is automatically wrapped with a `col-tooltip` that appears on hover. For more details on tooltip configuration, see the [Tooltip documentation](./?path=/docs/overlays-tooltip--overview).
+    </Callout>
+
+    <Canvas of={ColSiteMenuStories.ButtonExampleWithTooltip} />
 
 
     #### Key Implementation Details
@@ -184,8 +193,15 @@ import * as ColSiteMenuStories from './col-site-menu.stories';
     - **General Slot** - Typically contains a `col-icon` for visual representation
     - **Context Integration** - Automatically updates selection state based on Site Menu context
 
+    **Tooltip Integration:**
+    - **Optional Labels** - Use the `label` property to display tooltips when collapsed
+    - **Automatic Wrapping** - Buttons with labels are wrapped in `col-tooltip` components
+    - **Context-Aware** - Tooltips are disabled when the site menu is open
+    - **Seamless Experience** - Provides helpful context without interfering with navigation
+
+
     **Accessibility features:**
-    - **`aria-label`** - Descriptive label for screen readers. Defaults to "Navigation action" if not provided
+    - **`aria-label`** - Descriptive label for screen readers. Defaults to "Navigation action" if not provided, or uses the `label` property value if `aria-label` is not explicitly set
     - **`aria-pressed`** - Automatically managed to reflect selection state
     - **Keyboard Focus** - Fully focusable and operable via keyboard inputs
 
@@ -394,7 +410,7 @@ import * as ColSiteMenuStories from './col-site-menu.stories';
 
     ### `col-site-menu-button` properties
 
-    <ArgTypes of={ColSiteMenuStories} include="^(action-id|selected|aria-label|disabled)$" />
+    <ArgTypes of={ColSiteMenuStories} include="^(action-id|selected|aria-label|label|disabled)$" />
 
     ### `col-site-menu-submenu` properties
 
