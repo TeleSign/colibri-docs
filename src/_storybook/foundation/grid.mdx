@@ -1,6 +1,7 @@
 import React from 'react';
 import { Meta, Title, Subtitle, Source, Unstyled } from '@storybook/blocks';
-import { Callout, Container } from '../components';
+import GridMeta from '@/components/col-grid/col-grid.stories'
+import { Callout, Container, DocsLinkTo } from '../components';
 import {
   GRID_COLUMNS,
   GRID_ROWS,
@@ -30,7 +31,7 @@ import {
       </div>
 
       <Callout variant="info">
-        **Looking for the component approach?** Check out the [col-grid component documentation](/docs/atoms-grid--overview)
+        **Looking for the component approach?** Check out the <DocsLinkTo title={GridMeta.title}>Grid Component</DocsLinkTo>
         for a more declarative way to build grid layouts with the same underlying utilities.
       </Callout>
 

@@ -1,5 +1,7 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title, Description } from '@storybook/blocks';
 import LinkTo from '@storybook/addon-links/react';
+import ColGroupMeta from '@/components/col-group/col-group.stories'
+import { DocsLinkTo } from '@/_storybook/components';
 import * as ColCheckboxButtonStories from './col-checkbox-button.stories';
 
 <Meta of={ColCheckboxButtonStories} />
@@ -72,7 +74,7 @@ import * as ColCheckboxButtonStories from './col-checkbox-button.stories';
     <Canvas className="col-doc__canvas--with-background" of={ColCheckboxButtonStories.WithIcon} />
 
     <h3>Checkbox Button Group with ColGroup</h3>
-    <p>See the [Col Group](/docs/atoms-col-group--overview) documentation.</p>
+    <p>See the <DocsLinkTo title={ColGroupMeta.title}>ColGroup</DocsLinkTo> documentation.</p>
     <Canvas className="col-doc__canvas--with-background" of={ColCheckboxButtonStories.GroupCheckbox} />
 
 

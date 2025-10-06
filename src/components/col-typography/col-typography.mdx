@@ -1,6 +1,6 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title, Typeset } from '@storybook/blocks';
 import LinkTo from '@storybook/addon-links/react';
-import { Callout } from '@/_storybook/components';
+import { Callout, DocsLinkTo } from '@/_storybook/components';
 import * as ColTypographyStories from './col-typography.stories';
 
 <Meta of={ColTypographyStories} />
@@ -13,7 +13,7 @@ export const SampleText = 'Lorem ipsum dolor sit amet';
     The Colibri Typography component provides consistent text styling across the application, with multiple variants, sizes, and states to match different design contexts.
 
     <Callout variant="info" icon="ℹ️">
-      For details on the core font families used by the Colibri Design System, please refer to the [Foundation Typography documentation](/docs/foundation-typography--overview#font-families).
+      For details on the core font families used by the Colibri Design System, please refer to the <DocsLinkTo title='Foundation/Typography'>Foundation Typography documentation</DocsLinkTo>.
     </Callout>
 
     <Subtitle>Table of contents</Subtitle>

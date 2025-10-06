@@ -1,6 +1,7 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
 import LinkTo from '@storybook/addon-links/react';
-import { Callout } from '@/_storybook/components';
+import { Callout, DocsLinkTo } from '@/_storybook/components';
+import ColGroupMeta from '@/components/col-group/col-group.stories';
 import * as ColRadioButtonStories from './col-radio-button.stories';
 
 <Meta of={ColRadioButtonStories} />
@@ -116,7 +117,7 @@ import * as ColRadioButtonStories from './col-radio-button.stories';
 
     <h4>Radio Button Group with ColGroup</h4>
     <p>Multiple radio buttons working together as a group using the ColGroup component for better organization.</p>
-    <p>See the [Col Group](/docs/layouts-group--overview) documentation.</p>
+    <p>See the <DocsLinkTo title={ColGroupMeta.title} >Col Group</DocsLinkTo> documentation.</p>
     <Canvas className="col-doc__canvas--with-background" of={ColRadioButtonStories.GroupRadioWithColGroup} />
 
     <Subtitle>Icons</Subtitle>

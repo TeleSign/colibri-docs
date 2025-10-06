@@ -1,6 +1,6 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
 import LinkTo from '@storybook/addon-links/react';
-import { Callout } from '@/_storybook/components';
+import { Callout, DocsLinkTo } from '@/_storybook/components';
 import * as ColGridStories from './col-grid.stories';
 
 <Meta of={ColGridStories} />
@@ -11,7 +11,7 @@ import * as ColGridStories from './col-grid.stories';
     The Colibri Grid system provides powerful layout capabilities with responsive design, flexible spacing, and semantic grid areas. It includes both container (`col-grid`) and item (`col-grid-item`) components for building complex, adaptive layouts.
 
     <Callout variant="info" icon="ℹ️">
-      For details on the foundational grid utilities and CSS classes, please refer to the [Foundation Grid documentation](/docs/foundation-grid--overview).
+        For details on the foundational grid utilities and CSS classes, please refer to the <DocsLinkTo title='Foundation/Grid'>Foundation Grid documentation</DocsLinkTo>.
     </Callout>
 
     <Subtitle>Component vs Utility Approach</Subtitle>
