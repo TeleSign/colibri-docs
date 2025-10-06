@@ -1,8 +1,9 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
-import * as stories from './col-text-area.stories';
-import { Callout } from '../../_storybook/components';
+import LinkTo from '@storybook/addon-links/react';
+import { Callout } from '@/_storybook/components';
+import * as TextAreaStories from './col-text-area.stories';
 
-<Meta of={stories} />
+<Meta of={TextAreaStories} />
 
 <div className="col-doc__wrapper">
   <div className="col-doc__container">
@@ -73,32 +74,32 @@ import { Callout } from '../../_storybook/components';
     <div>
       The most fundamental text area requires only a `label` to identify its purpose.
     </div>
-    <Canvas of={stories.Default} />
+    <Canvas of={TextAreaStories.Default} />
 
     ### With Sub-Label
     <div>
       Use the `sub-label` property to display additional, non-critical information directly next to the main label. This is often used for marking fields as "(Optional)".
     </div>
-    <Canvas of={stories.WithSubLabel} />
+    <Canvas of={TextAreaStories.WithSubLabel} />
 
     ### With Helper Text
     <div>
      The `helper` property provides instructional text that appears below the input, guiding the user on the expected data format or purpose.
     </div>
-    <Canvas of={stories.WithHelper} />
+    <Canvas of={TextAreaStories.WithHelper} />
 
     ### With Character Count
     <div>
       Set the `char-count` property to enforce a maximum length. The component will display a running count and prevent further input once the limit is reached.
     </div>
-    <Canvas of={stories.WithCharacterCount} />
+    <Canvas of={TextAreaStories.WithCharacterCount} />
 
     ### With Custom ID
 
     <div>
       This example demonstrates how to provide a custom ID for better form integration and accessibility.
     </div>
-    <Canvas of={stories.WithCustomId} />
+    <Canvas of={TextAreaStories.WithCustomId} />
 
   </div>
 </div>
@@ -116,7 +117,7 @@ import { Callout } from '../../_storybook/components';
   Use the `disabled` property to render the field non-interactive. This is useful for preventing
   user input when a field is not applicable.
 </div>
-<Canvas of={stories.Disabled} />
+<Canvas of={TextAreaStories.Disabled} />
 
 ### Readonly
 
@@ -124,7 +125,7 @@ import { Callout } from '../../_storybook/components';
   The `readonly` property allows the field to display a value that cannot be edited by the user, but
   can still be selected and copied.
 </div>
-<Canvas of={stories.ReadOnly} />
+<Canvas of={TextAreaStories.ReadOnly} />
 
 ### Error
 
@@ -132,7 +133,7 @@ import { Callout } from '../../_storybook/components';
   The `error` property visually marks the field as invalid and displays an error message. This is
   typically set in response to failed validation.
 </div>
-<Canvas of={stories.Error} />
+<Canvas of={TextAreaStories.Error} />
 
 ## Form Integration
 
@@ -161,12 +162,12 @@ The component automatically associates with HTML forms using the `name` attribut
 #### Required
 
 <div>Add the `required` property to ensure the field must be filled before form submission.</div>
-<Canvas of={stories.Required} />
+<Canvas of={TextAreaStories.Required} />
 
 #### Minimum Length
 
 <div>Use the `min-length` property to enforce a minimum number of characters.</div>
-<Canvas of={stories.WithMinLength} />
+<Canvas of={TextAreaStories.WithMinLength} />
 
 #### Custom Validation Message
 
@@ -174,7 +175,7 @@ The component automatically associates with HTML forms using the `name` attribut
   You can provide a custom error message using the `validation-message` property, which will be
   shown when the field is invalid.
 </div>
-<Canvas of={stories.WithCustomValidationMessage} />
+<Canvas of={TextAreaStories.WithCustomValidationMessage} />
 
 #### Custom Validation Timing
 
@@ -182,7 +183,7 @@ The component automatically associates with HTML forms using the `name` attribut
   Control when validation occurs by setting the `validation-timing` property to `blur` (default) or
   `input`.
 </div>
-<Canvas of={stories.WithCustomValidationTiming} />
+<Canvas of={TextAreaStories.WithCustomValidationTiming} />
 
 ### Interactive Form Example
 
@@ -194,9 +195,9 @@ The component automatically associates with HTML forms using the `name` attribut
 <Callout variant="info" icon="ℹ️">
   This preview shows the form structure and styling excluding the form submission and reset
   functionality. For the **full interactive experience** with working form submission, reset, and
-  validation, visit the [Canvas tab](/story/molecules-text-area--interactive-form-example).
+  validation, visit the <LinkTo title={TextAreaStories.default.title} story="interactive-form-example">Canvas tab</LinkTo>.
 </Callout>
-<Canvas of={stories.InteractiveFormExample} />
+<Canvas of={TextAreaStories.InteractiveFormExample} />
 
 ## Accessibility
 
@@ -224,8 +225,8 @@ The component automatically associates with HTML forms using the `name` attribut
 
 ## Properties
 
-<ArgTypes of={stories} />
+<ArgTypes of={TextAreaStories} />
 
 ## Interact with the component
 
-To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/molecules-text-area--default) section.
+To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={TextAreaStories.default.title} story="default">Default</LinkTo> section.

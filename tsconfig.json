@@ -29,8 +29,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@root/*": ["./*"]
-    },
+    }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.mdx"],
   "exclude": ["node_modules", "dist"]
 }

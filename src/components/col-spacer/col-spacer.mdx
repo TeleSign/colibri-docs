@@ -1,6 +1,7 @@
 import { Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
+import { Callout } from '@/_storybook/components';
 import * as ColSpacerStories from './col-spacer.stories';
-import { Callout } from '../../_storybook/components';
 
 <Meta of={ColSpacerStories} />
 
@@ -167,7 +168,7 @@ import { Callout } from '../../_storybook/components';
     <Canvas of={ColSpacerStories.MultipleSpacers} />
 
     ## Interact with the component
-    To see all spacer examples and use cases, navigate to the [Default](/story/atoms-spacer--default) section.
+    To see all spacer examples and use cases, navigate to the <LinkTo title={ColSpacerStories.default.title} story="default">Default</LinkTo> section.
 
   </div>
 </div>

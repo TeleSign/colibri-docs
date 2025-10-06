@@ -1,6 +1,7 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
+import { Callout } from '@/_storybook/components';
 import * as ColGroupStories from './col-group.stories';
-import { Callout } from '../../_storybook/components';
 
 <Meta of={ColGroupStories} />
 
@@ -156,6 +157,6 @@ import { Callout } from '../../_storybook/components';
     - Complex nested groups should maintain a logical structure
 
     ## Interact with the component
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-group--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ColGroupStories.default.title} story="default">Default</LinkTo> section.
   </div>
 </div>

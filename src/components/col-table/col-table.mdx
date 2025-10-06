@@ -1,6 +1,7 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
+import { Callout } from '@/_storybook/components';
 import * as ColTableStories from './col-table.stories';
-import { Callout } from '../../_storybook/components';
 
 <Meta of={ColTableStories} />
 
@@ -335,7 +336,7 @@ import { Callout } from '../../_storybook/components';
     | `Enter` | Activate buttons or links within cells |
 
     <Subtitle>Interact with the component</Subtitle>
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/organisms-table--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ColTableStories.default.title} story="default">Default</LinkTo> section.
 
   </div>
 </div>

@@ -1,6 +1,8 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
 import * as BannerStories from './col-banner.stories';
-import { Callout } from '../../_storybook/components';
+import { Callout } from '@/_storybook/components';
+import IconStoriesMeta from '@/components/col-icon/col-icon.stories';
 
 <Meta of={BannerStories} />
 
@@ -73,7 +75,7 @@ import { Callout } from '../../_storybook/components';
       You can click on the "Show code" button in the bottom-right section of the following code snippets to see how to use the component.
     </Callout>
     <Callout  variant="info" icon="ℹ️">
-      You can check out the `ColIcon` icons for each variant in the [All Icons](/story/atoms-icons--all-icons) section.
+      You can check out the `ColIcon` icons for each variant in the <LinkTo title={IconStoriesMeta.title} story="all-icons">All Icons</LinkTo> section.
     </Callout>
 
     ### Default Banner
@@ -135,7 +137,7 @@ import { Callout } from '../../_storybook/components';
 
     ## Interact with the component
 
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-banner--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={BannerStories.default.title} story="default">Default</LinkTo> section.
 
   </div>
 </div>

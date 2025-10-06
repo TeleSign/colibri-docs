@@ -1,6 +1,7 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
+import { Callout } from '@/_storybook/components';
 import * as stories from './col-tag.stories';
-import { Callout } from '../../_storybook/components';
 
 <Meta of={stories} />
 
@@ -158,7 +159,7 @@ import { Callout } from '../../_storybook/components';
 
     ## Interact with the component
 
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-tag--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={stories.default.title} story="default">Default</LinkTo> section.
 
   </div>
 </div>

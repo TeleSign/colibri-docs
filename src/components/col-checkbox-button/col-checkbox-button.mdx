@@ -1,4 +1,5 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title, Description } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
 import * as ColCheckboxButtonStories from './col-checkbox-button.stories';
 
 <Meta of={ColCheckboxButtonStories} />
@@ -91,7 +92,7 @@ import * as ColCheckboxButtonStories from './col-checkbox-button.stories';
     - Provides appropriate visual states (checked, unchecked, disabled)
 
     ## Interact with the component
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-checkbox-button--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ColCheckboxButtonStories.default.title} story="default">Default</LinkTo> section.
 
   </div>
 </div>

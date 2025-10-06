@@ -1,6 +1,7 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
+import { Callout } from '@/_storybook/components';
 import * as ColRadioButtonStories from './col-radio-button.stories';
-import { Callout } from '../../_storybook/components';
 
 <Meta of={ColRadioButtonStories} />
 
@@ -115,7 +116,7 @@ import { Callout } from '../../_storybook/components';
 
     <h4>Radio Button Group with ColGroup</h4>
     <p>Multiple radio buttons working together as a group using the ColGroup component for better organization.</p>
-    <p>See the [Col Group](/docs/atoms-group--overview) documentation.</p>
+    <p>See the [Col Group](/docs/layouts-group--overview) documentation.</p>
     <Canvas className="col-doc__canvas--with-background" of={ColRadioButtonStories.GroupRadioWithColGroup} />
 
     <Subtitle>Icons</Subtitle>
@@ -140,7 +141,7 @@ import { Callout } from '../../_storybook/components';
     <ArgTypes of={ColRadioButtonStories} />
 
     <Subtitle>Interact with the component</Subtitle>
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-radio-button--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ColRadioButtonStories.default.title} story="default">Default</LinkTo> section.
 
   </div>
 </div>

@@ -1,4 +1,5 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
 import * as ColStatusStories from './col-status.stories';
 
 <Meta of={ColStatusStories} />
@@ -81,7 +82,7 @@ import * as ColStatusStories from './col-status.stories';
     <ArgTypes of={ColStatusStories} />
 
     <Subtitle>Interact with the component</Subtitle>
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-status--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ColStatusStories.default.title} story="default">Default</LinkTo> section.
 
   </div>
 </div>

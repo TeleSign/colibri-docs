@@ -1,6 +1,7 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
+import { Callout } from '@/_storybook/components';
 import * as ColRadioStories from './col-radio.stories';
-import { Callout } from '../../_storybook/components';
 
 <Meta of={ColRadioStories} />
 
@@ -101,7 +102,7 @@ import { Callout } from '../../_storybook/components';
     <ArgTypes of={ColRadioStories} />
 
     <Subtitle>Interact with the component</Subtitle>
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-radio--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ColRadioStories.default.title} story="default">Default</LinkTo> section.
 
   </div>
 </div>

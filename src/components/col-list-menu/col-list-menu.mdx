@@ -1,12 +1,13 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
-import * as stories from './col-list-menu.stories';
-import { Callout } from '../../_storybook/components';
+import LinkTo from '@storybook/addon-links/react';
+import { Callout } from '@/_storybook/components';
+import * as ListItemStories from './col-list-menu.stories';
 
-<Meta of={stories} />
+<Meta of={ListItemStories} />
 
 <div className="col-doc__wrapper">
   <div className="col-doc__container">
-    <Title>ColListMenu</Title>
+    <Title>List Menu</Title>
     The `col-list-menu` is composed of items containing primary and supplemental actions, represented by icons and text.
 
     <Callout variant="info" icon="ℹ️">
@@ -90,7 +91,7 @@ import { Callout } from '../../_storybook/components';
 
     ### Basic Usage
     The most basic usage of `col-list-menu` is to show a small group of options
-    <Canvas className="col-doc__canvas--with-background" of={stories.Default} />
+    <Canvas className="col-doc__canvas--with-background" of={ListItemStories.Default} />
 
     <Callout variant="info" icon="ℹ️">
       **Selection handling**:
@@ -130,7 +131,7 @@ import { Callout } from '../../_storybook/components';
 
     ### Option Grouping
     `col-list-menu` may want to group options, for that purpose, the `col-list-menu-item` has a `variant` property which can be set to `label`
-    <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuWithLabelItems} />
+    <Canvas className="col-doc__canvas--with-background" of={ListItemStories.ListMenuWithLabelItems} />
 
     ### Navigation Lists
     `col-list-menu`s are also commonly used for navigation, linking to internal and external resources. We've used our standardized [navigation properties](#properties), but here's an example with links that open in new tabs.
@@ -139,25 +140,25 @@ import { Callout } from '../../_storybook/components';
       Remember, when using a `col-list-menu` for navigation, you **must** set the `role="menu"` on the `<col-list-menu>` element.
     </Callout>
 
-    <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuWithNavigation} />
+    <Canvas className="col-doc__canvas--with-background" of={ListItemStories.ListMenuWithNavigation} />
 
     #### Using ColIcon
     `col-list-menu-item`s may include ColIcons to visually aid with the option description
-    <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuItemsWithIcons} />
+    <Canvas className="col-doc__canvas--with-background" of={ListItemStories.ListMenuItemsWithIcons} />
 
     ### Using ColCheckbox
     `col-list-menu-item`s may require additional selection input components like ColCheckbox
 
-    <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuCheckbox} />
+    <Canvas className="col-doc__canvas--with-background" of={ListItemStories.ListMenuCheckbox} />
 
     If the `col-list-menu` has `multiselectable` attribute, then the list will allow for multiple items to be selected
 
-    <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuCheckboxWithMultiSelect} />
+    <Canvas className="col-doc__canvas--with-background" of={ListItemStories.ListMenuCheckboxWithMultiSelect} />
 
     ### Using ColRadio
     ColRadio can also be used with `col-list-menu-item`, be careful not to add `multiselectable` as this would be very confusing user experience since by default, radio components are meant to be used when only one option should be selected.
 
-    <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuRadio} />
+    <Canvas className="col-doc__canvas--with-background" of={ListItemStories.ListMenuRadio} />
 
 ## Slots
 
@@ -174,7 +175,7 @@ import { Callout } from '../../_storybook/components';
 
     * The `default` slot is where we want to make sure we add the `<col-list-menu-item>` to represent the options in the `col-list-menu`.
 
-    <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuSlots} />
+    <Canvas className="col-doc__canvas--with-background" of={ListItemStories.ListMenuSlots} />
 
     ### ColListMenuItem Slots
 
@@ -192,14 +193,14 @@ import { Callout } from '../../_storybook/components';
     * The `default` slot is the content for the `col-list-menu-item` itself.
 
     <Callout variant='info' icon='ℹ️'>
-      When using a ColButton in the `list-menu-item-slot`, make sure you add the necessary code to capture the events. To see sample code, please open the "Show code" option; or view <a href="http://localhost:6006/?path=/story/molecules-listmenu--list-menu-item-slots">the story</a> for an interactive example.
+      When using a ColButton in the `list-menu-item-slot`, make sure you add the necessary code to capture the events. To see sample code, please open the "Show code" option; or view <LinkTo title={ListItemStories.default.title} story="list-menu-item-slots">the story</LinkTo> for an interactive example.
     </Callout>
 
-    <Canvas className="col-doc__canvas--with-background" of={stories.ListMenuItemSlots} />
+    <Canvas className="col-doc__canvas--with-background" of={ListItemStories.ListMenuItemSlots} />
 
     ## Properties
 
-    <ArgTypes of={stories} />
+    <ArgTypes of={ListItemStories} />
 
     ## Accessibility
 
@@ -259,7 +260,7 @@ import { Callout } from '../../_storybook/components';
 
     ## Interact with the component
 
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/molecules-list-menu--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ListItemStories.default.title} story="default">Default</LinkTo> section.
 
   </div>
 </div>

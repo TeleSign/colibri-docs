@@ -1,6 +1,7 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
+import { Callout } from '@/_storybook/components';
 import * as ColToolbarStories from './col-toolbar.stories';
-import { Callout } from '../../_storybook/components';
 
 <Meta of={ColToolbarStories} />
 
@@ -295,7 +296,7 @@ import { Callout } from '../../_storybook/components';
     </div>
 
     <Callout variant="info" icon="📋">
-      **Explore comprehensive examples** including application headers, data table toolbars, form actions, and mobile interfaces in the [Complex Toolbars story](/story/atoms-toolbar--complex-toolbars). These examples demonstrate practical applications with full responsive behavior and detailed implementation patterns.
+      **Explore comprehensive examples** including application headers, data table toolbars, form actions, and mobile interfaces in the <LinkTo title={ColToolbarStories.default.title} story="complex-toolbars">Complex Toolbars story</LinkTo>. These examples demonstrate practical applications with full responsive behavior and detailed implementation patterns.
     </Callout>
 
     **Application Header:**
@@ -312,7 +313,7 @@ import { Callout } from '../../_storybook/components';
     <ArgTypes of={ColToolbarStories} />
 
     ## Interact with the component
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-toolbar--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ColToolbarStories.default.title} story="default">Default</LinkTo> section.
 
   </div>
 </div>

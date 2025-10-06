@@ -1,4 +1,5 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
 import * as ColAvatarStories from './col-avatar.stories';
 
 <Meta of={ColAvatarStories} />
@@ -57,7 +58,7 @@ import * as ColAvatarStories from './col-avatar.stories';
     <ArgTypes of={ColAvatarStories} />
 
     <Subtitle>Interact with the component</Subtitle>
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-avatar--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ColAvatarStories.default.title} story="default">Default</LinkTo> section.
 
   </div>
 </div>

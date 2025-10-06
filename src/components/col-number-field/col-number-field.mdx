@@ -1,6 +1,7 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
+import { Callout } from '@/_storybook/components';
 import * as stories from './col-number-field.stories';
-import { Callout } from '../../_storybook/components';
 
 <Meta of={stories} />
 
@@ -441,7 +442,7 @@ import { Callout } from '../../_storybook/components';
       This example demonstrates how the `col-number-field` component works within a real HTML form, including validation, form submission, and data handling.
     </div>
     <Callout variant="info" icon="ℹ️">
-      This preview shows the form structure and styling excluding the form submission and reset functionality. For the **full interactive experience** with working form submission, reset, and validation, visit the [Canvas tab](/story/molecules-number-field--interactive-form-example).
+      This preview shows the form structure and styling excluding the form submission and reset functionality. For the **full interactive experience** with working form submission, reset, and validation, visit the <LinkTo title={stories.default.title} story="interactive-form-example">Canvas tab</LinkTo>.
     </Callout>
     <Canvas of={stories.InteractiveFormExample} />
 
@@ -533,6 +534,6 @@ import { Callout } from '../../_storybook/components';
     <ArgTypes of={stories} />
 
     ## Interact with the component
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/molecules-number-field--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={stories.default.title} story="default">Default</LinkTo> section.
   </div>
 </div>

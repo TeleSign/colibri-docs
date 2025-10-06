@@ -1,4 +1,5 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
 import * as ColButtonStories from './col-button.stories';
 
 <Meta of={ColButtonStories} />
@@ -70,7 +71,7 @@ import * as ColButtonStories from './col-button.stories';
     <ArgTypes of={ColButtonStories} />
 
     <Subtitle>Interact with the component</Subtitle>
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-button--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ColButtonStories.default.title} story="default">Default</LinkTo> section.
 
   </div>
 </div>

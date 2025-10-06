@@ -1,8 +1,9 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
-import * as stories from './col-text-field.stories';
-import { Callout } from '../../_storybook/components';
+import LinkTo from '@storybook/addon-links/react';
+import { Callout } from '@/_storybook/components';
+import * as TextFieldStories from './col-text-field.stories';
 
-<Meta of={stories} />
+<Meta of={TextFieldStories} />
 
 <div className="col-doc__wrapper">
   <div className="col-doc__container">
@@ -78,44 +79,44 @@ import { Callout } from '../../_storybook/components';
     <div>
       The most fundamental text field requires only a `label` to identify its purpose.
     </div>
-    <Canvas of={stories.WithLabel} />
+    <Canvas of={TextFieldStories.WithLabel} />
 
     ### With Sub-Label
     <div>
       Use the `sub-label` property to display additional, non-critical information directly next to the main label. This is often used for marking fields as "(Optional)".
     </div>
-    <Canvas of={stories.WithSubLabel} />
+    <Canvas of={TextFieldStories.WithSubLabel} />
 
     ### With Helper Text
     <div>
      The `helper` property provides instructional text that appears below the input, guiding the user on the expected data format or purpose.
     </div>
-    <Canvas of={stories.WithHelper} />
+    <Canvas of={TextFieldStories.WithHelper} />
 
     ### With Icon
     <div>
       An icon can be placed inside the text field by adding a `col-icon` component to the `icon` slot. This enhances context, for example, by indicating a search field.
     </div>
-    <Canvas of={stories.WithIcon} />
+    <Canvas of={TextFieldStories.WithIcon} />
 
     ### With Character Count
     <div>
       Set the `char-count` property to enforce a maximum length. The component will display a running count and prevent further input once the limit is reached.
     </div>
-    <Canvas of={stories.WithCharacterCount} />
+    <Canvas of={TextFieldStories.WithCharacterCount} />
 
     ### Password Input
     <div>
       To create a secure password field that masks input, set `input-type="password"`.
     </div>
-    <Canvas of={stories.Password} />
+    <Canvas of={TextFieldStories.Password} />
 
     ### With Custom ID
 
     <div>
       This example demonstrates how to provide a custom ID for better form integration and accessibility.
     </div>
-    <Canvas of={stories.WithCustomId} />
+    <Canvas of={TextFieldStories.WithCustomId} />
 
     ### Variants
     <div>
@@ -127,13 +128,13 @@ import { Callout } from '../../_storybook/components';
     <div>
       The outline variant displays a full border around the input field, providing clear visual boundaries. This is the default variant and is ideal for most form contexts where clear field separation is important.
     </div>
-    <Canvas of={stories.Variants} />
+    <Canvas of={TextFieldStories.Variants} />
 
     #### Plain Variant
     <div>
       The plain variant removes the border entirely, creating a minimal appearance. The field only shows a border when focused or in error states, providing a cleaner, more modern look.
     </div>
-    <Canvas of={stories.PlainVariant} />
+    <Canvas of={TextFieldStories.PlainVariant} />
   </div>
 </div>
 
@@ -147,19 +148,19 @@ import { Callout } from '../../_storybook/components';
 <div>
   Use the `disabled` property to render the field non-interactive. This is useful for preventing user input when a field is not applicable.
 </div>
-<Canvas of={stories.Disabled} />
+<Canvas of={TextFieldStories.Disabled} />
 
 ### Readonly
 <div>
   The `readonly` property allows the field to display a value that cannot be edited by the user, but can still be selected and copied.
 </div>
-<Canvas of={stories.ReadOnly} />
+<Canvas of={TextFieldStories.ReadOnly} />
 
 ### Error
 <div>
   The `error` property visually marks the field as invalid and displays an error message. This is typically set in response to failed validation.
 </div>
-<Canvas of={stories.Error} />
+<Canvas of={TextFieldStories.Error} />
 
 ## Form Integration
 
@@ -198,40 +199,40 @@ The component automatically associates with HTML forms using the `name` attribut
 <div>
   Add the `required` property to ensure the field must be filled before form submission.
 </div>
-<Canvas of={stories.Required} />
+<Canvas of={TextFieldStories.Required} />
 
 #### Minimum Length
 <div>
   Use the `min-length` property to enforce a minimum number of characters.
 </div>
-<Canvas of={stories.WithMinLength} />
+<Canvas of={TextFieldStories.WithMinLength} />
 
 #### Pattern Matching
 <div>
   The `pattern` property allows you to specify a regular expression that the input value must match.
 </div>
-<Canvas of={stories.WithPattern} />
+<Canvas of={TextFieldStories.WithPattern} />
 
 #### Custom Validation Message
 <div>
   You can provide a custom error message using the `validation-message` property, which will be shown when the field is invalid.
 </div>
-<Canvas of={stories.WithCustomValidationMessage} />
+<Canvas of={TextFieldStories.WithCustomValidationMessage} />
 
 #### Custom Validation Timing
 <div>
   Control when validation occurs by setting the `validation-timing` property to `blur` (default) or `input`.
 </div>
-<Canvas of={stories.WithCustomValidationTiming} />
+<Canvas of={TextFieldStories.WithCustomValidationTiming} />
 
 ### Interactive Form Example
 <div>
   The following example demonstrates how multiple `col-text-field` components work together in a native HTML form. It shows real-time validation, form submission, and reset behavior, with the submitted data displayed below the form.
 </div>
 <Callout variant="info" icon="ℹ️">
-  This preview shows the form structure and styling excluding the form submission and reset functionality. For the **full interactive experience** with working form submission, reset, and validation, visit the [Canvas tab](/story/molecules-text-field--interactive-form-example).
+  This preview shows the form structure and styling excluding the form submission and reset functionality. For the **full interactive experience** with working form submission, reset, and validation, visit the <LinkTo title={TextFieldStories.default.title} story="interactive-form-example">Canvas tab</LinkTo>.
 </Callout>
-<Canvas of={stories.InteractiveFormExample} />
+<Canvas of={TextFieldStories.InteractiveFormExample} />
 
 ## Accessibility
 
@@ -259,7 +260,7 @@ The component automatically associates with HTML forms using the `name` attribut
 
 ## Properties
 
-<ArgTypes of={stories} />
+<ArgTypes of={TextFieldStories} />
 
 ## Interact with the component
-To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/molecules-text-field--default) section.
+To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={TextFieldStories.default.title} story="default">Default</LinkTo> section.

@@ -1,4 +1,5 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
 import * as ColBadgeStories from './col-badge.stories';
 
 <Meta of={ColBadgeStories} />
@@ -66,7 +67,7 @@ import * as ColBadgeStories from './col-badge.stories';
     <ArgTypes of={ColBadgeStories} />
 
     <Subtitle>Interact with the component</Subtitle>
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-badge--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ColBadgeStories.default.title} story="default">Default</LinkTo> section.
 
   </div>
 </div>

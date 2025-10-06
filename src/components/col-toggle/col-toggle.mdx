@@ -1,6 +1,7 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title, Description } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
+import { Callout } from '@/_storybook/components';
 import * as ToggleStories from './col-toggle.stories';
-import { Callout } from '../../_storybook/components';
 
 <Meta of={ToggleStories} />
 
@@ -98,7 +99,7 @@ import { Callout } from '../../_storybook/components';
     ## Implementation within a Form
     The following example demonstrates how multiple `col-toggle` components work together in a native HTML form. It shows real-time form submission, and reset behavior, with the submitted data displayed below the form.
     <Callout variant="info" icon="ℹ️">
-      For the **full interactive experience** with working form submission, reset, and validation, visit the [Canvas tab](/story/atoms-toggle--interactive-form-example).
+      For the **full interactive experience** with working form submission, reset, and validation, visit the <LinkTo title={ToggleStories.default.title} story="interactive-form-example">Canvas tab</LinkTo>.
     </Callout>
     <Canvas of={ToggleStories.InteractiveFormExample} />
 
@@ -116,7 +117,7 @@ import { Callout } from '../../_storybook/components';
 
 
     ## Interact with the component
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-toggle--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ToggleStories.default.title} story="default">Default</LinkTo> section.
 
   </div>
 </div>

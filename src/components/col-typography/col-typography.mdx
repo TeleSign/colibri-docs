@@ -1,6 +1,7 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title, Typeset } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
+import { Callout } from '@/_storybook/components';
 import * as ColTypographyStories from './col-typography.stories';
-import { Callout } from '../../_storybook/components';
 
 <Meta of={ColTypographyStories} />
 
@@ -269,7 +270,7 @@ export const SampleText = 'Lorem ipsum dolor sit amet';
     **Basic version:**
 
     <Callout variant="tip" icon="💡">
-      Try hovering over the link to observe its hover state. For a detailed understanding of the link handling, please visit the [Link](/story/atoms-typography--link) section.
+      Try hovering over the link to observe its hover state. For a detailed understanding of the link handling, please visit the <LinkTo title={ColTypographyStories.default.title} story="link">Link</LinkTo> section.
     </Callout>
     <Canvas of={ColTypographyStories.Link} />
 
@@ -371,7 +372,7 @@ export const SampleText = 'Lorem ipsum dolor sit amet';
     <ArgTypes of={ColTypographyStories} />
 
     ## Interact with the component
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-typography--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ColTypographyStories.default.title} story="default">Default</LinkTo> section.
 
   </div>
 </div>
