@@ -48,4 +48,5 @@ export const HTML_BOOLEAN_ATTRIBUTES = [
   'clearable',
   'selectable',
   'scroller',
+  'showonclick',
 ];
