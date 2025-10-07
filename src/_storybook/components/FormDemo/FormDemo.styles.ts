@@ -34,7 +34,9 @@ export const FormDemoStyles = css`
     flex: 1 1 0;
   }
 
-  .form-container {
+  /* Apply layout to the top-level slotted form container */
+  ::slotted(.form-container),
+  ::slotted(form) {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
