@@ -1,4 +1,5 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
 import * as ColModalFooterStories from './col-modal-footer.stories';
 
 <Meta of={ColModalFooterStories} />
@@ -155,7 +156,7 @@ import * as ColModalFooterStories from './col-modal-footer.stories';
     - **Loading States**: Use the description area to show loading or processing messages
 
     <Subtitle>Interact with the component</Subtitle>
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/molecules-modal-footer--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ColModalFooterStories.default.title} story="default">Default</LinkTo> section.
 
   </div>
 </div>

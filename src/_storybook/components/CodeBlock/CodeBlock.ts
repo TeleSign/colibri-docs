@@ -4,6 +4,27 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { CodeBlockStyles } from './CodeBlock.styles';
 import { highlightJsStyles } from './highlight-js.styles';
 
+/**
+ * A Lit-based web component for displaying syntax-highlighted code blocks in Storybook documentation
+ *
+ * Note: This is a Lit-based web component for use in story files (.stories.tsx), not a React component.
+ * Can be used in: TSX story files (Lit template rendering)
+ *
+ * @example
+ * ```typescript
+ * import { html } from 'lit';
+ * import '@/_storybook/components/CodeBlock';
+ *
+ * export const CodeExample = () => html`
+ *   <code-block
+ *     code="const example = 'Hello World';"
+ *     language="javascript"
+ *     code-theme="dark"
+ *     title="JavaScript Example"
+ *   ></code-block>
+ * `;
+ * ```
+ */
 @customElement('code-block')
 export class CodeBlock extends LitElement {
   static styles = [CodeBlockStyles, highlightJsStyles];

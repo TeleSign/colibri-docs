@@ -1,6 +1,7 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
+import { Callout } from '@/_storybook/components';
 import * as ColBreadcrumbStories from './col-breadcrumb.stories';
-import { Callout } from '../../_storybook/components';
 
 <Meta of={ColBreadcrumbStories} />
 
@@ -171,7 +172,7 @@ import { Callout } from '../../_storybook/components';
       While less common in breadcrumbs, items can be configured as download links using standard link attributes through the internal LinkHandler by setting the `downloadable` property to `true`, and the `filename` property to the desired filename.
     </div>
     <Callout variant="info" icon="ℹ️">
-      This preview shows the download functionality of the current page in csv format. For the **full interactive experience** with working download of a file, visit the [Canvas tab](/story/atoms-breadcrumb--download-link).
+      This preview shows the download functionality of the current page in csv format. For the **full interactive experience** with working download of a file, visit the <LinkTo title={ColBreadcrumbStories.default.title} story="download-link">Canvas tab</LinkTo>.
     </Callout>
 
     <Canvas of={ColBreadcrumbStories.DownloadLink} />
@@ -236,6 +237,6 @@ import { Callout } from '../../_storybook/components';
     - Use descriptive, concise text for each breadcrumb item
 
     ## Interact with the component
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Defaut](/story/atoms-breadcrumb--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ColBreadcrumbStories.default.title} story="default">Default</LinkTo> section.
   </div>
 </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, Title, Subtitle, Unstyled } from '@storybook/blocks';
 import { themes } from '@telesign/colibri';
-import { Callout, Card, Container, Component } from '../components';
+import { Callout, Card, Container, Component, DocsLinkTo } from '../components';
 import { useStorybookTheme } from '../hooks/useStorybookTheme';
 
 <Meta title="Foundation/Themes" />
@@ -62,7 +62,7 @@ import { useStorybookTheme } from '../hooks/useStorybookTheme';
 
       ### Available Themes
       <div>
-        Colibri currently provides {Object.keys(themes).length} built-in themes, each designed for different use cases and aesthetic preferences. The themes include main color categories such as <strong>primary</strong>, <strong>accent</strong>, <strong>neutral</strong>, <strong>success</strong>, <strong>danger</strong>, <strong>warning</strong>, and <strong>information</strong> colors. For a complete overview of all available colors and their usage, please refer to the [Colors](/docs/foundation-colors--overview)  section in the documentation.
+        Colibri currently provides {Object.keys(themes).length} built-in themes, each designed for different use cases and aesthetic preferences. The themes include main color categories such as <strong>primary</strong>, <strong>accent</strong>, <strong>neutral</strong>, <strong>success</strong>, <strong>danger</strong>, <strong>warning</strong>, and <strong>information</strong> colors. For a complete overview of all available colors and their usage, please refer to the <DocsLinkTo title='Foundation/Colors'>Colors</DocsLinkTo> section in the documentation.
       </div>
 
       <div className="theme-preview-container">
@@ -244,7 +244,7 @@ import { useStorybookTheme } from '../hooks/useStorybookTheme';
       </div>
 
       <Callout variant="tip" icon="💡">
-        When setting tokens, you must <strong>use the correct token path structure</strong>. For instance, to modify the <strong>primary</strong> color, use the path <code>colors.ui.primary</code>. The <code>--col-</code> prefix is automatically appended to token names. For a complete reference of available colors and their corresponding token paths, see the [Colors](/docs/foundation-colors--overview) documentation. For other tokens like <strong>spacing</strong>, <strong>typography</strong>, and more, refer to their respective sections in the <strong>Foundation</strong> section of the documentation.
+        When setting tokens, you must <strong>use the correct token path structure</strong>. For instance, to modify the <strong>primary</strong> color, use the path <code>colors.ui.primary</code>. The <code>--col-</code> prefix is automatically appended to token names. For a complete reference of available colors and their corresponding token paths, see the <DocsLinkTo title='Foundation/Colors'>Colors</DocsLinkTo> documentation. For other tokens like <strong>spacing</strong>, <strong>typography</strong>, and more, refer to their respective sections in the <strong>Foundation</strong> section of the documentation.
       </Callout>
 
       #### HTML Files

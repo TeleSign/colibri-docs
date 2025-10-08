@@ -28,7 +28,7 @@ type StoryArgs = {
 const withWhiteBackground = (Story: any) => html` <div style="background: #fff;">${Story()}</div> `;
 
 const meta = {
-  title: 'Actions/ListMenu',
+  title: 'Actions/List Menu',
   component: 'col-list-menu',
   parameters: {
     docs: {

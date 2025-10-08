@@ -6,3 +6,4 @@ export { FormDemo } from './FormDemo';
 export { LayoutDemo } from './LayoutDemo';
 export { MainLogo } from './MainLogo';
 export { CodeBlock, highlightJsStyles } from './CodeBlock';
+export { DocsLinkTo } from './DocsLinkTo';

@@ -1,5 +1,6 @@
 import { ArgTypes, Canvas, Meta, Title, Subtitle, Source, Unstyled } from '@storybook/blocks';
-import { Callout, Container } from '../../_storybook/components';
+import LinkTo from '@storybook/addon-links/react';
+import { Callout, Container } from '@/_storybook/components';
 import * as ColSiteMenuStories from './col-site-menu.stories';
 
 <Meta of={ColSiteMenuStories} />
@@ -107,7 +108,7 @@ import * as ColSiteMenuStories from './col-site-menu.stories';
     The default configuration demonstrates core functionality with dashboard and analytics navigation, featuring multi-level content organization and single-open accordion behavior.
 
     <Callout variant="info" icon="ℹ️">
-     To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/organisms-site-menu--default) section.
+     To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ColSiteMenuStories.default.title} story="default">Default</LinkTo> section.
     </Callout>
 
     ### Interactive example
@@ -115,7 +116,7 @@ import * as ColSiteMenuStories from './col-site-menu.stories';
     Explore all configuration options including color variants, state management, and responsive behavior. Use the controls panel to test different combinations.
 
     <Callout variant="info" icon="ℹ️">
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Interactive Example](/story/organisms-site-menu--interactive-example) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ColSiteMenuStories.default.title} story="interactive-example">Interactive Example</LinkTo> section.
     </Callout>
 
     ## Child Components
@@ -577,6 +578,6 @@ import * as ColSiteMenuStories from './col-site-menu.stories';
 
     ## Interact with the component
 
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/organisms-site-menu--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ColSiteMenuStories.default.title} story="default">Default</LinkTo> section.
   </div>
 </div>

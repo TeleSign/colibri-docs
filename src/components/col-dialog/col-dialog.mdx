@@ -1,6 +1,7 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
+import { Callout } from '@/_storybook/components';
 import * as ColDialogStories from './col-dialog.stories';
-import { Callout } from '../../_storybook/components';
 
 <Meta of={ColDialogStories} />
 
@@ -216,7 +217,7 @@ import { Callout } from '../../_storybook/components';
     ```
 
     <Subtitle>Interact with the component</Subtitle>
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/organisms-dialog--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ColDialogStories.default.title} story="default">Default</LinkTo> section.
 
   </div>
 </div>

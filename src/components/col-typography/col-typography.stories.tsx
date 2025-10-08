@@ -1,6 +1,7 @@
 import { html, nothing } from 'lit';
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
 import { formatCodeString } from '@/utils';
+import { icons } from '@telesign/colibri-icons/icons-list';
 import {
   TYPOGRAPHY_VARIANTS,
   TYPOGRAPHY_ELEMENTS,
@@ -207,7 +208,7 @@ const meta = {
     iconSize: {
       control: 'text',
       description:
-        'Size of the slotted icon, mapping to the `size` prop of the `Icon` component. Only applicable for `heading`, `subheading`, and `label` variants. Refer to [Icon documentation](./?path=/docs/atoms-icons--overview) for more details. **Storybook control only, not a component prop.**',
+        'Size of the slotted icon, mapping to the `size` prop of the `Icon` component. Only applicable for `heading`, `subheading`, and `label` variants. **Storybook control only, not a component prop.**',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '12px' },
@@ -216,9 +217,10 @@ const meta = {
       if: { arg: 'iconVisible' },
     },
     iconName: {
-      control: 'text',
+      control: 'select',
+      options: icons,
       description:
-        'Name of the slotted icon mapping to the `name` prop of the `Icon` component. Only applicable for `heading`, `subheading`, and `label` variants. Refer to [Icon documentation](./?path=/docs/atoms-icons--overview) for more details. **Storybook control only, not a component prop.**',
+        'Name of the slotted icon mapping to the `name` prop of the `Icon` component. Only applicable for `heading`, `subheading`, and `label` variants. **Storybook control only, not a component prop.**',
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'info-circle' },

@@ -1,6 +1,7 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
+import { Callout } from '@/_storybook/components';
 import * as ColDropdownStories from './col-dropdown.stories';
-import { Callout } from '../../_storybook/components';
 
 <Meta of={ColDropdownStories} />
 
@@ -192,7 +193,7 @@ import { Callout } from '../../_storybook/components';
     <ArgTypes of={ColDropdownStories}/>
 
     ## Interact with the component
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-dropdown--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ColDropdownStories.default.title} story="default">Default</LinkTo> section.
 
   </div>
 </div>

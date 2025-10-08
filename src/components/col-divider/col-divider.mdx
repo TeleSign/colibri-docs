@@ -1,4 +1,5 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
 import * as ColDividerStories from './col-divider.stories';
 
 <Meta of={ColDividerStories} />
@@ -56,7 +57,7 @@ import * as ColDividerStories from './col-divider.stories';
     <ArgTypes of={ColDividerStories} />
 
     <Subtitle>Interact with the component</Subtitle>
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-divider--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ColDividerStories.default.title} story="default">Default</LinkTo> section.
 
   </div>
 </div>

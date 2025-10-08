@@ -1,6 +1,7 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
+import { Callout, DocsLinkTo } from '@/_storybook/components';
 import * as ColGridStories from './col-grid.stories';
-import { Callout } from '../../_storybook/components';
 
 <Meta of={ColGridStories} />
 
@@ -10,7 +11,7 @@ import { Callout } from '../../_storybook/components';
     The Colibri Grid system provides powerful layout capabilities with responsive design, flexible spacing, and semantic grid areas. It includes both container (`col-grid`) and item (`col-grid-item`) components for building complex, adaptive layouts.
 
     <Callout variant="info" icon="ℹ️">
-      For details on the foundational grid utilities and CSS classes, please refer to the [Foundation Grid documentation](/docs/foundation-grid--overview).
+        For details on the foundational grid utilities and CSS classes, please refer to the <DocsLinkTo title='Foundation/Grid'>Foundation Grid documentation</DocsLinkTo>.
     </Callout>
 
     <Subtitle>Component vs Utility Approach</Subtitle>
@@ -358,7 +359,7 @@ import { Callout } from '../../_storybook/components';
     </div>
 
     <Callout variant="info" icon="📋">
-      **Explore comprehensive examples** including e-commerce homepages, application dashboards, news layouts, and social media feeds in the [Complex Layout story](/story/atoms-grid--complex-layout). These examples demonstrate practical applications with full responsive behavior and detailed implementation notes.
+      **Explore comprehensive examples** including e-commerce homepages, application dashboards, news layouts, and social media feeds in the <LinkTo title={ColGridStories.default.title} story="complex-layout">Complex Layout story</LinkTo>. These examples demonstrate practical applications with full responsive behavior and detailed implementation notes.
     </Callout>
 
     ## Properties
@@ -392,7 +393,7 @@ import { Callout } from '../../_storybook/components';
     <ArgTypes of={ColGridStories} include="^(aria-label|aria-labelledby)$" />
 
     ## Interact with the component
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/atoms-grid--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ColGridStories.default.title} story="default">Default</LinkTo> section.
 
   </div>
 </div>

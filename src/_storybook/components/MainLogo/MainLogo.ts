@@ -7,6 +7,32 @@ import { MainLogoStyles } from './MainLogo.styles';
 export type LogoName = 'telesign' | 'massive' | 'bics';
 export type LogoColor = 'primary' | 'dark' | 'light';
 
+/**
+ * A Lit-based web component for displaying brand logos with theme-aware switching and dynamic sizing
+ *
+ * Note: This is a Lit-based web component for use in story files (.stories.tsx), not a React component.
+ * Can be used in: TSX story files (Lit template rendering) and MDX files
+ *
+ * @example
+ * ```typescript
+ * // In TSX story files
+ * import { html } from 'lit';
+ * import '@/_storybook/components/MainLogo';
+ *
+ * export const LogoExample = () => html`
+ *   <main-logo name="telesign" color="primary" size="200px"></main-logo>
+ *   <main-logo name="massive" size="150x50"></main-logo>
+ * `;
+ * ```
+ *
+ * @example
+ * ```mdx
+ * // In MDX files
+ * import '@/_storybook/components/MainLogo';
+ *
+ * <main-logo name="bics" color="dark" size="180px"></main-logo>
+ * ```
+ */
 @customElement('main-logo')
 export class MainLogo extends LitElement {
   static styles = MainLogoStyles;

@@ -1,8 +1,9 @@
 import { Meta, Title, Subtitle, Canvas, ArgTypes } from '@storybook/blocks';
-import * as stories from './col-search-bar.stories';
-import { Callout } from '../../_storybook/components';
+import LinkTo from '@storybook/addon-links/react';
+import { Callout } from '@/_storybook/components';
+import * as SearchBarStories from './col-search-bar.stories';
 
-<Meta of={stories} />
+<Meta of={SearchBarStories} />
 
 <div className="col-doc__wrapper">
   <div className="col-doc__container">
@@ -43,7 +44,7 @@ import { Callout } from '../../_storybook/components';
 
       // Option 2: Register all Colibri components
       registerAllComponents();
-      ```    
+      ```
 
   4. Use it in your HTML:
       ```html
@@ -60,7 +61,7 @@ import { Callout } from '../../_storybook/components';
 
   ## Component preview
 
-  <Canvas of={stories.Default} />
+  <Canvas of={SearchBarStories.Default} />
 
   ## Modes
 
@@ -69,14 +70,14 @@ import { Callout } from '../../_storybook/components';
   <div>
     This mode shows the text field inline and visible at all times.
   </div>
-  <Canvas of={stories.Static} />
+  <Canvas of={SearchBarStories.Static} />
 
   ### Expanded mode
 
   <div>
     This mode starts collapsed and expands only when the user interacts with the toggle button.
   </div>
-  <Canvas of={stories.Expanded} />
+  <Canvas of={SearchBarStories.Expanded} />
 
   ## States
 
@@ -85,14 +86,14 @@ import { Callout } from '../../_storybook/components';
   <div>
     Use the `disabled` attribute to disable user interaction.
   </div>
-  <Canvas of={stories.Disabled} />
+  <Canvas of={SearchBarStories.Disabled} />
 
   ### Loading
 
   <div>
     Use the `loading` attribute to show a loading spinner inside the input.
   </div>
-  <Canvas of={stories.Loading} />
+  <Canvas of={SearchBarStories.Loading} />
 
   ## Event handling
 
@@ -104,7 +105,7 @@ import { Callout } from '../../_storybook/components';
     @search-input=${(e) => console.log('Search value:', e.detail.value)}
   ></col-search-bar>
   ```
-  
+
   ## Interactive Form Example
 
   The `col-search-bar` component integrates seamlessly with native HTML forms through the use of the `name` attribute, enabling its value to be included automatically in form submissions.
@@ -117,10 +118,10 @@ import { Callout } from '../../_storybook/components';
   - Full integration with native HTML form behaviors such as submission and reset.
 
   <Callout variant="info" icon="ℹ️">
-    For a fully interactive experience with working form submission, reset, and validation, visit the [Canvas tab](/story/molecules-search-bar--interactive-form-example).
+    For a fully interactive experience with working form submission, reset, and validation, visit the <LinkTo title={SearchBarStories.default.title} story="interactive-form-example">Canvas tab</LinkTo>.
   </Callout>
 
-  <Canvas of={stories.InteractiveFormExample} />
+  <Canvas of={SearchBarStories.InteractiveFormExample} />
 
 
   ## Accessibility
@@ -148,10 +149,10 @@ import { Callout } from '../../_storybook/components';
 
   ## Properties
 
-  <ArgTypes of={stories} />
+  <ArgTypes of={SearchBarStories} />
 
   ## Interact with the component
 
-  You can test input behavior, mode switching, and event handling in the [Canvas](/story/molecules-search-bar--default) section.
+  To interact with the component, test actions, and verify accessibility compliance, you can visit the <LinkTo title={SearchBarStories.default.title} story="default">Default</LinkTo> section.
   </div>
 </div>

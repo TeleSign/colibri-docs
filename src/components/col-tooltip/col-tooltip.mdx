@@ -1,6 +1,7 @@
 import { ArgTypes, Canvas, Meta, Subtitle, Title } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
+import { Callout } from '@/_storybook/components';
 import * as ColTooltipStories from './col-tooltip.stories';
-import { Callout } from '../../_storybook/components';
 
 <Meta of={ColTooltipStories} />
 
@@ -140,7 +141,7 @@ import { Callout } from '../../_storybook/components';
     - Click-to-toggle behavior can be enabled via the `showonclick` property for touch devices or when the trigger has no other primary click action.
 
     ## Interact with the component
-    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the [Default](/story/overlays-tooltip--default) section.
+    To interact with the component, test actions, verify accessibility compliance, and perform visual testing, navigate to the <LinkTo title={ColTooltipStories.default.title} story="default">Default</LinkTo> section.
 
   </div>
 </div>
