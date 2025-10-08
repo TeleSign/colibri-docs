@@ -49,7 +49,7 @@ export const MainLogoStyles = css`
   /* Theme-specific colors - set via JavaScript */
   :host([data-current-theme='telesign']) {
     --logo-telesign-color: #011ac2;
-    --logo-primary-color: #ffffff; /* To be updated to the #011ac2 once UX/UI team fixes the tokens issue */
+    --logo-primary-color: #011ac2;
     --logo-dark-color: #ffffff;
     --logo-light-color: #011ac2;
   }
