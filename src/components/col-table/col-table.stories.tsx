@@ -703,7 +703,7 @@ export const FullFeaturedExample: Story = {
                       Actions
                       <col-icon name="chevron-down" size="12"></col-icon>
                     </col-button>
-                    <col-list-menu slot="content">
+                    <col-list-menu>
                       <col-list-menu-item>View Details</col-list-menu-item>
                       <col-list-menu-item>Edit Order</col-list-menu-item>
                       <col-list-menu-item>Send Invoice</col-list-menu-item>
