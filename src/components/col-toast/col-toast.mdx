@@ -1,0 +1,127 @@
+import { Meta, Title, Subtitle, Canvas, Story, ArgTypes } from '@storybook/blocks';
+import * as stories from './col-toast.stories';
+
+<Meta of={stories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+
+    <Title>Toast</Title>
+
+    The `col-toast` component displays temporary notifications to inform users about recent events, states, or actions.
+
+    <Subtitle>Table of contents</Subtitle>
+    - [How to use it](#how-to-use-it)
+    - [When to use it](#when-to-use-it)
+    - [Component preview](#component-preview)
+    - [Variants](#variants)
+    - [Types](#types)
+    - [Using slots](#using-slots)
+    - [Custom duration](#custom-duration)
+    - [Accessibility](#accessibility)
+    - [Properties](#properties)
+
+    ## How to use it
+
+    1. Install the package:
+    ```bash
+    npm install @colibri/colibri-components
+    ```
+
+    2. Import dependencies:
+    ```ts
+    import { registerColibriComponents, ColToast } from '@telesign/colibri';
+    import '@telesign/colibri/styles/styles.css';
+    ```
+
+    3. Register the component:
+    ```typescript
+    // Option 1: Register specific components
+    registerColibriComponents([ColToast]);
+
+    // Option 2: Register all Colibri components
+    registerAllComponents();
+    ```
+
+    4. Use it in your HTML:
+    ```html
+    <col-toast
+      variant="information"
+      type="informative"
+      open
+    >
+      <col-typography variant="subheading" slot="title">Notification</col-typography>
+      <div>This is an informational message.</div>
+    </col-toast>
+    ```
+
+    ## When to use it
+
+    Use `col-toast` to:
+
+    - Show temporary messages that don’t interrupt the user experience.
+    - Alert about errors, warnings, or important information.
+    - Confirm actions with visual feedback.
+
+    ## Component preview
+
+    <Canvas of={stories.InformationDefaultDuration} />
+
+    ## Variants
+
+    Variants control the visual style and icon:
+
+    - **Information**: General informational messages.
+    - **Success**: Confirm successful actions.
+    - **Warning**: Alerts that require attention.
+    - **Danger**: Errors or critical alerts.
+
+    <Canvas of={stories.InformationDefaultDuration} />
+    <Canvas of={stories.Success} />
+    <Canvas  of={stories.Warning}/>
+    <Canvas of={stories.Danger} />
+
+    ## Types
+
+    Control behavior and interaction:
+
+    - **Informative**: Auto-closes after the `duration` seconds.
+    - **Action-close**: Requires user action to close, shows a close button, and can include action buttons.
+
+    <Canvas of={stories.Autoclose} />
+    <Canvas of={stories.InformationDefaultDuration} />
+
+    ## Using slots
+
+    `col-toast` provides several slots for customization:
+
+    - `icon`: Replaces the default icon.
+    - `title`: Short title text.
+    - Default slot: Main content / description.
+
+    Example with all slots used:
+
+    <Canvas of={stories.SlotsExample} />
+
+    ## Custom duration 
+
+    The `duration` property controls how long the toast stays visible (in seconds). It applies mainly to the `informative` type.
+
+    Example custom duration of 10 seconds:
+    <Canvas of={stories.InformationCustomDuration} />
+
+    ## Accessibility
+
+    The component is designed with accessibility in mind:
+
+    - Uses ARIA roles `alert` for `warning` and `danger` variants to ensure urgent announcements.
+    - Uses ARIA role `status` for informational variants for polite screen reader updates.
+    - Supports `aria-live` for dynamic updates.
+    - Close button includes an accessible `aria-label`.
+    - Fully keyboard navigable with support for `Enter` and `Space` keys.
+
+    ## Properties
+
+    <ArgTypes of={stories} />
+  </div>
+</div>
