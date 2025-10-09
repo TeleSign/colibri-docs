@@ -619,6 +619,11 @@ export const FullFeaturedExample: Story = {
     };
 
     return html`
+      <style>
+        col-toolbar::part(toolbar) {
+          padding: 0;
+        }
+      </style>
       <col-table
         max-height="500px"
         min-height="300px"
@@ -627,21 +632,39 @@ export const FullFeaturedExample: Story = {
         @row-selected=${handleRowSelected}
         @all-rows-selected=${handleAllRowsSelected}
       >
-        <div slot="table-header" style="padding: 16px; background: #f5f5f5;">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div>
-              <h3 style="margin: 0;">Order Management</h3>
-              <p style="margin: 8px 0 0 0; color: #666;">Track and manage customer orders</p>
+        <div slot="table-header">
+          <col-toolbar gap="none">
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; gap: 2px"
+            >
+              <col-icon name="file" size="20"></col-icon>
+              <col-typography variant="subheading">
+                Order Management
+                <col-tooltip slot="icon" position="top">
+                  <col-icon name="info-circle" size="14px"></col-icon>
+                  <span slot="tooltip-content">Track and manage customer orders</span>
+                </col-tooltip>
+              </col-typography>
             </div>
-            <div style="display: flex; gap: 8px;">
-              <col-text-field
-                placeholder="Search orders..."
-                size="small"
-                style="width: 200px;"
-              ></col-text-field>
-              <col-button color="primary" size="small">New Order</col-button>
+            <col-spacer></col-spacer>
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; gap: 2px"
+            >
+              <col-group orientation="horizontal" withoutgap>
+                <col-search-bar
+                  placeholder="Type to search..."
+                  mode="static"
+                  custom-width="100%"
+                ></col-search-bar>
+                <col-button size="small">
+                  <col-icon name="filter" size="16px"></col-icon>
+                </col-button>
+                <col-button size="small">
+                  <col-icon name="table" size="16px"></col-icon>
+                </col-button>
+              </col-group>
             </div>
-          </div>
+          </col-toolbar>
         </div>
 
         <col-table-head>
@@ -654,7 +677,7 @@ export const FullFeaturedExample: Story = {
           <col-table-cell header>Actions</col-table-cell>
         </col-table-head>
         <col-table-body>
-          ${[...Array(15)].map(
+          ${[...Array(10)].map(
             (_, i) => html`
               <col-table-row row-index="${i + 1}" ?selectable=${true}>
                 <col-table-cell>ORD-${String(1001 + i).padStart(4, '0')}</col-table-cell>
@@ -693,11 +716,24 @@ export const FullFeaturedExample: Story = {
           )}
         </col-table-body>
 
-        <div slot="table-footer" style="padding: 16px; background: #f5f5f5;">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div style="color: #666;">Showing 1-15 of 100 orders</div>
-            <col-paginator length="7" value="1"></col-paginator>
-          </div>
+        <div slot="table-footer">
+          <col-toolbar gap="none">
+            <col-toolbar gap="small">
+              <span class="text-xs">Items per page</span>
+              <col-select id="items-per-page" value="10" custom-width="60px">
+                <col-list-menu>
+                  <col-list-menu-item value="5">5</col-list-menu-item>
+                  <col-list-menu-item value="10">10</col-list-menu-item>
+                  <col-list-menu-item value="20">20</col-list-menu-item>
+                  <col-list-menu-item value="50">50</col-list-menu-item>
+                  <col-list-menu-item value="100">100</col-list-menu-item>
+                </col-list-menu>
+              </col-select>
+              <col-divider orientation="vertical" style="height: 32px"></col-divider>
+              <span id="items-info" class="text-xs" role="status" aria-live="polite"></span>
+            </col-toolbar>
+            <col-paginator id="paginator" length="4" value="1" align="end"></col-paginator>
+          </col-toolbar>
         </div>
       </col-table>
     `;
