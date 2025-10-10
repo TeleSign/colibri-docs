@@ -20,12 +20,13 @@ import * as stories from './col-toast.stories';
     - [Custom duration](#custom-duration)
     - [Accessibility](#accessibility)
     - [Properties](#properties)
+    - [Interact with the component](#interact-with-the-component)
 
     ## How to use it
 
     1. Install the package:
     ```bash
-    npm install @colibri/colibri-components
+    npm install @telesign/colibri
     ```
 
     2. Import dependencies:
@@ -85,8 +86,8 @@ import * as stories from './col-toast.stories';
 
     Control behavior and interaction:
 
-    - **Informative**: Auto-closes after the `duration` seconds.
-    - **Action-close**: Requires user action to close, shows a close button, and can include action buttons.
+    - **Informative**: Automatically closes after the specified `duration` in seconds (clamped between 3 and 6 seconds).
+    - **Action-close**: Requires manual closing by the user via a close button.
 
     <Canvas of={stories.Autoclose} />
     <Canvas of={stories.InformationDefaultDuration} />
@@ -123,5 +124,9 @@ import * as stories from './col-toast.stories';
     ## Properties
 
     <ArgTypes of={stories} />
+
+    ## Interact with the component
+
+    You can test the toast's behavior, variants, types, and slots interactively in the [Canvas](/story/feedback-toast--interactive-toast-example)  section below.
   </div>
 </div>

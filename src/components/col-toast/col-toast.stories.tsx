@@ -1,7 +1,8 @@
 import type { ColibriStoryMeta, ColibriStory } from '@/types/storybook';
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import { formatCodeString } from '@/utils';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { ColToast } from '@telesign/colibri';
 
 type ColToastArgs = {
   variant: 'information' | 'success' | 'warning' | 'danger';
@@ -9,9 +10,15 @@ type ColToastArgs = {
   duration: number;
   position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
   open: boolean;
+};
+
+type SlotArgs = {
   title?: string;
   default?: string;
+  icon?: string;
 };
+
+type StorybookOnlyArgs = ColToastArgs & SlotArgs;
 
 const meta = {
   title: 'Feedback/Toast',
@@ -76,6 +83,24 @@ const meta = {
         defaultValue: { summary: 'true' },
       },
     },
+    title: {
+      control: { type: 'text' },
+      description: 'Slot `title`: Text shown as the toast title.',
+      table: {
+        category: 'Slots',
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' },
+      },
+    },
+    default: {
+      control: { type: 'text' },
+      description: '`Default slot`: Main body content of the toast.',
+      table: {
+        category: 'Slots',
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' },
+      },
+    },
   },
   args: {
     variant: 'information',
@@ -84,10 +109,10 @@ const meta = {
     title: 'Information',
     default: 'This is an informational message with default duration.',
   },
-} satisfies ColibriStoryMeta<ColToastArgs>;
+} satisfies ColibriStoryMeta<StorybookOnlyArgs>;
 
 export default meta;
-type Story = ColibriStory<ColToastArgs>;
+type Story = ColibriStory<StorybookOnlyArgs>;
 
 const renderToast: Story['render'] = args => html`
   <col-toast
@@ -97,8 +122,13 @@ const renderToast: Story['render'] = args => html`
     position=${ifDefined(args.position)}
     ?open=${args.open}
   >
-    <col-typography variant="subheading" slot="title">${args.title}</col-typography>
-    ${args.default}
+    ${args.icon
+    ? html`<col-icon slot="icon" name=${args.icon}></col-icon>`
+    : nothing}
+    ${args.title
+    ? html`<col-typography variant="subheading" slot="title">${args.title}</col-typography>`
+    : nothing}
+    ${args.default ?? nothing}
   </col-toast>
 `;
 
@@ -114,27 +144,129 @@ export const InformationDefaultDuration: Story = {
 };
 
 export const Autoclose: Story = {
-  render: renderToast,
+  render: args => html`
+    <col-button
+      color="primary"
+      style="padding-bottom:10px;"
+      @click=${() => {
+      const toast = document.getElementById('autoclose') as ColToast;
+      if (toast) {
+        toast.open = true;
+      }
+    }}
+    >
+      Show Toast
+    </col-button>
+    <col-toast
+      id="autoclose"
+      variant=${args.variant}
+      type=${args.type}
+      duration=${ifDefined(args.duration)}
+    >
+      <col-typography variant="subheading" slot="title">${args.title}</col-typography>
+      ${args.default}
+    </col-toast>
+  `,
   args: {
     variant: 'information',
     type: 'informative',
-    open: true,
     title: 'Information',
     default: 'This is an informational message with default duration.',
   },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+<col-button
+  color="primary"
+  style="padding-bottom:10px;"
+  @click={handleClick}
+/>
+<col-toast
+  id="autoclose"
+  variant="information"
+  type="informative"
+>
+<col-typography slot="title" variant="subheading">Information</col-typography>
+  This is an informational message with default duration.
+</col-toast>
+<script>
+  function handleClick() {
+    const toast = document.getElementById('autoclose');
+    if (toast) toast.open = true;
+  }
+</script>
+      `.trim(),
+        language: 'html',
+      },
+    },
+  }
+
 };
 
 export const InformationCustomDuration: Story = {
-  render: renderToast,
+  render: args => html`
+    <col-button
+      color="primary"
+      style="padding-bottom:10px;"
+      @click=${() => {
+      const toast = document.getElementById('customDuration') as ColToast;
+      if (toast) {
+        toast.open = true;
+      }
+    }}
+    >
+      Show Toast
+    </col-button>
+    <col-toast
+      id="customDuration"
+      variant=${args.variant}
+      type=${args.type}
+      duration=${ifDefined(args.duration)}
+    >
+      <col-typography variant="subheading" slot="title">${args.title}</col-typography>
+      ${args.default}
+    </col-toast>
+  `,
   args: {
     variant: 'information',
     type: 'informative',
     duration: 10,
-    open: true,
     title: 'Information',
     default: 'This message will stay visible for 10 seconds.',
   },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+<col-button
+  color="primary"
+  style="padding-bottom:10px;"
+  @click={handleClick}
+/>
+<col-toast
+  id="customDuration"
+  variant="information"
+  type="informative"
+  duration="10"
+>
+<col-typography slot="title" variant="subheading">Information</col-typography>
+ This message will stay visible for 10 seconds.
+</col-toast>
+<script>
+  function handleClick() {
+    const toast = document.getElementById('customDuration');
+    if (toast) toast.open = true;
+  }
+</script>
+      `.trim(),
+        language: 'html',
+      },
+    },
+  }
+
 };
+
 
 export const Success: Story = {
   render: renderToast,
@@ -172,7 +304,7 @@ export const Danger: Story = {
 export const SlotsExample: Story = {
   render: args => html`
     <col-toast variant=${args.variant} type=${args.type} ?open=${args.open}>
-      <col-icon slot="icon" name="check-circle-fill"></col-icon>
+      <col-icon slot="icon" name="info-circle"></col-icon>
       <col-typography slot="title" variant="subheading">${args.title}</col-typography>
       ${args.default}
     </col-toast>
@@ -183,5 +315,76 @@ export const SlotsExample: Story = {
     open: true,
     title: 'Custom Icon & Title',
     default: 'This toast uses all named slots plus default content.',
+  },
+};
+
+export const InteractiveToastExample: Story = {
+  name: 'Interactive Toast Example',
+  args: {
+    variant: 'information',
+    type: 'action-close',
+    duration: 4,
+    position: 'bottom-right',
+    open: false,
+    title: 'Interactive Toast',
+    default: 'You can control this toast using the controls and open it manually.',
+  },
+  render: (args) => {
+    const toastId = 'interactive-toast-example';
+
+    return html`
+      <col-button
+        color="primary"
+        style="padding-bottom:10px;"
+        @click=${() => {
+        const toast = document.getElementById(toastId) as ColToast;
+        if (toast) {
+          toast.open = true;
+        }
+      }}
+      >
+        Show Toast
+      </col-button>
+
+      <col-toast
+        id=${toastId}
+        variant=${args.variant}
+        type=${args.type}
+        duration=${args.type === 'informative' ? args.duration : undefined}
+        position=${args.position}
+        ?open=${args.open}
+      >
+        <col-typography slot="title" variant="subheading">${args.title}</col-typography>
+        ${args.default}
+      </col-toast>
+    `;
+  },
+  argTypes: {
+    variant: {
+      control: { type: 'select' },
+      options: ['information', 'success', 'warning', 'danger'],
+    },
+    type: {
+      control: { type: 'select' },
+      options: ['informative', 'action-close'],
+    },
+    duration: {
+      control: { type: 'number', min: 3, max: 10 },
+      if: { arg: 'type', eq: 'informative' },
+    },
+    position: {
+      control: { type: 'select' },
+      options: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
+    },
+    open: {
+      control: false,
+    },
+    title: {
+      control: { type: 'text' },
+    },
+    default: {
+      control: { type: 'text' },
+      name: 'Content',
+    },
   },
 };
