@@ -143,6 +143,38 @@ export const InformationDefaultDuration: Story = {
   },
 };
 
+export const ActionClose: Story = {
+  render: args => html`
+    <col-button
+      color="primary"
+      style="padding-bottom:10px;"
+      @click=${() => {
+      const toast = document.getElementById('action-close') as ColToast;
+      if (toast) {
+        toast.open = true;
+      }
+    }}
+    >
+      Show Toast
+    </col-button>
+    <col-toast
+      id="action-close"
+      variant=${args.variant}
+      type=${args.type}
+    >
+      <col-typography variant="subheading" slot="title">${args.title}</col-typography>
+      ${args.default}
+    </col-toast>
+  `,
+  args: {
+    variant: 'information',
+    type: 'action-close',
+    title: 'Information',
+    default: 'This message requires manual dismissal using the close button.',
+  },
+};
+
+
 export const Autoclose: Story = {
   render: args => html`
     <col-button

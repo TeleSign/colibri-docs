@@ -1,5 +1,6 @@
 import { Meta, Title, Subtitle, Canvas, Story, ArgTypes } from '@storybook/blocks';
 import * as stories from './col-toast.stories';
+import LinkTo from '@storybook/addon-links/react';
 
 <Meta of={stories} />
 
@@ -90,7 +91,7 @@ import * as stories from './col-toast.stories';
     - **Action-close**: Requires manual closing by the user via a close button.
 
     <Canvas of={stories.Autoclose} />
-    <Canvas of={stories.InformationDefaultDuration} />
+    <Canvas of={stories.ActionClose} />
 
     ## Using slots
 
@@ -127,6 +128,6 @@ import * as stories from './col-toast.stories';
 
     ## Interact with the component
 
-    You can test the toast's behavior, variants, types, and slots interactively in the [Canvas](/story/feedback-toast--interactive-toast-example)  section below.
+    You can test the toast's behavior, variants, types, and slots interactively in the <LinkTo title="feedback-toast"  story="interactive-toast-example">Canvas tab</LinkTo> section below.
   </div>
 </div>
