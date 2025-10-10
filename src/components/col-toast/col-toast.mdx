@@ -1,8 +1,8 @@
 import { Meta, Title, Subtitle, Canvas, Story, ArgTypes } from '@storybook/blocks';
-import * as stories from './col-toast.stories';
+import * as ColToastStories from './col-toast.stories';
 import LinkTo from '@storybook/addon-links/react';
 
-<Meta of={stories} />
+<Meta of={ColToastStories} />
 
 <div className="col-doc__wrapper">
   <div className="col-doc__container">
@@ -67,7 +67,7 @@ import LinkTo from '@storybook/addon-links/react';
 
     ## Component preview
 
-    <Canvas of={stories.InformationDefaultDuration} />
+    <Canvas of={ColToastStories.Default} />
 
     ## Variants
 
@@ -78,10 +78,10 @@ import LinkTo from '@storybook/addon-links/react';
     - **Warning**: Alerts that require attention.
     - **Danger**: Errors or critical alerts.
 
-    <Canvas of={stories.InformationDefaultDuration} />
-    <Canvas of={stories.Success} />
-    <Canvas  of={stories.Warning}/>
-    <Canvas of={stories.Danger} />
+    <Canvas of={ColToastStories.Default} />
+    <Canvas of={ColToastStories.Success} />
+    <Canvas  of={ColToastStories.Warning}/>
+    <Canvas of={ColToastStories.Danger} />
 
     ## Types
 
@@ -90,8 +90,8 @@ import LinkTo from '@storybook/addon-links/react';
     - **Informative**: Automatically closes after the specified `duration` in seconds (clamped between 3 and 6 seconds).
     - **Action-close**: Requires manual closing by the user via a close button.
 
-    <Canvas of={stories.Autoclose} />
-    <Canvas of={stories.ActionClose} />
+    <Canvas of={ColToastStories.Autoclose} />
+    <Canvas of={ColToastStories.ActionClose} />
 
     ## Using slots
 
@@ -103,14 +103,14 @@ import LinkTo from '@storybook/addon-links/react';
 
     Example with all slots used:
 
-    <Canvas of={stories.SlotsExample} />
+    <Canvas of={ColToastStories.SlotsExample} />
 
-    ## Custom duration 
+    ## Custom duration
 
     The `duration` property controls how long the toast stays visible (in seconds). It applies mainly to the `informative` type.
 
     Example custom duration of 10 seconds:
-    <Canvas of={stories.InformationCustomDuration} />
+    <Canvas of={ColToastStories.InformationCustomDuration} />
 
     ## Accessibility
 
@@ -124,10 +124,10 @@ import LinkTo from '@storybook/addon-links/react';
 
     ## Properties
 
-    <ArgTypes of={stories} />
+    <ArgTypes of={ColToastStories} />
 
     ## Interact with the component
 
-    You can test the toast's behavior, variants, types, and slots interactively in the <LinkTo title="feedback-toast"  story="interactive-toast-example">Canvas tab</LinkTo> section below.
+    You can test the toast's behavior, variants, types, and slots interactively in the <LinkTo title={ColToastStories.default.title}  story="default">Default</LinkTo> section below.
   </div>
 </div>

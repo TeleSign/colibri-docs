@@ -122,17 +122,15 @@ const renderToast: Story['render'] = args => html`
     position=${ifDefined(args.position)}
     ?open=${args.open}
   >
-    ${args.icon
-    ? html`<col-icon slot="icon" name=${args.icon}></col-icon>`
-    : nothing}
+    ${args.icon ? html`<col-icon slot="icon" name=${args.icon}></col-icon>` : nothing}
     ${args.title
-    ? html`<col-typography variant="subheading" slot="title">${args.title}</col-typography>`
-    : nothing}
+      ? html`<col-typography variant="subheading" slot="title">${args.title}</col-typography>`
+      : nothing}
     ${args.default ?? nothing}
   </col-toast>
 `;
 
-export const InformationDefaultDuration: Story = {
+export const Default: Story = {
   render: renderToast,
   args: {
     variant: 'information',
@@ -149,19 +147,15 @@ export const ActionClose: Story = {
       color="primary"
       style="padding-bottom:10px;"
       @click=${() => {
-      const toast = document.getElementById('action-close') as ColToast;
-      if (toast) {
-        toast.open = true;
-      }
-    }}
+        const toast = document.getElementById('action-close') as ColToast;
+        if (toast) {
+          toast.open = true;
+        }
+      }}
     >
       Show Toast
     </col-button>
-    <col-toast
-      id="action-close"
-      variant=${args.variant}
-      type=${args.type}
-    >
+    <col-toast id="action-close" variant=${args.variant} type=${args.type}>
       <col-typography variant="subheading" slot="title">${args.title}</col-typography>
       ${args.default}
     </col-toast>
@@ -174,18 +168,17 @@ export const ActionClose: Story = {
   },
 };
 
-
 export const Autoclose: Story = {
   render: args => html`
     <col-button
       color="primary"
       style="padding-bottom:10px;"
       @click=${() => {
-      const toast = document.getElementById('autoclose') as ColToast;
-      if (toast) {
-        toast.open = true;
-      }
-    }}
+        const toast = document.getElementById('autoclose') as ColToast;
+        if (toast) {
+          toast.open = true;
+        }
+      }}
     >
       Show Toast
     </col-button>
@@ -232,8 +225,7 @@ export const Autoclose: Story = {
         language: 'html',
       },
     },
-  }
-
+  },
 };
 
 export const InformationCustomDuration: Story = {
@@ -242,11 +234,11 @@ export const InformationCustomDuration: Story = {
       color="primary"
       style="padding-bottom:10px;"
       @click=${() => {
-      const toast = document.getElementById('customDuration') as ColToast;
-      if (toast) {
-        toast.open = true;
-      }
-    }}
+        const toast = document.getElementById('customDuration') as ColToast;
+        if (toast) {
+          toast.open = true;
+        }
+      }}
     >
       Show Toast
     </col-button>
@@ -295,10 +287,8 @@ export const InformationCustomDuration: Story = {
         language: 'html',
       },
     },
-  }
-
+  },
 };
-
 
 export const Success: Story = {
   render: renderToast,
@@ -361,7 +351,7 @@ export const InteractiveToastExample: Story = {
     title: 'Interactive Toast',
     default: 'You can control this toast using the controls and open it manually.',
   },
-  render: (args) => {
+  render: args => {
     const toastId = 'interactive-toast-example';
 
     return html`
@@ -369,11 +359,11 @@ export const InteractiveToastExample: Story = {
         color="primary"
         style="padding-bottom:10px;"
         @click=${() => {
-        const toast = document.getElementById(toastId) as ColToast;
-        if (toast) {
-          toast.open = true;
-        }
-      }}
+          const toast = document.getElementById(toastId) as ColToast;
+          if (toast) {
+            toast.open = true;
+          }
+        }}
       >
         Show Toast
       </col-button>
