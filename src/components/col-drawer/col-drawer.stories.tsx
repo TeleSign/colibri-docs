@@ -275,11 +275,11 @@ export const WithHeaderFooter: Story = {
           ?nofocustrap=${nofocustrap}
           @overlay-click-outside=${onOverlayClickOutside}
         >
-          <col-modal-header
-            slot="header"
-            title="Drawer Title"
-            @on-close=${handleClose}
-          ></col-modal-header>
+          <col-modal-header slot="header" title="Drawer Title" @on-close=${handleClose}>
+            <col-button slot="actions" aria-label="Full screen">
+              <col-icon name="three-dots-vertical" size="16"></col-icon>
+            </col-button>
+          </col-modal-header>
 
           <div>
             <h3>Main Content Area</h3>
@@ -288,9 +288,10 @@ export const WithHeaderFooter: Story = {
             <p>The footer contains action buttons.</p>
           </div>
 
-          <col-modal-footer slot="footer" description="2 items selected">
-            <col-button slot="actions" color="secondary" @click=${handleClose}>Cancel</col-button>
-            <col-button slot="actions" color="primary" @click=${handleClose}>Save</col-button>
+          <col-modal-footer slot="footer" description="This is helper text">
+            <col-button slot="actions-left">Tertiary</col-button>
+            <col-button slot="actions" @click=${handleClose}>Secondary</col-button>
+            <col-button slot="actions" color="primary" @click=${handleClose}>Primary</col-button>
           </col-modal-footer>
         </col-drawer>
       </div>
