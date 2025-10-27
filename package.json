@@ -14,7 +14,7 @@
   "license": "MIT",
   "description": "Colibri Design System - Documentation",
   "dependencies": {
-    "@telesign/colibri": "^0.12.1",
+    "@telesign/colibri": "^0.13.0",
     "@telesign/colibri-icons": "^0.3.10"
   },
   "devDependencies": {
