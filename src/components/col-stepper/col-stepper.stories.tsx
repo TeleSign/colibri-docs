@@ -17,6 +17,10 @@ const meta = {
         transform: formatCodeString,
       },
     },
+    __sb: {
+      display: 'flex',
+      justifyContent: 'center',
+    },
   },
   argTypes: {
     orientation: {
@@ -30,6 +34,7 @@ const meta = {
       },
     },
     ariaLabel: {
+      name: 'aria-label',
       control: 'text',
       description: 'Provides an accessible label for the stepper group.',
       table: {
