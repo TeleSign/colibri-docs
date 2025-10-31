@@ -1,0 +1,123 @@
+import { Meta, Title, Subtitle, Canvas, ArgTypes } from '@storybook/blocks';
+import LinkTo from '@storybook/addon-links/react';
+import * as ColStepperStories from './col-stepper.stories';
+
+<Meta of={ColStepperStories} />
+
+<div className="col-doc__wrapper">
+  <div className="col-doc__container">
+
+  <Title>Stepper</Title>
+  The `col-stepper` component helps users navigate **multi-step processes** by visually indicating **progress, completion,** and **errors**.  
+  This documentation covers its orientations, step states, and behavior.
+
+  <Subtitle>Table of contents</Subtitle>
+  - [How to use it](#how-to-use-it)
+  - [When to use it](#when-to-use-it)
+  - [Component preview](#component-preview)
+  - [Layouts](#layouts)
+  - [Step states and behaviors](#step-states-and-behaviors)
+  - [Accessibility](#accessibility)
+  - [Properties](#properties)
+  - [Interact with the component](#interact-with-the-component)
+
+  ## How to use it
+
+  1. Install the package:
+      ```bash
+      npm install @telesign/colibri
+      ```
+
+  2. Import the dependencies:
+      ```ts
+      import { registerColibriComponents, registerAllComponents, ColStepper, ColStep } from '@telesign/colibri';
+      import '@telesign/colibri/styles/styles.css';
+      ```
+
+  3. Register the components:
+      ```typescript
+      // Option 1: Register specific components
+      registerColibriComponents([ColStepper, ColStep]);
+
+      // Option 2: Register all Colibri components
+      registerAllComponents();
+      ```
+
+  4. Use it in your HTML:
+      ```html
+      <col-stepper orientation="horizontal" aria-label="Step Progress">
+        <col-step step="1" label="Step 1" state="completed" orientation="horizontal" hasconnector></col-step>
+        <col-step step="2" label="Step 2" state="active" orientation="horizontal" hasconnector></col-step>
+        <col-step step="3" label="Step 3" state="pending" orientation="horizontal" hasconnector></col-step>
+        <col-step step="4" label="Step 4" state="error"></col-step>
+      </col-stepper>
+      ```
+
+  ## When to use it
+
+  Use the `col-stepper` component when you need to guide users through **multi-step workflows** such as:
+
+  - Multi-page forms or onboarding sequences  
+  - Order, setup, or registration processes  
+  - Any scenario that requires visual indication of **progress and completion**  
+
+  ## Component preview
+
+  <Canvas of={ColStepperStories.Default} />
+
+  ## Layouts
+
+  ### Horizontal layout
+
+  <div>
+    The default orientation arranges steps from left to right.  
+    Commonly used for wizards or progress trackers at the top of a page.
+  </div>
+  <Canvas of={ColStepperStories.Horizontal} />
+
+  ### Vertical layout
+
+  <div>
+    Steps are arranged from top to bottom.  
+    Ideal for forms or side navigation where vertical space is preferred.
+  </div>
+  <Canvas of={ColStepperStories.Vertical} />
+
+  ### Custom accessible label
+
+  <div>
+    You can provide a custom <code>aria-label</code> to describe the stepper group for assistive technologies.
+  </div>
+  <Canvas of={ColStepperStories.WithCustomLabel} />
+
+  ## Step states and behaviors
+
+  The Stepper can represent multiple **states** for each step:
+
+  - **Pending:** Step not yet reached or completed.
+  - **Active:** Current step the user is on.
+  - **Completed:** Step successfully finished.
+  - **Error:** Step encountered an issue.
+  - **Completed with Error:** Step finished but with an error.
+
+  <Canvas of={ColStepperStories.Default} />
+
+  ## Accessibility
+
+  <div>
+    The `col-stepper` is built with accessibility in mind, ensuring assistive technologies can correctly interpret and navigate the component.
+  </div>
+
+  - **ARIA Roles:** Uses <code>role="group"</code> to represent a collection of steps.  
+  - **ARIA Orientation:** Automatically sets <code>aria-orientation</code> to match layout direction.  
+  - **Labeling:** Accepts a descriptive <code>aria-label</code> to announce the step group’s purpose. 
+
+  ## Properties
+
+  <ArgTypes of={ColStepperStories} />
+
+  ## Interact with the component
+
+  To experiment with orientations and labels, visit the <LinkTo title={ColStepperStories.default.title} story="default">Default</LinkTo> section in the Canvas tab.
+  </div>
+</div>
