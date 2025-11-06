@@ -38,7 +38,7 @@ import { Meta } from '@storybook/blocks';
 ### Guidelines
 
 - Use **camelCase** for prop names.
-- **Boolean props** should be named to reflect true/false nature.
+- **Boolean props** should be named to reflect true/false nature and should start with **is** or **has**.
 - **Event handler props** should start with **on** and describe the action.
 - **Data or value props** should be descriptive and concise.
 - Avoid abbreviations unless they are widely recognized.
@@ -167,11 +167,12 @@ Define when to extend from base classes to keep components consistent and predic
 
 | Base Class | Use When... | Example |
 |------------|------------|---------|
-| **ThemedComponent** | The component is visual or interactive, uses design tokens or theming, but doesn’t handle form values. | ColToast |
+| **ThemedComponent** | Base for all components. Provides theming, design tokens, and shared visual behavior. | ColToast |
 | **FormComponent** | The component manages a `value`, handles selection, or interacts with form-like logic. | ColListMenuItem |
-| **InputFormComponent** | The component is a true input with validation, helper text, and accessibility states. | ColTextArea |
-
----
+| **SelectableFormComponent** | The component can be selected or toggled. | ColToggle, ColCheckboxCard |
+| **InputFormComponent** | The component is input with validation, placeholder, etc. | ColTextArea |
+| **TextInputBase** | The component handles text-based input behavior (pattern validation, char count, clear button, dirty state). | ColNumberField |
+| **AlertComponent** | Use this for components that **display messages or notifications**, with support for **variant, optional title/content/actions, automatic or manual dismissal, and accessible attributes**. | ColBanner |
 
 ### Avoid Extending Higher Layers When Not Needed
 
@@ -182,12 +183,71 @@ Define when to extend from base classes to keep components consistent and predic
 
 ### Guidelines
 
-- Use **ThemedComponent** for UI and style-driven components.  
-- Use **FormComponent** for stateful or selectable items.  
-- Use **InputFormComponent** for input fields with validation.  
+- **All components must extend `ThemedComponent`** — this ensures theming, token access, and shared visual consistency.  
+- Use **FormComponent** for components that manage form-like behavior, including selection and values.  
+- Use **SelectableFormComponent** for components that represent selectable/toggleable states.  
+- Use **InputFormComponent** for inputs that need validation, placeholder, etc.  
+- Use **TextInputBase** for text-based input fields that share logic for clearing, validation, and character counting.  Use **AlertComponent** for components that **display messages or notifications**, supporting **variant, optional title/content/actions, automatic or manual dismissal, and accessibility attributes**.  
+ 
 
 **Rationale:**  
 This layered inheritance model keeps components modular and predictable, ensuring that theming, form behavior, and validation logic remain centralized and reusable.
+
+## When to Create a New Base Layer
+
+Create a new base (or higher-level) component **only when multiple components need to share the same logic or lifecycle behavior**.  
+Typical cases include:
+
+- **Theming and design tokens** (e.g., `ThemedComponent`)  
+- **Form behavior** — value handling, validation, or association (e.g., `FormComponent`)  
+- **Selection or toggling logic** (e.g., `SelectableFormComponent`)  
+- **Reusable input patterns** — labels, placeholders, helper text  
+- **Shared accessibility or event patterns**
+
+## How to Create a New Base Layer
+
+### 1. Extend the Right Abstraction
+Always start from the **lowest suitable base**:
+- Use `ThemedComponent` for token or style management.
+- Use `FormComponent` for form fields or inputs.
+- Use `SelectableFormComponent` or `InputFormComponent` for specialized behavior.
+
+---
+
+### 2. Keep It Abstract and Focused
+A base layer should not render templates or be registered as a custom element.  
+Its purpose is to encapsulate logic that **child components can inherit** — such as property syncing, event dispatching, or lifecycle hooks.  
+Keep responsibilities narrow and reusable; don’t include component-specific logic.
+
+---
+
+### 3. Define a Clear Responsibility and Scope
+Each base component should serve a **single, well-defined purpose**:
+- `ThemedComponent`: theming, CSS tokens, slot detection.  
+- `FormComponent`: value management and form association.  
+- `InputFormComponent`: input validation and text-handling.  
+- `AlertComponent`: standardized notification structure.  
+
+---
+
+### 4. Use Consistent Naming
+Follow the naming convention:
+- Use **PascalCase**.
+- Choose names that reflect behavior, not appearance.  
+  Examples: `FormComponent`, `SelectableFormComponent`, `AlertComponent`.
+
+Avoid generic terms like `BaseComponent` unless it’s truly generic.
+
+---
+
+### 5. Document the Layer
+Every new base class should include a short **documentation block** explaining:
+- Its **purpose** (what it provides and why it exists).
+- Any **required properties or expected behavior**.
+
+This helps maintain consistency and ensures new developers understand the hierarchy.
+
+---
 
 
 # 8. Quick Reference / Summary
@@ -198,24 +258,27 @@ This section summarizes the main naming and structural standards for creating co
 
 ### Component Standards Overview
 
-| Category | Convention | Example |
-|----------|-----------|---------|
-| **Component Names** | PascalCase | ColButton, ColSelect, ColToast |
-| **Props** | camelCase — descriptive and clear | isDisabled, userName, onSubmit |
-| **Boolean Props** | Prefix with is or has | isOpen, hasError, isVisible |
-| **Events** | Prefix with on + action | onChange, onClick, onDismiss |
-| **State Variables** | camelCase — reflect purpose | isLoading, selectedItem, currentPage |
-| **Slots** | Descriptive, lowercase | header, footer, actions, icon |
-| **CSS Parts** | Lowercase, hyphen-separated | part="toast", part="content" |
-| **CSS Classes** | Lowercase with hyphens | .toast-content, .button-primary |
-| **Base Class** | Extend based on functionality | ThemedComponent, FormComponent, InputFormComponent |
+| Category | Convention | Tip | Example |
+|----------|-------------|-----|---------|
+| **Component Names** | PascalCase | Must be unique and descriptive | ColButton, ColSelect, ColToast |
+| **Props** | camelCase | Keep names clear and intuitive | isDisabled, userName, onSubmit |
+| **Boolean Props** | camelCase | Prefix with `is` or `has` | isOpen, hasError, isVisible |
+| **Events** | camelCase | Start with `on` + action | onChange, onClick, onDismiss |
+| **State Variables** | camelCase | Reflects purpose or state meaning | isLoading, selectedItem, currentPage |
+| **Slots** | lowercase | Use short, descriptive names | header, footer, actions, icon |
+| **CSS Parts** | lowercase, hyphen-separated | Match DOM structure | part="toast", part="content" |
+| **CSS Classes** | kebab-case | Semantic, not visual | .toast-content, .button-primary |
+| **Base Class** | PascalCase | Extend by functionality | ThemedComponent, FormComponent, InputFormComponent |
 
 ---
 
 ### Base Class Quick Guide
 
-| When you need... | Extend... | Example |
-|-----------------|-----------|---------|
-| Theming, tokens, styles | ThemedComponent | ColToast, ColButton |
-| Value handling, selection, or form logic | FormComponent | ColListMenuItem |
-| Validation, helper text, input behavior | InputFormComponent | ColTextArea |
+| Use Case | Extend | Tip | Example |
+|--------------------|----------------------|-----|---------|
+| Theming, tokens, or shared styles | **ThemedComponent** | Foundation for all components | ColToast, ColButton |
+| Value handling, selection, or form logic | **FormComponent** | Handles values, syncs with forms | ColListMenuItem |
+| Selection behavior | **SelectableFormComponent** | Adds toggle/checked support | ColToggle, ColCheckboxCard |
+| Validation, helper text, or input behavior | **InputFormComponent** | Ideal for validated inputs | ColTextArea |
+| Text-based input logic | **TextInputBase** | Manages typing, char count, and clear button | ColNumberField |
+| Notification display | **AlertComponent** | Handles variants, title/content, and dismissal | ColBanner |
