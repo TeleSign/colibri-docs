@@ -49,5 +49,6 @@ export const HTML_BOOLEAN_ATTRIBUTES = [
   'selectable',
   'scroller',
   'showonclick',
-  'hasconnector'
+  'hasconnector',
+  'selectable',
 ];
