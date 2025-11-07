@@ -1,0 +1,115 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Developer Guidelines/Component Architecture and Inheritance Layers"/>
+
+# Component Architecture and Inheritance Layers
+
+These guidelines define the inheritance structure and component layering model used in the library to keep components consistent and predictable.
+
+
+## Table of Contents
+1. [Base Layers](#base-layers)
+2. [Avoid Extending Higher Layers When Not Needed](#avoid-extending-higher-layers-when-not-needed)
+3. [Guidelines](#guidelines)
+4. [When to Create a New Base Layer](#when-to-create-a-new-base-layer)
+5. [How to Create a New Base Layer](#how-to-create-a-new-base-layer)
+6. [Base Class Quick Guide](#base-class-quick-guide)
+
+
+## Base Layers
+
+| Base Class | Use When... | Example |
+|------------|------------|---------|
+| **ThemedComponent** | Base for all components. Provides theming, design tokens, and shared visual behavior. | ColToast |
+| **FormComponent** | The component manages a `value`, handles selection, or interacts with form-like logic. | ColListMenuItem |
+| **SelectableFormComponent** | The component can be selected or toggled. | ColToggle, ColCheckboxCard |
+| **InputFormComponent** | The component is input with validation, placeholder, etc. | ColTextArea |
+| **TextInputBase** | The component handles text-based input behavior (pattern validation, char count, clear button, dirty state). | ColNumberField |
+| **AlertComponent** | Use this for components that **display messages or notifications**, with support for **variant, optional title/content/actions, automatic or manual dismissal, and accessible attributes**. | ColBanner |
+
+
+## Avoid Extending Higher Layers When Not Needed
+
+- Do **not** extend `InputFormComponent` if your component doesn’t require validation or labels.  
+- Do **not** use `FormComponent` for components that don’t interact with forms
+
+
+## Guidelines
+
+- **All components must extend `ThemedComponent`** — this ensures theming, token access, and shared visual consistency.  
+- Use **FormComponent** for components that manage form-like behavior, including selection and values.  
+- Use **SelectableFormComponent** for components that represent selectable/toggleable states.  
+- Use **InputFormComponent** for inputs that need validation, placeholder, etc.  
+- Use **TextInputBase** for text-based input fields that share logic for clearing, validation, and character counting.  
+- Use **AlertComponent** for components that **display messages or notifications**, supporting **variant, optional title/content/actions, automatic or manual dismissal, and accessibility attributes**.  
+
+**Rationale:**  
+This layered inheritance model keeps components modular and predictable, ensuring that theming, form behavior, and validation logic remain centralized and reusable.
+
+
+## When to Create a New Base Layer
+
+Create a new base (or higher-level) component **only when multiple components need to share the same logic or lifecycle behavior**.  
+Typical cases include:
+
+- **Theming and design tokens** (e.g., `ThemedComponent`)  
+- **Form behavior** — value handling, validation, or association (e.g., `FormComponent`)  
+- **Selection or toggling logic** (e.g., `SelectableFormComponent`)  
+- **Reusable input patterns** — labels, placeholders, helper text  
+- **Shared accessibility or event patterns**
+
+
+## How to Create a New Base Layer
+
+### 1. Extend the Right Abstraction
+Always start from the **lowest suitable base**:
+- Use `ThemedComponent` for token or style management.
+- Use `FormComponent` for form fields or inputs.
+- Use `SelectableFormComponent` or `InputFormComponent` for specialized behavior.
+
+---
+
+### 2. Keep It Abstract and Focused
+A base layer should not render templates or be registered as a custom element.  
+Its purpose is to encapsulate logic that **child components can inherit** — such as property syncing, event dispatching, or lifecycle hooks.  
+Keep responsibilities narrow and reusable; don’t include component-specific logic.
+
+---
+
+### 3. Define a Clear Responsibility and Scope
+Each base component should serve a **single, well-defined purpose**:
+- `ThemedComponent`: theming, CSS tokens, slot detection.  
+- `FormComponent`: value management and form association.  
+- `InputFormComponent`: input validation and text-handling.  
+- `AlertComponent`: standardized notification structure.  
+
+---
+
+### 4. Use Consistent Naming
+Follow the naming convention:
+- Use **PascalCase**.
+- Choose names that reflect behavior, not appearance.  
+  Examples: `FormComponent`, `SelectableFormComponent`, `AlertComponent`.
+
+Avoid generic terms like `BaseComponent` unless it’s truly generic.
+
+---
+
+### 5. Document the Layer
+Every new base class should include a short **documentation block** explaining:
+- Its **purpose** (what it provides and why it exists).
+- Any **required properties or expected behavior**.
+
+This helps maintain consistency and ensures new developers understand the hierarchy.
+
+
+## Base Class Quick Guide
+
+| Use Case | Extend | Tip | Example |
+|--------------------|----------------------|-----|---------|
+| Theming, tokens, or shared styles | **ThemedComponent** | Foundation for all components | ColToast, ColButton |
+| Value handling, selection, or form logic | **FormComponent** | Handles values, syncs with forms | ColListMenuItem |
+| Selection behavior | **SelectableFormComponent** | Adds toggle/checked support | ColToggle, ColCheckboxCard |
+| Validation, helper text, or input behavior | **InputFormComponent** | Ideal for validated inputs | ColTextArea |
+| Text-based input logic | **TextInputBase** | Manages typing, char count, and clear button | ColNumberField |
+| Notification display | **AlertComponent** | Handles variants, title/content, and dismissal | ColBanner |
