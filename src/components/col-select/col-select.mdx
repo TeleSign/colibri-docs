@@ -7,9 +7,9 @@ import * as SelectStories from './col-select.stories';
 
 <div className="col-doc__wrapper">
   <div className="col-doc__container">
-    <Title>Select</Title>
+    <Title>Select / Autocomplete</Title>
 
-    The Select component provides dropdown selection functionality with support for various states, validation, and two option rendering patterns: standard list menu items and custom data attributes.
+    The Select component provides dropdown selection functionality with support for various states, validation, and two option rendering patterns: standard list menu items and custom data attributes. It offers both static selection mode and searchable mode (also known as Autocomplete) with real-time filtering.
 
     <Callout variant="info" icon="ℹ️">
       <p>
@@ -23,6 +23,7 @@ import * as SelectStories from './col-select.stories';
     - [When to use it](#when-to-use-it)
     - [Component preview](#component-preview)
     - [Variants](#variants)
+    - [Searchable / Autocomplete Mode](#searchable--autocomplete-mode)
     - [States and Features](#states-and-features)
     - [Content and Layout](#content-and-layout)
     - [Option Types](#option-types)
@@ -56,6 +57,7 @@ import * as SelectStories from './col-select.stories';
         ```
     4. Use it in your HTML:
         ```html
+        <!-- Static select -->
         <col-select
           id="user-preference"
           name="user-preference"
@@ -68,6 +70,23 @@ import * as SelectStories from './col-select.stories';
             <col-list-menu-item value="option3">Option 3</col-list-menu-item>
           </col-list-menu>
         </col-select>
+
+        <!-- Searchable / Autocomplete select -->
+        <col-select
+          id="fruit-selector"
+          name="fruit-selector"
+          label="Favorite Fruit"
+          placeholder="Search fruits..."
+          searchable
+          clearable
+        >
+          <col-list-menu role="menuitem">
+            <col-list-menu-item value="apple">Apple</col-list-menu-item>
+            <col-list-menu-item value="banana">Banana</col-list-menu-item>
+            <col-list-menu-item value="cherry">Cherry</col-list-menu-item>
+            <col-list-menu-item value="grape">Grape</col-list-menu-item>
+          </col-list-menu>
+        </col-select>
         ```
 
     ## When to use it
@@ -76,6 +95,7 @@ import * as SelectStories from './col-select.stories';
 
     - **Collect Single Choices**: Gather selection data like categories, priorities, or preferences from a predefined list.
     - **Implement Form Dropdowns**: Integrate seamlessly into HTML forms for data submission and validation.
+    - **Enable Search and Filtering**: Use searchable (also known as Autocomplete) mode to let users quickly find options by typing, especially useful for long lists.
     - **Provide Loading States**: Display loading indicators while options are being fetched dynamically.
     - **Show Selection Feedback**: Use badges or counters to indicate selected items and selection count.
     - **Build Accessible Interfaces**: Ensure keyboard navigation and screen reader compatibility for dropdown interactions.
@@ -113,6 +133,36 @@ import * as SelectStories from './col-select.stories';
     </div>
     <Canvas className="col-doc__canvas--with-background" of={SelectStories.PlainVariant} />
 
+    ## Searchable / Autocomplete Mode
+
+    <div>
+      The `col-select` component offers two distinct modes of operation: **Static Mode** (default) and **Searchable / Autocomplete Mode**. Each mode provides different user interaction patterns suitable for various use cases.
+    </div>
+
+    ### Static Mode
+    <div>
+      In static mode, the input field is readonly and users interact with the select by clicking to open the dropdown. This is the traditional select behavior and is ideal for shorter lists where users can easily browse all options.
+    </div>
+    <Canvas of={SelectStories.Default} />
+
+    ### Searchable / Autocomplete Mode
+    <div>
+      When the `searchable` attribute is enabled, the input becomes editable and options are filtered in real-time as the user types. This mode is perfect for large option lists where users need to quickly find specific items.
+    </div>
+    <Canvas of={SelectStories.BasicAutocomplete} />
+
+    ### Filtering Behavior
+    <div>
+      In searchable mode, the filtering is case-insensitive and matches any part of the option text. Disabled options are automatically hidden when filtering is active, and an empty state message appears when no options match the search query.
+    </div>
+    <Canvas of={SelectStories.AutocompleteWithDisabledOptions} />
+
+    ### Empty State
+    <div>
+      When search results return no matches, a customizable empty state message is displayed. You can set a custom message using the `empty-state-text` attribute to provide context-specific feedback to users.
+    </div>
+    <Canvas of={SelectStories.AutocompleteWithCustomEmptyState} />
+
     ## States and Features
 
     <div>
@@ -143,6 +193,18 @@ import * as SelectStories from './col-select.stories';
     </div>
     <Canvas of={SelectStories.WithBadgeAndCounter} />
 
+    ### Searchable / Autocomplete with Features
+    <div>
+      Searchable / Autocomplete mode works seamlessly with other select features like badges, counters, and clearable functionality. This example combines searchable filtering with visual selection indicators.
+    </div>
+    <Canvas of={SelectStories.AutocompleteWithBadgeAndCounter} />
+
+    ### Searchable / Autocomplete with Clear
+    <div>
+      The `clearable` property works perfectly with searchable mode, allowing users to both filter options and easily clear their selection when needed.
+    </div>
+    <Canvas of={SelectStories.AutocompleteWithClearable} />
+
     ### Disabled State
     <div>
       Use the `disabled` property to render the select non-interactive. This is useful for preventing user input when a field is not applicable or when the form is in a read-only state.
@@ -163,7 +225,7 @@ import * as SelectStories from './col-select.stories';
 
     ### With Initial Value
     <div>
-      You can provide an initial selected value using the `value` property. This is useful for displaying pre-selected options or restoring previous user selections.
+      You can set an initial selected value using the `value` property. The component will automatically find and select the matching option from the available choices.
     </div>
     <Callout variant="info" icon="ℹ️">
       <p>
@@ -173,6 +235,12 @@ import * as SelectStories from './col-select.stories';
     </Callout>
 
         <Canvas of={SelectStories.WithInitialValue} />
+
+    ### Searchable / Autocomplete with Initial Value
+    <div>
+      In searchable / autocomplete mode, initial values work the same way as static mode. The selected option text is displayed in the input field, and users can clear it to start filtering or select a different option by typing.
+    </div>
+    <Canvas of={SelectStories.AutocompleteWithInitialValue} />
 
     ## Content and Layout
 
@@ -233,6 +301,12 @@ import * as SelectStories from './col-select.stories';
       </p>
     </Callout>
     <Canvas of={SelectStories.CustomDataOptions} />
+
+    ### Searchable / Autocomplete with Custom Elements
+    <div>
+      Searchable / Autocomplete mode also works seamlessly with custom elements using `data-value` attributes. Filtering behavior remains consistent regardless of the option rendering pattern you choose.
+    </div>
+    <Canvas of={SelectStories.AutocompleteCustomElements} />
 
     <Callout variant="tip" icon="💡">
       <p>

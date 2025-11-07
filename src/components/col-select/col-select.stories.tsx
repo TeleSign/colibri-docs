@@ -27,6 +27,8 @@ type StoryArgs = {
   subLabel: string;
   helper: string;
   errorMessage: string;
+  searchable: boolean;
+  emptyStateText: string;
   iconVisible: boolean;
   iconName: string;
   iconSize: string;
@@ -46,7 +48,7 @@ type StoryArgs = {
 };
 
 const meta = {
-  title: 'Forms/Select',
+  title: 'Forms/Select & Autocomplete',
   component: 'col-select',
   parameters: {
     docs: {
@@ -222,6 +224,28 @@ const meta = {
       },
       if: { arg: 'clearable', neq: false },
     },
+    searchable: {
+      control: 'boolean',
+      description:
+        'Enables search/filter functionality. When true, the input becomes editable and options are filtered as the user types.',
+      table: {
+        category: 'Features',
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
+      if: { arg: 'searchable', neq: false },
+    },
+    emptyStateText: {
+      name: 'empty-state-text',
+      control: 'text',
+      description: 'Text to display when searchable mode has no matching results.',
+      table: {
+        category: 'Features',
+        type: { summary: 'string' },
+        defaultValue: { summary: 'No results found' },
+      },
+      if: { arg: 'searchable' },
+    },
     errorMessage: {
       name: 'error-message',
       control: 'text',
@@ -385,6 +409,8 @@ const meta = {
     badge: false,
     counter: false,
     clearable: false,
+    searchable: false,
+    emptyStateText: 'No results found',
     errorMessage: '',
     iconVisible: false,
     iconName: 'search',
@@ -446,7 +472,9 @@ const renderColSelect: Story['render'] = args => {
       placement=${args.placement}
       error-message=${args.errorMessage || nothing}
       custom-width=${args.customWidth || nothing}
+      empty-state-text=${args.emptyStateText || nothing}
       ?clearable=${args.clearable}
+      ?searchable=${args.searchable}
       ?loading=${args.loading}
       ?disabled=${args.disabled}
       ?error=${args.error}
@@ -768,6 +796,28 @@ export const InteractiveFormExample: Story = {
               <col-list-menu-item value="auto">Auto (System)</col-list-menu-item>
             </col-list-menu>
           </col-select>
+          <col-select
+            name="favoriteLanguage"
+            label="Favorite Programming Language"
+            helper="Search and select your favorite language"
+            placeholder="Type to search..."
+            required
+            error-message="Please select a language"
+            custom-width="100%"
+            searchable
+            clearable
+          >
+            <col-list-menu role="menuitem">
+              <col-list-menu-item value="javascript">JavaScript</col-list-menu-item>
+              <col-list-menu-item value="typescript">TypeScript</col-list-menu-item>
+              <col-list-menu-item value="python">Python</col-list-menu-item>
+              <col-list-menu-item value="java">Java</col-list-menu-item>
+              <col-list-menu-item value="csharp">C#</col-list-menu-item>
+              <col-list-menu-item value="golang">Go</col-list-menu-item>
+              <col-list-menu-item value="rust">Rust</col-list-menu-item>
+              <col-list-menu-item value="php">PHP</col-list-menu-item>
+            </col-list-menu>
+          </col-select>
           <col-group>
             <col-button type="submit" ?disabled=${isInDocs}>Submit</col-button>
             <col-button type="reset" ?disabled=${isInDocs}>Reset</col-button>
@@ -776,4 +826,164 @@ export const InteractiveFormExample: Story = {
       </form-demo>
     `;
   },
+};
+
+export const BasicAutocomplete: Story = {
+  args: {
+    searchable: true,
+    placeholder: 'Search fruits...',
+    showOptions: true,
+    optionType: 'col-list-menu',
+  },
+  render: args => html`
+    <col-select placeholder=${args.placeholder} ?searchable=${args.searchable}>
+      <col-list-menu role="menuitem">
+        <col-list-menu-item value="apple">Apple</col-list-menu-item>
+        <col-list-menu-item value="banana">Banana</col-list-menu-item>
+        <col-list-menu-item value="cherry">Cherry</col-list-menu-item>
+        <col-list-menu-item value="grape">Grape</col-list-menu-item>
+        <col-list-menu-item value="orange">Orange</col-list-menu-item>
+        <col-list-menu-item value="pineapple">Pineapple</col-list-menu-item>
+        <col-list-menu-item value="strawberry">Strawberry</col-list-menu-item>
+      </col-list-menu>
+    </col-select>
+  `,
+};
+
+export const AutocompleteWithCustomEmptyState: Story = {
+  args: {
+    searchable: true,
+    emptyStateText: 'No fruits match your search',
+    placeholder: 'Search fruits...',
+    showOptions: true,
+    optionType: 'col-list-menu',
+  },
+  render: args => html`
+    <col-select
+      placeholder=${args.placeholder}
+      empty-state-text=${args.emptyStateText}
+      ?searchable=${args.searchable}
+    >
+      <col-list-menu role="menuitem">
+        <col-list-menu-item value="apple">Apple</col-list-menu-item>
+        <col-list-menu-item value="banana">Banana</col-list-menu-item>
+        <col-list-menu-item value="cherry">Cherry</col-list-menu-item>
+      </col-list-menu>
+    </col-select>
+  `,
+};
+
+export const AutocompleteWithInitialValue: Story = {
+  args: {
+    searchable: true,
+    value: 'banana',
+    placeholder: 'Search fruits...',
+    showOptions: true,
+    optionType: 'col-list-menu',
+  },
+  render: args => html`
+    <col-select value=${args.value} placeholder=${args.placeholder} ?searchable=${args.searchable}>
+      <col-list-menu role="menuitem">
+        <col-list-menu-item value="apple">Apple</col-list-menu-item>
+        <col-list-menu-item value="banana">Banana</col-list-menu-item>
+        <col-list-menu-item value="cherry">Cherry</col-list-menu-item>
+        <col-list-menu-item value="grape">Grape</col-list-menu-item>
+      </col-list-menu>
+    </col-select>
+  `,
+};
+
+export const AutocompleteWithClearable: Story = {
+  args: {
+    searchable: true,
+    clearable: true,
+    value: 'apple',
+    placeholder: 'Search fruits...',
+    showOptions: true,
+    optionType: 'col-list-menu',
+  },
+  render: args => html`
+    <col-select
+      value=${args.value}
+      placeholder=${args.placeholder}
+      ?searchable=${args.searchable}
+      ?clearable=${args.clearable}
+    >
+      <col-list-menu role="menuitem">
+        <col-list-menu-item value="apple">Apple</col-list-menu-item>
+        <col-list-menu-item value="banana">Banana</col-list-menu-item>
+        <col-list-menu-item value="cherry">Cherry</col-list-menu-item>
+        <col-list-menu-item value="grape">Grape</col-list-menu-item>
+      </col-list-menu>
+    </col-select>
+  `,
+};
+
+export const AutocompleteWithBadgeAndCounter: Story = {
+  args: {
+    searchable: true,
+    badge: true,
+    counter: true,
+    value: 'apple',
+    placeholder: 'Search fruits...',
+    showOptions: true,
+    optionType: 'col-list-menu',
+  },
+  render: args => html`
+    <col-select
+      value=${args.value}
+      placeholder=${args.placeholder}
+      ?searchable=${args.searchable}
+      ?badge=${args.badge}
+      ?counter=${args.counter}
+    >
+      <col-list-menu role="menuitem">
+        <col-list-menu-item value="apple">Apple</col-list-menu-item>
+        <col-list-menu-item value="banana">Banana</col-list-menu-item>
+        <col-list-menu-item value="cherry">Cherry</col-list-menu-item>
+      </col-list-menu>
+    </col-select>
+  `,
+};
+
+export const AutocompleteCustomElements: Story = {
+  args: {
+    searchable: true,
+    placeholder: 'Search programming languages...',
+  },
+  render: args => html`
+    <col-select placeholder=${args.placeholder} ?searchable=${args.searchable}>
+      <div role="menuitem">
+        <div data-value="javascript">JavaScript</div>
+        <div data-value="typescript">TypeScript</div>
+        <div data-value="python">Python</div>
+        <div data-value="java">Java</div>
+        <div data-value="csharp">C#</div>
+        <div data-value="golang">Go</div>
+        <div data-value="rust">Rust</div>
+      </div>
+    </col-select>
+  `,
+};
+
+export const AutocompleteWithDisabledOptions: Story = {
+  args: {
+    searchable: true,
+    placeholder: 'Search operating systems...',
+    showOptions: true,
+    optionType: 'col-list-menu',
+  },
+  render: args => html`
+    <col-select placeholder=${args.placeholder} ?searchable=${args.searchable}>
+      <col-list-menu role="menuitem">
+        <col-list-menu-item value="windows">Windows</col-list-menu-item>
+        <col-list-menu-item value="macos">macOS</col-list-menu-item>
+        <col-list-menu-item value="linux">Linux</col-list-menu-item>
+        <col-list-menu-item value="freebsd" disabled>FreeBSD (Coming Soon)</col-list-menu-item>
+        <col-list-menu-item value="solaris" disabled>Solaris (Legacy)</col-list-menu-item>
+        <col-list-menu-item value="android">Android</col-list-menu-item>
+        <col-list-menu-item value="ios">iOS</col-list-menu-item>
+      </col-list-menu>
+    </col-select>
+  `,
 };
