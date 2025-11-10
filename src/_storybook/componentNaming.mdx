@@ -1,0 +1,191 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Developer Guidelines/Component Naming"/>
+
+# Component Naming
+
+These guidelines define the **naming conventions** used across our component library to ensure clarity, consistency, and maintainability.  
+Following these conventions helps developers understand and contribute to the library more effectively.
+
+## Table of Contents
+1. [Component Naming](#component-naming)
+2. [Property (Prop) Naming](#property-prop-naming)
+3. [State Naming](#state-naming)
+4. [Event Naming](#event-naming)
+5. [Slot Naming](#slot-naming)
+6. [CSS Class Naming](#css-class-naming)
+7. [Quick Reference / Summary](#quick-reference--summary)
+
+## Component Naming
+
+**Purpose:** Ensure all components follow a **consistent and descriptive naming convention**, making them easier to discover, use, and maintain.
+
+### Guidelines
+
+- Use **PascalCase** for all component names.  
+  Example:
+  ```text
+  ColModalHeader, ColGridItem, ColModalFooter
+  ```
+- Names should **clearly describe the component’s purpose**.  
+  Avoid vague names like `Box` or `Container` unless their role is truly generic.
+
+- For related or grouped components, use **compound names** that reflect hierarchy or context:
+  Example:
+  ```text
+  ColModalHeader, ColModalFooter, ColGridItem
+  ```
+
+### Notes / Tips
+
+- Always check if a name is **already used** in the library to avoid conflicts.  
+
+### Rationale
+
+- Compound names make **relationships between components explicit**.  
+- Consistent naming improves **discoverability**, **readability**, and reduces **developer confusion** across the component library.
+
+## Property (Prop) Naming
+
+**Purpose:** Ensure props are named consistently and clearly, making components easier to use and understand.
+
+### Guidelines
+
+- Use **camelCase** for prop names.
+- **Boolean props** should be named to reflect true/false nature and should start with **is** or **has**.
+- **Event handler props** should start with **on** and describe the action.
+- **Data or value props** should be descriptive and concise.
+- Avoid abbreviations unless they are widely recognized.
+
+### Notes / Tips
+
+- When adding a new prop, ask: *“Will another developer understand this prop’s purpose without extra documentation?”*  
+- Prefix boolean props with `is` or `has` to indicate a **true/false** value.
+- For event handlers, always start with `on` and be specific: `onClick`, `onFormSubmit`, not `handleEvent`.
+
+### Examples
+
+- **Boolean props:**
+  - Good: `isVisible`, `hasError`, `isLoading`
+  - Bad: `visibleFlag`, `errorStatus`
+
+- **Event handlers:**
+  - Good: `onClick`, `onSubmit`, `onFormReset`
+  - Bad: `handleEvent`, `doAction`
+
+- **Data/value props:**
+  - Good: `user`, `items`, `selectedValue`
+  - Bad: `usr`, `val`, `dataObj`
+
+**Rationale:**
+- Consistent camelCase naming aligns with JavaScript conventions.
+- Boolean props clearly indicate their purpose and expected values.
+- Descriptive prop names improve code readability and reduce confusion.
+
+## State Naming
+
+**Purpose:** Maintain clear and predictable names for component state to improve readability and maintainability.
+
+### Guidelines
+
+- Use **camelCase** for state variable names.
+- Boolean state variables should start with **is** or **has**.
+- Use descriptive names that clearly indicate what the state represents.
+- Avoid vague names like `data` or `temp` unless the context is obvious.
+
+### Examples
+
+- **Boolean state:**
+  - Good: `isOpen`, `hasError`, `isActive`
+  - Bad: `openFlag`, `errorStatus`
+
+- **Other state variables:**
+  - Good: `currentPage`, `formValues`, `selectedItem`
+  - Bad: `data`, `tempValue`
+  
+**Rationale:**
+- Consistent camelCase matches JavaScript and React conventions.
+- Prefixing boolean state with `is/has` immediately indicates a true/false flag.
+- Descriptive names improve readability and reduce confusion for developers working on the component.
+
+## Event Naming
+
+**Purpose:** Ensure event names are clear, predictable, and easy to understand for anyone using or extending the component.
+
+### Guidelines
+
+- Use **camelCase** for event names.
+- Prefix event handlers with **on** to indicate they are events.
+- Use descriptive names that clearly indicate what action triggers the event.
+- Avoid generic names like `handleEvent` or `doAction`.
+
+### Examples
+
+- **Good:** `onClick`, `onChange`, `onSubmit`, `onFormReset`
+- **Bad:** `handleEvent`, `doAction`
+
+**Rationale:**
+- The `on` prefix is standard in React and helps differentiate events from regular functions.
+- Descriptive names make it clear what the event represents and when it is fired.
+- Consistent naming improves maintainability and developer experience when using the component library.
+
+## Slot Naming
+
+**Purpose:** Ensure slots are named consistently so consumers of the component understand their purpose and usage quickly.
+
+### Guidelines
+
+- Use **descriptive, camelCase names** for slots.
+- Avoid vague names like `slot1`, `slot2`.
+- Keep names short but meaningful, reflecting the content or role of the slot.
+
+### Examples
+
+- **Good:** `header`, `footer`, `content`, `sidebar`, `actions`
+- **Bad:** `slot1`, `slot2`, `partA`
+
+**Rationale:**
+- Clear slot names improve readability and make it easier for developers to compose components.
+- Consistency reduces confusion when multiple components share a similar slot structure.
+
+## CSS Class Naming
+
+**Purpose:** Maintain consistent and predictable CSS class naming conventions to ensure styles are easy to understand, override, and maintain.
+
+### Guidelines
+
+- Use **kebab-case** (lowercase words separated by hyphens) for all CSS class names.
+- Class names should be semantic and describe their purpose or role, not their visual appearance.
+- When using **BEM (Block Element Modifier)** style, follow the structure:
+  `block__element--modifier`.
+
+### Examples
+
+- **Kebab-case:** `input-group`, `toast-content`
+- **Semantic:** `input-container`, `error-message`
+- **BEM style:** `button__icon--disabled`
+
+**Rationale:**
+- Kebab-case ensures class names remain readable and consistent with standard CSS conventions.
+- Semantic naming makes components easier to understand and maintain.
+- BEM-style naming helps organize related styles and prevents class name collisions
+
+
+## Quick Reference / Summary
+
+This section summarizes the main naming and structural standards for creating components in the library.
+
+
+### Component Standards Overview
+
+| Category | Convention | Tip | Example |
+|----------|-------------|-----|---------|
+| **Component Names** | PascalCase | Must be unique and descriptive | ColButton, ColSelect, ColToast |
+| **Props** | camelCase | Keep names clear and intuitive | isDisabled, userName, onSubmit |
+| **Boolean Props** | camelCase | Prefix with `is` or `has` | isOpen, hasError, isVisible |
+| **Events** | camelCase | Start with `on` + action | onChange, onClick, onDismiss |
+| **State Variables** | camelCase | Reflects purpose or state meaning | isLoading, selectedItem, currentPage |
+| **Slots** | lowercase | Use short, descriptive names | header, footer, actions, icon |
+| **CSS Parts** | lowercase, hyphen-separated | Match DOM structure | part="toast", part="content" |
+| **CSS Classes** | kebab-case | Semantic, not visual | .toast-content, .button-primary |
+

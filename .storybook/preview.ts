@@ -200,6 +200,7 @@ const preview: Preview = {
       storySort: {
         order: [
           'Welcome',
+          'Developer Guidelines',
           'Framework Integration',
           'Foundation',
           'Actions',
